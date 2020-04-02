@@ -4,7 +4,7 @@
 
 
 - ###   10598125    Riccardo Chioetto ([@ChioettoR](https://github.com/ChioettoR))<br>10598125@polimi.it
-- ###   10600002    Federico Banfi ([@BanfiFederico](https://github.com/BanfiFederico))<br>10581441@mail.polimi.it
+- ###   10581441    Federico Banfi ([@BanfiFederico](https://github.com/BanfiFederico))<br>10581441@mail.polimi.it
 - ###   10600003    Carlo Carugno ([@loveSnoopy](https://github.com/loveSnoopy))<br>charlie.marrone@mail.polimi.it
 
 | Functionality | State |
