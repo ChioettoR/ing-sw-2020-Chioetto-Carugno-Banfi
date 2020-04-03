@@ -48,9 +48,12 @@ public class Card {
         this.alreadyPicked = alreadyPicked;
     }
 
-    //TODO:
     public ArrayList<MoveAction> getMoveActions() {
+        ArrayList<MoveAction> moveActionArrayList = new ArrayList<MoveAction>();
+        for(Action action : actionOrder.getActions()) {
+            if(action instanceof MoveAction)
+                moveActionArrayList.add((MoveAction) action);
+        }
         return null;
     }
-
 }

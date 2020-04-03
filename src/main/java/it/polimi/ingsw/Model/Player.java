@@ -31,12 +31,13 @@ public class Player {
         this.card = card;
     }
 
-    /* TODO:
+    /* TODO: Chiamata dal controller
     /**
      * Player resets values of his Action classes to the original one at the end of his round
      * Sets can move up to true
      */
     public void resetControllerValues() {
+        getCard().getMoveActions().forEach(moveAction -> moveAction.setCanMoveUp(true));
     }
 
     /**

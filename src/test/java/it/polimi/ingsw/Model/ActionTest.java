@@ -60,6 +60,11 @@ class ActionTest {
             }
 
             @Override
+            public void setCanMoveUp(boolean canMoveUp) {
+                moveActionStandard.setCanMoveUp(canMoveUp);
+            }
+
+            @Override
             public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
                 return moveActionStandard.getAvailableTilesForAction(worker,this);
             }
@@ -235,6 +240,9 @@ class ActionTest {
         buildCompleteTower(worker, grid.getTiles().get(11));
         buildCompleteTower(worker, grid.getTiles().get(12));
         buildCompleteTower(worker, grid.getTiles().get(7));
+//        System.out.println(moveActionStandard.getAvailableTilesForAction(worker));
+//        moveActionStandard.getAvailableTilesForAction(worker).stream().forEach(tile -> System.out.println(tile.getX()));
+//        moveActionStandard.getAvailableTilesForAction(worker).stream().forEach(tile -> System.out.println(tile.getY()));
     }
 
     public void buildCompleteTower(Worker worker, Tile tileWhereBuildCompleteTower) {

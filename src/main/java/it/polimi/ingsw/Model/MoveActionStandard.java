@@ -12,25 +12,37 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         this.canMoveUp = canMoveUp;
     }
 
+    public boolean isCanMoveUp() {
+        return canMoveUp;
+    }
+
     @Override
     public void move(Worker worker, Tile tileWhereMove) {
-        lastActionSave.saveBeforeMove(worker, tileWhereMove);
-        Tile currentTile = worker.getPosition();
-        currentTile.setEmpty(true);
-        tileWhereMove.setWorker(worker);
-        worker.setPosition(tileWhereMove);
-        if(currentTile.getLevel()==2 && worker.getPosition().getLevel() == 2) {
-            winManager.winCurrentPlayer();
+        if(canMove(worker, tileWhereMove)) {
+            lastActionSave.saveBeforeMove(worker, tileWhereMove);
+            Tile currentTile = worker.getPosition();
+            currentTile.setEmpty(true);
+            tileWhereMove.setWorker(worker);
+            worker.setPosition(tileWhereMove);
+            if (currentTile.getLevel() == 2 && tileWhereMove.getLevel() == 3) {
+                winManager.winCurrentPlayer();
+            }
         }
+    }
+
+    public LastActionSave getLastActionSave() {
+        return lastActionSave;
     }
 
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
         Tile currentTile = worker.getPosition();
-        if (correctTile(currentTile, tileWhereMove)) {
+        if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty()) {
             if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && !canMoveUp)
                 return false;
-            return (tileWhereMove.getLevel() - currentTile.getLevel() < 1);
+            else if (tileWhereMove.getLevel() - currentTile.getLevel() <= 1) {
+                return true;
+            }
         }
         return false;
     }

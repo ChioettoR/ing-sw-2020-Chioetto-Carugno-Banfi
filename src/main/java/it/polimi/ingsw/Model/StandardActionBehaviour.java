@@ -15,7 +15,7 @@ public abstract class StandardActionBehaviour {
     }
 
     public boolean correctTile(Tile currentTile, Tile tile){
-        if (tile.getLevel() == 4 || !tile.isEmpty())
+        if (tile.getLevel() == 4)
             return false;
         return grid.isNeighbour(currentTile, tile);
     }

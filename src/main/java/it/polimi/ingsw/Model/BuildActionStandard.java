@@ -64,6 +64,10 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
         return newNeighboursTiles;
     }
 
+    public LastActionSave getLastActionSave() {
+        return lastActionSave;
+    }
+
     @Override
     public void undo() {
         lastActionSave.undo();

@@ -12,6 +12,4 @@ public class ActionOrder {
     public void setActions(ArrayList<Action> actions) {
         this.actions = actions;
     }
-
-
 }

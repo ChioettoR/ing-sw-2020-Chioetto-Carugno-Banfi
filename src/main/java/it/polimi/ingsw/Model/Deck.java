@@ -8,9 +8,11 @@ public class Deck {
     private ArrayList<Card> cardsList;
     private static Deck deck;
     Card completeTowersObserver;
+    //CardsBuilder cardsBuilder;
 
     private Deck() {
         cardsList = new ArrayList<Card>();
+//        cardsList.addAll(cardsBuilder.createCards());
         deck = this;
     }
 

@@ -36,6 +36,10 @@ public class LastActionSave {
         this.currentTile = currentWorker.getPosition();
     }
 
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
     public void undo() {
         if(lastActionType.equals(ActionType.MOVE))
             undoMovement();

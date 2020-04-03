@@ -169,8 +169,10 @@ public class PlayersManager {
     /**
      * @return List of all players except the current one
      */
-    public Player getNextPlayers(){
-        return (getPlayers().remove(currentPlayerIndex));
+    public ArrayList<Player> getNextPlayers() {
+        ArrayList<Player> playersCopy = getPlayers();
+        playersCopy.remove(currentPlayerIndex);
+        return playersCopy;
     }
 
     /**
