@@ -1,6 +1,11 @@
 package it.polimi.ingsw.Model;
 
+import java.lang.reflect.Array;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Grid {
     private static Grid grid;
@@ -64,6 +69,10 @@ public class Grid {
             grid = new Grid();
 
         return grid;
+    }
+
+    public void destroyGrid() {
+        grid = null;
     }
 
     public ArrayList<Tile> getTiles() {

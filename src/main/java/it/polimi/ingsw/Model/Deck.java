@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class Deck {
     private ArrayList<Card> cardsList;
@@ -54,6 +56,12 @@ public class Deck {
         return selectedCard;
     }
 
+    public void deleteAllCards() {
+        ArrayList<Card> cardsListCopy = new ArrayList<Card>(cardsList);
+        for(Card card : cardsListCopy)
+            cardsList.remove(card);
+    }
+
     /**
      *
      * @param name of the card to search
@@ -90,7 +98,7 @@ public class Deck {
     public void addCard(Card card) {
         if(card == null) {
             System.out.println("The card is null");
-       }
+        }
 
         else if (cardsList.contains(card)) {
             System.out.println("The card is already in the deck");
