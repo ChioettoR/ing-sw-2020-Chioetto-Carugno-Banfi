@@ -19,14 +19,27 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     @Override
     public void move(Worker worker, Tile tileWhereMove) {
         if(canMove(worker, tileWhereMove)) {
-            lastActionSave.saveBeforeMove(worker, tileWhereMove);
-            Tile currentTile = worker.getPosition();
-            currentTile.setEmpty(true);
-            tileWhereMove.setWorker(worker);
-            worker.setPosition(tileWhereMove);
-            if (currentTile.getLevel() == 2 && tileWhereMove.getLevel() == 3) {
-                winManager.winCurrentPlayer();
-            }
+            standardMove(worker, tileWhereMove);
+        }
+    }
+
+    public void move(Worker worker, Tile tileWhereMove, Action action) {
+        if(action instanceof MoveAction) {
+            if(((MoveAction) action).canMove(worker, tileWhereMove))
+                standardMove(worker, tileWhereMove);
+        }
+        else
+            System.out.println("Wrong action passed to MoveActionStandard");
+    }
+
+    public void standardMove(Worker worker, Tile tileWhereMove) {
+        lastActionSave.saveBeforeMove(worker, tileWhereMove);
+        Tile currentTile = worker.getPosition();
+        currentTile.setEmpty(true);
+        tileWhereMove.setWorker(worker);
+        worker.setPosition(tileWhereMove);
+        if (currentTile.getLevel() == 2 && tileWhereMove.getLevel() == 3) {
+            winManager.winCurrentPlayer();
         }
     }
 

@@ -51,7 +51,7 @@ class ActionTest {
             MoveActionStandard moveActionStandard = new MoveActionStandard();
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                moveActionStandard.move(worker, tileWhereMove);
+                moveActionStandard.move(worker, tileWhereMove,this);
             }
 
             @Override

@@ -9,7 +9,7 @@ public class CardsBuilder {
     static BuildActionStandard buildActionStandard = new BuildActionStandard();
 
     public ArrayList<Card> createCards() {
-        Card card = new Card("Apollo", true, false);
+        Card card  = new Card("Apollo", true, false);
         Card card1 = new Card("Artemis", false, false);
         Card card2 = new Card("Athena", false, false);
         Card card3 = new Card("Atlas", false ,false);
@@ -59,7 +59,7 @@ public class CardsBuilder {
                 if(canMove(worker, tileWhereMove)) {
                     Tile currentPosition = worker.getPosition();
                     Worker enemyWorker = tileWhereMove.getWorker();
-                    moveActionStandard.move(worker, tileWhereMove);
+                    moveActionStandard.move(worker, tileWhereMove,this);
                     if(enemyWorker==null)
                         return;
                     enemyWorker.setPosition(currentPosition);
@@ -73,10 +73,11 @@ public class CardsBuilder {
                     return moveActionStandard.canMove(worker, tileWhereMove);
                 else {
                     Tile currentTile = worker.getPosition();
+                    int enemyID = tileWhereMove.getWorker().getPlayerID();
                     if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && !moveActionStandard.isCanMoveUp())
                         return false;
                     else
-                        return (tileWhereMove.getLevel() - currentTile.getLevel() <= 1 && moveActionStandard.correctTile(currentTile, tileWhereMove));
+                        return (tileWhereMove.getLevel() - currentTile.getLevel() <= 1 && moveActionStandard.correctTile(currentTile, tileWhereMove) && enemyID != worker.getPlayerID());
                 }
             }
 
@@ -108,8 +109,10 @@ public class CardsBuilder {
 
         moveActionDecorator.setOptional(false);
         buildActionStandard.setOptional(false);
-
-        return (ArrayList<Action>) Arrays.asList(moveActionDecorator,buildActionStandard);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionDecorator);
+        actions.add(buildActionStandard);
+        return actions;
     }
 
     public ArrayList<Action> createArtemis() {
@@ -316,4 +319,6 @@ public class CardsBuilder {
 
         return (ArrayList<Action>) Arrays.asList(moveActionStandard, buildActionStandard, buildActionDecorator);
     }
+
+
 }
