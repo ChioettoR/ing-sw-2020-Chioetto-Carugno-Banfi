@@ -1,6 +1,6 @@
 # Prova Finale Ingegneria del Software 2020
 
-## Gruppo AM05
+## Gruppo AM005
 
 
 - ###   10598125    Riccardo Chioetto ([@ChioettoR](https://github.com/ChioettoR))<br>10598125@polimi.it
