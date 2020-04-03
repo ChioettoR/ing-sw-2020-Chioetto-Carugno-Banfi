@@ -123,7 +123,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                moveActionStandard.move(worker, tileWhereMove);
+                moveActionStandard.move(worker, tileWhereMove, this);
             }
 
             @Override
@@ -160,8 +160,11 @@ public class CardsBuilder {
         moveActionStandard.setOptional(false);
         moveActionDecorator.setOptional(true);
         buildActionStandard.setOptional(false);
-
-        return (ArrayList<Action>) Arrays.asList(moveActionStandard, moveActionDecorator, buildActionStandard);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(moveActionDecorator);
+        actions.add(buildActionStandard);
+        return actions;
     }
 
     public ArrayList<Action> createAthena() {

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DeckTest {
 
     Deck deck = Deck.getDeck();
@@ -17,9 +16,13 @@ class DeckTest {
     ArrayList<String> names = new ArrayList<String>();
 
     @Test
-    @Order(2)
     void addAndRandomPickTest() {
         addAndRandomPick();
+    }
+
+    @AfterEach
+    void tearDown() {
+        deck.deleteAllCards();
     }
 
     void addAndRandomPick() {
