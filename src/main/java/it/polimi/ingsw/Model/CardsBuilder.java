@@ -200,8 +200,9 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
+                Tile currentTile = worker.getPosition();
                 moveActionStandard.move(worker, tileWhereMove);
-                if(tileWhereMove.getLevel() - worker.getPosition().getLevel() == 1) {
+                if(tileWhereMove.getLevel() - currentTile.getLevel() == 1) {
                     ArrayList<Player> players = PlayersManager.getPlayersManager().getNextPlayers();
 
                     //Sets that opponents workers cannot move up

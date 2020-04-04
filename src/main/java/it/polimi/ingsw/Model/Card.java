@@ -54,6 +54,6 @@ public class Card {
             if(action instanceof MoveAction)
                 moveActionArrayList.add((MoveAction) action);
         }
-        return null;
+        return moveActionArrayList;
     }
 }

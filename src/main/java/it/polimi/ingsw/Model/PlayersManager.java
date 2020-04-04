@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PlayersManager {
 
@@ -172,7 +173,7 @@ public class PlayersManager {
      * @return List of all players except the current one
      */
     public ArrayList<Player> getNextPlayers() {
-        ArrayList<Player> playersCopy = getPlayers();
+        ArrayList<Player> playersCopy = new ArrayList<Player>(getPlayers());
         playersCopy.remove(currentPlayerIndex);
         return playersCopy;
     }
