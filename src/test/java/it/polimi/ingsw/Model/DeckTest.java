@@ -69,12 +69,12 @@ class DeckTest {
             Card pickedCard = deck.pickCard();
 
             if (i >= deck.getCardsList().size())
-                assertEquals(null, pickedCard);
+                assertNull(pickedCard);
 
             else {
                 assert (namesCopy.contains(pickedCard.getName()));
                 namesCopy.remove(pickedCard.getName());
-                assertEquals(true, pickedCard.getAlreadyPicked());
+                assertTrue(pickedCard.getAlreadyPicked());
             }
         }
     }
@@ -85,13 +85,13 @@ class DeckTest {
     public void getCardByNameFromEmptyDeck() {
         System.out.println("TEST: I'm getting cards using their names from the empty deck");
         Card selectedCard = deck.getCardByName("Carlo");
-        assertEquals(null, selectedCard);
+        assertNull(selectedCard);
 
         selectedCard = deck.pickCard();
-        assertEquals(null, selectedCard);
+        assertNull(selectedCard);
 
         selectedCard = deck.getCardByName("Marcello");
-        assertEquals(null, selectedCard);
+        assertNull(selectedCard);
     }
 
     /**
@@ -102,7 +102,7 @@ class DeckTest {
 
         //I'm trying to get a card not in the deck
         Card selectedCard = deck.getCardByName("Carlo");
-        assertEquals(null, selectedCard);
+        assertNull(selectedCard);
 
         selectedCard = deck.getCardByName("Marcello");
         assertEquals(card, selectedCard);
@@ -114,7 +114,7 @@ class DeckTest {
         assertEquals(card2, selectedCard);
 
         selectedCard = deck.getCardByName(null);
-        assertEquals(null, selectedCard);
+        assertNull(selectedCard);
 
     }
 }

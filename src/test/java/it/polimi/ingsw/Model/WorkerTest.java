@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,13 @@ class WorkerTest {
     Tile tile1;
     Tile tile2 = new Tile(5,8);
     Tile nullTile = null;
-    Grid grid = Grid.getGrid();
+    Grid grid;
+
+    @BeforeEach
+    void setUp() {
+        grid = Grid.getGrid();
+        grid.createGrid(5,5);
+    }
 
     @Test
     void setPositionTest() {
@@ -45,10 +52,8 @@ class WorkerTest {
         assertEquals(tile1, worker.getPosition());
     }
 
-
     public void getTilesFromGrid() {
         System.out.println("TEST: I'm adding tiles to the grid");
-        grid.createGrid(5,5);
         tile = grid.getTiles().get(0);
         tile1 = grid.getTiles().get(1);
     }

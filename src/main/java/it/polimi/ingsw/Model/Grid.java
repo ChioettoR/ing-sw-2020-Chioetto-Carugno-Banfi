@@ -73,6 +73,7 @@ public class Grid {
 
     public void destroyGrid() {
         grid = null;
+        tiles.clear();
     }
 
     public ArrayList<Tile> getTiles() {

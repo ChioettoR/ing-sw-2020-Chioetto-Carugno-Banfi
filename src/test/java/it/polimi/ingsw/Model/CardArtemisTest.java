@@ -17,11 +17,11 @@ class CardArtemisTest {
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
     Deck deck = Deck.getDeck();
-    Card card = new Card("Artemis", false, false);
-    Card card1 = new Card("Tonino", false, false);
+    Card card = new Card("Artemis");
+    Card card1 = new Card("Carlo");
     Tile currentTile;
     Tile currentTile1;
-    ActionOrder actionOrder = new ActionOrder();
+    ArrayList<Action> actionOrder = new ArrayList<Action>();
     MoveAction moveAction;
     MoveAction moveAction2;
     BuildAction buildAction;
@@ -45,13 +45,13 @@ class CardArtemisTest {
         currentTile1.setWorker(worker1);
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
-        Action action = actionOrder.getActions().get(0);
+        Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
-        action = actionOrder.getActions().get(1);
+        action = actionOrder.get(1);
         assertTrue(action instanceof MoveAction);
         moveAction2 = (MoveAction) action;
-        action = actionOrder.getActions().get(2);
+        action = actionOrder.get(2);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
     }
@@ -66,6 +66,7 @@ class CardArtemisTest {
 
     @Test
     void testArtemis(){
+        System.out.println("TEST: I'm testing Artemis Card");
         ArrayList<Tile> actualTiles = moveAction.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));

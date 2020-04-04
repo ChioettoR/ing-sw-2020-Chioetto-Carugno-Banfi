@@ -35,6 +35,8 @@ public class PlayersManager {
             System.out.println("You're adding a null player");
 
         else if(validatePlayer(player)) {
+            if(getPlayersNumber()==0)
+                currentPlayerIndex=0;
             player.setID(idManager.pickID());
             players.add(player);
             if(getPlayersNumber()==2)

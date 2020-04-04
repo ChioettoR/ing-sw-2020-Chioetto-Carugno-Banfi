@@ -16,19 +16,22 @@ class CardApolloTest {
     Worker worker2 = new Worker();
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
-    Deck deck = Deck.getDeck();
+    Deck deck;
     Card card = new Card("Apollo", true, false);
-    Card card1 = new Card("Tonino", false, false);
+    Card card1 = new Card("Carlo");
     Tile currentTile;
     Tile currentTile1;
     Tile currentTile2;
-    ActionOrder actionOrder = new ActionOrder();
+    ArrayList<Action> actionOrder = new ArrayList<Action>();
     MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
         grid = Grid.getGrid();
+        deck = Deck.getDeck();
+        deck.addCard(card);
+        deck.addCard(card1);
         grid.createGrid(5, 5);
         PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
@@ -49,10 +52,10 @@ class CardApolloTest {
         currentTile2.setWorker(worker2);
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
-        Action action = actionOrder.getActions().get(0);
+        Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
-        action = actionOrder.getActions().get(1);
+        action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
     }
@@ -67,6 +70,7 @@ class CardApolloTest {
 
     @Test
     void testApollo() {
+        System.out.println("TEST: I'm testing Apollo Card");
         ArrayList<Tile> actualTiles = moveAction.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));

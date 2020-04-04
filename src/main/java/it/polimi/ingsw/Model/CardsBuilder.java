@@ -8,44 +8,69 @@ public class CardsBuilder {
     static MoveActionStandard moveActionStandard = new MoveActionStandard();
     static BuildActionStandard buildActionStandard = new BuildActionStandard();
 
-    public ArrayList<Card> createCards() {
+    public void createCards() {
+        Deck deck = Deck.getDeck();
+
         Card card  = new Card("Apollo", true, false);
-        Card card1 = new Card("Artemis", false, false);
-        Card card2 = new Card("Athena", false, false);
-        Card card3 = new Card("Atlas", false ,false);
-        Card card4 = new Card("Demeter", false ,false);
-        Card card5 = new Card("Hephaestus", false, false);
+        deck.addCard(card);
+
+        Card card1 = new Card("Artemis");
+        deck.addCard(card1);
+
+        Card card2 = new Card("Athena");
+        deck.addCard(card2);
+
+        Card card3 = new Card("Atlas");
+        deck.addCard(card3);
+
+        Card card4 = new Card("Demeter");
+        deck.addCard(card4);
+
+        Card card5 = new Card("Hephaestus");
+        deck.addCard(card5);
+
         Card card6 = new Card("Minotaur", true, false);
-        Card card7 = new Card("Pan", false, false);
-        Card card8 = new Card("Prometheus", false, false);
+        deck.addCard(card6);
+
+        Card card7 = new Card("Pan");
+        deck.addCard(card7);
+
+        Card card8 = new Card("Prometheus");
+        deck.addCard(card8);
+
         Card card9 = new Card("Chronus", false , true);
-        Card card10 = new Card("Hestia", false, false);
-        Card card11 = new Card("Poseidon", false, false);
-        Card card12 = new Card("Triton", false, false);
-        Card card13 = new Card("Zeus", false , false);
-        return (ArrayList<Card>) Arrays.asList(card, card1, card2, card3);
+        deck.addCard(card9);
+
+        Card card10 = new Card("Hestia");
+        deck.addCard(card10);
+
+        Card card11 = new Card("Poseidon");
+        deck.addCard(card11);
+
+        Card card12 = new Card("Triton");
+        deck.addCard(card12);
+
+        Card card13 = new Card("Zeus");
+        deck.addCard(card13);
     }
 
     public void createAction(Card card) {
-        ActionOrder actionOrder = new ActionOrder();
+
         if(card.getName().equals("Apollo")) {
-            actionOrder.setActions(createApollo());
+            card.setActionOrder(createApollo());
         }
         if(card.getName().equals("Artemis")) {
-            actionOrder.setActions(createArtemis());
+            card.setActionOrder(createArtemis());
         }
         if(card.getName().equals("Athena")) {
-            actionOrder.setActions(createAthena());
+            card.setActionOrder(createAthena());
         }
         if(card.getName().equals("Atlas")) {
-            actionOrder.setActions(createAtlas());
+            card.setActionOrder(createAtlas());
         }
         if(card.getName().equals("Demeter")) {
-            actionOrder.setActions(createDemeter());
+            card.setActionOrder(createDemeter());
         }
-
-
-        card.setActionOrder(actionOrder);
     }
 
     public ArrayList<Action> createApollo() {
@@ -222,8 +247,10 @@ public class CardsBuilder {
 
         moveActionDecorator.setOptional(false);
         buildActionStandard.setOptional(false);
-
-        return (ArrayList<Action>) Arrays.asList(moveActionDecorator, buildActionStandard);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionDecorator);
+        actions.add(buildActionStandard);
+        return actions;
     }
 
     public ArrayList<Action> createAtlas() {
@@ -270,8 +297,10 @@ public class CardsBuilder {
 
         moveActionStandard.setOptional(false);
         buildActionDecorator.setOptional(false);
-
-        return (ArrayList<Action>) Arrays.asList(moveActionStandard, buildActionDecorator);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionDecorator);
+        return actions;
     }
 
     public ArrayList<Action> createDemeter() {
@@ -319,9 +348,10 @@ public class CardsBuilder {
         moveActionStandard.setOptional(false);
         buildActionStandard.setOptional(false);
         buildActionDecorator.setOptional(true);
-
-        return (ArrayList<Action>) Arrays.asList(moveActionStandard, buildActionStandard, buildActionDecorator);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionStandard);
+        actions.add(buildActionDecorator);
+        return actions;
     }
-
-
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class MoveActionStandard extends StandardActionBehaviour implements MoveAction{
     private boolean canMoveUp = true;
     private WinManager winManager = new WinManager();
-    private Grid grid = Grid.getGrid();
     private LastActionSave lastActionSave = new LastActionSave();
 
     public void setCanMoveUp(boolean canMoveUp) {
@@ -62,7 +61,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
 
     @Override
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
-        ArrayList<Tile> neighboursTiles = grid.getNeighbours(worker.getPosition());
+        ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
         neighboursTiles.removeIf(tile -> (!canMove(worker,tile)));
         return neighboursTiles;
     }
@@ -73,7 +72,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     }
 
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action action) {
-        ArrayList<Tile> neighboursTiles = grid.getNeighbours(worker.getPosition());
+        ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
         if(action instanceof MoveAction)
             neighboursTiles.removeIf(tile -> (!((MoveAction)action).canMove(worker,tile)));
         else {

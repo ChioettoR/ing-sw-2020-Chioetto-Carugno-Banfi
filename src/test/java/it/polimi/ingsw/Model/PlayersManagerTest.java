@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -7,10 +8,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(OrderAnnotation.class)
 class PlayersManagerTest {
 
-    Grid grid = Grid.getGrid();
+    Grid grid;
 
     Player player = new Player("Marcello");
     Card card = new Card("Carlo");
@@ -29,15 +29,23 @@ class PlayersManagerTest {
 
     Card card3 = new Card("Silvio");
     Worker worker3 = new Worker();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    PlayersManager playersManager;
+
+    @AfterEach
+    void tearDown() {
+        playersManager.deletePlayer(player);
+        playersManager.deletePlayer(player1);
+        grid.destroyGrid();
+    }
 
     @Test
-    @Order(4)
     void addAndDeletePlayersTest() {
         addAndDeletePlayers();
     }
 
     void addAndDeletePlayers() {
+        playersManager = PlayersManager.getPlayersManager();
+        grid = Grid.getGrid();
         grid.createGrid(5,5);
         addPlayers();
         nextRound();
@@ -87,12 +95,12 @@ class PlayersManagerTest {
         System.out.println("TEST: I'm deleting players from the game");
         playersManager.deletePlayer(player);
         assert(!playersManager.getPlayers().contains(player));
-        assertEquals(null, playersManager.getCurrentPlayer());
+        assertNull(playersManager.getCurrentPlayer());
         assertEquals("Alberto", playersManager.getNextPlayerAndStartRound().getName());
 
         //I'm deleting the last worker of a player and check if the player is deleted from the game
         playersManager.deleteWorker(worker4);
-        assertTrue(!playersManager.getPlayers().contains(player));
+        assertFalse(playersManager.getPlayers().contains(player));
 
         //I'm trying to delete a player not in the game
         playersManager.deletePlayer(player2);
@@ -115,13 +123,12 @@ class PlayersManagerTest {
         assertEquals(player1, playersManager.getPlayerWithCard(card1));
 
         //I'm trying to get a card not assigned to any player
-        assertEquals(null, playersManager.getPlayerWithCard(card2));
+        assertNull(playersManager.getPlayerWithCard(card2));
 
         //I'm trying to get a card not assigned to any player in the game
-        assertEquals(null, playersManager.getPlayerWithCard(card3));
+        assertNull(playersManager.getPlayerWithCard(card3));
     }
 
-    @Test
     void deleteWorker() {
         System.out.println("TEST: I'm deleting workers");
         playersManager.deleteWorker(worker);
@@ -137,7 +144,6 @@ class PlayersManagerTest {
         playersManager.deleteWorker(worker3);
     }
 
-    @Test
     void deleteCurrentWorker() {
         System.out.println("TEST: I'm deleting current workers");
         playersManager.setCurrentWorker(worker);

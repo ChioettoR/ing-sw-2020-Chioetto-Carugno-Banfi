@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GridTest {
 
     Grid grid;
@@ -19,8 +18,12 @@ class GridTest {
         grid.createGrid(length, width);
     }
 
+    @AfterEach
+    void tearDown() {
+        grid.destroyGrid();
+    }
+
     @Test
-    @Order(5)
     void createGridAndCheckNeighboursTest() {
         createGridAndCheckNeighbours();
     }
@@ -28,7 +31,6 @@ class GridTest {
     void createGridAndCheckNeighbours() {
         createGrid();
         checkNeighbour();
-        checkCompleteTowersCount();
     }
 
     public void createGrid() {
@@ -51,10 +53,4 @@ class GridTest {
         assertTrue(grid.isNeighbour(grid.getTiles().get(1), grid.getTiles().get(5)));
         assertFalse(grid.isNeighbour(grid.getTiles().get(5), grid.getTiles().get(8)));
     }
-
-    @Test
-    void checkCompleteTowersCount(){
-
-    }
-
 }

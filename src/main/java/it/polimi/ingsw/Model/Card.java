@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Card {
     private String name;
     private boolean alreadyPicked;
-    private ActionOrder actionOrder;
+    private ArrayList<Action> actionOrder = new ArrayList<Action>();
     private boolean saveEverythingBeforeMove;
     private boolean completeTowersObserver;
 
@@ -13,11 +13,11 @@ public class Card {
         return saveEverythingBeforeMove;
     }
 
-    public ActionOrder getActionOrder() {
+    public ArrayList<Action> getActionOrder() {
         return actionOrder;
     }
 
-    public void setActionOrder(ActionOrder actionOrder) {
+    public void setActionOrder(ArrayList<Action> actionOrder) {
         this.actionOrder = actionOrder;
     }
 
@@ -50,7 +50,7 @@ public class Card {
 
     public ArrayList<MoveAction> getMoveActions() {
         ArrayList<MoveAction> moveActionArrayList = new ArrayList<MoveAction>();
-        for(Action action : actionOrder.getActions()) {
+        for(Action action : actionOrder) {
             if(action instanceof MoveAction)
                 moveActionArrayList.add((MoveAction) action);
         }
