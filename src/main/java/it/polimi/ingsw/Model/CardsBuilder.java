@@ -153,7 +153,7 @@ public class CardsBuilder {
 
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
-                return (moveActionStandard.canMove(worker, tileWhereMove) && tileWhereMove!=moveActionStandard.getLastActionSave().getCurrentTile());
+                return (moveActionStandard.canMove(worker, tileWhereMove) && tileWhereMove != moveActionStandard.getLastActionSave().getCurrentTile());
             }
 
             @Override
@@ -312,17 +312,17 @@ public class CardsBuilder {
 
             @Override
             public void build(Worker worker, Tile tileWhereBuild, int newLevel) {
-                buildActionStandard.build(worker, tileWhereBuild, newLevel);
+                buildActionStandard.build(worker, tileWhereBuild, newLevel, this);
             }
 
             @Override
             public void build(Worker worker, Tile tileWhereBuild) {
-                buildActionStandard.build(worker, tileWhereBuild);
+                buildActionStandard.build(worker, tileWhereBuild, this);
             }
 
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
-                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && tileWhereBuild != buildActionStandard.getLastActionSave().getCurrentTile());
+                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && tileWhereBuild != buildActionStandard.getLastActionSave().getNextTile());
             }
 
             @Override

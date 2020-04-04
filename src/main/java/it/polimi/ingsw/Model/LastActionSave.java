@@ -36,6 +36,10 @@ public class LastActionSave {
         this.currentTile = currentWorker.getPosition();
     }
 
+    public Tile getNextTile() {
+        return nextTile;
+    }
+
     public Tile getCurrentTile() {
         return currentTile;
     }
