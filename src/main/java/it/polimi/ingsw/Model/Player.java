@@ -37,7 +37,7 @@ public class Player {
      * Sets can move up to true
      */
     public void resetControllerValues() {
-        getCard().getMoveActions().forEach(moveAction -> moveAction.setCanMoveUp(true));
+        getCard().getMoveActions().forEach(moveAction -> moveAction.setCantMoveUp(false));
     }
 
     /**

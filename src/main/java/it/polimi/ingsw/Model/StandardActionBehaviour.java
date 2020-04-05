@@ -4,6 +4,15 @@ import it.polimi.ingsw.Model.Grid;
 
 public abstract class StandardActionBehaviour {
     private boolean isOptional;
+    private boolean actionLock;
+
+    public boolean isActionLock() {
+        return actionLock;
+    }
+
+    public void setActionLock(boolean actionLock) {
+        this.actionLock = actionLock;
+    }
 
     public boolean isOptional() {
         return isOptional;

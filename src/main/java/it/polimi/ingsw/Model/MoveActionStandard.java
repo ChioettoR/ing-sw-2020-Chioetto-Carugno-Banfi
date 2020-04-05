@@ -3,16 +3,17 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public class MoveActionStandard extends StandardActionBehaviour implements MoveAction{
-    private boolean canMoveUp = true;
+    private boolean cantMoveUp;
     private WinManager winManager = new WinManager();
     private LastActionSave lastActionSave = new LastActionSave();
+    private boolean actionLock = false;
 
-    public void setCanMoveUp(boolean canMoveUp) {
-        this.canMoveUp = canMoveUp;
+    public void setCantMoveUp(boolean cantMoveUp) {
+        this.cantMoveUp = cantMoveUp;
     }
 
-    public boolean isCanMoveUp() {
-        return canMoveUp;
+    public boolean isCantMoveUp() {
+        return cantMoveUp;
     }
 
     @Override
@@ -20,15 +21,6 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         if(canMove(worker, tileWhereMove)) {
             standardMove(worker, tileWhereMove);
         }
-    }
-
-    public void move(Worker worker, Tile tileWhereMove, Action action) {
-        if(action instanceof MoveAction) {
-            if(((MoveAction) action).canMove(worker, tileWhereMove))
-                standardMove(worker, tileWhereMove);
-        }
-        else
-            System.out.println("Wrong action passed to MoveActionStandard");
     }
 
     public void standardMove(Worker worker, Tile tileWhereMove) {
@@ -49,12 +41,10 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
         Tile currentTile = worker.getPosition();
-        if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty()) {
-            if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && !canMoveUp)
+        if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty() && !isActionLock()) {
+            if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && cantMoveUp)
                 return false;
-            else if (tileWhereMove.getLevel() - currentTile.getLevel() <= 1) {
-                return true;
-            }
+            else return tileWhereMove.getLevel() - currentTile.getLevel() <= 1;
         }
         return false;
     }

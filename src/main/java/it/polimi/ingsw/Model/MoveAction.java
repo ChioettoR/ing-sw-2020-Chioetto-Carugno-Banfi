@@ -4,5 +4,5 @@ public interface MoveAction extends Action {
 
     public void move(Worker worker, Tile tileWhereMove);
     public boolean canMove(Worker worker, Tile tileWhereMove);
-    public void setCanMoveUp(boolean canMoveUp);
+    public void setCantMoveUp(boolean canMoveUp);
 }

@@ -98,6 +98,23 @@ public class Grid {
         return tilesNeighbour;
     }
 
+    public Tile getOppositeTile(Tile currentTile, Tile nextTile) {
+        int oppositeTileX;
+        int oppositeTileY;
+        oppositeTileX = nextTile.getX() + (nextTile.getX() - currentTile.getX());
+        oppositeTileY = nextTile.getY() + (nextTile.getY() - currentTile.getY());
+        return getTile(oppositeTileX, oppositeTileY);
+    }
+
+    public Tile getTile(int x, int y) {
+        for(Tile tile : tiles) {
+            if(tile.getX()==x && tile.getY()==y)
+                return tile;
+        }
+        System.out.println("There are no tiles with that x and y");
+        return null;
+    }
+
     public boolean isNeighbour (Tile currentTile, Tile nextTile){
         ArrayList<Tile> neighbours = getNeighbours(currentTile);
         if(neighbours == null)

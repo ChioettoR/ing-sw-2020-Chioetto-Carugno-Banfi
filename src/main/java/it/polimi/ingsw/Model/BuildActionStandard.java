@@ -23,27 +23,14 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
         }
     }
 
-    public void build(Worker worker, Tile tileWhereBuild, int newLevel, Action action) {
-        if(action instanceof BuildAction) {
-            if(((BuildAction) action).canBuild(worker, tileWhereBuild, newLevel))
-                standardBuild(worker, tileWhereBuild, newLevel);
-        }
-        else
-            System.out.println("Wrong action passed to BuildActionStandard");
-    }
-
     @Override
     public void build(Worker worker, Tile tileWhereBuild) {
         build(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);
     }
 
-    public void build(Worker worker, Tile tileWhereBuild, Action action) {
-        build(worker, tileWhereBuild, tileWhereBuild.getLevel()+1, action);
-    }
-
     @Override
     public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
-        return (correctTile(worker.getPosition(), tileWhereBuild) && newLevel == tileWhereBuild.getLevel()+1);
+        return (!isActionLock() && correctTile(worker.getPosition(), tileWhereBuild) && newLevel<=4 && newLevel == tileWhereBuild.getLevel()+1) && tileWhereBuild.isEmpty();
     }
 
     @Override
@@ -73,7 +60,7 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
         lastActionSave.undo();
     }
 
-    public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action action) {
+    public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action classWhereCheckBuild) {
         ArrayList<Tile> neighboursTiles = grid.getNeighbours(worker.getPosition());
         ArrayList<Tile> newNeighboursTiles = new ArrayList<Tile>(neighboursTiles);
         boolean buildable = false;
@@ -81,8 +68,8 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
         for(Tile tile : neighboursTiles) {
             buildable = false;
             for(int i=0; i<=4; i++) {
-                if(action instanceof BuildAction) {
-                    if(((BuildAction) action).canBuild(worker, tile, i))
+                if(classWhereCheckBuild instanceof BuildAction) {
+                    if(((BuildAction) classWhereCheckBuild).canBuild(worker, tile, i))
                         buildable = true;
                 }
                 else {

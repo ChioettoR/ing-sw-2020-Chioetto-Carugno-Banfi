@@ -7,4 +7,6 @@ public interface Action {
     public boolean isOptional();
     public void setOptional(boolean isOptional);
     public void undo();
+    public void setActionLock(boolean actionLock);
+    public boolean isActionLock();
 }
