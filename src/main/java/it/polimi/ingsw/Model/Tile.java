@@ -59,8 +59,6 @@ public class Tile {
     }
 
     public Worker getWorker() {
-        if(worker==null)
-            System.out.println("This tile is empty");
         return worker;
     }
 

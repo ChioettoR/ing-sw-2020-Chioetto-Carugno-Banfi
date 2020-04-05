@@ -80,6 +80,9 @@ public class CardsBuilder {
         if(card.getName().equals("Pan")) {
             card.setActionOrder(createPan());
         }
+        if(card.getName().equals("Prometheus")) {
+            card.setActionOrder(createPrometheus());
+        }
     }
 
     public ArrayList<Action> createApollo() {
