@@ -80,6 +80,12 @@ class StandardActionsTest {
 
         // Verifies if the standard worker building has been successful : the new level of the tile is updated
         //I'm trying to build a wrong level
+        buildActionStandard.getAvailableTilesForAction(worker);
+        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        expectedTiles.add(grid.getTiles().get(1));
+        expectedTiles.add(grid.getTiles().get(5));
+        expectedTiles.add(grid.getTiles().get(6));
+        assertEquals(expectedTiles, buildActionStandard.getAvailableTilesForAction(worker));
         buildActionStandard.build(worker, buildPosition, 2);
         assertEquals(0, buildPosition.getLevel());
         assertEquals(1, buildPosition.getLevelsSize());

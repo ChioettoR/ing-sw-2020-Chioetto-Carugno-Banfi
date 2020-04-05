@@ -7,7 +7,7 @@ public class WinManager {
     }
 
     public void winCurrentPlayer(){
-        //System.out.println("Win " + PlayersManager.getPlayersManager().getCurrentPlayer().getName());
+        System.out.println("Win " + PlayersManager.getPlayersManager().getCurrentPlayer().getName());
         win(PlayersManager.getPlayersManager().getCurrentPlayer());
     }
 

@@ -124,6 +124,11 @@ public class CardsBuilder {
             }
 
             @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
+            }
+
+            @Override
             public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
                 return moveActionStandard.getAvailableTilesForAction(worker, this);
             }
@@ -182,6 +187,11 @@ public class CardsBuilder {
             @Override
             public void setCantMoveUp(boolean cantMoveUp) {
                 moveActionStandard.setCantMoveUp(cantMoveUp);
+            }
+
+            @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
             }
 
             @Override
@@ -258,6 +268,11 @@ public class CardsBuilder {
             @Override
             public void setCantMoveUp(boolean cantMoveUp) {
                 moveActionStandard.setCantMoveUp(cantMoveUp);
+            }
+
+            @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
             }
 
             @Override
@@ -529,6 +544,11 @@ public class CardsBuilder {
             }
 
             @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
+            }
+
+            @Override
             public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
                 return moveActionStandard.getAvailableTilesForAction(worker, this);
             }
@@ -590,6 +610,11 @@ public class CardsBuilder {
             @Override
             public void setCantMoveUp(boolean cantMoveUp) {
                 moveActionStandard.setCantMoveUp(cantMoveUp);
+            }
+
+            @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
             }
 
             @Override

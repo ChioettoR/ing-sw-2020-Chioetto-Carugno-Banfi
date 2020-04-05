@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CardDemeterTest {
+class CardPrometheusTest {
 
     Grid grid;
     Worker worker = new Worker();
     Player player = new Player("Alberto");
     Deck deck = Deck.getDeck();
-    Card card = new Card("Demeter");
+    Card card = new Card("Prometheus");
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<Action>();
     MoveAction moveAction;
@@ -35,11 +35,11 @@ class CardDemeterTest {
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
-        assertTrue(action instanceof MoveAction);
-        moveAction = (MoveAction) action;
-        action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
+        action = actionOrder.get(1);
+        assertTrue(action instanceof MoveAction);
+        moveAction = (MoveAction) action;
         action = actionOrder.get(2);
         assertTrue(action instanceof BuildAction);
         buildAction2 = (BuildAction) action;
@@ -52,25 +52,38 @@ class CardDemeterTest {
         grid.destroyGrid();
     }
 
+
     @Test
-    void testDemeter(){
-        System.out.println("TEST: I'm testing Demeter Card");
-        moveAction.move(worker, grid.getTiles().get(1));
-        buildAction.build(worker,currentTile);
-        buildAction2.getAvailableTilesForAction(worker);
+    void testPrometheus() {
+        System.out.println("TEST: I'm testing Prometheus Card");
+
+        buildAction.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
-        expectedTiles.add(grid.getTiles().get(2));
+        expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));
-        expectedTiles.add(grid.getTiles().get(7));
-        assertEquals(expectedTiles, buildAction2.getAvailableTilesForAction(worker));
-        buildAction2.build(worker,grid.getTiles().get(5));
-        assertEquals(1, grid.getTiles().get(5).getLevel());
-        assertEquals(1, currentTile.getLevel());
-        buildAction.build(worker,grid.getTiles().get(5));
-        assertEquals(2, grid.getTiles().get(5).getLevel());
-        buildAction2.build(worker,grid.getTiles().get(5));
-        assertEquals(2, grid.getTiles().get(5).getLevel());
-    }
+        assertEquals(expectedTiles, buildAction.getAvailableTilesForAction(worker));
 
+        buildAction.build(worker, grid.getTiles().get(1));
+        assertEquals(1, grid.getTiles().get(1).getLevel());
+        moveAction.move(worker, grid.getTiles().get(1));
+        assertEquals(currentTile, worker.getPosition());
+        moveAction.move(worker, grid.getTiles().get(5));
+        assertEquals(grid.getTiles().get(5), worker.getPosition());
+        buildAction2.build(worker, grid.getTiles().get(10));
+        assertEquals(0, grid.getTiles().get(10).getLevel());
+        assertTrue(buildAction2.isActionLock());
+        assertTrue(moveAction.isCantMoveUp());
+
+        player.resetControllerValues();
+
+        assertFalse(buildAction2.isActionLock());
+        assertFalse(moveAction.isCantMoveUp());
+
+        moveAction.move(worker, grid.getTiles().get(1));
+        assertEquals(1, worker.getPosition().getLevel());
+        buildAction2.build(worker, grid.getTiles().get(2));
+        assertEquals(1, grid.getTiles().get(2).getLevel());
+
+    }
 }

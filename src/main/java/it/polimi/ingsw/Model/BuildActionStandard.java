@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class BuildActionStandard extends StandardActionBehaviour implements BuildAction {
 
-    Grid grid = Grid.getGrid();
     LastActionSave lastActionSave = new LastActionSave();
 
     @Override
@@ -19,7 +18,7 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
 
         //If I'm building a dome, it increases the counter of complete towers (For Chronus)
         if(tileWhereBuild.getLevelsSize()==5) {
-            grid.increaseCompleteTowersCount();
+            Grid.getGrid().increaseCompleteTowersCount();
         }
     }
 
@@ -35,7 +34,7 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
 
     @Override
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
-        ArrayList<Tile> neighboursTiles = grid.getNeighbours( worker.getPosition());
+        ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours( worker.getPosition());
         ArrayList<Tile> newNeighboursTiles = new ArrayList<Tile>(neighboursTiles);
         boolean buildable = false;
 
@@ -61,7 +60,7 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
     }
 
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action classWhereCheckBuild) {
-        ArrayList<Tile> neighboursTiles = grid.getNeighbours(worker.getPosition());
+        ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
         ArrayList<Tile> newNeighboursTiles = new ArrayList<Tile>(neighboursTiles);
         boolean buildable = false;
 

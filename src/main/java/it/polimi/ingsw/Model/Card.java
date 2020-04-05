@@ -56,4 +56,13 @@ public class Card {
         }
         return moveActionArrayList;
     }
+
+    public ArrayList<BuildAction> getBuildActions() {
+        ArrayList<BuildAction> buildActionArrayList = new ArrayList<BuildAction>();
+        for(Action action : actionOrder) {
+            if(action instanceof BuildAction)
+                buildActionArrayList.add((BuildAction) action);
+        }
+        return buildActionArrayList;
+    }
 }

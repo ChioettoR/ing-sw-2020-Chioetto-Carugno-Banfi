@@ -8,11 +8,10 @@ public class Deck {
     private ArrayList<Card> cardsList;
     private static Deck deck;
     Card completeTowersObserver;
-    //CardsBuilder cardsBuilder;
+    CardsBuilder cardsBuilder = new CardsBuilder();
 
     private Deck() {
         cardsList = new ArrayList<Card>();
-//        cardsList.addAll(cardsBuilder.createCards());
         deck = this;
     }
 
@@ -55,6 +54,7 @@ public class Deck {
         }
 
         selectedCard.setAlreadyPicked(true);
+        cardsBuilder.createAction(selectedCard);
         return selectedCard;
     }
 

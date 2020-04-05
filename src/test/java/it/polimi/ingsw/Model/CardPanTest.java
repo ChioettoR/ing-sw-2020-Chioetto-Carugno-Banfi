@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CardAtlasTest {
+class CardPanTest {
 
     Grid grid;
     Worker worker = new Worker();
-    Player player = new Player("Alberto");
+    Player player = new Player("Marcello");
     Deck deck;
-    Card card = new Card("Atlas");
+    Card card = new Card("Pan");
     Tile currentTile;
     Tile buildTile;
     ArrayList<Action> actionOrder = new ArrayList<Action>();
@@ -53,31 +53,20 @@ public class CardAtlasTest {
     }
 
     @Test
-    void testAtlas() {
-        System.out.println("TEST: I'm testing Atlas Card");
+    void testPan() {
+        System.out.println("TEST: I'm testing Pan Card");
 
-        // Verifies if the worker can build a dome
-        //I'm trying to build a dome on a base block
-        buildAction.build(worker, buildTile);
-        assertFalse(buildAction.canBuild(worker, buildTile, 4));
-        buildAction.build(worker, buildTile, 4 );
-        assertEquals(1, buildTile.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
-        //I'm trying to build a dome on the ground level
-        Tile newBuildPosition = grid.getTiles().get(5);
-        assertTrue(buildAction.canBuild(worker, newBuildPosition, 4));
-        buildAction.build(worker, newBuildPosition, 4);
-        assertEquals(4, newBuildPosition.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
-
-        // Verifies if the undo functionality for the building has been successful
-        buildAction.undo();
-        assertEquals(0, newBuildPosition.getLevel());
-        assertEquals(1, newBuildPosition.getLevelsSize());
-
-        buildAction.build(worker, newBuildPosition);
-        assertEquals(1, buildTile.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
-        buildAction.undo();
+        buildAction.build(worker, grid.getTiles().get(1));
+        moveAction.move(worker, grid.getTiles().get(1));
+        buildAction.build(worker, grid.getTiles().get(2));
+        buildAction.build(worker, grid.getTiles().get(2));
+        moveAction.move(worker, grid.getTiles().get(2));
+        buildAction.build(worker, grid.getTiles().get(1));
+        buildAction.build(worker, grid.getTiles().get(1));
+        moveAction.move(worker, grid.getTiles().get(1));
+        moveAction.move(worker, grid.getTiles().get(0));
+        buildAction.build(worker, grid.getTiles().get(5));
+        moveAction.move(worker, grid.getTiles().get(5));
+        moveAction.move(worker, grid.getTiles().get(0));
     }
 }

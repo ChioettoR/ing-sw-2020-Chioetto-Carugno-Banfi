@@ -38,6 +38,7 @@ public class Player {
      */
     public void resetControllerValues() {
         getCard().getMoveActions().forEach(moveAction -> moveAction.setCantMoveUp(false));
+        getCard().getBuildActions().forEach(buildAction -> buildAction.setActionLock(false));
     }
 
     /**
