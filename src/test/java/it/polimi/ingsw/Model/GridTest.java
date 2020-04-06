@@ -23,6 +23,7 @@ class GridTest {
         grid.destroyGrid();
     }
 
+
     @Test
     void createGridAndCheckNeighboursTest() {
         createGridAndCheckNeighbours();
@@ -33,18 +34,26 @@ class GridTest {
         checkNeighbour();
     }
 
+    /**
+     * Testing the creation of the grid (gaming board)
+     */
     public void createGrid() {
         System.out.println("TEST: I'm creating the grid");
+        //Checking if the size of the grid is correct
         assertEquals(width * length, grid.getTiles().size());
 
         int k=0;
         for(int i=0; i<length; i++)
             for(int j=0; j<width; j++, k++) {
+                //Checking if every tile from the grid gets the corrects [x,y]
                 assertEquals(i,grid.getTiles().get(k).getX());
                 assertEquals(j, grid.getTiles().get(k).getY());
             }
     }
 
+    /**
+     * Testing if checkNeighbour gives the correct tile Neighbour
+     */
     @Test
     void checkNeighbour() {
         assertTrue(grid.isNeighbour(grid.getTiles().get(6), grid.getTiles().get(7)));

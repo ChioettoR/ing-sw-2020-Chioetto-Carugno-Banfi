@@ -67,12 +67,18 @@ class CardMinotaurTest {
         deck.deleteAllCards();
         grid.destroyGrid();
     }
+
+    /**
+     * Testing the Minotaur card
+     */
     @Test
     void testMinotaur() {
         System.out.println("TEST: I'm testing Minotaur Card");
         moveAction.move(worker,currentTile2);
+        // Check if the worker doesn't move anything if the other worker is yours
         assertEquals(currentTile, worker.getPosition());
         assertEquals(currentTile2, worker2.getPosition());
+
         moveAction.move(worker, grid.getTiles().get(1));
         moveAction.move(worker, grid.getTiles().get(7));
         buildAction.build(worker, grid.getTiles().get(11));
@@ -80,25 +86,34 @@ class CardMinotaurTest {
         buildAction.build(worker, grid.getTiles().get(11));
         moveAction.move(worker, grid.getTiles().get(1));
         moveAction.move(worker, grid.getTiles().get(6));
+        // Trying to move the worker to tile no.6 knocking back the opponent's worker1 to tile no.11 expecting to be at level:3
         assertEquals(worker.getPosition(), grid.getTiles().get(6));
         assertEquals(worker1.getPosition(),grid.getTiles().get(11));
         assertEquals(3, worker1.getPosition().getLevel());
+
         moveAction.move(worker, grid.getTiles().get(1));
         moveAction.move(worker1, grid.getTiles().get(6));
         buildAction.build(worker2,grid.getTiles().get(11));
         moveAction.move(worker,grid.getTiles().get(6));
+        // Trying to move worker to tile no.6 but the worker1 in this tile can't be knocked back because the tile no.11 is level:4
         assertEquals(grid.getTiles().get(1), worker.getPosition());
         assertEquals(grid.getTiles().get(6), worker1.getPosition());
+
         moveAction.move(worker, grid.getTiles().get(0));
         moveAction.move(worker, grid.getTiles().get(6));
+        // Move of worker from tile no.0 to tile no.6 knocking back the worker1 in diagonal to tile no.12
         assertEquals(grid.getTiles().get(6), worker.getPosition());
         assertEquals(grid.getTiles().get(12), worker1.getPosition());
+
         moveAction.undo();
+        // Testing the undo functionality on this card
         assertEquals(grid.getTiles().get(0), worker.getPosition());
         assertEquals(grid.getTiles().get(6), worker1.getPosition());
+
         moveAction.move(worker, grid.getTiles().get(1));
         moveAction.move(worker1, grid.getTiles().get(0));
         moveAction.move(worker, grid.getTiles().get(0));
+        // Trying to knock back worker1 out of the gaming board without success
         assertEquals(grid.getTiles().get(0), worker1.getPosition());
         assertEquals(grid.getTiles().get(1), worker.getPosition());
     }

@@ -51,23 +51,36 @@ class CardHephaestusTest {
         deck.deleteAllCards();
         grid.destroyGrid();
     }
+
+    /**
+     * Testing the Hephaestus card
+     */
     @Test
     void testHephaestus() {
         System.out.println("TEST: I'm testing Hephaestus Card");
         moveAction.move(worker, grid.getTiles().get(1));
         buildAction.build(worker,currentTile);
         buildAction2.build(worker,currentTile);
+        // Checking if i can do the 2nd build on the same tile used in the 1st build from ground to level:2
         assertEquals(2, currentTile.getLevel());
+
         buildAction.build(worker,currentTile);
         buildAction2.build(worker,currentTile);
+        // Checking if i can do the 2nd build on the same tile used in the 1st build from level:2 to level:3 and it doesn't build the dome
         assertEquals(3, currentTile.getLevel());
+
         buildAction.build(worker,currentTile);
         buildAction2.build(worker,currentTile);
+        // Checking if i can do the 2nd build on the same tile used in the 1st build from level:3 to level:4 (dome)
         assertEquals(4, currentTile.getLevel());
+
         buildAction.build(worker,currentTile);
+        // Checking that i can't build another level higher than level:4
         assertEquals(4, currentTile.getLevel());
+
         buildAction.build(worker, grid.getTiles().get(5));
         buildAction2.build(worker,grid.getTiles().get(6));
+        // Trying to build in two different tiles in the same turn getting the 2nd build denied
         assertEquals(1, grid.getTiles().get(5).getLevel());
         assertEquals(0, grid.getTiles().get(6).getLevel());
     }

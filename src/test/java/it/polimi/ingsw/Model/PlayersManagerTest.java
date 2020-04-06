@@ -56,6 +56,9 @@ class PlayersManagerTest {
         deletePlayers();
     }
 
+    /**
+     * Testing addPlayers
+     */
     public void addPlayers() {
         System.out.println("TEST: I'm adding players to the game");
         player.setCard(card);
@@ -65,6 +68,7 @@ class PlayersManagerTest {
         player.setWorker(worker);
         player.setWorker(worker4);
         assert(playersManager.getPlayers().contains(player));
+        //I'm trying to add a player
         assertEquals(1, playersManager.getPlayersNumber());
 
         playersManager.addPlayer(player1);
@@ -74,6 +78,7 @@ class PlayersManagerTest {
         player1.setWorker(worker1);
         player1.setWorker(worker5);
         assert(playersManager.getPlayers().contains(player));
+        //I'm trying to add a 2nd player
         assertEquals(2, playersManager.getPlayersNumber());
 
         player2.setCard(card3);
@@ -91,9 +96,13 @@ class PlayersManagerTest {
         assert(player.getID()!=player1.getID());
     }
 
+    /**
+     * Testing deletePlayers
+     */
     public void deletePlayers() {
         System.out.println("TEST: I'm deleting players from the game");
         playersManager.deletePlayer(player);
+        //Checking if the Player "player" is no longer in the Player's list after deletePlayer
         assert(!playersManager.getPlayers().contains(player));
         assertNull(playersManager.getCurrentPlayer());
         assertEquals("Alberto", playersManager.getNextPlayerAndStartRound().getName());
@@ -112,6 +121,9 @@ class PlayersManagerTest {
         playersManager.getNextPlayerAndStartRound();
     }
 
+    /**
+     * Testing if checkCurrentPlayer works in every round
+     */
     public void checkCurrentPlayer() {
         assertEquals("Marcello", playersManager.getCurrentPlayer().getName());
         nextRound();
@@ -122,6 +134,9 @@ class PlayersManagerTest {
         assertEquals("Alberto", playersManager.getCurrentPlayer().getName());
     }
 
+    /**
+     * Testing getPlayerWithCard trying to get cards with no player assigned
+     */
     public void getPlayerWithCard() {
         System.out.println("TEST: I'm getting players with card");
         assertEquals(player, playersManager.getPlayerWithCard(card));
@@ -135,6 +150,9 @@ class PlayersManagerTest {
         assertNull(playersManager.getPlayerWithCard(card3));
     }
 
+    /**
+     * Testing deleteWorker trying to delete workers with no player assigner
+     */
     void deleteWorker() {
         System.out.println("TEST: I'm deleting workers");
         playersManager.deleteWorker(worker);
@@ -150,6 +168,9 @@ class PlayersManagerTest {
         playersManager.deleteWorker(worker3);
     }
 
+    /**
+     * Testing deleteCurrentWorker setting them to CurrentWorker before acting
+     */
     void deleteCurrentWorker() {
         System.out.println("TEST: I'm deleting current workers");
         playersManager.setCurrentWorker(worker);

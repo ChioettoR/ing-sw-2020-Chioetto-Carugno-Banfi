@@ -71,6 +71,10 @@ class CardAthenaTest {
         deck.deleteAllCards();
         grid.destroyGrid();
     }
+
+    /**
+     * Testing the Athena card
+     */
     @Test
     void testAthena() {
         System.out.println("TEST: I'm testing Athena Card");
@@ -82,10 +86,14 @@ class CardAthenaTest {
         ArrayList<Tile> expectedTiles = grid.getNeighbours(worker1.getPosition());
         expectedTiles.remove(grid.getTiles().get(1));
         expectedTiles.remove(grid.getTiles().get(5));
+        //In this test worker builds and moves on level:1 forcing the other workers to stay on their level in the next move
         assertEquals(expectedTiles, moveAction1.getAvailableTilesForAction(worker1));
+
+        //Testing the reset of the moveUp-lock
         player1.resetActionsValues();
         ArrayList<Tile> expectedTiles1 = grid.getNeighbours(worker1.getPosition());
         expectedTiles1.remove(grid.getTiles().get(1));
+        //After the reset the worker can now moveUp to a new level:x
         assertEquals(expectedTiles1, moveAction1.getAvailableTilesForAction(worker1));
     }
 }

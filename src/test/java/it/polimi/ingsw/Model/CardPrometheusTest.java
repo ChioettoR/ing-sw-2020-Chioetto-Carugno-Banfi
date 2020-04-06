@@ -52,18 +52,20 @@ class CardPrometheusTest {
         grid.destroyGrid();
     }
 
-
+    /**
+     * Testing Prometheus card
+     */
     @Test
     void testPrometheus() {
         System.out.println("TEST: I'm testing Prometheus Card");
 
+        //Testing in different orders the moveAction-buildAction or buildAction-moveAction
         buildAction.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));
         assertEquals(expectedTiles, buildAction.getAvailableTilesForAction(worker));
-
         buildAction.build(worker, grid.getTiles().get(1));
         assertEquals(1, grid.getTiles().get(1).getLevel());
         moveAction.move(worker, grid.getTiles().get(1));

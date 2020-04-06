@@ -52,26 +52,32 @@ public class CardAtlasTest {
         deck.deleteAllCards();
     }
 
+    /**
+     * Testing the Atlas card
+     */
     @Test
     void testAtlas() {
         System.out.println("TEST: I'm testing Atlas Card");
-
-        // Verifies if the worker can build a dome
-        //I'm trying to build a dome on a base block
         buildAction.build(worker, buildTile);
+        //I'm trying to build a dome on a base block
         assertFalse(buildAction.canBuild(worker, buildTile, 4));
+
         buildAction.build(worker, buildTile, 4 );
+        //Checking if the build of the dome doesn't modify the effective level of the building below it
         assertEquals(1, buildTile.getLevel());
         assertEquals(2, buildTile.getLevelsSize());
-        //I'm trying to build a dome on the ground level
+
         Tile newBuildPosition = grid.getTiles().get(5);
+        //I'm trying to build a dome on the ground level
         assertTrue(buildAction.canBuild(worker, newBuildPosition, 4));
+
         buildAction.build(worker, newBuildPosition, 4);
+        //I'm checking the effective build of a dome on the ground level
         assertEquals(4, newBuildPosition.getLevel());
         assertEquals(2, buildTile.getLevelsSize());
 
-        // Verifies if the undo functionality for the building has been successful
         buildAction.undo();
+        // Verifies if the undo functionality for the building has been successful
         assertEquals(0, newBuildPosition.getLevel());
         assertEquals(1, newBuildPosition.getLevelsSize());
 

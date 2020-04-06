@@ -52,10 +52,13 @@ class CardPanTest {
         deck.deleteAllCards();
     }
 
+    /**
+     * Testing Pan card
+     */
     @Test
     void testPan() {
         System.out.println("TEST: I'm testing Pan Card");
-
+        //I'm building and moving the worker in a tile with building level:3
         buildAction.build(worker, grid.getTiles().get(1));
         moveAction.move(worker, grid.getTiles().get(1));
         buildAction.build(worker, grid.getTiles().get(2));
@@ -63,10 +66,13 @@ class CardPanTest {
         moveAction.move(worker, grid.getTiles().get(2));
         buildAction.build(worker, grid.getTiles().get(1));
         buildAction.build(worker, grid.getTiles().get(1));
+        //Try to win with the normal Win Condition from level:2 to level:3
         moveAction.move(worker, grid.getTiles().get(1));
+        //Try to win with the new Win Condition from level:2 to level:0
         moveAction.move(worker, grid.getTiles().get(0));
         buildAction.build(worker, grid.getTiles().get(5));
         moveAction.move(worker, grid.getTiles().get(5));
+        //Try to win with the normal Win Condition from level:1 to level:0
         moveAction.move(worker, grid.getTiles().get(0));
     }
 }

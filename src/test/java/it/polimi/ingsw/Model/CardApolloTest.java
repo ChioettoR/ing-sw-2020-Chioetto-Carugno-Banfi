@@ -68,6 +68,9 @@ class CardApolloTest {
         grid.destroyGrid();
     }
 
+    /**
+     * Testing the card Apollo
+     */
     @Test
     void testApollo() {
         System.out.println("TEST: I'm testing Apollo Card");
@@ -75,20 +78,27 @@ class CardApolloTest {
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(currentTile1);
+        // Check the available tiles for the move of worker
         assertEquals(expectedTiles, actualTiles);
+
         moveAction.move(worker,currentTile1);
+        // Move of worker from currentTile to currentTile1, forcing the worker1 to move from currentTile1 to currentTile
         assertEquals(currentTile, worker1.getPosition());
         assertEquals(currentTile1, worker.getPosition());
+
         buildAction.build(worker, grid.getTiles().get(1), 1);
         buildAction.build(worker, grid.getTiles().get(1), 2);
         buildAction.build(worker, grid.getTiles().get(1), 3);
         worker1.setPosition(grid.getTiles().get(1));
         moveAction.move(worker,grid.getTiles().get(1));
+        // Move of worker from currentTile1 to grid.getTiles().get(1) (Which is level 3) testing the Win condition of a move on a level 3 structure
         assertEquals(worker.getPosition(), currentTile1);
         assertEquals(worker1.getPosition(), grid.getTiles().get(1));
+
         worker1.setPosition(currentTile);
         worker.setPosition(grid.getTiles().get(1));
         moveAction.move(worker, currentTile);
+        // Testing the opposite thing with worker inverted and Win Condition inverted
         assertEquals(worker.getPosition(), currentTile);
         assertEquals(worker1.getPosition(), grid.getTiles().get(1));
     }

@@ -64,6 +64,9 @@ class CardArtemisTest {
         grid.destroyGrid();
     }
 
+    /**
+     * Testing the card Artemis
+     */
     @Test
     void testArtemis(){
         System.out.println("TEST: I'm testing Artemis Card");
@@ -71,22 +74,32 @@ class CardArtemisTest {
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
+        // Check the available tiles for the move of worker
         assertEquals(expectedTiles, actualTiles);
+
+        // Reset of the expected tiles of worker for a new check
         expectedTiles.clear();
         moveAction.move(worker, grid.getTiles().get(1));
         actualTiles = moveAction2.getAvailableTilesForAction(worker);
         expectedTiles.add(grid.getTiles().get(2));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(7));
+        // Check the available tiles for the move of worker
         assertEquals(expectedTiles, actualTiles);
+
         moveAction2.move(worker, grid.getTiles().get(2));
+        // Check of the second move in a row of Artemis
         assertEquals(grid.getTiles().get(2), worker.getPosition());
+
         moveAction.move(worker, grid.getTiles().get(1));
         moveAction2.move(worker, grid.getTiles().get(2));
+        // Trying to do two moves in a row and go back in the same place where we started (2nd move locked up by the effect of the card)
         assertEquals(grid.getTiles().get(1), worker.getPosition());
+
         buildAction.build(worker, currentTile);
         moveAction.move(worker, currentTile);
         moveAction2.move(worker, grid.getTiles().get(5));
+        // Testing if the worker can move from different levels(in this case from level:1 to level:0)
         assertEquals(grid.getTiles().get(5), worker.getPosition());
     }
 }

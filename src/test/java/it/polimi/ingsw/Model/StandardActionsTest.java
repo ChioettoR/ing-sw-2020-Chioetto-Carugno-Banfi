@@ -79,7 +79,7 @@ class StandardActionsTest {
         assertFalse(currentPosition.isEmpty());
 
         // Verifies if the standard worker building has been successful : the new level of the tile is updated
-        //I'm trying to build a wrong level
+        // I'm trying to build a wrong level
         buildActionStandard.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));
@@ -89,7 +89,7 @@ class StandardActionsTest {
         buildActionStandard.build(worker, buildPosition, 2);
         assertEquals(0, buildPosition.getLevel());
         assertEquals(1, buildPosition.getLevelsSize());
-        //I'm trying to build a correct level
+        // I'm trying to build a correct level
         buildActionStandard.build(worker, buildPosition);
         assertEquals(1, buildPosition.getLevel());
         assertEquals(2, buildPosition.getLevelsSize());

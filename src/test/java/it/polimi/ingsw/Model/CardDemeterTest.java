@@ -52,6 +52,9 @@ class CardDemeterTest {
         grid.destroyGrid();
     }
 
+    /**
+     * Testing Demeter Card
+     */
     @Test
     void testDemeter(){
         System.out.println("TEST: I'm testing Demeter Card");
@@ -63,13 +66,20 @@ class CardDemeterTest {
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));
         expectedTiles.add(grid.getTiles().get(7));
+        // Checks if the available 2nd build moves doesn't contain the tile used in the 1st build
         assertEquals(expectedTiles, buildAction2.getAvailableTilesForAction(worker));
+
         buildAction2.build(worker,grid.getTiles().get(5));
+        // Checks the effective build with the 2nd build
         assertEquals(1, grid.getTiles().get(5).getLevel());
         assertEquals(1, currentTile.getLevel());
+
         buildAction.build(worker,grid.getTiles().get(5));
+        // Doing a build on the tile no.5
         assertEquals(2, grid.getTiles().get(5).getLevel());
+
         buildAction2.build(worker,grid.getTiles().get(5));
+        // Trying to do another build on the tile no.5 and check that it doesn't go fine
         assertEquals(2, grid.getTiles().get(5).getLevel());
     }
 

@@ -52,8 +52,11 @@ class WorkerTest {
         assertEquals(tile1, worker.getPosition());
     }
 
+    /**
+     * Gets the tiles from grid
+     */
     public void getTilesFromGrid() {
-        System.out.println("TEST: I'm adding tiles to the grid");
+        System.out.println("TEST: I'm getting tiles to the grid");
         tile = grid.getTiles().get(0);
         tile1 = grid.getTiles().get(1);
     }
