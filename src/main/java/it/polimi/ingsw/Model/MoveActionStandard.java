@@ -16,6 +16,11 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         return cantMoveUp;
     }
 
+    /**
+     * Moves in the given tile the given worker if all the standard move conditions are satisfied
+     * @param worker The worker that is moving
+     * @param tileWhereMove The tile in which the worker will move
+     */
     @Override
     public void move(Worker worker, Tile tileWhereMove) {
         if(canMove(worker, tileWhereMove)) {
@@ -23,8 +28,13 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         }
     }
 
+    /**
+     * The standard move. It doesn't check any condition before moving
+     * @param worker The worker that is moving
+     * @param tileWhereMove The tile in which the worker will move
+     */
     public void standardMove(Worker worker, Tile tileWhereMove) {
-        lastActionSave.saveBeforeMove(worker, tileWhereMove);
+        lastActionSave.saveBeforeMove(worker);
         Tile currentTile = worker.getPosition();
         currentTile.setEmpty(true);
         tileWhereMove.setWorker(worker);
@@ -38,6 +48,12 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         return lastActionSave;
     }
 
+    /**
+     * Standard move conditions
+     * @param worker The worker that is moving
+     * @param tileWhereMove The tile in which the worker will move
+     * @return True if the conditions are satisfied
+     */
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
         Tile currentTile = worker.getPosition();
@@ -49,6 +65,11 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         return false;
     }
 
+    /**
+     * Returns all the possible tiles in which the worker can move. The conditions checked are the standard ones
+     * @param worker The worker that is moving
+     * @return All the tiles in which the worker can move
+     */
     @Override
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
@@ -61,6 +82,11 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         lastActionSave.undo();
     }
 
+    /**
+     * Returns all the possible tiles in which the worker can move. The conditions checked are the ones in the given action class
+     * @param worker The worker that is moving
+     * @return All the tiles in which the worker can move
+     */
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action action) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
         if(action instanceof MoveAction)

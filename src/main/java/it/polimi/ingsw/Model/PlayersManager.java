@@ -11,7 +11,7 @@ public class PlayersManager {
     private int nextPlayerIndex;
     private static PlayersManager playersManager;
     private Worker currentWorker;
-    //private ActionOrder currentActionOrder;
+    private ArrayList<Action> currentActionOrder = new ArrayList<Action>();
     WinManager winManager = new WinManager();
 
     private PlayersManager() {
@@ -27,7 +27,7 @@ public class PlayersManager {
     }
 
     /**
-     * If the player is valid then add the player to the players list and assign him a uniqueID.
+     * If the player is valid then adds the player to the players list and assigns him a uniqueID.
      * The position in the list will determine the round order of the players
      * @param player The logged player you want to add to the game
      */
@@ -36,12 +36,12 @@ public class PlayersManager {
             System.out.println("You're adding a null player");
 
         else if(validatePlayer(player)) {
-            if(getPlayersNumber()==0)
-                currentPlayerIndex=0;
+            if(getPlayersNumber()==0) {
+                currentPlayerIndex = 0;
+                nextPlayerIndex = 0;
+            }
             player.setID(idManager.pickID());
             players.add(player);
-            if(getPlayersNumber()==2)
-                nextPlayerIndex=1;
         }
     }
 
@@ -55,7 +55,7 @@ public class PlayersManager {
     }
 
     /**
-     * Verify if the player you want to add has an original name
+     * Verifies if the player you want to add has an original name
      * @param player The player to validate
      * @return The result of the validation
      */
@@ -83,7 +83,7 @@ public class PlayersManager {
     }
 
     /**
-     * Remove the current player from the game
+     * Removes the current player from the game and sets current player int to -1
      */
     public void deletePlayer(Player player) {
         if(player ==null)
@@ -115,12 +115,23 @@ public class PlayersManager {
             System.out.println("There are no players left in the game");
             return null;
         }
+        int currentPlayerIndexCopy;
+
+        if(currentPlayerIndex!=-1)
+            players.get(currentPlayerIndex).resetActionsValues();
+
         currentPlayerIndex = nextPlayerIndex;
         int nextPlayerIndexCopy = nextPlayerIndex;
         nextPlayerIndex = increaseIndex(nextPlayerIndex);
-        return players.get(nextPlayerIndexCopy);
+        currentActionOrder = players.get(currentPlayerIndex).getCard().getActionOrder();
+        return players.get(currentPlayerIndex);
     }
 
+    /**
+     * Increases the index of a circular List
+     * @param index The current index
+     * @return The increased index
+     */
     private int increaseIndex(int index) {
         index++;
         if(index>=getPlayersNumber())
@@ -129,7 +140,7 @@ public class PlayersManager {
     }
 
     /**
-     * Delete a worker from the game
+     * Deletes a worker from the game
      * @param worker The worker you want to delete from the game
      */
     public void deleteWorker(Worker worker) {
@@ -151,6 +162,9 @@ public class PlayersManager {
         System.out.println("Can't find a player which controls this worker");
     }
 
+    /**
+     * Deletes the selected worker from the game
+     */
     public void deleteCurrentWorker() {
         deleteWorker(getCurrentWorker());
     }
@@ -159,15 +173,9 @@ public class PlayersManager {
         return players.size();
     }
 
-/*
-    public void setActionOrder(ActionOrder actionOrder){
-        currentActionOrder = actionOrder;
-    }
-
-    public ActionOrder getActionOrder() {
+    public ArrayList<Action> getActionOrder() {
         return currentActionOrder;
     }
-*/
 
     /**
      * @return List of all players except the current one
@@ -194,7 +202,7 @@ public class PlayersManager {
     }
 
     /**
-     * Search player with the given card
+     * Searches a player with the given card
      * @param card The card that the wanted player holds
      * @return The searched player
      */

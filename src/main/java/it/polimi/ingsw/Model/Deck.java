@@ -28,7 +28,7 @@ public class Deck {
         return deck;
     }
 
-    /** Pick a random card from a copy of the original deck
+    /** Picks a random card from the deck. The selected card cannot be picked again in the future
      * @return Random card from the deck
      */
     public Card pickCard() {
@@ -58,6 +58,9 @@ public class Deck {
         return selectedCard;
     }
 
+    /**
+     * Deletes all cards from the deck
+     */
     public void deleteAllCards() {
         ArrayList<Card> cardsListCopy = new ArrayList<Card>(cardsList);
         for(Card card : cardsListCopy)
@@ -66,8 +69,8 @@ public class Deck {
 
     /**
      *
-     * @param name of the card to search
-     * @return selected card
+     * @param name The name of the card to search
+     * @return The card with the given name
      */
     public Card getCardByName (String name){
 
@@ -94,7 +97,7 @@ public class Deck {
     }
 
     /**
-     * Add a card to the deck
+     * Adds a card to the deck
      * @param card The card you want to add to the deck
      */
     public void addCard(Card card) {

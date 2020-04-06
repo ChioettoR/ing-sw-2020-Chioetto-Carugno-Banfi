@@ -6,12 +6,7 @@ public class Card {
     private String name;
     private boolean alreadyPicked;
     private ArrayList<Action> actionOrder = new ArrayList<Action>();
-    private boolean saveEverythingBeforeMove;
     private boolean completeTowersObserver;
-
-    public boolean isSaveEverythingBeforeMove() {
-        return saveEverythingBeforeMove;
-    }
 
     public ArrayList<Action> getActionOrder() {
         return actionOrder;
@@ -25,15 +20,23 @@ public class Card {
         return name;
     }
 
-    public Card(String name, boolean saveEverythingBeforeMove, boolean completeTowersObserver) {
+    /**
+     * Creates a card
+     * @param name The name of the card
+     * @param completeTowersObserver If it is true and there are at least 5 complete towers, the player with this card wins
+     */
+    public Card(String name, boolean completeTowersObserver) {
         this.name = name;
-        this.saveEverythingBeforeMove = saveEverythingBeforeMove;
         this.completeTowersObserver = completeTowersObserver;
     }
 
+    /**
+     * Creates a card
+     * @param name The name of the card
+     */
     public Card(String name) {
         this.name = name;
-        this.saveEverythingBeforeMove = false;
+        this.completeTowersObserver = false;
     }
 
     public boolean isCompleteTowersObserver() {
@@ -48,6 +51,10 @@ public class Card {
         this.alreadyPicked = alreadyPicked;
     }
 
+    /**
+     * Returns the move actions the player with this card does
+     * @return Every move action
+     */
     public ArrayList<MoveAction> getMoveActions() {
         ArrayList<MoveAction> moveActionArrayList = new ArrayList<MoveAction>();
         for(Action action : actionOrder) {
@@ -57,6 +64,10 @@ public class Card {
         return moveActionArrayList;
     }
 
+    /**
+     * Returns the build actions the player with this card does
+     * @return Every build action
+     */
     public ArrayList<BuildAction> getBuildActions() {
         ArrayList<BuildAction> buildActionArrayList = new ArrayList<BuildAction>();
         for(Action action : actionOrder) {

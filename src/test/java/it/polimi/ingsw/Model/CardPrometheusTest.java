@@ -75,7 +75,7 @@ class CardPrometheusTest {
         assertTrue(buildAction2.isActionLock());
         assertTrue(moveAction.isCantMoveUp());
 
-        player.resetControllerValues();
+        player.resetActionsValues();
 
         assertFalse(buildAction2.isActionLock());
         assertFalse(moveAction.isCantMoveUp());

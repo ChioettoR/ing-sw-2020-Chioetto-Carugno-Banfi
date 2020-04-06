@@ -15,7 +15,7 @@ class CardAthenaTest {
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
     Deck deck;
-    Card card = new Card("Athena", false, false);
+    Card card = new Card("Athena");
     Card card1 = new Card("Atlas");
     Tile currentTile;
     Tile currentTile1;
@@ -83,7 +83,7 @@ class CardAthenaTest {
         expectedTiles.remove(grid.getTiles().get(1));
         expectedTiles.remove(grid.getTiles().get(5));
         assertEquals(expectedTiles, moveAction1.getAvailableTilesForAction(worker1));
-        player1.resetControllerValues();
+        player1.resetActionsValues();
         ArrayList<Tile> expectedTiles1 = grid.getNeighbours(worker1.getPosition());
         expectedTiles1.remove(grid.getTiles().get(1));
         assertEquals(expectedTiles1, moveAction1.getAvailableTilesForAction(worker1));

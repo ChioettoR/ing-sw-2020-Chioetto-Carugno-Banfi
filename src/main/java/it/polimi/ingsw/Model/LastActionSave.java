@@ -7,43 +7,51 @@ public class LastActionSave {
     private ActionType lastActionType;
     private ArrayList<Worker> workers;
     private ArrayList<Tile> tiles;
-    private boolean saveAllMovements;
-    private Worker currentWorker;
-    private Tile currentTile;
-    private Tile nextTile;
+    private Tile savedTile;
 
-    Deck deck = Deck.getDeck();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-
-    public void saveBeforeBuild(Tile nextTile) {
+    /**
+     * Saves the tile in which the worker will build
+     * @param savedTile The tile in which the worker will build
+     */
+    public void saveBeforeBuild(Tile savedTile) {
         lastActionType = ActionType.BUILD;
-        this.nextTile = nextTile;
+        this.savedTile = savedTile;
     }
 
-    public void saveBeforeMove(Worker currentWorker, Tile nextTile) {
+    /**
+     * Saves the tile in which the worker will move and the current worker
+     * @param currentWorker The worker that is moving
+     */
+    public void saveBeforeMove(Worker currentWorker) {
 
         lastActionType = ActionType.MOVE;
-        Player currentPlayer = playersManager.getPlayerWithID(currentWorker.getPlayerID());
-        Card card = currentPlayer.getCard();
-
-        if(card.isSaveEverythingBeforeMove()) {
-            saveAllMovements();
-            return;
-        }
-        saveAllMovements = false;
-        this.nextTile = nextTile;
-        this.currentWorker = currentWorker;
-        this.currentTile = currentWorker.getPosition();
+        savedTile = currentWorker.getPosition();
+        workers = new ArrayList<Worker>();
+        tiles = new ArrayList<Tile>();
+        workers.add(currentWorker);
+        tiles.add(savedTile);
     }
 
-    public Tile getNextTile() {
-        return nextTile;
+    /**
+     * Saves additional worker positions
+     * @param worker The worker you want to save the position
+     */
+    public void saveAdditionalWorker(Worker worker) {
+        workers.add(worker);
+        tiles.add((worker.getPosition()));
     }
 
-    public Tile getCurrentTile() {
-        return currentTile;
+    /**
+     * Returns the saved tile. The tile in which the worker built or the tile in which the worker moved depending on the last action did
+     * @return The saved tile
+     */
+    public Tile getSavedTile() {
+        return savedTile;
     }
 
+    /**
+     * Undoes the last action
+     */
     public void undo() {
         if(lastActionType.equals(ActionType.MOVE))
             undoMovement();
@@ -53,37 +61,31 @@ public class LastActionSave {
             System.out.println("Unknown action type");
     }
 
-    private void saveAllMovements() {
-        saveAllMovements = true;
-        ArrayList<Player> players = playersManager.getPlayers();
-        tiles = new ArrayList<Tile>();
-        workers = new ArrayList<Worker>();
-        for(Player p : players)
-            for(Worker w : p.getWorkers()) {
-                workers.add(w);
-                tiles.add(w.getPosition());
-            }
-    }
-
+    /**
+     * Resets the position of all the workers that need a reset
+     */
     //TODO: NON IN QUESTA CLASSE! Per Athena bisogna settare il canMoveUp false solo dopo la fine del turno o del timer dell'undo
     private void undoMovement() {
-        if(saveAllMovements) {
-            for(int i=0; i<workers.size(); i++) {
-                undoPosition(workers.get(i), tiles.get(i));
-            }
+        for (int i = 0; i < workers.size(); i++) {
+            undoPosition(workers.get(i), tiles.get(i));
         }
-        else
-            undoPosition(currentWorker, currentTile);
     }
 
+    /**
+     * Resets the position of the given worker
+     * @param worker The worker you want to reset the position
+     * @param position The previous position of the worker
+     */
     private void undoPosition(Worker worker, Tile position) {
         worker.getPosition().setEmpty(true);
         worker.setPosition(position);
         position.setWorker(worker);
     }
 
+    /**
+     * Deletes the last level of the tile in which the worker built
+     */
     private void undoBuild() {
-        nextTile.removeLastLevel();
-        Grid grid = Grid.getGrid();
+        savedTile.removeLastLevel();
     }
 }

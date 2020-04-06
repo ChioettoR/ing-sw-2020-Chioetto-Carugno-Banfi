@@ -11,7 +11,7 @@ public class CardsBuilder {
     public void createCards() {
         Deck deck = Deck.getDeck();
 
-        Card card  = new Card("Apollo", true, false);
+        Card card  = new Card("Apollo");
         deck.addCard(card);
 
         Card card1 = new Card("Artemis");
@@ -29,7 +29,7 @@ public class CardsBuilder {
         Card card5 = new Card("Hephaestus");
         deck.addCard(card5);
 
-        Card card6 = new Card("Minotaur", true, false);
+        Card card6 = new Card("Minotaur");
         deck.addCard(card6);
 
         Card card7 = new Card("Pan");
@@ -38,7 +38,7 @@ public class CardsBuilder {
         Card card8 = new Card("Prometheus");
         deck.addCard(card8);
 
-        Card card9 = new Card("Chronus", false , true);
+        Card card9 = new Card("Chronus", true);
         deck.addCard(card9);
 
         Card card10 = new Card("Hestia");
@@ -99,6 +99,7 @@ public class CardsBuilder {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(enemyWorker==null)
                         return;
+                    moveActionStandard.getLastActionSave().saveAdditionalWorker(enemyWorker);
                     enemyWorker.setPosition(currentPosition);
                     currentPosition.setWorker(enemyWorker);
                 }
@@ -181,7 +182,7 @@ public class CardsBuilder {
 
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
-                return (moveActionStandard.canMove(worker, tileWhereMove) && tileWhereMove != moveActionStandard.getLastActionSave().getCurrentTile());
+                return (moveActionStandard.canMove(worker, tileWhereMove) && tileWhereMove != moveActionStandard.getLastActionSave().getSavedTile());
             }
 
             @Override
@@ -394,7 +395,7 @@ public class CardsBuilder {
 
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
-                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && tileWhereBuild != buildActionStandard.getLastActionSave().getNextTile());
+                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && tileWhereBuild != buildActionStandard.getLastActionSave().getSavedTile());
             }
 
             @Override
@@ -457,7 +458,7 @@ public class CardsBuilder {
 
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
-                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && buildActionStandard.getLastActionSave().getNextTile() == tileWhereBuild && newLevel!=4);
+                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && buildActionStandard.getLastActionSave().getSavedTile() == tileWhereBuild && newLevel!=4);
             }
 
             @Override
@@ -515,6 +516,7 @@ public class CardsBuilder {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if (enemyWorker == null)
                         return;
+                    moveActionStandard.getLastActionSave().saveAdditionalWorker(enemyWorker);
                     Tile oppositeTile = Grid.getGrid().getOppositeTile(currentPosition, tileWhereMove);
                     enemyWorker.setPosition(oppositeTile);
                     oppositeTile.setWorker(enemyWorker);

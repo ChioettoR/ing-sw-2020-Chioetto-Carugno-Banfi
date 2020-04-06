@@ -31,18 +31,17 @@ public class Player {
         this.card = card;
     }
 
-    /* TODO: Chiamata dal controller
     /**
      * Player resets values of his Action classes to the original one at the end of his round
      * Sets can move up to true
      */
-    public void resetControllerValues() {
+    public void resetActionsValues() {
         getCard().getMoveActions().forEach(moveAction -> moveAction.setCantMoveUp(false));
         getCard().getBuildActions().forEach(buildAction -> buildAction.setActionLock(false));
     }
 
     /**
-     * Remove a worker from the game
+     * Removes a worker from the game
      * @param workerToDelete The Worker you want to delete from the game
      */
     public void deleteWorker(Worker workerToDelete){
@@ -64,7 +63,7 @@ public class Player {
     }
 
     /**
-     * Add a new worker to the list of workers of this player
+     * Adds a new worker to the list of workers of this player
      * @param worker The worker this player will control
      */
     public void setWorker(Worker worker) {

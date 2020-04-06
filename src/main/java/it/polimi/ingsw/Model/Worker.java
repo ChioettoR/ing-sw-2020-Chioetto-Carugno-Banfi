@@ -13,7 +13,7 @@ public class Worker {
     }
 
     /**
-     * Place the worker on the given tile
+     * Sets the worker on the given tile
      * @param tile The new worker position on the grid
      */
     public void setPosition(Tile tile) {

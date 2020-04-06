@@ -113,6 +113,12 @@ class PlayersManagerTest {
     }
 
     public void checkCurrentPlayer() {
+        assertEquals("Marcello", playersManager.getCurrentPlayer().getName());
+        nextRound();
+        assertEquals("Alberto", playersManager.getCurrentPlayer().getName());
+        nextRound();
+        assertEquals("Marcello", playersManager.getCurrentPlayer().getName());
+        nextRound();
         assertEquals("Alberto", playersManager.getCurrentPlayer().getName());
     }
 

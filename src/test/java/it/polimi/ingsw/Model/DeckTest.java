@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DeckTest {
 
     Deck deck = Deck.getDeck();
-    Card card = new Card("Marcello", false, false);
+    Card card = new Card("Marcello");
     Card card1 = new Card("Alberto");
     Card card2 = new Card("Federico");
     ArrayList<String> names = new ArrayList<String>();

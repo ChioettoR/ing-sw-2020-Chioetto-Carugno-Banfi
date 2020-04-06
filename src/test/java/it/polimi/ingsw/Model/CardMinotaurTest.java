@@ -17,7 +17,7 @@ class CardMinotaurTest {
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
     Deck deck;
-    Card card = new Card("Minotaur", true, false);
+    Card card = new Card("Minotaur");
     Card card1 = new Card("Philip");
     Tile currentTile;
     Tile currentTile1;

@@ -17,6 +17,10 @@ public class Tile {
         return y;
     }
 
+    /**
+     * Returns the last level of the tile
+     * @return The level of the tile
+     */
     public int getLevel() {
         if(levels==null || levels.size()==0) {
             System.out.println("This tile has no levels");
@@ -25,6 +29,9 @@ public class Tile {
         return levels.get(levels.size() - 1);
     }
 
+    /**
+     * Removes the last level of the tile
+     */
     public void removeLastLevel() {
         if(levels.size()==0)
             System.out.println("This tile has only ground level");

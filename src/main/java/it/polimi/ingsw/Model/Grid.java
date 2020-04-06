@@ -18,15 +18,17 @@ public class Grid {
         return completeTowersCount;
     }
 
+    /**
+     * Increases the counter of complete towers. If there is a complete towers observer and the complete
+     * towers are 5, he's the winner.
+     */
     public void increaseCompleteTowersCount() {
         completeTowersCount++;
         if(completeTowersCount==5) {
             Card card = Deck.getDeck().getCompleteTowersObserver();
             PlayersManager playersManager = PlayersManager.getPlayersManager();
             Player player = playersManager.getPlayerWithCard(card);
-            if(player==null)
-                return;
-            else
+            if(player!=null)
                 new WinManager().win(player);
         }
     }
@@ -48,7 +50,7 @@ public class Grid {
     }
 
     /**
-     * Creation of a grid instance
+     * Creation of a grid with its tiles
      */
     public void createGrid(int length, int width) {
         this.length = length;
@@ -71,6 +73,9 @@ public class Grid {
         return grid;
     }
 
+    /**
+     * Destroys the Grid instance
+     */
     public void destroyGrid() {
         grid = null;
         tiles.clear();
@@ -81,9 +86,9 @@ public class Grid {
     }
 
     /**
-     * Get the adjacent tiles to the given one
+     * Returns the adjacent tiles to the given one
      * @param tile Get adjacent tiles to this one
-     * @return List of adjacent tiles to the given one
+     * @return Adjacent tiles to the given one
      */
     public ArrayList<Tile> getNeighbours (Tile tile) {
         if(!getTiles().contains(tile)) {
@@ -98,6 +103,12 @@ public class Grid {
         return tilesNeighbour;
     }
 
+    /**
+     * Returns the opposite tile to yours compared to another one
+     * @param currentTile The tile you want the opposite one
+     * @param nextTile The middle tile
+     * @return The opposite tile
+     */
     public Tile getOppositeTile(Tile currentTile, Tile nextTile) {
         int oppositeTileX;
         int oppositeTileY;
@@ -106,6 +117,9 @@ public class Grid {
         return getTile(oppositeTileX, oppositeTileY);
     }
 
+    /**
+     * Returns the tile with the given x and y
+     */
     public Tile getTile(int x, int y) {
         for(Tile tile : tiles) {
             if(tile.getX()==x && tile.getY()==y)
@@ -115,6 +129,12 @@ public class Grid {
         return null;
     }
 
+    /**
+     * Returns true if the 2 given tiles are adjacent
+     * @param currentTile The first tile
+     * @param nextTile The second tile
+     * @return True if the first and second tiles are adjacent
+     */
     public boolean isNeighbour (Tile currentTile, Tile nextTile){
         ArrayList<Tile> neighbours = getNeighbours(currentTile);
         if(neighbours == null)

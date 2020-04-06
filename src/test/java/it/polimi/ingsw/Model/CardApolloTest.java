@@ -17,7 +17,7 @@ class CardApolloTest {
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
     Deck deck;
-    Card card = new Card("Apollo", true, false);
+    Card card = new Card("Apollo");
     Card card1 = new Card("Carlo");
     Tile currentTile;
     Tile currentTile1;
