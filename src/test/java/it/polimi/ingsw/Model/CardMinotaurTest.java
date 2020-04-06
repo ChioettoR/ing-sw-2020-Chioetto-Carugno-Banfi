@@ -75,7 +75,7 @@ class CardMinotaurTest {
     void testMinotaur() {
         System.out.println("TEST: I'm testing Minotaur Card");
         moveAction.move(worker,currentTile2);
-        // Check if the worker doesn't move anything if the other worker is yours
+        // Check that the worker can't move another worker of the same player
         assertEquals(currentTile, worker.getPosition());
         assertEquals(currentTile2, worker2.getPosition());
 

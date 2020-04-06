@@ -151,7 +151,7 @@ class PlayersManagerTest {
     }
 
     /**
-     * Testing deleteWorker trying to delete workers with no player assigner
+     * Testing deleteWorker trying to delete workers with no player assigned
      */
     void deleteWorker() {
         System.out.println("TEST: I'm deleting workers");
@@ -169,7 +169,7 @@ class PlayersManagerTest {
     }
 
     /**
-     * Testing deleteCurrentWorker setting them to CurrentWorker before acting
+     * Testing deleteCurrentWorker and setCurrentWorker
      */
     void deleteCurrentWorker() {
         System.out.println("TEST: I'm deleting current workers");

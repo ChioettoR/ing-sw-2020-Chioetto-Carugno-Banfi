@@ -66,7 +66,7 @@ class CardDemeterTest {
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));
         expectedTiles.add(grid.getTiles().get(7));
-        // Checks if the available 2nd build moves doesn't contain the tile used in the 1st build
+        // Checks if the available 2nd build move tiles contain the tile used in the 1st build
         assertEquals(expectedTiles, buildAction2.getAvailableTilesForAction(worker));
 
         buildAction2.build(worker,grid.getTiles().get(5));
@@ -79,7 +79,7 @@ class CardDemeterTest {
         assertEquals(2, grid.getTiles().get(5).getLevel());
 
         buildAction2.build(worker,grid.getTiles().get(5));
-        // Trying to do another build on the tile no.5 and check that it doesn't go fine
+        // Trying to do another build on the tile no.5 and check the result
         assertEquals(2, grid.getTiles().get(5).getLevel());
     }
 

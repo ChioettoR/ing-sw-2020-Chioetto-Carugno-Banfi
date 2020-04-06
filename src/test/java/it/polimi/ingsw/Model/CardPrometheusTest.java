@@ -59,7 +59,6 @@ class CardPrometheusTest {
     void testPrometheus() {
         System.out.println("TEST: I'm testing Prometheus Card");
 
-        //Testing in different orders the moveAction-buildAction or buildAction-moveAction
         buildAction.getAvailableTilesForAction(worker);
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));

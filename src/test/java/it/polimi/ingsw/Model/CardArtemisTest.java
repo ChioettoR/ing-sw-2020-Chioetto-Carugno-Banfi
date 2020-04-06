@@ -74,21 +74,20 @@ class CardArtemisTest {
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
-        // Check the available tiles for the move of worker
+        // Check the available tiles for the worker movement
         assertEquals(expectedTiles, actualTiles);
 
-        // Reset of the expected tiles of worker for a new check
         expectedTiles.clear();
         moveAction.move(worker, grid.getTiles().get(1));
         actualTiles = moveAction2.getAvailableTilesForAction(worker);
         expectedTiles.add(grid.getTiles().get(2));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(7));
-        // Check the available tiles for the move of worker
+        // Check the available tiles for the worker movement
         assertEquals(expectedTiles, actualTiles);
 
         moveAction2.move(worker, grid.getTiles().get(2));
-        // Check of the second move in a row of Artemis
+        // Check the second move in a row of Artemis
         assertEquals(grid.getTiles().get(2), worker.getPosition());
 
         moveAction.move(worker, grid.getTiles().get(1));

@@ -52,7 +52,7 @@ class GridTest {
     }
 
     /**
-     * Testing if checkNeighbour gives the correct tile Neighbour
+     * Testing if isNeighbour works correctly
      */
     @Test
     void checkNeighbour() {

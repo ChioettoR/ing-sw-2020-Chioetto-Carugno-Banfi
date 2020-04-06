@@ -830,16 +830,16 @@ public class CardsBuilder {
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
 
             MoveActionStandard moveActionStandard = CardsBuilder.moveActionStandard;
+            int indexBuildAction = 1;
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
                 if(canMove(worker, tileWhereMove)) {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(Grid.getGrid().isPerimeterTile(tileWhereMove)) {
-                       BuildAction buildAction = PlayersManager.getPlayersManager().getPlayerWithID(worker.getPlayerID()).getCard().getBuildActions().get(0);
-                       int indexBuildAction = actions.indexOf(buildAction);
                        actions.add(indexBuildAction, this);
                        setOptional(true);
+                       indexBuildAction++;
                     }
                 }
             }
@@ -918,9 +918,7 @@ public class CardsBuilder {
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
                 if(buildActionStandard.canBuild(worker, tileWhereBuild, newLevel))
                     return true;
-                if(tileWhereBuild == worker.getPosition() && newLevel != 4)
-                    return true;
-                return false;
+                return tileWhereBuild == worker.getPosition() && newLevel != 4;
             }
 
             @Override
