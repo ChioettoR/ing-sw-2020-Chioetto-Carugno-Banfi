@@ -141,4 +141,11 @@ public class Grid {
             return false;
         return neighbours.contains(nextTile);
     }
+
+    public boolean isPerimeterTile(Tile tileWhereBuild){
+        ArrayList<Tile> perimeterTiles = new ArrayList<Tile>(tiles);
+        perimeterTiles.removeIf(tile -> tile.getX() == 0 || tile.getX() == getLength() || tile.getY() == 0 || tile.getY() == getWidth());
+        return !perimeterTiles.contains(tileWhereBuild);
+    }
+
 }

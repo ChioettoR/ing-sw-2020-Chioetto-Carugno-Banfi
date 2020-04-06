@@ -83,6 +83,21 @@ public class CardsBuilder {
         if(card.getName().equals("Prometheus")) {
             card.setActionOrder(createPrometheus());
         }
+        if(card.getName().equals("Chronus")){
+            card.setActionOrder(createChronus());
+        }
+        if(card.getName().equals("Hestia")){
+            card.setActionOrder(createHestia());
+        }
+        if(card.getName().equals("Poseidon")){
+            card.setActionOrder(createPoseidon());
+        }
+        if(card.getName().equals("Triton")){
+            card.setActionOrder(createTriton());
+        }
+        if(card.getName().equals("Zeus")){
+            card.setActionOrder(createZeus());
+        }
     }
 
     public ArrayList<Action> createApollo() {
@@ -721,6 +736,229 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         actions.add(moveActionStandard);
         actions.add(buildActionStandard);
+        return actions;
+    }
+
+    public ArrayList<Action> createChronus(){
+
+        moveActionStandard.setOptional(false);
+        buildActionStandard.setOptional(false);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionStandard);
+        return actions;
+
+    }
+
+    public ArrayList<Action> createHestia(){
+        BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
+
+            BuildActionStandard buildActionStandard = CardsBuilder.buildActionStandard;
+
+            @Override
+            public void build(Worker worker, Tile tileWhereBuild, int newLevel) {
+                if(canBuild(worker, tileWhereBuild, newLevel))
+                    buildActionStandard.standardBuild(worker, tileWhereBuild, newLevel);
+            }
+
+            @Override
+            public void build(Worker worker, Tile tileWhereBuild) {
+                build(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);
+            }
+
+            @Override
+            public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) && !Grid.getGrid().isPerimeterTile(tileWhereBuild));
+            }
+
+            @Override
+            public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
+                return buildActionStandard.getAvailableTilesForAction(worker, this);
+            }
+
+            @Override
+            public boolean isOptional() {
+                return buildActionStandard.isOptional();
+            }
+
+            @Override
+            public void setOptional(boolean isOptional) {
+                buildActionStandard.setOptional(isOptional);
+            }
+
+            @Override
+            public void undo() {
+                buildActionStandard.undo();
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                moveActionStandard.setActionLock(actionLock);
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return moveActionStandard.isActionLock();
+            }
+        };
+
+        moveActionStandard.setOptional(false);
+        buildActionStandard.setOptional(false);
+        buildActionDecorator.setOptional(true);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionStandard);
+        actions.add(buildActionDecorator);
+        return actions;
+    }
+
+    public ArrayList<Action> createPoseidon(){
+
+        moveActionStandard.setOptional(false);
+        buildActionStandard.setOptional(false);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionStandard);
+        return actions;
+
+    }
+
+    public ArrayList<Action> createTriton(){
+
+        ArrayList <Action> actions = new ArrayList<Action>();
+
+        MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
+
+            MoveActionStandard moveActionStandard = CardsBuilder.moveActionStandard;
+
+            @Override
+            public void move(Worker worker, Tile tileWhereMove) {
+                if(canMove(worker, tileWhereMove)) {
+                    moveActionStandard.standardMove(worker, tileWhereMove);
+                    if(Grid.getGrid().isPerimeterTile(tileWhereMove)) {
+                       BuildAction buildAction = PlayersManager.getPlayersManager().getPlayerWithID(worker.getPlayerID()).getCard().getBuildActions().get(0);
+                       int indexBuildAction = actions.indexOf(buildAction);
+                       actions.add(indexBuildAction, this);
+                       setOptional(true);
+                    }
+                }
+            }
+
+            @Override
+            public boolean canMove(Worker worker, Tile tileWhereMove) {
+                return (moveActionStandard.canMove(worker, tileWhereMove));
+            }
+
+            @Override
+            public void setCantMoveUp(boolean cantMoveUp) {
+                moveActionStandard.setCantMoveUp(cantMoveUp);
+            }
+
+            @Override
+            public boolean isCantMoveUp() {
+                return moveActionStandard.isCantMoveUp();
+            }
+
+            @Override
+            public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
+                return moveActionStandard.getAvailableTilesForAction(worker, this);
+            }
+
+            @Override
+            public boolean isOptional() {
+                return moveActionStandard.isOptional();
+            }
+
+            @Override
+            public void setOptional(boolean isOptional) {
+                moveActionStandard.setOptional(isOptional);
+            }
+
+            @Override
+            public void undo() {
+                moveActionStandard.undo();
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                moveActionStandard.setActionLock(actionLock);
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return moveActionStandard.isActionLock();
+            }
+        };
+
+        moveActionDecorator.setOptional(false);
+        buildActionStandard.setOptional(false);
+        actions.add(moveActionDecorator);
+        actions.add(buildActionStandard);
+        return actions;
+    }
+
+    public ArrayList<Action> createZeus(){
+
+        BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
+
+            BuildActionStandard buildActionStandard = CardsBuilder.buildActionStandard;
+
+            @Override
+            public void build(Worker worker, Tile tileWhereBuild, int newLevel) {
+                if(canBuild(worker, tileWhereBuild, newLevel))
+                    buildActionStandard.standardBuild(worker, tileWhereBuild, newLevel);
+            }
+
+            @Override
+            public void build(Worker worker, Tile tileWhereBuild) {
+                build(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);
+            }
+
+            @Override
+            public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+                if(buildActionStandard.canBuild(worker, tileWhereBuild, newLevel))
+                    return true;
+                if(tileWhereBuild == worker.getPosition() && newLevel != 4)
+                    return true;
+                return false;
+            }
+
+            @Override
+            public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
+                return buildActionStandard.getAvailableTilesForAction(worker, this);
+            }
+
+            @Override
+            public boolean isOptional() {
+                return buildActionStandard.isOptional();
+            }
+
+            @Override
+            public void setOptional(boolean isOptional) {
+                buildActionStandard.setOptional(isOptional);
+            }
+
+            @Override
+            public void undo() {
+                buildActionStandard.undo();
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                moveActionStandard.setActionLock(actionLock);
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return moveActionStandard.isActionLock();
+            }
+        };
+
+        moveActionStandard.setOptional(false);
+        buildActionDecorator.setOptional(false);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionDecorator);
         return actions;
     }
 }
