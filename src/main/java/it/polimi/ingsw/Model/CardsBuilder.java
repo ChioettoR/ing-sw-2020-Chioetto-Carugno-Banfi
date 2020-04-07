@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CardsBuilder {
     static MoveActionStandard moveActionStandard = new MoveActionStandard();
@@ -44,7 +43,7 @@ public class CardsBuilder {
         Card card10 = new Card("Hestia");
         deck.addCard(card10);
 
-        Card card11 = new Card("Poseidon");
+        Card card11 = new Card("Medusa");
         deck.addCard(card11);
 
         Card card12 = new Card("Triton");
@@ -89,7 +88,7 @@ public class CardsBuilder {
         if(card.getName().equals("Hestia")){
             card.setActionOrder(createHestia());
         }
-        if(card.getName().equals("Poseidon")){
+        if(card.getName().equals("Medusa")){
             card.setActionOrder(createPoseidon());
         }
         if(card.getName().equals("Triton")){
@@ -959,4 +958,60 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         return actions;
     }
+
+    public ArrayList<Action> createMedusa() {
+        RoundAction roundAction = new RoundAction() {
+            boolean optional = false;
+            @Override
+            public boolean isOptional() {
+                return optional;
+            }
+
+            @Override
+            public void setOptional(boolean isOptional) {
+                optional = isOptional;
+            }
+
+            @Override
+            public void undo() {
+                return;
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                return;
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return false;
+            }
+
+            @Override
+            public void doSomething() {
+                PlayersManager playersManager = PlayersManager.getPlayersManager();
+                Tile tempTile = playersManager.getCurrentWorker().getPosition();
+                ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
+                if(tiles == null || tiles.size() == 0)
+                    return;
+                tiles.removeIf(tile -> tile.getLevel() >= tempTile.getLevel() && tile.isEmpty());
+                tiles.removeIf(tile -> tile.getWorker().getPlayerID() == playersManager.getCurrentWorker().getPlayerID());
+                ArrayList<Worker> workers = (ArrayList<Worker>) tiles.stream().map(Tile::getWorker).collect(Collectors.toList());
+                for(Worker w : workers){
+                    w.getPosition().setLevel(w.getPosition().getLevel() + 1);
+                    playersManager.deleteWorker(w);
+                }
+            }
+        };
+        moveActionStandard.setOptional(false);
+        buildActionStandard.setOptional(false);
+        roundAction.setOptional(false);
+        ArrayList <Action> actions = new ArrayList<Action>();
+        actions.add(moveActionStandard);
+        actions.add(buildActionStandard);
+        actions.add(roundAction);
+        return actions;
+    }
+
+
 }
