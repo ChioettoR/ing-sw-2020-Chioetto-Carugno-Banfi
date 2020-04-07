@@ -51,6 +51,9 @@ public class CardsBuilder {
 
         Card card13 = new Card("Zeus");
         deck.addCard(card13);
+
+        Card card14 = new Card("Medusa");
+        deck.addCard(card14);
     }
 
     public void createAction(Card card) {
@@ -89,7 +92,7 @@ public class CardsBuilder {
             card.setActionOrder(createHestia());
         }
         if(card.getName().equals("Medusa")){
-            card.setActionOrder(createPoseidon());
+            card.setActionOrder(createMedusa());
         }
         if(card.getName().equals("Triton")){
             card.setActionOrder(createTriton());
@@ -974,12 +977,10 @@ public class CardsBuilder {
 
             @Override
             public void undo() {
-                return;
             }
 
             @Override
             public void setActionLock(boolean actionLock) {
-                return;
             }
 
             @Override
@@ -994,9 +995,14 @@ public class CardsBuilder {
                 ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
                 if(tiles == null || tiles.size() == 0)
                     return;
-                tiles.removeIf(tile -> tile.getLevel() >= tempTile.getLevel() && tile.isEmpty());
-                tiles.removeIf(tile -> tile.getWorker().getPlayerID() == playersManager.getCurrentWorker().getPlayerID());
-                ArrayList<Worker> workers = (ArrayList<Worker>) tiles.stream().map(Tile::getWorker).collect(Collectors.toList());
+                tiles.removeIf(tile -> tile.getLevel() >= tempTile.getLevel() || tile.isEmpty());
+                ArrayList<Tile> tilesCopy = new ArrayList<Tile>(tiles);
+                for(Tile t : tiles) {
+                    Worker worker = t.getWorker();
+                    if(worker!=null && worker.getPlayerID()== playersManager.getCurrentWorker().getPlayerID())
+                        tilesCopy.remove(t);
+                }
+                ArrayList<Worker> workers = (ArrayList<Worker>) tilesCopy.stream().map(Tile::getWorker).collect(Collectors.toList());
                 for(Worker w : workers){
                     w.getPosition().setLevel(w.getPosition().getLevel() + 1);
                     playersManager.deleteWorker(w);
@@ -1012,6 +1018,4 @@ public class CardsBuilder {
         actions.add(roundAction);
         return actions;
     }
-
-
 }
