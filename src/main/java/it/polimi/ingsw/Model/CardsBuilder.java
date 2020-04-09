@@ -124,6 +124,8 @@ public class CardsBuilder {
 
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
+                if(isActionLock())
+                    return false;
                 if(tileWhereMove.isEmpty())
                     return moveActionStandard.canMove(worker, tileWhereMove);
                 else {
@@ -255,26 +257,52 @@ public class CardsBuilder {
 
     public ArrayList<Action> createAthena() {
 
+        RoundAction roundAction = new RoundAction() {
+            boolean actionLock;
+
+            @Override
+            public void doAction() {
+                if(actionLock)
+                    return;
+                ArrayList<Player> players = PlayersManager.getPlayersManager().getNextPlayers();
+                //Sets that opponents workers cannot move up
+                for (Player player : players) {
+                    ArrayList<MoveAction> moveActions = player.getCard().getMoveActions();
+                    for (MoveAction moveAction : moveActions) {
+                        moveAction.setCantMoveUp(true);
+                    }
+                }
+            }
+
+            @Override
+            public void undo() {
+                System.out.println("Can't undo this action");
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                this.actionLock = actionLock;
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return actionLock;
+            }
+        };
+
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
 
             MoveActionStandard moveActionStandard = CardsBuilder.moveActionStandard;
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if(canMove(worker, tileWhereMove)) {
+                if (canMove(worker, tileWhereMove)) {
                     Tile currentTile = worker.getPosition();
                     moveActionStandard.standardMove(worker, tileWhereMove);
-                    if (tileWhereMove.getLevel() - currentTile.getLevel() == 1) {
-                        ArrayList<Player> players = PlayersManager.getPlayersManager().getNextPlayers();
-
-                        //Sets that opponents workers cannot move up
-                        for (Player player : players) {
-                            ArrayList<MoveAction> moveActions = player.getCard().getMoveActions();
-                            for (MoveAction moveAction : moveActions) {
-                                moveAction.setCantMoveUp(true);
-                            }
-                        }
-                    }
+                    if (tileWhereMove.getLevel() - currentTile.getLevel() == 1)
+                        roundAction.setActionLock(false);
+                    else
+                        roundAction.setActionLock(true);
                 }
             }
 
@@ -326,9 +354,11 @@ public class CardsBuilder {
 
         moveActionDecorator.setOptional(false);
         buildActionStandard.setOptional(false);
+        roundAction.setActionLock(true);
         ArrayList <Action> actions = new ArrayList<Action>();
         actions.add(moveActionDecorator);
         actions.add(buildActionStandard);
+        actions.add(roundAction);
         return actions;
     }
 
@@ -351,6 +381,8 @@ public class CardsBuilder {
 
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+                if(isActionLock())
+                    return false;
                 return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) || ((buildActionStandard.correctTile(worker.getPosition(), tileWhereBuild)) && newLevel==4 && tileWhereBuild.getLevel()==0));
             }
 
@@ -542,6 +574,8 @@ public class CardsBuilder {
 
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
+                if(isActionLock())
+                    return false;
                 if(tileWhereMove.isEmpty())
                     return moveActionStandard.canMove(worker, tileWhereMove);
                 else {
@@ -918,6 +952,8 @@ public class CardsBuilder {
 
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+                if(isActionLock())
+                    return false;
                 if(buildActionStandard.canBuild(worker, tileWhereBuild, newLevel))
                     return true;
                 return tileWhereBuild == worker.getPosition() && newLevel != 4;
@@ -964,32 +1000,27 @@ public class CardsBuilder {
 
     public ArrayList<Action> createMedusa() {
         RoundAction roundAction = new RoundAction() {
-            boolean optional = false;
-            @Override
-            public boolean isOptional() {
-                return optional;
-            }
-
-            @Override
-            public void setOptional(boolean isOptional) {
-                optional = isOptional;
-            }
+            boolean actionLock = false;
 
             @Override
             public void undo() {
+                System.out.println("Can't undo this action");
             }
 
             @Override
             public void setActionLock(boolean actionLock) {
+                this.actionLock = actionLock;
             }
 
             @Override
             public boolean isActionLock() {
-                return false;
+                return actionLock;
             }
 
             @Override
-            public void doSomething() {
+            public void doAction() {
+                if(actionLock)
+                    return;
                 PlayersManager playersManager = PlayersManager.getPlayersManager();
                 Tile tempTile = playersManager.getCurrentWorker().getPosition();
                 ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
@@ -1011,7 +1042,6 @@ public class CardsBuilder {
         };
         moveActionStandard.setOptional(false);
         buildActionStandard.setOptional(false);
-        roundAction.setOptional(false);
         ArrayList <Action> actions = new ArrayList<Action>();
         actions.add(moveActionStandard);
         actions.add(buildActionStandard);

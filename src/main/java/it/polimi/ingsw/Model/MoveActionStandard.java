@@ -56,6 +56,8 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
      */
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
+        if(actionLock)
+            return false;
         Tile currentTile = worker.getPosition();
         if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty() && !isActionLock()) {
             if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && cantMoveUp)

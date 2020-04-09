@@ -64,7 +64,6 @@ public class LastActionSave {
     /**
      * Resets the position of all the workers that need a reset
      */
-    //TODO: NON IN QUESTA CLASSE! Per Athena bisogna settare il canMoveUp false solo dopo la fine del turno o del timer dell'undo
     private void undoMovement() {
         for (int i = 0; i < workers.size(); i++) {
             undoPosition(workers.get(i), tiles.get(i));

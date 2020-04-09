@@ -22,6 +22,7 @@ class CardAthenaTest {
     ArrayList<Action> actionOrder = new ArrayList<Action>();
     MoveAction moveAction;
     BuildAction buildAction;
+    RoundAction roundAction;
     ArrayList<Action> actionOrder1 = new ArrayList<Action>();
     MoveAction moveAction1;
     BuildAction buildAction1;
@@ -54,6 +55,9 @@ class CardAthenaTest {
         action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
+        action = actionOrder.get(2);
+        assertTrue(action instanceof RoundAction);
+        roundAction = (RoundAction) action;
         new CardsBuilder().createAction(card1);
         actionOrder1 = card1.getActionOrder();
         Action action1 = actionOrder1.get(0);
@@ -81,6 +85,8 @@ class CardAthenaTest {
         PlayersManager playersManager = PlayersManager.getPlayersManager();
         buildAction.build(worker, grid.getTiles().get(1));
         moveAction.move(worker, grid.getTiles().get(1));
+        assertFalse(roundAction.isActionLock());
+        roundAction.doAction();
         playersManager.getNextPlayers();
         buildAction1.build(worker1, grid.getTiles().get(5));
         ArrayList<Tile> expectedTiles = grid.getNeighbours(worker1.getPosition());
@@ -90,6 +96,11 @@ class CardAthenaTest {
         assertEquals(expectedTiles, moveAction1.getAvailableTilesForAction(worker1));
 
         //Testing the reset of the moveUp-lock
+        player1.resetActionsValues();
+        moveAction.move(worker, grid.getTiles().get(2));
+        assertTrue(roundAction.isActionLock());
+        moveAction.move(worker, grid.getTiles().get(1));
+        assertFalse(roundAction.isActionLock());
         player1.resetActionsValues();
         ArrayList<Tile> expectedTiles1 = grid.getNeighbours(worker1.getPosition());
         expectedTiles1.remove(grid.getTiles().get(1));

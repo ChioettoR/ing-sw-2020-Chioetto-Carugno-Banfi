@@ -81,7 +81,7 @@ class CardMedusaTest {
         grid.getTiles().get(11).setEmpty(true);
         workerF1.setPosition(grid.getTiles().get(12));
         grid.getTiles().get(12).setWorker(workerF1);
-        roundAction.doSomething();
+        roundAction.doAction();
         assertEquals(workerA1, grid.getTiles().get(5).getWorker());
         assertEquals(0, workerA1.getPosition().getLevel());
         assertEquals(1, grid.getTiles().get(2).getLevel());

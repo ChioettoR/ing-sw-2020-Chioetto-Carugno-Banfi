@@ -56,9 +56,9 @@ public class Grid {
         this.length = length;
         this.width = width;
         tiles = new ArrayList<Tile>();
-        for(int i=0; i<length; i++){
-            for (int j=0; j<width; j++) {
-                tiles.add(new Tile(i,j));
+        for(int i=1; i<=length; i++){
+            for (int j=1; j<=width; j++) {
+                tiles.add(new Tile(j,i));
             }
         }
     }
@@ -144,8 +144,7 @@ public class Grid {
 
     public boolean isPerimeterTile(Tile tileWhereBuild){
         ArrayList<Tile> perimeterTiles = new ArrayList<Tile>(tiles);
-        perimeterTiles.removeIf(tile -> tile.getX() == 0 || tile.getX() == getLength() || tile.getY() == 0 || tile.getY() == getWidth());
+        perimeterTiles.removeIf(tile -> tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());
         return !perimeterTiles.contains(tileWhereBuild);
     }
-
 }

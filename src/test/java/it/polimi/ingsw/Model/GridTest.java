@@ -43,11 +43,11 @@ class GridTest {
         assertEquals(width * length, grid.getTiles().size());
 
         int k=0;
-        for(int i=0; i<length; i++)
-            for(int j=0; j<width; j++, k++) {
+        for(int i=1; i<=length; i++)
+            for(int j=1; j<=width; j++, k++) {
                 //Checking if every tile from the grid gets the corrects [x,y]
-                assertEquals(i,grid.getTiles().get(k).getX());
-                assertEquals(j, grid.getTiles().get(k).getY());
+                assertEquals(j,grid.getTiles().get(k).getX());
+                assertEquals(i, grid.getTiles().get(k).getY());
             }
     }
 
