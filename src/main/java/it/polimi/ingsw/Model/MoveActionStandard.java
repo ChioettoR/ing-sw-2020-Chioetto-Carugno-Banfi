@@ -89,10 +89,10 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
      * @param worker The worker that is moving
      * @return All the tiles in which the worker can move
      */
-    public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action action) {
+    public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action classWhereCheckMove) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
-        if(action instanceof MoveAction)
-            neighboursTiles.removeIf(tile -> (!((MoveAction)action).canMove(worker,tile)));
+        if(classWhereCheckMove instanceof MoveAction)
+            neighboursTiles.removeIf(tile -> (!((MoveAction)classWhereCheckMove).canMove(worker,tile)));
         else {
             System.out.println("Wrong action passed to MoveActionStandard");
             return null;

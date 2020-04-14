@@ -142,9 +142,9 @@ public class Grid {
         return neighbours.contains(nextTile);
     }
 
-    public boolean isPerimeterTile(Tile tileWhereBuild){
+    public boolean isPerimeterTile(Tile t){
         ArrayList<Tile> perimeterTiles = new ArrayList<Tile>(tiles);
         perimeterTiles.removeIf(tile -> tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());
-        return !perimeterTiles.contains(tileWhereBuild);
+        return !perimeterTiles.contains(t);
     }
 }
