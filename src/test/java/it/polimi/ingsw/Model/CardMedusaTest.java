@@ -68,6 +68,9 @@ class CardMedusaTest {
         grid.destroyGrid();
     }
 
+    /**
+     * Testing Medusa card
+     */
     @Test
     void testMedusa() {
         System.out.println("TEST: I'm testing Medusa Card");
@@ -82,6 +85,8 @@ class CardMedusaTest {
         workerF1.setPosition(grid.getTiles().get(12));
         grid.getTiles().get(12).setWorker(workerF1);
         roundAction.doAction();
+
+        // Checking if all the workers around the workerA are effectively removed from the board!
         assertEquals(workerA1, grid.getTiles().get(5).getWorker());
         assertEquals(0, workerA1.getPosition().getLevel());
         assertEquals(1, grid.getTiles().get(2).getLevel());

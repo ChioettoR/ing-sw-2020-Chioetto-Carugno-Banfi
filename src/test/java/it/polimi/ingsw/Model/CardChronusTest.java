@@ -51,6 +51,10 @@ class CardChronusTest {
         grid.destroyGrid();
     }
 
+    /**
+     *Testing Chronus card
+     * @param tileWhereBuildCompleteTower : tile used to check the WinCondition of Chronos
+     */
     public void buildCompleteTower(Worker worker, Tile tileWhereBuildCompleteTower) {
         for(int i = 0; i<4; i++)
             buildAction.build(worker, tileWhereBuildCompleteTower);
