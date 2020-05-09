@@ -5,7 +5,6 @@ import it.polimi.ingsw.Observer.Server.ActionObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class ActionManager extends ActionObservable{
@@ -22,6 +21,7 @@ public class ActionManager extends ActionObservable{
         MoveAction moveAction;
         int moveActionIndex;
         BuildAction buildAction;
+
         int buildActionIndex;
         private final ArrayList<ActionType> availableActionsNames = new ArrayList<>();
 
@@ -95,16 +95,7 @@ public class ActionManager extends ActionObservable{
             notifyError(new ErrorEvent("You can't move in this tile", playersManager.getCurrentPlayer().getID()));
 
         else {
-            ArrayList<Tile> oldGrid = saveOldGrid();
-            moveAction.move(worker, tile);
-            //TODO: rendere disponibile UNDO
-            lastAction = ActionType.MOVE;
-            sendChange(oldGrid);
-            if(checkWin())
-                return;
-            index = availableActions.getMoveActionIndex() + 1;
-            stateManager.setGameState(GameState.ACTIONSELECTING);
-            sendActions();
+            moveMethod(moveAction, worker, tile);
         }
     }
 
@@ -121,35 +112,14 @@ public class ActionManager extends ActionObservable{
         Tile tile = Grid.getGrid().getTile(x, y);
 
         if(buildLevel==-1) {
-            if(!buildAction.canBuild(worker, tile))
-                notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID()));
-            else {
-                ArrayList<Tile> oldGrid = saveOldGrid();
-                buildAction.build(worker, tile);
-                lastAction = ActionType.BUILD;
-                sendChange(oldGrid);
-                if(checkWin())
-                    return;
-                index = availableActions.getBuildActionIndex() + 1;
-                stateManager.setGameState(GameState.ACTIONSELECTING);
-                sendActions();
-            }
+            buildWithoutLevelMethod(buildAction, worker, tile);
         }
 
         else {
             if(!buildAction.canBuild(worker, tile, buildLevel))
                 notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID()));
             else {
-                ArrayList<Tile> oldGrid = saveOldGrid();
-                buildAction.build(worker, tile, buildLevel);
-                //TODO: rendere disponibile UNDO
-                lastAction = ActionType.BUILD;
-                sendChange(oldGrid);
-                if(checkWin())
-                    return;
-                index = availableActions.getBuildActionIndex() + 1;
-                stateManager.setGameState(GameState.ACTIONSELECTING);
-                sendActions();
+               buildWithLevelMethod(buildAction, worker, tile, buildLevel);
             }
         }
     }
@@ -169,41 +139,19 @@ public class ActionManager extends ActionObservable{
 
         switch (ActionType.valueOf(action)) {
             case MOVE: {
-                ArrayList<Tile> availableTiles = availableActions.getMoveAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
-                stateManager.setGameState(GameState.ACTING);
-                notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                notifyRequest(new RequestEvent("Where do you want to move?", playersManager.getCurrentPlayer().getID()));
+                classicMove();
                 break;
             }
             case BUILD: {
-                ArrayList<Tile> availableTiles = availableActions.getBuildAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
-                stateManager.setGameState(GameState.ACTING);
-                notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                notifyRequest(new RequestEvent("Where do you want to build?", playersManager.getCurrentPlayer().getID()));
+                classicBuild();
                 break;
             }
             case ENDROUND: {
-                //playersManager.nextPlayerAndStartRound();
-                //stateManager.setGameState(GameState.SELECTING);
-                //index = 0;
-                index++;
-                sendActions();
-                //notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+                classicEndRound();
                 break;
             }
             case UNDO: {
-                int moveIndex = availableActions.getMoveActionIndex();
-                int buildIndex = availableActions.getBuildActionIndex();
-                if(moveIndex==-1) index = buildIndex;
-                else if(buildIndex==-1) index = moveIndex;
-                else index = Math.min(moveIndex, buildIndex);
-                ArrayList<Tile> oldGrid = Grid.getGrid().getTiles();
-                if(lastAction==ActionType.MOVE)
-                    availableActions.getMoveAction().undo();
-                else if(lastAction==ActionType.BUILD)
-                    availableActions.getBuildAction().undo();
-                sendChange(oldGrid);
-                stateManager.setGameState(GameState.ACTIONSELECTING);
+                classicUndo();
                 break;
             }
         }
@@ -217,89 +165,22 @@ public class ActionManager extends ActionObservable{
             return;
         }
 
-        if((actionList.size()<=index)) {
-            playersManager.nextPlayerAndStartRound();
-            index = 0;
-            stateManager.setGameState(GameState.SELECTING);
-            notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+        if(checkSize(actionList))
             return;
-        }
 
         Action currentAction = actionList.get(index);
 
         if(currentAction instanceof RoundAction) {
-            ((RoundAction) currentAction).doAction();
-            index++;
-            if((actionList.size()<=index)) {
-                playersManager.nextPlayerAndStartRound();
-                index = 0;
-                stateManager.setGameState(GameState.SELECTING);
-                notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
-            }
-            else sendActions();
+            roundActionMethod(currentAction, actionList);
         }
 
         else if(currentAction instanceof UserAction) {
 
             if(!((UserAction) currentAction).isOptional()) {
-                ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
-                if(availableTiles.size()==0) {
-                    if(currentAction.isActionLock()) {
-                        index++;
-                        sendActions();
-                        return;
-                    }
-                    playersManager.getCurrentWorker().setAvailable(false);
-                    index = 0;
-                    stateManager.setGameState(GameState.SELECTING);
-                    ArrayList<Tile> oldGrid = saveOldGrid();
-                    resetGrid();
-                    sendChange(oldGrid);
-                    notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));
-                    notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
-                }
-                else {
-                    availableActions.addAvailableAction((UserAction) currentAction);
-                    stateManager.setGameState(GameState.ACTIONSELECTING);
-                    index++;
-                    notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                }
+                userActionNotOptional(currentAction);
             }
-
             else {
-                ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
-
-                if(availableTiles.size()!=0)
-                    availableActions.addAvailableAction((UserAction) currentAction);
-
-                index++;
-
-                if(actionList.size()<=index) {
-                    availableActions.addAvailableActionName(ActionType.ENDROUND);
-                    stateManager.setGameState(GameState.ACTIONSELECTING);
-                    notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                }
-                else {
-                    currentAction = actionList.get(index);
-
-                    if(currentAction instanceof RoundAction) {
-                        availableActions.addAvailableActionName(ActionType.ENDROUND);
-                        stateManager.setGameState(GameState.ACTIONSELECTING);
-                        notify(new ActionEvent((ArrayList<String>) availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                    }
-
-                    else if(currentAction instanceof UserAction) {
-                        if((currentAction instanceof MoveAction && availableActions.getMoveActionIndex()!=-1) || (currentAction instanceof BuildAction && availableActions.getBuildActionIndex()!=-1))
-                            System.out.println("FATAL ERROR: Adding two actions of the same type to the available actions");
-                        else {
-                            if(availableTiles.size()!=0)
-                                availableActions.addAvailableAction((UserAction) currentAction);
-                            stateManager.setGameState(GameState.ACTIONSELECTING);
-                            index++;
-                            notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-                        }
-                    }
-                }
+                userActionOptional(currentAction, actionList);
             }
         }
     }
@@ -380,5 +261,173 @@ public class ActionManager extends ActionObservable{
             return true;
         }
         return false;
+    }
+
+    private void moveMethod(MoveAction moveAction, Worker worker, Tile tile) throws IOException {
+        ArrayList<Tile> oldGrid = saveOldGrid();
+        moveAction.move(worker, tile);
+        //TODO: rendere disponibile UNDO
+        lastAction = ActionType.MOVE;
+        sendChange(oldGrid);
+        if(checkWin())
+            return;
+        index = availableActions.getMoveActionIndex() + 1;
+        stateManager.setGameState(GameState.ACTIONSELECTING);
+        sendActions();
+    }
+
+    private void buildWithoutLevelMethod(BuildAction buildAction, Worker worker, Tile tile) throws IOException {
+        if(!buildAction.canBuild(worker, tile))
+            notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID()));
+        else {
+            ArrayList<Tile> oldGrid = saveOldGrid();
+            buildAction.build(worker, tile);
+            lastAction = ActionType.BUILD;
+            sendChange(oldGrid);
+            if(checkWin())
+                return;
+            index = availableActions.getBuildActionIndex() + 1;
+            stateManager.setGameState(GameState.ACTIONSELECTING);
+            sendActions();
+        }
+    }
+
+    private void buildWithLevelMethod(BuildAction buildAction, Worker worker, Tile tile, int buildLevel) throws IOException {
+        ArrayList<Tile> oldGrid = saveOldGrid();
+        buildAction.build(worker, tile, buildLevel);
+        //TODO: rendere disponibile UNDO
+        lastAction = ActionType.BUILD;
+        sendChange(oldGrid);
+        if(checkWin())
+            return;
+        index = availableActions.getBuildActionIndex() + 1;
+        stateManager.setGameState(GameState.ACTIONSELECTING);
+        sendActions();
+    }
+
+    private void classicMove() throws IOException {
+        ArrayList<Tile> availableTiles = availableActions.getMoveAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
+        stateManager.setGameState(GameState.ACTING);
+        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Where do you want to move?", playersManager.getCurrentPlayer().getID()));
+    }
+
+    private void classicBuild() throws IOException {
+        ArrayList<Tile> availableTiles = availableActions.getBuildAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
+        stateManager.setGameState(GameState.ACTING);
+        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Where do you want to build?", playersManager.getCurrentPlayer().getID()));
+    }
+
+    private void classicEndRound() throws IOException {
+        index++;
+        sendActions();
+    }
+
+    private void classicUndo() throws IOException {
+        int moveIndex = availableActions.getMoveActionIndex();
+        int buildIndex = availableActions.getBuildActionIndex();
+        if(moveIndex==-1) index = buildIndex;
+        else if(buildIndex==-1) index = moveIndex;
+        else index = Math.min(moveIndex, buildIndex);
+        ArrayList<Tile> oldGrid = Grid.getGrid().getTiles();
+        if(lastAction==ActionType.MOVE)
+            availableActions.getMoveAction().undo();
+        else if(lastAction==ActionType.BUILD)
+            availableActions.getBuildAction().undo();
+        sendChange(oldGrid);
+        stateManager.setGameState(GameState.ACTIONSELECTING);
+    }
+
+    private boolean checkSize(ArrayList<Action> actionList) throws IOException {
+        if((actionList.size()<=index)) {
+            playersManager.nextPlayerAndStartRound();
+            index = 0;
+            stateManager.setGameState(GameState.SELECTING);
+            notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+            return true;
+        }
+        return false;
+    }
+
+    private void roundActionMethod(Action currentAction, ArrayList<Action> actionList) throws IOException {
+        ((RoundAction) currentAction).doAction();
+        index++;
+        if((actionList.size()<=index)) {
+            playersManager.nextPlayerAndStartRound();
+            index = 0;
+            stateManager.setGameState(GameState.SELECTING);
+            notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+        }
+        else sendActions();
+    }
+
+    private void userActionNotOptional(Action currentAction) throws IOException {
+        ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
+        if(availableTiles.size()==0) {
+            if(currentAction.isActionLock()) {
+                index++;
+                sendActions();
+                return;
+            }
+            playersManager.getCurrentWorker().setAvailable(false);
+            index = 0;
+            stateManager.setGameState(GameState.SELECTING);
+            ArrayList<Tile> oldGrid = saveOldGrid();
+            resetGrid();
+            sendChange(oldGrid);
+            notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));
+            notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
+        }
+        else {
+            availableActions.addAvailableAction((UserAction) currentAction);
+            stateManager.setGameState(GameState.ACTIONSELECTING);
+            index++;
+            notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        }
+    }
+
+    private void checkSizeAndAddAction(ArrayList<Tile> availableTiles, Action currentAction){
+        if(availableTiles.size()!=0)
+            availableActions.addAvailableAction((UserAction) currentAction);
+    }
+
+    private void endRound() throws IOException {
+        availableActions.addAvailableActionName(ActionType.ENDROUND);
+        stateManager.setGameState(GameState.ACTIONSELECTING);
+        notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+    }
+
+    private void userActionOptional(Action currentAction, ArrayList<Action> actionList) throws IOException {
+        ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
+
+        checkSizeAndAddAction(availableTiles, currentAction);
+
+        index++;
+
+        if(actionList.size()<=index) {
+            endRound();
+        }
+        else {
+            currentAction = actionList.get(index);
+
+            if(currentAction instanceof RoundAction) {
+                availableActions.addAvailableActionName(ActionType.ENDROUND);
+                stateManager.setGameState(GameState.ACTIONSELECTING);
+                notify(new ActionEvent((ArrayList<String>) availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+            }
+
+            else if(currentAction instanceof UserAction) {
+                if((currentAction instanceof MoveAction && availableActions.getMoveActionIndex()!=-1) || (currentAction instanceof BuildAction && availableActions.getBuildActionIndex()!=-1))
+                    System.out.println("FATAL ERROR: Adding two actions of the same type to the available actions");
+                else {
+                    if(availableTiles.size()!=0)
+                        availableActions.addAvailableAction((UserAction) currentAction);
+                    stateManager.setGameState(GameState.ACTIONSELECTING);
+                    index++;
+                    notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+                }
+            }
+        }
     }
 }
