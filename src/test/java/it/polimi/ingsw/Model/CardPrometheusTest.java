@@ -65,6 +65,8 @@ class CardPrometheusTest {
         expectedTiles.add(grid.getTiles().get(6));
         assertEquals(expectedTiles, buildAction.getAvailableTilesForAction(worker));
         buildAction.build(worker, grid.getTiles().get(1));
+
+        //Trying to Build first and then Move; checking if the successive Build(3rd action) isn't successful
         assertEquals(1, grid.getTiles().get(1).getLevel());
         moveAction.move(worker, grid.getTiles().get(1));
         assertEquals(currentTile, worker.getPosition());
@@ -81,6 +83,7 @@ class CardPrometheusTest {
         assertFalse(buildAction2.isActionLock());
         assertFalse(moveAction.isCantMoveUp());
 
+        //Trying to Move first and then Build
         moveAction.move(worker, grid.getTiles().get(1));
         assertEquals(1, worker.getPosition().getLevel());
         buildAction2.build(worker, grid.getTiles().get(2));

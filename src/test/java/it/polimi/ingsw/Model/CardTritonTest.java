@@ -53,6 +53,9 @@ class CardTritonTest {
         grid.reset();
     }
 
+    /**
+     * Testing Triton card
+     */
     @Test
     void testTriton() {
         System.out.println("TEST: I'm testing Triton Card");
@@ -69,6 +72,8 @@ class CardTritonTest {
         expectedActions.add(moveAction);
         expectedActions.add(buildAction);
         assertEquals(expectedActions, card.getActionOrder());
+
+        //Trying to move to a perimetric tile, being able to do a 2nd move in a row to another tile
         moveAction.move(worker, grid.getTiles().get(6));
         assertEquals(expectedActions, card.getActionOrder());
         moveAction.move(worker, grid.getTiles().get(1));

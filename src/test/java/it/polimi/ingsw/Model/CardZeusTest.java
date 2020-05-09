@@ -47,12 +47,19 @@ class CardZeusTest {
         grid.reset();
     }
 
+    /**
+     *Testing Zeus card
+     */
     @Test
     void testZeus() {
         System.out.println("TEST: I'm testing Zeus Card");
         buildAction.build(worker, grid.getTiles().get(1));
+
+        //Trying to do a normal Build
         assertEquals(1, grid.getTiles().get(1).getLevel());
         buildAction.build(worker, currentTile);
+
+        //Trying to do a Build under worker's tile
         assertEquals(1, currentTile.getLevel());
         buildAction.build(worker, currentTile);
         assertEquals(2, currentTile.getLevel());

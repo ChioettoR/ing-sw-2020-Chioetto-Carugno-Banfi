@@ -51,18 +51,25 @@ class CardHestiaTest {
         grid.reset();
     }
 
+    /**
+     * Testing the Hestia card
+     */
     @Test
     void testHestia() {
         System.out.println("TEST: I'm testing Hestia Card");
         moveAction.move(worker,grid.getTiles().get(1));
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(6));
+        // Building in non-perimetric tiles
         assertEquals(1, currentTile.getLevel());
         assertEquals(1, grid.getTiles().get(6).getLevel());
+
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(5));
+        // Building in a non-perimetric tile, then trying to build in a perimetric tile
         assertEquals(2, currentTile.getLevel());
         assertEquals(0, grid.getTiles().get(5).getLevel());
+
         ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         moveAction.move(worker, grid.getTiles().get(6));
         expectedTiles.add(grid.getTiles().get(7));
