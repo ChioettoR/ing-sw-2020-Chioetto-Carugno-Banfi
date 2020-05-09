@@ -10,23 +10,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTritonTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Player player = new Player("Alberto");
-    Deck deck = Deck.getDeck();
     Card card;
     Tile currentTile;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
+    RoundAction roundAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5, 5);
         new Builder().build();
         card = deck.getCardByName("Triton");
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         player.setWorker(worker);
         player.setCard(card);
@@ -36,30 +36,35 @@ class CardTritonTest {
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
+        assertTrue(action instanceof RoundAction);
+        roundAction = (RoundAction) action;
+        action = actionOrder.get(1);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
-        action = actionOrder.get(1);
+        action = actionOrder.get(2);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
     }
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     @Test
     void testTriton() {
         System.out.println("TEST: I'm testing Triton Card");
         moveAction.move(worker, grid.getTiles().get(6));
-        ArrayList<Action> expectedActions = new ArrayList<Action>();
+        ArrayList<Action> expectedActions = new ArrayList<>();
+        expectedActions.add(roundAction);
         expectedActions.add(moveAction);
         expectedActions.add(buildAction);
         assertEquals(expectedActions, card.getActionOrder());
         moveAction.move(worker, currentTile);
         expectedActions.clear();
+        expectedActions.add(roundAction);
         expectedActions.add(moveAction);
         expectedActions.add(moveAction);
         expectedActions.add(buildAction);
@@ -68,6 +73,7 @@ class CardTritonTest {
         assertEquals(expectedActions, card.getActionOrder());
         moveAction.move(worker, grid.getTiles().get(1));
         expectedActions.clear();
+        expectedActions.add(roundAction);
         expectedActions.add(moveAction);
         expectedActions.add(moveAction);
         expectedActions.add(moveAction);

@@ -10,24 +10,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardPanTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Player player = new Player("Marcello");
-    Deck deck;
-    Card card = new Card("Pan");
+    Card card = new Card("Pan", CardsBuilder.GodPower.MoveDownToWin);
     Tile currentTile;
     Tile buildTile;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5,5);
-        deck = Deck.getDeck();
         deck.addCard(card);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         player.setWorker(worker);
         player.setCard(card);
@@ -47,9 +45,9 @@ class CardPanTest {
 
     @AfterEach
     void tearDown() {
-        grid.destroyGrid();
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        deck.deleteAllCards();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**
@@ -66,13 +64,19 @@ class CardPanTest {
         moveAction.move(worker, grid.getTiles().get(2));
         buildAction.build(worker, grid.getTiles().get(1));
         buildAction.build(worker, grid.getTiles().get(1));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         //Try to win with the normal Win Condition from level:2 to level:3
         moveAction.move(worker, grid.getTiles().get(1));
+        assertEquals(0, playersManager.getPlayerWinnerID());
+        playersManager.setPlayerWinnerID(-1);
         //Try to win with the new Win Condition from level:2 to level:0
         moveAction.move(worker, grid.getTiles().get(0));
         buildAction.build(worker, grid.getTiles().get(5));
         moveAction.move(worker, grid.getTiles().get(5));
+        assertEquals(0, playersManager.getPlayerWinnerID());
+        playersManager.setPlayerWinnerID(-1);
         //Try to win with the normal Win Condition from level:1 to level:0
         moveAction.move(worker, grid.getTiles().get(0));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
     }
 }

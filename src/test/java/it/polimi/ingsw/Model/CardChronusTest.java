@@ -10,23 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardChronusTest {
 
-    Grid grid;
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Player player = new Player("Alberto");
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
     Deck deck = Deck.getDeck();
-    Card card = new Card("Chronus", true);
+    Worker worker = new Worker();
+    Player player = new Player("Alberto");
+    Card card = new Card("Chronus", CardsBuilder.GodPower.CompleteTowersObserver, true);
     Tile currentTile;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
     int completeTowersNumber;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         player.setWorker(worker);
         deck.addCard(card);
@@ -46,9 +44,9 @@ class CardChronusTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     public void buildCompleteTower(Worker worker, Tile tileWhereBuildCompleteTower) {
@@ -65,11 +63,17 @@ class CardChronusTest {
     void testChronus() {
         System.out.println("TEST: I'm testing Chronus Card");
         moveAction.move(worker, grid.getTiles().get(6));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker,currentTile);
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker, grid.getTiles().get(1));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker, grid.getTiles().get(2));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker, grid.getTiles().get(5));
+        assertEquals(-1, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker, grid.getTiles().get(7));
+        assertEquals(0, playersManager.getPlayerWinnerID());
         buildCompleteTower(worker, grid.getTiles().get(10));
     }
 }

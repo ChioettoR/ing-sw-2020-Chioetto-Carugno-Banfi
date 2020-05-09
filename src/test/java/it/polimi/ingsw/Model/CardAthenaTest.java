@@ -9,32 +9,30 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardAthenaTest {
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Worker worker1 = new Worker();
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
-    Deck deck;
-    Card card = new Card("Athena");
-    Card card1 = new Card("Atlas");
+    Card card = new Card("Athena", CardsBuilder.GodPower.CantMoveUp);
+    Card card1 = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
     Tile currentTile;
     Tile currentTile1;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
     RoundAction roundAction;
-    ArrayList<Action> actionOrder1 = new ArrayList<Action>();
+    ArrayList<Action> actionOrder1 = new ArrayList<>();
     MoveAction moveAction1;
     BuildAction buildAction1;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
-        deck = Deck.getDeck();
         deck.addCard(card);
         deck.addCard(card1);
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
         player.setWorker(worker);
@@ -49,13 +47,13 @@ class CardAthenaTest {
         currentTile1.setWorker(worker1);
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
-        Action action = actionOrder.get(0);
+        Action action = actionOrder.get(1);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
-        action = actionOrder.get(1);
+        action = actionOrder.get(2);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
-        action = actionOrder.get(2);
+        action = actionOrder.get(3);
         assertTrue(action instanceof RoundAction);
         roundAction = (RoundAction) action;
         new CardsBuilder().createAction(card1);
@@ -70,10 +68,9 @@ class CardAthenaTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        PlayersManager.getPlayersManager().deletePlayer(player1);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**
@@ -96,7 +93,7 @@ class CardAthenaTest {
         assertEquals(expectedTiles, moveAction1.getAvailableTilesForAction(worker1));
 
         //Testing the reset of the moveUp-lock
-        player1.resetActionsValues();
+        player1.resetMoveUp();
         moveAction.move(worker, grid.getTiles().get(2));
         assertTrue(roundAction.isActionLock());
         moveAction.move(worker, grid.getTiles().get(1));

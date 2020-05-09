@@ -1,21 +1,36 @@
 package it.polimi.ingsw.Model;
 
-import java.lang.reflect.Array;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Grid {
     private static Grid grid;
     private int length;
     private int width;
     private int completeTowersCount;
-    private ArrayList<Tile> tiles;
+    private ArrayList<Tile> tiles = new ArrayList<>();
+
+    private Grid() {
+        grid = this;
+    }
+
+    public static Grid getGrid() {
+        if(grid==null)
+            grid = new Grid();
+
+        return grid;
+    }
+
+    public void reset() {
+        completeTowersCount = 0;
+        tiles.clear();
+    }
 
     public int getCompleteTowersCount() {
         return completeTowersCount;
+    }
+
+    public void resetTiles(ArrayList<Tile> newTiles) {
+        tiles = newTiles;
     }
 
     /**
@@ -29,16 +44,12 @@ public class Grid {
             PlayersManager playersManager = PlayersManager.getPlayersManager();
             Player player = playersManager.getPlayerWithCard(card);
             if(player!=null)
-                new WinManager().win(player);
+                playersManager.winPlayer(player);
         }
     }
 
     public void setCompleteTowersCount(int completeTowersCount) {
         this.completeTowersCount = completeTowersCount;
-    }
-
-    private Grid() {
-        grid = this;
     }
 
     public int getLength() {
@@ -55,30 +66,12 @@ public class Grid {
     public void createGrid(int length, int width) {
         this.length = length;
         this.width = width;
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
         for(int i=1; i<=length; i++){
             for (int j=1; j<=width; j++) {
                 tiles.add(new Tile(j,i));
             }
         }
-    }
-
-    /**
-     * @return The instance of Grid
-     */
-    public static Grid getGrid() {
-        if(grid==null)
-            grid = new Grid();
-
-        return grid;
-    }
-
-    /**
-     * Destroys the Grid instance
-     */
-    public void destroyGrid() {
-        grid = null;
-        tiles.clear();
     }
 
     public ArrayList<Tile> getTiles() {
@@ -95,7 +88,7 @@ public class Grid {
             System.out.println("The grid doesn't contain this tile");
             return null;
         }
-        ArrayList<Tile> tilesNeighbour = new ArrayList<Tile>();
+        ArrayList<Tile> tilesNeighbour = new ArrayList<>();
         for(Tile t : tiles) {
             if(Math.abs(tile.getX() - t.getX()) <= 1 && Math.abs(tile.getY() - t.getY()) <= 1 && tile!=t)
                 tilesNeighbour.add(t);
@@ -143,8 +136,12 @@ public class Grid {
     }
 
     public boolean isPerimeterTile(Tile tileWhereBuild){
-        ArrayList<Tile> perimeterTiles = new ArrayList<Tile>(tiles);
+        ArrayList<Tile> perimeterTiles = new ArrayList<>(tiles);
         perimeterTiles.removeIf(tile -> tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());
         return !perimeterTiles.contains(tileWhereBuild);
+    }
+
+    public GridSimplified simplify() {
+        return new GridSimplified(new ArrayList<Tile>(tiles));
     }
 }

@@ -1,41 +1,37 @@
 package it.polimi.ingsw.Model;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersManagerTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
 
     Player player = new Player("Marcello");
-    Card card = new Card("Carlo");
+    Card card = new Card("Carlo", null);
     Worker worker = new Worker();
     Worker worker4 = new Worker();
 
     Player player1 = new Player("Alberto");
-    Card card1 = new Card("Marco");
+    Card card1 = new Card("Marco", null);
     Worker worker1 = new Worker();
     Worker worker5 = new Worker();
 
     Player player2 = new Player("Federico");
-    Card card2 = new Card("Giordano");
+    Card card2 = new Card("Giordano", null);
     Worker worker2 = new Worker();
     Worker worker6 = new Worker();
 
-    Card card3 = new Card("Silvio");
+    Card card3 = new Card("Silvio", null);
     Worker worker3 = new Worker();
-    PlayersManager playersManager;
 
     @AfterEach
     void tearDown() {
-        playersManager.deletePlayer(player);
-        playersManager.deletePlayer(player1);
-        grid.destroyGrid();
+        playersManager.reset();
+        grid.reset();
     }
 
     @Test
@@ -88,10 +84,6 @@ class PlayersManagerTest {
 
         worker3.setPosition(grid.getTiles().get(3));
 
-        //I'm trying to add a player with an existing name
-        playersManager.addPlayer(player);
-        assertEquals(2, playersManager.getPlayersNumber());
-
         //Verifies all the indexes are different
         assert(player.getID()!=player1.getID());
     }
@@ -105,7 +97,7 @@ class PlayersManagerTest {
         //Checking if the Player "player" is no longer in the Player's list after deletePlayer
         assert(!playersManager.getPlayers().contains(player));
         assertNull(playersManager.getCurrentPlayer());
-        assertEquals("Alberto", playersManager.getNextPlayerAndStartRound().getName());
+        assertEquals("Alberto", playersManager.nextPlayerAndStartRound().getName());
 
         //I'm deleting the last worker of a player and check if the player is deleted from the game
         playersManager.deleteWorker(worker4);
@@ -118,7 +110,7 @@ class PlayersManagerTest {
     }
 
     public void nextRound() {
-        playersManager.getNextPlayerAndStartRound();
+        playersManager.nextPlayerAndStartRound();
     }
 
     /**

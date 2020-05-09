@@ -1,22 +1,19 @@
 package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PlayersManager {
 
-    private ArrayList<Player> players;
-    private IDManager idManager;
+    private final ArrayList<Player> players = new ArrayList<>();
+    private IDManager idManager = new IDManager();
     private int currentPlayerIndex;
     private int nextPlayerIndex;
     private static PlayersManager playersManager;
     private Worker currentWorker;
-    private ArrayList<Action> currentActionOrder = new ArrayList<Action>();
-    WinManager winManager = new WinManager();
+    private ArrayList<Action> currentActionOrder = new ArrayList<>();
+    private int playerWinnerID = -1;
 
     private PlayersManager() {
-        idManager = new IDManager();
-        players = new ArrayList<Player>();
         playersManager = this;
     }
 
@@ -26,23 +23,31 @@ public class PlayersManager {
         return  playersManager;
     }
 
-    /**
-     * If the player is valid then adds the player to the players list and assigns him a uniqueID.
-     * The position in the list will determine the round order of the players
-     * @param player The logged player you want to add to the game
-     */
-    public void addPlayer(Player player) {
-        if(player==null)
-            System.out.println("You're adding a null player");
+    public void reset() {
+        idManager = new IDManager();
+        players.clear();
+        playerWinnerID = -1;
+        currentPlayerIndex = 0;
+        nextPlayerIndex = 0;
+        currentWorker = null;
+        currentActionOrder.clear();
+    }
 
-        else if(validatePlayer(player)) {
-            if(getPlayersNumber()==0) {
-                currentPlayerIndex = 0;
-                nextPlayerIndex = 0;
-            }
-            player.setID(idManager.pickID());
-            players.add(player);
+    public int getPlayerWinnerID() {
+        return playerWinnerID;
+    }
+
+    public void setPlayerWinnerID(int playerWinnerID) {
+        this.playerWinnerID = playerWinnerID;
+    }
+
+    public void addPlayer(Player player) {
+        if(getPlayersNumber()==0) {
+            currentPlayerIndex = 0;
+            nextPlayerIndex = 0;
         }
+        player.setID(idManager.pickID());
+        players.add(player);
     }
 
     public Player getPlayerWithID(int ID) {
@@ -54,24 +59,18 @@ public class PlayersManager {
         return null;
     }
 
-    /**
-     * Verifies if the player you want to add has an original name
-     * @param player The player to validate
-     * @return The result of the validation
-     */
-    private boolean validatePlayer(Player player) {
-        for(Player p : players) {
-            if(p.getName()==null) {
-                System.out.println("You're adding a player with a null name");
-                return false;
-            }
-
-            if(p.getName().equals(player.getName())) {
-                System.out.println("You're adding a player with an existing name");
-                return false;
+    public Worker getWorkerWithID(int playerID, int localID) {
+        for(Player p : getPlayers()) {
+            if(p.getID()==playerID) {
+                for(Worker w : p.getWorkers()) {
+                    if(w.getLocalID()==localID) {
+                        return w;
+                    }
+                }
             }
         }
-        return true;
+        System.out.println("There are no workers or players with that ID");
+        return null;
     }
 
     public Worker getCurrentWorker() {
@@ -97,7 +96,7 @@ public class PlayersManager {
             nextPlayerIndex = increaseIndex(currentPlayerIndex - 1);
             currentPlayerIndex = -1;
             if(getPlayersNumber() == 1){
-                winManager.win(getPlayers().get(0));
+                winPlayer(getPlayers().get(0));
             }
         }
     }
@@ -108,22 +107,23 @@ public class PlayersManager {
 
     /**
      * The current round has ended
-     * @return The next player on the list
      */
-    public Player getNextPlayerAndStartRound() {
+    public Player nextPlayerAndStartRound() {
+        if(currentPlayerIndex!=-1)
+            players.get(currentPlayerIndex).resetActionsValues();
+        if(nextPlayer()==null)
+            return null;
+        currentActionOrder = players.get(currentPlayerIndex).getCard().getActionOrder();
+        return players.get(currentPlayerIndex);
+    }
+
+    public Player nextPlayer() {
         if(getPlayersNumber()==0) {
             System.out.println("There are no players left in the game");
             return null;
         }
-        int currentPlayerIndexCopy;
-
-        if(currentPlayerIndex!=-1)
-            players.get(currentPlayerIndex).resetActionsValues();
-
         currentPlayerIndex = nextPlayerIndex;
-        int nextPlayerIndexCopy = nextPlayerIndex;
         nextPlayerIndex = increaseIndex(nextPlayerIndex);
-        currentActionOrder = players.get(currentPlayerIndex).getCard().getActionOrder();
         return players.get(currentPlayerIndex);
     }
 
@@ -181,7 +181,7 @@ public class PlayersManager {
      * @return List of all players except the current one
      */
     public ArrayList<Player> getNextPlayers() {
-        ArrayList<Player> playersCopy = new ArrayList<Player>(getPlayers());
+        ArrayList<Player> playersCopy = new ArrayList<>(getPlayers());
         playersCopy.remove(currentPlayerIndex);
         return playersCopy;
     }
@@ -213,6 +213,14 @@ public class PlayersManager {
         }
         System.out.println("There are no players with that card");
         return null;
+    }
+
+    public void winCurrentPlayer() {
+        winPlayer(getCurrentPlayer());
+    }
+
+    public void winPlayer(Player player) {
+        playerWinnerID = player.getID();
     }
 }
 

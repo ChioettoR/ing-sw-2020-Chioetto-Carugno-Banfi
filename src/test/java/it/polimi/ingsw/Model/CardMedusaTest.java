@@ -10,7 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardMedusaTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker workerA = new Worker();
     Worker workerA1 = new Worker();
     Worker workerF = new Worker();
@@ -19,18 +21,15 @@ class CardMedusaTest {
     Player playerA = new Player("Alberto");
     Player playerF = new Player("Filippo");
     Player playerM = new Player("Marcello");
-    Deck deck = Deck.getDeck();
-    Card card = new Card("Medusa");
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    Card card = new Card("Medusa", CardsBuilder.GodPower.PetrifyOpponents);
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
     RoundAction roundAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(playerA);
         playersManager.addPlayer(playerF);
         playersManager.addPlayer(playerM);
@@ -61,11 +60,9 @@ class CardMedusaTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(playerA);
-        PlayersManager.getPlayersManager().deletePlayer(playerM);
-        PlayersManager.getPlayersManager().deletePlayer(playerF);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     @Test

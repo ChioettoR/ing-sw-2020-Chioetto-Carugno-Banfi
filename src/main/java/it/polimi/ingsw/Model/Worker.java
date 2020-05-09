@@ -2,7 +2,28 @@ package it.polimi.ingsw.Model;
 
 public class Worker {
     private int playerID;
+
+    //Identifies the worker among other workers of the same player
+    private int localID;
+
     private Tile position;
+    private boolean isAvailable = true;
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public int getLocalID() {
+        return localID;
+    }
+
+    public void setLocalID(int localID) {
+        this.localID = localID;
+    }
 
     public int getPlayerID() {
         return playerID;
@@ -24,6 +45,7 @@ public class Worker {
         else if(!Grid.getGrid().getTiles().contains(tile)) {
             System.out.println("The grid doesn't contain the tile");
         }
+
         else {
             tile.setWorker(this);
             position = tile;
@@ -33,5 +55,9 @@ public class Worker {
 
     public Tile getPosition() {
         return position;
+    }
+
+    public WorkerSimplified simplify() {
+        return new WorkerSimplified(playerID, localID);
     }
 }

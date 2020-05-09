@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Grid;
-
 public abstract class StandardActionBehaviour {
     private boolean isOptional;
     private boolean actionLock;

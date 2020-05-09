@@ -10,30 +10,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardApolloTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Worker worker1 = new Worker();
     Worker worker2 = new Worker();
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
-    Deck deck;
-    Card card = new Card("Apollo");
-    Card card1 = new Card("Carlo");
+    Card card = new Card("Apollo", CardsBuilder.GodPower.CanSwitch);
+    Card card1 = new Card("Carlo", null);
     Tile currentTile;
     Tile currentTile1;
     Tile currentTile2;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         deck = Deck.getDeck();
         deck.addCard(card);
         deck.addCard(card1);
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
         player.setWorker(worker);
@@ -62,10 +61,9 @@ class CardApolloTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        PlayersManager.getPlayersManager().deletePlayer(player1);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**
@@ -75,7 +73,7 @@ class CardApolloTest {
     void testApollo() {
         System.out.println("TEST: I'm testing Apollo Card");
         ArrayList<Tile> actualTiles = moveAction.getAvailableTilesForAction(worker);
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(currentTile1);
         // Check the available tiles for the worker movement

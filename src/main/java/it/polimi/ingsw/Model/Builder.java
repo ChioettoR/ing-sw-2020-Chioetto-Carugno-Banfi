@@ -2,12 +2,11 @@ package it.polimi.ingsw.Model;
 
 public class Builder {
 
-    //TODO: chiamato dal controller all'inizio
-    /**
-     * Builds the grid and all cards
-     */
     public void build(){
+        Grid.getGrid().reset();
+        PlayersManager.getPlayersManager().reset();
+        Deck.getDeck().reset();
+        Deck.getDeck().createCards();
         Grid.getGrid().createGrid(5,5);
-        new CardsBuilder().createCards();
     }
 }

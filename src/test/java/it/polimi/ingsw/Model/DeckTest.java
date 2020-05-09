@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DeckTest {
 
     Deck deck = Deck.getDeck();
-    Card card = new Card("Marcello");
-    Card card1 = new Card("Alberto");
-    Card card2 = new Card("Federico");
-    ArrayList<String> names = new ArrayList<String>();
+    Card card = new Card("Marcello", null);
+    Card card1 = new Card("Alberto", null);
+    Card card2 = new Card("Federico", null);
+    ArrayList<String> names = new ArrayList<>();
 
     @Test
     void addAndRandomPickTest() {
@@ -60,7 +60,7 @@ class DeckTest {
      * Picks Cards from the deck, asserts the changing of alreadyPicked and if the card is null when the deck is empty
      */
     public void pickCards() {
-        ArrayList<String> namesCopy = new ArrayList<String>(names);
+        ArrayList<String> namesCopy = new ArrayList<>(names);
 
         System.out.println("TEST: I'm picking cards");
 

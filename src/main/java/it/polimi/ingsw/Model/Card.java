@@ -3,10 +3,19 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public class Card {
-    private String name;
+    private final String name;
+    private CardsBuilder.GodPower godPower;
     private boolean alreadyPicked;
     private ArrayList<Action> actionOrder = new ArrayList<Action>();
-    private boolean completeTowersObserver;
+    private final boolean completeTowersObserver;
+
+    public CardsBuilder.GodPower getGodPower() {
+        return godPower;
+    }
+
+    public void setGodPower(CardsBuilder.GodPower godPower) {
+        this.godPower = godPower;
+    }
 
     public ArrayList<Action> getActionOrder() {
         return actionOrder;
@@ -25,8 +34,9 @@ public class Card {
      * @param name The name of the card
      * @param completeTowersObserver If it is true and there are at least 5 complete towers, the player with this card wins
      */
-    public Card(String name, boolean completeTowersObserver) {
+    public Card(String name, CardsBuilder.GodPower godPower, boolean completeTowersObserver) {
         this.name = name;
+        this.godPower = godPower;
         this.completeTowersObserver = completeTowersObserver;
     }
 
@@ -34,8 +44,9 @@ public class Card {
      * Creates a card
      * @param name The name of the card
      */
-    public Card(String name) {
+    public Card(String name, CardsBuilder.GodPower godPower) {
         this.name = name;
+        this.godPower = godPower;
         this.completeTowersObserver = false;
     }
 
@@ -75,5 +86,9 @@ public class Card {
                 buildActionArrayList.add((BuildAction) action);
         }
         return buildActionArrayList;
+    }
+
+    public CardSimplified simplify() {
+        return new CardSimplified(name);
     }
 }

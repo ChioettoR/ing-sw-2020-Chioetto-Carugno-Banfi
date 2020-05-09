@@ -1,13 +1,8 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
-
-public interface MoveAction extends Action {
-    public boolean isOptional();
-    public void setOptional(boolean isOptional);
-    public ArrayList<Tile> getAvailableTilesForAction(Worker worker);
-    public void move(Worker worker, Tile tileWhereMove);
-    public boolean canMove(Worker worker, Tile tileWhereMove);
-    public void setCantMoveUp(boolean canMoveUp);
-    public boolean isCantMoveUp();
+public interface MoveAction extends UserAction {
+    void move(Worker worker, Tile tileWhereMove);
+    boolean canMove(Worker worker, Tile tileWhereMove);
+    void setCantMoveUp(boolean canMoveUp);
+    boolean isCantMoveUp();
 }

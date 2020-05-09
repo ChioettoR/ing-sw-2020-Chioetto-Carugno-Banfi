@@ -15,16 +15,15 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
     @Override
     public void build(Worker worker, Tile tileWhereBuild, int newLevel) {
         if(canBuild(worker, tileWhereBuild, newLevel))
-            standardBuild(worker, tileWhereBuild, newLevel);
+            standardBuild(tileWhereBuild, newLevel);
     }
 
     /**
      * The standard build. It doesn't check any condition before building
-     * @param worker The worker that is building
      * @param tileWhereBuild The tile in which the worker will build
      * @param newLevel The block level you want to build
      */
-    public void standardBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+    public void standardBuild(Tile tileWhereBuild, int newLevel) {
         lastActionSave.saveBeforeBuild(tileWhereBuild);
         tileWhereBuild.setLevel(newLevel);
 
@@ -56,6 +55,11 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
         return (!isActionLock() && correctTile(worker.getPosition(), tileWhereBuild) && newLevel<=4 && newLevel == tileWhereBuild.getLevel()+1) && tileWhereBuild.isEmpty();
     }
 
+    @Override
+    public boolean canBuild(Worker worker, Tile tileWhereBuild) {
+        return canBuild(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);
+    }
+
     /**
      * Returns all the possible tiles in which the worker can build. The conditions checked are the standard ones
      * @param worker The worker that is building
@@ -64,8 +68,8 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
     @Override
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours( worker.getPosition());
-        ArrayList<Tile> newNeighboursTiles = new ArrayList<Tile>(neighboursTiles);
-        boolean buildable = false;
+        ArrayList<Tile> newNeighboursTiles = new ArrayList<>(neighboursTiles);
+        boolean buildable;
 
         for(Tile tile : neighboursTiles) {
             buildable = false;
@@ -95,8 +99,8 @@ public class BuildActionStandard extends StandardActionBehaviour implements Buil
      */
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action classWhereCheckBuild) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
-        ArrayList<Tile> newNeighboursTiles = new ArrayList<Tile>(neighboursTiles);
-        boolean buildable = false;
+        ArrayList<Tile> newNeighboursTiles = new ArrayList<>(neighboursTiles);
+        boolean buildable;
 
         for(Tile tile : neighboursTiles) {
             buildable = false;

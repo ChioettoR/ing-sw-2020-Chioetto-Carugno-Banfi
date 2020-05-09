@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StandardActionsTest {
-    Grid grid;
-    Worker worker = new Worker();
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
     Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
     MoveActionStandard moveActionStandard = new MoveActionStandard();
     BuildActionStandard buildActionStandard = new BuildActionStandard();
-    PlayersManager playersManager;
     Player player = new Player("Marcello");
-    Card card = new Card("Card");
+    Card card = new Card("Card", null);
 
     @AfterEach
     void tearDown() {
-        playersManager.deletePlayer(player);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     @BeforeEach
@@ -81,7 +81,7 @@ class StandardActionsTest {
         // Verifies if the standard worker building has been successful : the new level of the tile is updated
         // I'm trying to build a wrong level
         buildActionStandard.getAvailableTilesForAction(worker);
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));

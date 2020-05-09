@@ -10,24 +10,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CardAtlasTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Player player = new Player("Alberto");
-    Deck deck;
-    Card card = new Card("Atlas");
+    Card card = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
     Tile currentTile;
     Tile buildTile;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5,5);
-        deck = Deck.getDeck();
         deck.addCard(card);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         player.setWorker(worker);
         player.setCard(card);
@@ -47,9 +45,9 @@ public class CardAtlasTest {
 
     @AfterEach
     void tearDown() {
-        grid.destroyGrid();
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        deck.deleteAllCards();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**
@@ -60,12 +58,12 @@ public class CardAtlasTest {
         System.out.println("TEST: I'm testing Atlas Card");
         buildAction.build(worker, buildTile);
         //I'm trying to build a dome on a base block
-        assertFalse(buildAction.canBuild(worker, buildTile, 4));
+        assertTrue(buildAction.canBuild(worker, buildTile, 4));
 
         buildAction.build(worker, buildTile, 4 );
         //Checking if the build of the dome doesn't modify the effective level of the building below it
-        assertEquals(1, buildTile.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
+        assertEquals(4, buildTile.getLevel());
+        assertEquals(3, buildTile.getLevelsSize());
 
         Tile newBuildPosition = grid.getTiles().get(5);
         //I'm trying to build a dome on the ground level
@@ -74,7 +72,7 @@ public class CardAtlasTest {
         buildAction.build(worker, newBuildPosition, 4);
         //I'm checking the effective build of a dome on the ground level
         assertEquals(4, newBuildPosition.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
+        assertEquals(2, newBuildPosition.getLevelsSize());
 
         buildAction.undo();
         // Verifies if the undo functionality for the building has been successful
@@ -82,8 +80,8 @@ public class CardAtlasTest {
         assertEquals(1, newBuildPosition.getLevelsSize());
 
         buildAction.build(worker, newBuildPosition);
-        assertEquals(1, buildTile.getLevel());
-        assertEquals(2, buildTile.getLevelsSize());
+        assertEquals(1, newBuildPosition.getLevel());
+        assertEquals(2, newBuildPosition.getLevelsSize());
         buildAction.undo();
     }
 }

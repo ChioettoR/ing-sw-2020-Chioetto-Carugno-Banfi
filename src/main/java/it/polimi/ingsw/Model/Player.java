@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Player {
     private int ID = -1;
-    private String name;
+    private final String name;
     private Card card;
-    private ArrayList<Worker> workers;
+    private final ArrayList<Worker> workers;
 
     public Player(String name) {
-        workers = new ArrayList<Worker>();
+        workers = new ArrayList<>();
         this.name = name;
     }
 
@@ -36,8 +36,12 @@ public class Player {
      * Sets can move up to true
      */
     public void resetActionsValues() {
-        getCard().getMoveActions().forEach(moveAction -> moveAction.setCantMoveUp(false));
         getCard().getActionOrder().forEach(buildAction -> buildAction.setActionLock(false));
+        getWorkers().forEach(worker -> worker.setAvailable(true));
+    }
+
+    public void resetMoveUp() {
+        getCard().getMoveActions().forEach(moveAction -> moveAction.setCantMoveUp(false));
     }
 
     /**
@@ -67,13 +71,12 @@ public class Player {
      * @param worker The worker this player will control
      */
     public void setWorker(Worker worker) {
-        for(Worker w : workers) {
-            if (workers.contains(worker)) {
-                System.out.println("You're adding a worker already in the workers list");
-                return;
-            }
+        if (workers.contains(worker)) {
+            System.out.println("You're adding a worker already in the workers list");
+            return;
         }
         worker.setPlayerID(ID);
+        worker.setLocalID(workers.size()+1);
         workers.add(worker);
     }
 }

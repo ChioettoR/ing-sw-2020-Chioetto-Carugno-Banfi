@@ -3,11 +3,19 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public class LastActionSave {
-    public enum ActionType {MOVE, BUILD};
+
+    public enum ActionType {
+        MOVE, BUILD
+    }
+
     private ActionType lastActionType;
     private ArrayList<Worker> workers;
     private ArrayList<Tile> tiles;
     private Tile savedTile;
+
+    public ActionType getLastActionType() {
+        return lastActionType;
+    }
 
     /**
      * Saves the tile in which the worker will build
@@ -26,8 +34,8 @@ public class LastActionSave {
 
         lastActionType = ActionType.MOVE;
         savedTile = currentWorker.getPosition();
-        workers = new ArrayList<Worker>();
-        tiles = new ArrayList<Tile>();
+        workers = new ArrayList<>();
+        tiles = new ArrayList<>();
         workers.add(currentWorker);
         tiles.add(savedTile);
     }

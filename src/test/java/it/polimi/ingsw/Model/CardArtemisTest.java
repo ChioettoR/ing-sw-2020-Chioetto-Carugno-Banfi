@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,26 +10,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardArtemisTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Worker worker1 = new Worker();
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
-    Deck deck = Deck.getDeck();
-    Card card = new Card("Artemis");
-    Card card1 = new Card("Carlo");
+    Card card = new Card("Artemis", CardsBuilder.GodPower.CanMoveTwice);
+    Card card1 = new Card("Carlo", null);
     Tile currentTile;
     Tile currentTile1;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     MoveAction moveAction2;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
         player.setWorker(worker);
@@ -58,10 +56,9 @@ class CardArtemisTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        PlayersManager.getPlayersManager().deletePlayer(player1);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**
@@ -71,7 +68,7 @@ class CardArtemisTest {
     void testArtemis(){
         System.out.println("TEST: I'm testing Artemis Card");
         ArrayList<Tile> actualTiles = moveAction.getAvailableTilesForAction(worker);
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         expectedTiles.add(grid.getTiles().get(1));
         expectedTiles.add(grid.getTiles().get(5));
         // Check the available tiles for the worker movement

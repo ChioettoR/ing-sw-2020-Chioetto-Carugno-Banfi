@@ -1,18 +1,26 @@
 package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Random;
 
 public class Deck {
-    private ArrayList<Card> cardsList;
+    private final ArrayList<Card> cardsList = new ArrayList<>();
     private static Deck deck;
     Card completeTowersObserver;
     CardsBuilder cardsBuilder = new CardsBuilder();
 
     private Deck() {
-        cardsList = new ArrayList<Card>();
         deck = this;
+    }
+
+    public void reset() {
+        cardsList.clear();
+        completeTowersObserver = null;
+    }
+
+    public void createCards() {
+        ArrayList<Card> cardArrayList = cardsBuilder.createCards();
+        for(Card card : cardArrayList)
+            addCard(card);
     }
 
     public Card getCompleteTowersObserver() {
@@ -36,7 +44,7 @@ public class Deck {
             return null;
         }
 
-        ArrayList<Card> cardsListCopy = new ArrayList<Card>(cardsList);
+        ArrayList<Card> cardsListCopy = new ArrayList<>(cardsList);
         int randomIndex = (int) (Math.random() * cardsList.size());
         Card selectedCard = cardsListCopy.get(randomIndex);
 
@@ -54,7 +62,10 @@ public class Deck {
         }
 
         selectedCard.setAlreadyPicked(true);
-        cardsBuilder.createAction(selectedCard);
+
+        if(selectedCard.getGodPower()!=null)
+            cardsBuilder.createAction(selectedCard);
+
         return selectedCard;
     }
 
@@ -62,7 +73,7 @@ public class Deck {
      * Deletes all cards from the deck
      */
     public void deleteAllCards() {
-        ArrayList<Card> cardsListCopy = new ArrayList<Card>(cardsList);
+        ArrayList<Card> cardsListCopy = new ArrayList<>(cardsList);
         for(Card card : cardsListCopy)
             cardsList.remove(card);
     }
@@ -85,7 +96,7 @@ public class Deck {
         }
 
         for (Card card : cardsList) {
-            if (card.getName().compareTo(name) == 0)
+            if (card.getName().equals(name))
                 return card;
         }
         System.out.println("The deck doesn't contain the requested card");

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class MoveActionStandard extends StandardActionBehaviour implements MoveAction{
     private boolean cantMoveUp;
-    private WinManager winManager = new WinManager();
-    private LastActionSave lastActionSave = new LastActionSave();
-    private boolean actionLock = false;
+    private final LastActionSave lastActionSave = new LastActionSave();
 
     public void setCantMoveUp(boolean cantMoveUp) {
         this.cantMoveUp = cantMoveUp;
@@ -40,7 +38,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
         tileWhereMove.setWorker(worker);
         worker.setPosition(tileWhereMove);
         if (currentTile.getLevel() == 2 && tileWhereMove.getLevel() == 3) {
-            winManager.winCurrentPlayer();
+            PlayersManager.getPlayersManager().winCurrentPlayer();
         }
     }
 
@@ -56,7 +54,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
      */
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
-        if(actionLock)
+        if(isActionLock())
             return false;
         Tile currentTile = worker.getPosition();
         if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty() && !isActionLock()) {

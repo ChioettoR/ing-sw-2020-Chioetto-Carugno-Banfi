@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
     int length;
     int width;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         length = 5;
         width = 5;
         grid.createGrid(length, width);
@@ -20,7 +19,7 @@ class GridTest {
 
     @AfterEach
     void tearDown() {
-        grid.destroyGrid();
+        grid.reset();
     }
 
 

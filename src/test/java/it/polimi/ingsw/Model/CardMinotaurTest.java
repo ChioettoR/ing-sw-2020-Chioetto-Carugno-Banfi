@@ -10,30 +10,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardMinotaurTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Worker worker1 = new Worker();
     Worker worker2 = new Worker();
     Player player = new Player("Alberto");
     Player player1 = new Player("Marcello");
-    Deck deck;
-    Card card = new Card("Minotaur");
-    Card card1 = new Card("Philip");
+    Card card = new Card("Minotaur", CardsBuilder.GodPower.CanPush);
+    Card card1 = new Card("Philip", null);
     Tile currentTile;
     Tile currentTile1;
     Tile currentTile2;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
-        deck = Deck.getDeck();
         deck.addCard(card);
         deck.addCard(card1);
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
         player.setWorker(worker);
@@ -62,10 +60,9 @@ class CardMinotaurTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        PlayersManager.getPlayersManager().deletePlayer(player1);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**

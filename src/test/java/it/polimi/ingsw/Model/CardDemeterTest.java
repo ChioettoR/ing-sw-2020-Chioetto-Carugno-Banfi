@@ -10,22 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardDemeterTest {
 
-    Grid grid;
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
     Worker worker = new Worker();
     Player player = new Player("Alberto");
-    Deck deck = Deck.getDeck();
-    Card card = new Card("Demeter");
+    Card card = new Card("Demeter", CardsBuilder.GodPower.CanBuildTwiceDifferent);
     Tile currentTile;
-    ArrayList<Action> actionOrder = new ArrayList<Action>();
+    ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
     BuildAction buildAction2;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5, 5);
-        PlayersManager playersManager = PlayersManager.getPlayersManager();
         playersManager.addPlayer(player);
         player.setWorker(worker);
         player.setCard(card);
@@ -47,9 +46,9 @@ class CardDemeterTest {
 
     @AfterEach
     void tearDown() {
-        PlayersManager.getPlayersManager().deletePlayer(player);
-        deck.deleteAllCards();
-        grid.destroyGrid();
+        playersManager.reset();
+        deck.reset();
+        grid.reset();
     }
 
     /**

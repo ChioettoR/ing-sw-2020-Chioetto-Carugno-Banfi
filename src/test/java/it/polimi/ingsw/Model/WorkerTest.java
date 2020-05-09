@@ -4,20 +4,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WorkerTest {
 
+    Grid grid = Grid.getGrid();
     Tile tile;
     Tile tile1;
     Tile tile2 = new Tile(5,8);
     Tile nullTile = null;
-    Grid grid;
 
     @BeforeEach
     void setUp() {
-        grid = Grid.getGrid();
         grid.createGrid(5,5);
     }
 
@@ -28,7 +26,7 @@ class WorkerTest {
 
     @AfterEach
     void tearDown() {
-        grid.destroyGrid();
+        grid.reset();
     }
 
     /**

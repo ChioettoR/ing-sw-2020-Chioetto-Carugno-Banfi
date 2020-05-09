@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 public class IDManager {
 
-    static int uniqueID = 0;
+    private int uniqueID = 0;
 
     /**
      * Generates a unique numeric ID that will identify each player

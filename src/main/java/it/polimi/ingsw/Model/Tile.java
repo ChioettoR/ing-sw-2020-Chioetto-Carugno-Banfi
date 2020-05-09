@@ -3,11 +3,11 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public class Tile {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private boolean isEmpty = true;
     private Worker worker;
-    private ArrayList<Integer> levels = new ArrayList<Integer>();
+    private ArrayList<Integer> levels = new ArrayList<>();
 
     public int getX() {
         return x;
@@ -17,12 +17,20 @@ public class Tile {
         return y;
     }
 
+    public ArrayList<Integer> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(ArrayList<Integer> levels) {
+        this.levels = levels;
+    }
+
     /**
      * Returns the last level of the tile
      * @return The level of the tile
      */
     public int getLevel() {
-        if(levels==null || levels.size()==0) {
+        if(levels.size() == 0) {
             System.out.println("This tile has no levels");
             return -1;
         }
@@ -78,5 +86,14 @@ public class Tile {
         this.x = x;
         this.y = y;
         levels.add(0);
+    }
+
+    public TileSimplified simplify() {
+        WorkerSimplified workerSimplified;
+        if(worker==null)
+            workerSimplified = null;
+        else
+            workerSimplified = worker.simplify();
+        return new TileSimplified(x,y,getLevel(),workerSimplified);
     }
 }
