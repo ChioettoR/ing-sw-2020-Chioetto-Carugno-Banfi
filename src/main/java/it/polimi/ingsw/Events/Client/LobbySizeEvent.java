@@ -2,7 +2,7 @@ package it.polimi.ingsw.Events.Client;
 
 import java.io.Serializable;
 
-public class LobbySizeEvent implements Serializable {
+public class LobbySizeEvent extends ClientEvent implements Serializable {
     final int lobbySize;
 
     public int getLobbySize() {

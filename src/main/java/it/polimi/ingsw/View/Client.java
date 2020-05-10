@@ -1,20 +1,18 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Observer.Client.ClientObserver;
+
 import java.io.*;
 import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
-public class Client {
+public class Client implements ClientObserver {
 
     private final String ip;
     private final int port;
     Socket socket;
-    Scanner stdin;
     ObjectInputStream ois;
     ObjectOutputStream oos;
-    CLIStdinReader cliStdinReader;
-    CLIMessagesReader cliMessagesReader;
     private boolean login;
 
     public boolean isLogin() {
@@ -40,30 +38,43 @@ public class Client {
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
-    public void runCLI() throws IOException {
+    @Override
+    public void update(ClientEvent event) {
+
+        try { oos.writeObject(event); }
+        catch (IOException e) {
+            System.out.println("Unable to send messages to the server");
+            closeConnection();
+        }
+    }
+
+    public void run(MessagesReader messagesReader) throws IOException {
         connect();
         System.out.println("Connection established");
 
-        stdin = new Scanner(System.in);
-        cliStdinReader = new CLIStdinReader(this, stdin, oos);
-        cliMessagesReader = new CLIMessagesReader(this, ois);
-
-        Thread stdinRead = new Thread(() -> {
-            try { cliStdinReader.run(); }
-            catch (IllegalStateException | NoSuchElementException e) { System.out.println("Connection closed from the client side."); }
-            catch (IOException e) { System.out.println("Unable to send messages to the server"); }
-            finally { closeConnection(); }
-        });
-
         Thread messagesRead = new Thread(() -> {
-            try { cliMessagesReader.run(); }
+            Serializable object;
+            try {
+                while (true) {
+                    object = (Serializable) ois.readObject();
+                    messagesReader.read(object);
+                }
+            }
             catch (IOException e) { System.out.println("Connection closed from the server side"); }
             catch (ClassNotFoundException e) { System.err.println("Serializable class not found"); }
             finally { closeConnection(); }
         });
 
-        stdinRead.start();
         messagesRead.start();
+    }
+
+    public void runCLI() throws IOException {
+        run(new CLIMessagesReader(this));
+        new CLIStdinReader(this).run();
+    }
+
+    public void runGUI() throws IOException {
+
     }
 
     private void connect() throws IOException {
