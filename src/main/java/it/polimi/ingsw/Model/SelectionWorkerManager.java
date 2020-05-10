@@ -33,39 +33,12 @@ public class SelectionWorkerManager extends MessageObservable {
             return;
         }
 
-        if(!worker.isAvailable()) {
+        if(!worker.isAvailable())
             notifyError(new ErrorEvent("This worker is unavailable", playersManager.getCurrentPlayer().getID()));
-            if(!checkLose())
-                notifyRequest(new RequestEvent("Select another worker", playersManager.getCurrentPlayer().getID()));
-            else
-                checkWin();
-            return;
-        }
 
         playersManager.setCurrentWorker(playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID));
         notifySuccess(new SuccessEvent("Worker selected", playersManager.getCurrentPlayer().getID()));
         notifyRequest(new RequestEvent("Select the action you want to perform", playersManager.getCurrentPlayer().getID()));
         actionManager.transition();
-    }
-
-    private void checkWin() throws IOException {
-        int winnerID = playersManager.getPlayerWinnerID();
-        if(winnerID!=-1) {
-            notifyWin(new WinEvent("You win", playersManager.getCurrentPlayer().getID()));
-            for(Player p : playersManager.getNextPlayers())
-                notifyLose(new LoseEvent("You lose", p.getID()));
-            stateManager.setGameState(GameState.END);
-        }
-    }
-
-    private boolean checkLose() throws IOException {
-        ArrayList<Worker> workers = playersManager.getCurrentPlayer().getWorkers();
-        if(workers.stream().noneMatch(Worker::isAvailable)) {
-            notifyLose(new LoseEvent("You lose", playersManager.getCurrentPlayer().getID()));
-            playersManager.deleteCurrentPlayer();
-            playersManager.nextPlayerAndStartRound();
-            return true;
-        }
-        return false;
     }
 }

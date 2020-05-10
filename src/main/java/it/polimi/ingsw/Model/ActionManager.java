@@ -253,11 +253,25 @@ public class ActionManager extends ActionObservable{
 
     private boolean checkWin() throws IOException {
         int winnerID = playersManager.getPlayerWinnerID();
+        String winnerName = playersManager.getPlayerWithID(winnerID).getName();
         if(winnerID!=-1) {
-            notifyWin(new WinEvent("You win", playersManager.getCurrentPlayer().getID()));
-            for(Player p : playersManager.getNextPlayers())
-                notifyLose(new LoseEvent("You lose", p.getID()));
+            notifyWin(new WinEvent(winnerName, true, winnerID));
+            for(Player p : playersManager.getNextPlayers()) {
+                notifyWin(new WinEvent(winnerName, false, p.getID()));
+                notifyLose(new LoseEvent(p.getID()));
+            }
             stateManager.setGameState(GameState.END);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkLose() throws IOException {
+        ArrayList<Worker> workers = playersManager.getCurrentPlayer().getWorkers();
+        if(workers.stream().noneMatch(Worker::isAvailable)) {
+            notifyLose(new LoseEvent(playersManager.getCurrentPlayer().getID()));
+            playersManager.deleteCurrentPlayer();
+            playersManager.nextPlayerAndStartRound();
             return true;
         }
         return false;
@@ -266,7 +280,7 @@ public class ActionManager extends ActionObservable{
     private void moveMethod(MoveAction moveAction, Worker worker, Tile tile) throws IOException {
         ArrayList<Tile> oldGrid = saveOldGrid();
         moveAction.move(worker, tile);
-        //TODO: rendere disponibile UNDO
+        //TODO: UNDO
         lastAction = ActionType.MOVE;
         sendChange(oldGrid);
         if(checkWin())
@@ -282,27 +296,27 @@ public class ActionManager extends ActionObservable{
         else {
             ArrayList<Tile> oldGrid = saveOldGrid();
             buildAction.build(worker, tile);
+            //TODO: UNDO
             lastAction = ActionType.BUILD;
-            sendChange(oldGrid);
-            if(checkWin())
-                return;
-            index = availableActions.getBuildActionIndex() + 1;
-            stateManager.setGameState(GameState.ACTIONSELECTING);
-            sendActions();
+            sendBuildChanges(oldGrid);
         }
     }
 
-    private void buildWithLevelMethod(BuildAction buildAction, Worker worker, Tile tile, int buildLevel) throws IOException {
-        ArrayList<Tile> oldGrid = saveOldGrid();
-        buildAction.build(worker, tile, buildLevel);
-        //TODO: rendere disponibile UNDO
-        lastAction = ActionType.BUILD;
+    private void sendBuildChanges(ArrayList<Tile> oldGrid) throws IOException {
         sendChange(oldGrid);
         if(checkWin())
             return;
         index = availableActions.getBuildActionIndex() + 1;
         stateManager.setGameState(GameState.ACTIONSELECTING);
         sendActions();
+    }
+
+    private void buildWithLevelMethod(BuildAction buildAction, Worker worker, Tile tile, int buildLevel) throws IOException {
+        ArrayList<Tile> oldGrid = saveOldGrid();
+        buildAction.build(worker, tile, buildLevel);
+        //TODO: UNDO
+        lastAction = ActionType.BUILD;
+        sendBuildChanges(oldGrid);
     }
 
     private void classicMove() throws IOException {
@@ -377,7 +391,9 @@ public class ActionManager extends ActionObservable{
             resetGrid();
             sendChange(oldGrid);
             notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));
-            notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
+            if(!checkLose())
+                notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
+            else checkWin();
         }
         else {
             availableActions.addAvailableAction((UserAction) currentAction);
@@ -419,10 +435,9 @@ public class ActionManager extends ActionObservable{
 
             else if(currentAction instanceof UserAction) {
                 if((currentAction instanceof MoveAction && availableActions.getMoveActionIndex()!=-1) || (currentAction instanceof BuildAction && availableActions.getBuildActionIndex()!=-1))
-                    System.out.println("FATAL ERROR: Adding two actions of the same type to the available actions");
+                    System.err.println("FATAL ERROR: Adding two actions of the same type to the available actions");
                 else {
-                    if(availableTiles.size()!=0)
-                        availableActions.addAvailableAction((UserAction) currentAction);
+                    if(availableTiles.size()!=0) availableActions.addAvailableAction((UserAction) currentAction);
                     stateManager.setGameState(GameState.ACTIONSELECTING);
                     index++;
                     notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
