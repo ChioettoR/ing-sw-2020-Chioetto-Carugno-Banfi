@@ -253,8 +253,8 @@ public class ActionManager extends ActionObservable{
 
     private boolean checkWin() throws IOException {
         int winnerID = playersManager.getPlayerWinnerID();
-        String winnerName = playersManager.getPlayerWithID(winnerID).getName();
         if(winnerID!=-1) {
+            String winnerName = playersManager.getPlayerWithID(winnerID).getName();
             notifyWin(new WinEvent(winnerName, true, winnerID));
             for(Player p : playersManager.getNextPlayers()) {
                 notifyWin(new WinEvent(winnerName, false, p.getID()));
@@ -391,8 +391,10 @@ public class ActionManager extends ActionObservable{
             resetGrid();
             sendChange(oldGrid);
             notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));
-            if(!checkLose())
+            if(!checkLose()) {
                 notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
+                stateManager.setGameState(GameState.SELECTING);
+            }
             else checkWin();
         }
         else {
