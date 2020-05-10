@@ -67,14 +67,13 @@ public class Server {
         c.closeConnection();
         connections.remove(c);
         acceptedConnections.values().remove(c);
+        if(c.isFirstPlayer()) deregisterAllConnections();
     }
 
     public synchronized  void deregisterAllConnections() {
-        if(!lobbyCreated)
-            return;
+        if(!lobbyCreated) return;
         System.out.println("Deregister all clients...");
-        for(Connection connection : connections)
-            connection.closeConnection();
+        for(Connection connection : connections) connection.closeConnection();
         connections.clear();
         acceptedConnections.clear();
         names.clear();
@@ -87,33 +86,39 @@ public class Server {
         acceptedConnections.put(name, c);
         if (acceptedConnections.size() == lobbySize) {
             fullLobby=true;
-            List<String> keys = new ArrayList<>(acceptedConnections.keySet());
-            new Builder().build();
-            StateManager stateManager = new StateManager();
-            DrawCardManager drawCardManager = new DrawCardManager(stateManager);
-            PositioningManager positioningManager = new PositioningManager(stateManager);
-            ActionManager actionManager = new ActionManager(stateManager);
-            SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
-            Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager);
-            Controller controller = new Controller(communication);
-
-            for(int i=0; i<lobbySize; i++) {
-
-                Connection connection = acceptedConnections.get(keys.get(i));
-                Player player = new Player(keys.get(i));
-                PlayersManager.getPlayersManager().addPlayer(player);
-                RemoteView remoteView = new RemoteView(player.getID(), connection, controller);
-                connection.setRemoteView(remoteView);
-
-                drawCardManager.addObserver(remoteView);
-                positioningManager.addObserver(remoteView);
-                selectionWorkerManager.addObserver(remoteView);
-                actionManager.addObserver(remoteView);
-                stateManager.addObserver(remoteView);
-            }
-            stateManager.setGameState(GameState.DRAWING);
-            drawCardManager.transition();
+            setup();
         }
+    }
+
+    private void setup() throws IOException {
+
+        List<String> keys = new ArrayList<>(acceptedConnections.keySet());
+
+        new Builder().build();
+        StateManager stateManager = new StateManager();
+        DrawCardManager drawCardManager = new DrawCardManager(stateManager);
+        PositioningManager positioningManager = new PositioningManager(stateManager);
+        ActionManager actionManager = new ActionManager(stateManager);
+        SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
+        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager);
+        Controller controller = new Controller(communication);
+
+        for(int i=0; i<lobbySize; i++) {
+            Connection connection = acceptedConnections.get(keys.get(i));
+            Player player = new Player(keys.get(i));
+            PlayersManager.getPlayersManager().addPlayer(player);
+            RemoteView remoteView = new RemoteView(player.getID(), connection, controller);
+            connection.setRemoteView(remoteView);
+
+            drawCardManager.addObserver(remoteView);
+            positioningManager.addObserver(remoteView);
+            selectionWorkerManager.addObserver(remoteView);
+            actionManager.addObserver(remoteView);
+            stateManager.addObserver(remoteView);
+        }
+
+        stateManager.setGameState(GameState.DRAWING);
+        drawCardManager.transition();
     }
 
     public void lobby(Connection c, String name, int lobbySize) throws IOException {
@@ -129,6 +134,7 @@ public class Server {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
+
         System.out.println("Server listening on port: " + PORT);
         while(true) {
             try {
@@ -137,9 +143,7 @@ public class Server {
                 registerConnection(connection);
                 executor.submit(connection);
             }
-            catch (IOException e){
-                System.err.println("Connection error!");
-            }
+            catch (IOException e) { System.err.println("Connection error!"); }
         }
     }
 }
