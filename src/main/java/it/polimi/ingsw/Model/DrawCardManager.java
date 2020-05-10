@@ -25,17 +25,9 @@ public class DrawCardManager extends CardObservable{
         if(!stateManager.checkState(GameState.DRAWING))
             return;
 
-        ArrayList<CardSimplified> cardsSimplified = new ArrayList<>();
-        for (int i=0; i<playersManager.getPlayersNumber(); i++)
-            cardsSimplified.add(Deck.getDeck().pickCard().simplify());
+        ArrayList<CardSimplified> cardsSimplified = pickCardsFromDeck();
 
-        MiniDeckSimplified miniDeckSimplified = new MiniDeckSimplified(cardsSimplified);
-        pickedCards = new ArrayList<>();
-        remainingCards = miniDeckSimplified.getMiniDeck();
-        notifyDeck(new DeckEvent(miniDeckSimplified));
-        playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
-        stateManager.setGameState(GameState.PICKING);
+        sendCards(cardsSimplified);
     }
 
     public void pick(int playerID, String cardName) throws IOException {
@@ -45,39 +37,61 @@ public class DrawCardManager extends CardObservable{
         if(!stateManager.checkState(GameState.PICKING))
             return;
 
-        CardSimplified chosenCardSimplified;
-
         if(cardName.equals("")) {
             notifyError(new ErrorEvent("Please, specify the name of the card you want to pick", playersManager.getCurrentPlayer().getID()));
             return;
         }
+        boolean rightCard = playerPicksTheCard(cardName);
+        if(rightCard){
+            return;
+        }
 
+        checkWrongCard(cardName);
+    }
+
+    public void transition() throws IOException {
+        notifySuccess(new SuccessEvent("All players joined the lobby", -1));
+        notifyAllMessage(new AllMessageEvent("The game started"));
+        notifyRequest(new RequestEvent("Please, draw " + playersManager.getPlayersNumber() + " cards", PlayersManager.getPlayersManager().nextPlayer().getID()));
+    }
+
+    private ArrayList<CardSimplified> pickCardsFromDeck() {
+        ArrayList<CardSimplified> cardsSimplified = new ArrayList<>();
+        for (int i=0; i<playersManager.getPlayersNumber(); i++)
+            cardsSimplified.add(Deck.getDeck().pickCard().simplify());
+        return cardsSimplified;
+    }
+
+    private void sendCards(ArrayList<CardSimplified> cardsSimplified) throws IOException {
+        MiniDeckSimplified miniDeckSimplified = new MiniDeckSimplified(cardsSimplified);
+        pickedCards = new ArrayList<>();
+        remainingCards = miniDeckSimplified.getMiniDeck();
+        notifyDeck(new DeckEvent(miniDeckSimplified));
+        playersManager.nextPlayer();
+        notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
+        stateManager.setGameState(GameState.PICKING);
+    }
+
+    private boolean playerPicksTheCard(String cardName) throws IOException {
         for(CardSimplified cardSimplified : remainingCards) {
 
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
-                chosenCardSimplified = cardSimplified;
-                remainingCards.remove(chosenCardSimplified);
-                pickedCards.add(chosenCardSimplified);
-                playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
-                notifyCard(new CardEvent(chosenCardSimplified, playersManager.getCurrentPlayer().getID()));
-                ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
-                notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy)));
-                playersManager.nextPlayer();
+
+                pickCard(cardSimplified);
 
                 if(remainingCards.size()!=1)
                     notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
 
                 else {
-                    playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
-                    notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
-                    playersManager.nextPlayer();
-                    notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
-                    stateManager.setGameState(GameState.POSITIONING);
+                    nextPhase();
                 }
-                return;
+                return true;
             }
         }
+        return false;
+    }
 
+    private void checkWrongCard(String cardName) throws IOException {
         for(CardSimplified cardSimplified : pickedCards) {
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
                 notifyError(new ErrorEvent("Card already picked by another player", playersManager.getCurrentPlayer().getID()));
@@ -90,9 +104,22 @@ public class DrawCardManager extends CardObservable{
         notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));
     }
 
-    public void transition() throws IOException {
-        notifySuccess(new SuccessEvent("All players joined the lobby", -1));
-        notifyAllMessage(new AllMessageEvent("The game started"));
-        notifyRequest(new RequestEvent("Please, draw " + playersManager.getPlayersNumber() + " cards", PlayersManager.getPlayersManager().nextPlayer().getID()));
+    private void pickCard(CardSimplified cardSimplified) throws IOException {
+        CardSimplified chosenCardSimplified = cardSimplified;
+        remainingCards.remove(chosenCardSimplified);
+        pickedCards.add(chosenCardSimplified);
+        playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
+        notifyCard(new CardEvent(chosenCardSimplified, playersManager.getCurrentPlayer().getID()));
+        ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
+        notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy)));
+        playersManager.nextPlayer();
+    }
+
+    private void nextPhase() throws IOException {
+        playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
+        notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
+        playersManager.nextPlayer();
+        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
+        stateManager.setGameState(GameState.POSITIONING);
     }
 }

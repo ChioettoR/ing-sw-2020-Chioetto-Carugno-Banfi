@@ -26,40 +26,59 @@ public class PositioningManager extends ChangeObservable {
 
         if(currentWorkersNumber < playersManager.getPlayersNumber()*totalWorkersNumber) {
 
-            Tile tile = Grid.getGrid().getTile(x,y);
-            if(tile == null || !tile.isEmpty()) {
-                notifyError(new ErrorEvent("Invalid tile", playersManager.getCurrentPlayer().getID()));
-                notifyRequest(new RequestEvent("Select another tile", playersManager.getCurrentPlayer().getID()));
+            boolean wrongTile = checkWrongTile(x,y);
+            if(wrongTile)
                 return;
-            }
-            Worker worker = new Worker();
-            worker.setPosition(tile);
-            tile.setWorker(worker);
-            playersManager.getCurrentPlayer().setWorker(worker);
-            int workerID = worker.getLocalID();
-            TileSimplified tileSimplified = new TileSimplified(x, y, 0, new WorkerSimplified(playersManager.getCurrentPlayer().getID(), workerID));
-            ArrayList<TileSimplified> arrayList = new ArrayList<>();
-            arrayList.add(tileSimplified);
-            notify(new ChangeEvent(arrayList));
-            currentWorkersNumber++;
+
+            positionWorker(x,y);
 
             //If all players have finished positioning
-            if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber) {
-                stateManager.setGameState(GameState.SELECTING);
-                playersManager.nextPlayerAndStartRound();
-                notifyAllMessage(new AllMessageEvent("The round is started"));
-                notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
-            }
+            if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber)
+                phaseFinishedForAllPlayers();
 
             //If you have finished positioning
-            else if(currentWorkersNumber % totalWorkersNumber==0) {
-                playersManager.nextPlayer();
-                notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
-            }
+            else if(currentWorkersNumber % totalWorkersNumber==0)
+                phaseFinished();
 
             //If you have positioned the first worker only
             else
                 notifyRequest(new RequestEvent("Position your second worker", playersManager.getCurrentPlayer().getID()));
         }
+    }
+
+    private void phaseFinishedForAllPlayers() throws IOException {
+        stateManager.setGameState(GameState.SELECTING);
+        playersManager.nextPlayerAndStartRound();
+        notifyAllMessage(new AllMessageEvent("The round is started"));
+        notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+    }
+
+    private void phaseFinished() throws IOException {
+        playersManager.nextPlayer();
+        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
+    }
+
+    private boolean checkWrongTile(int x, int y) throws IOException {
+        Tile tile = Grid.getGrid().getTile(x,y);
+        if(tile == null || !tile.isEmpty()) {
+            notifyError(new ErrorEvent("Invalid tile", playersManager.getCurrentPlayer().getID()));
+            notifyRequest(new RequestEvent("Select another tile", playersManager.getCurrentPlayer().getID()));
+            return true;
+        }
+        return false;
+    }
+
+    private void positionWorker(int x, int y) throws IOException {
+        Tile tile = Grid.getGrid().getTile(x,y);
+        Worker worker = new Worker();
+        worker.setPosition(tile);
+        tile.setWorker(worker);
+        playersManager.getCurrentPlayer().setWorker(worker);
+        int workerID = worker.getLocalID();
+        TileSimplified tileSimplified = new TileSimplified(x, y, 0, new WorkerSimplified(playersManager.getCurrentPlayer().getID(), workerID));
+        ArrayList<TileSimplified> arrayList = new ArrayList<>();
+        arrayList.add(tileSimplified);
+        notify(new ChangeEvent(arrayList));
+        currentWorkersNumber++;
     }
 }
