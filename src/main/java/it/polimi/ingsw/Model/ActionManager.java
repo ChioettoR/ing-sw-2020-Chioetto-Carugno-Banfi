@@ -391,8 +391,10 @@ public class ActionManager extends ActionObservable{
             resetGrid();
             sendChange(oldGrid);
             notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));
-            if(!checkLose())
+            if(!checkLose()) {
                 notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID()));
+                stateManager.setGameState(GameState.SELECTING);
+            }
             else checkWin();
         }
         else {
