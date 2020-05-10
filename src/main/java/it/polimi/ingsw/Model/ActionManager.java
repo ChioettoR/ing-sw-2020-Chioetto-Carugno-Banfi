@@ -119,7 +119,7 @@ public class ActionManager extends ActionObservable{
             if(!buildAction.canBuild(worker, tile, buildLevel))
                 notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID()));
             else {
-               buildWithLevelMethod(buildAction, worker, tile, buildLevel);
+                buildWithLevelMethod(buildAction, worker, tile, buildLevel);
             }
         }
     }
@@ -253,8 +253,8 @@ public class ActionManager extends ActionObservable{
 
     private boolean checkWin() throws IOException {
         int winnerID = playersManager.getPlayerWinnerID();
-        String winnerName = playersManager.getPlayerWithID(winnerID).getName();
         if(winnerID!=-1) {
+            String winnerName = playersManager.getPlayerWithID(winnerID).getName();
             notifyWin(new WinEvent(winnerName, true, winnerID));
             for(Player p : playersManager.getNextPlayers()) {
                 notifyWin(new WinEvent(winnerName, false, p.getID()));
