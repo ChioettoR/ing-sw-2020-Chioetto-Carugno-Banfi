@@ -1,12 +1,18 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.CLI.CLIMessagesReader;
+import it.polimi.ingsw.Client.CLI.CLIStdinReader;
+import it.polimi.ingsw.CountdownInterface;
+import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Events.Client.PongEvent;
 import it.polimi.ingsw.Observer.Client.ClientObserver;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
 
-public class Client implements ClientObserver {
+public class Client implements ClientObserver, CountdownInterface {
 
     private final String ip;
     private final int port;
@@ -14,6 +20,9 @@ public class Client implements ClientObserver {
     ObjectInputStream ois;
     ObjectOutputStream oos;
     private boolean login;
+    Timer countdownTimer;
+    CountdownTask countdownTask;
+    boolean firstPing = true;
 
     public boolean isLogin() {
         return login;
@@ -60,7 +69,8 @@ public class Client implements ClientObserver {
                     messagesReader.read(object);
                 }
             }
-            catch (IOException e) { System.out.println("Connection closed from the server side"); }
+            catch (IOException e) {
+                System.out.println("Connection closed from the server side"); }
             catch (ClassNotFoundException e) { System.err.println("Serializable class not found"); }
             finally { closeConnection(); }
         });
@@ -82,5 +92,20 @@ public class Client implements ClientObserver {
         login = true;
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
+    }
+
+    public void pingReceived() {
+        if(!firstPing) countdownTimer.cancel();
+        update(new PongEvent());
+        countdownTimer = new Timer();
+        countdownTask = new CountdownTask(20,this);
+        countdownTimer.schedule(countdownTask, 0, 1000);
+        firstPing = false;
+    }
+
+    @Override
+    public void countdownEnded() {
+        System.err.println("Server is unreachable");
+        closeConnection();
     }
 }

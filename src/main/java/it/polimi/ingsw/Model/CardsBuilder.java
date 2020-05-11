@@ -918,13 +918,14 @@ public class CardsBuilder {
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
 
             final MoveActionStandard moveActionStandard = new MoveActionStandard();
-            int indexBuildAction = 1;
+            int indexBuildAction = 2;
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
                 if(canMove(worker, tileWhereMove)) {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(Grid.getGrid().isPerimeterTile(tileWhereMove)) {
+                        if(indexBuildAction>=actions.size()) indexBuildAction=2;
                        actions.add(indexBuildAction, this);
                        setOptional(true);
                        indexBuildAction++;
@@ -964,6 +965,11 @@ public class CardsBuilder {
 
             @Override
             public void undo() {
+                if(indexBuildAction==3) setOptional(false);
+                if(indexBuildAction>2) {
+                    indexBuildAction--;
+                    actions.remove(indexBuildAction);
+                }
                 moveActionStandard.undo();
             }
 

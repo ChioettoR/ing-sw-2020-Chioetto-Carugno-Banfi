@@ -1,5 +1,6 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.*;
 import org.junit.platform.commons.util.StringUtils;
 

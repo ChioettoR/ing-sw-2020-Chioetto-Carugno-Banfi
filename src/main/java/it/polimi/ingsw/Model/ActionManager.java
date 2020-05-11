@@ -1,13 +1,18 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.CountdownInterface;
+import it.polimi.ingsw.CountdownTask;
+import it.polimi.ingsw.Events.Client.ActionSelectEvent;
 import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Observer.Server.ActionObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
-public class ActionManager extends ActionObservable{
+public class ActionManager extends ActionObservable implements CountdownInterface {
     PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     private AvailableActions availableActions;
@@ -16,6 +21,17 @@ public class ActionManager extends ActionObservable{
     private final ArrayList<Worker> savedWorkers = new ArrayList<>();
     private final ArrayList<Tile> savedTiles = new ArrayList<>();
     private final ArrayList<ArrayList<Integer>> savedLevels = new ArrayList<>();
+    Timer undoTimer;
+    TimerTask undoTask;
+
+
+    @Override
+    public void countdownEnded() throws IOException {
+        undoTimer.cancel();
+        availableActions.removeAvailableActionName(ActionType.UNDO);
+        notifyError(new ErrorEvent("Undo unavailable", playersManager.getCurrentPlayer().getID()));
+        sendActions();
+    }
 
     private class AvailableActions {
         MoveAction moveAction;
@@ -48,6 +64,10 @@ public class ActionManager extends ActionObservable{
 
         public void addAvailableActionName(ActionType availableActionName) {
             availableActionsNames.add(availableActionName);
+        }
+
+        public void removeAvailableActionName(ActionType availableActionName) {
+            availableActionsNames.remove(availableActionName);
         }
 
         public void addAvailableAction(UserAction availableAction) {
@@ -280,14 +300,13 @@ public class ActionManager extends ActionObservable{
     private void moveMethod(MoveAction moveAction, Worker worker, Tile tile) throws IOException {
         ArrayList<Tile> oldGrid = saveOldGrid();
         moveAction.move(worker, tile);
-        //TODO: UNDO
         lastAction = ActionType.MOVE;
         sendChange(oldGrid);
-        if(checkWin())
-            return;
+        if(checkWin()) return;
         index = availableActions.getMoveActionIndex() + 1;
         stateManager.setGameState(GameState.ACTIONSELECTING);
-        sendActions();
+        undoCountdown();
+        //sendActions();
     }
 
     private void buildWithoutLevelMethod(BuildAction buildAction, Worker worker, Tile tile) throws IOException {
@@ -296,27 +315,35 @@ public class ActionManager extends ActionObservable{
         else {
             ArrayList<Tile> oldGrid = saveOldGrid();
             buildAction.build(worker, tile);
-            //TODO: UNDO
             lastAction = ActionType.BUILD;
             sendBuildChanges(oldGrid);
+            undoCountdown();
         }
     }
 
     private void sendBuildChanges(ArrayList<Tile> oldGrid) throws IOException {
         sendChange(oldGrid);
-        if(checkWin())
-            return;
+        if(checkWin()) return;
         index = availableActions.getBuildActionIndex() + 1;
         stateManager.setGameState(GameState.ACTIONSELECTING);
-        sendActions();
+        //sendActions();
     }
 
     private void buildWithLevelMethod(BuildAction buildAction, Worker worker, Tile tile, int buildLevel) throws IOException {
         ArrayList<Tile> oldGrid = saveOldGrid();
         buildAction.build(worker, tile, buildLevel);
-        //TODO: UNDO
         lastAction = ActionType.BUILD;
         sendBuildChanges(oldGrid);
+        undoCountdown();
+    }
+
+    private void undoCountdown() throws IOException {
+        availableActions.getAvailableActionsNames().clear();
+        availableActions.addAvailableActionName(ActionType.UNDO);
+        notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        undoTimer = new Timer();
+        undoTask = new CountdownTask(5, this);
+        undoTimer.schedule(undoTask, 0, 1000);
     }
 
     private void classicMove() throws IOException {
@@ -339,18 +366,19 @@ public class ActionManager extends ActionObservable{
     }
 
     private void classicUndo() throws IOException {
+        undoTimer.cancel();
         int moveIndex = availableActions.getMoveActionIndex();
         int buildIndex = availableActions.getBuildActionIndex();
         if(moveIndex==-1) index = buildIndex;
         else if(buildIndex==-1) index = moveIndex;
         else index = Math.min(moveIndex, buildIndex);
-        ArrayList<Tile> oldGrid = Grid.getGrid().getTiles();
+        ArrayList<Tile> oldGrid = saveOldGrid();
         if(lastAction==ActionType.MOVE)
             availableActions.getMoveAction().undo();
         else if(lastAction==ActionType.BUILD)
             availableActions.getBuildAction().undo();
         sendChange(oldGrid);
-        stateManager.setGameState(GameState.ACTIONSELECTING);
+        sendActions();
     }
 
     private boolean checkSize(ArrayList<Action> actionList) throws IOException {

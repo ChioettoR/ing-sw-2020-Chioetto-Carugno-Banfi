@@ -1,5 +1,7 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.CountdownInterface;
+import it.polimi.ingsw.Events.Client.PongEvent;
 import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
@@ -9,8 +11,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
 
-public class Connection implements Runnable {
+public class Connection implements Runnable, CountdownInterface {
 
     private final Socket socket;
     private ObjectOutputStream oos;
@@ -21,6 +24,8 @@ public class Connection implements Runnable {
     private final boolean firstPlayer;
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
+    Timer pingTimer;
+    PingPongTask pingPongTask;
 
     public boolean isFirstPlayer() {
         return firstPlayer;
@@ -55,6 +60,7 @@ public class Connection implements Runnable {
 
     public synchronized void closeConnection() {
         try{
+            pingTimer.cancel();
             socket.close();
             oos.close();
             ois.close();
@@ -168,9 +174,29 @@ public class Connection implements Runnable {
                 return;
             }
 
+            if(read instanceof PongEvent)
+                pongReceived();
+
             ClientEvent event = (ClientEvent) read;
             event.setPlayerID(remoteView.playerID);
             remoteView.sendMessage(event);
         }
+    }
+
+    public void startPing() {
+        pingTimer = new Timer();
+        pingPongTask = new PingPongTask(this);
+        pingTimer.schedule( pingPongTask, 10, 10000 );
+    }
+
+    private void pongReceived() {
+        System.out.println("PONG RECEIVED " + remoteView.playerID);
+        pingPongTask.cancelCountdown();
+    }
+
+    @Override
+    public void countdownEnded() {
+        System.out.println("Client " + remoteView.playerID + " unreachable");
+        closeConnection();
     }
 }

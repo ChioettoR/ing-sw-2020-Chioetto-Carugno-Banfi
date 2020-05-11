@@ -1,11 +1,13 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.Client;
+import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Model.TileSimplified;
 
 import java.io.Serializable;
 
-public class CLIMessagesReader implements MessagesReader{
+public class CLIMessagesReader implements MessagesReader {
 
     Client client;
 
@@ -16,7 +18,10 @@ public class CLIMessagesReader implements MessagesReader{
     @Override
     public void read(Serializable object) {
 
-        if (object instanceof RequestEvent)
+        if(object instanceof PingEvent)
+            client.pingReceived();
+
+        else if (object instanceof RequestEvent)
             System.out.println(((RequestEvent) object).getString());
 
         else if(object instanceof EndLoginEvent)
