@@ -80,12 +80,12 @@ public class Connection implements Runnable, CountdownInterface {
             if(firstPlayer) send(new MessageEvent("No lobbies found. Create one"));
             else send(new MessageEvent("Entered in " + server.getLobbyName() + "'s lobby of " + server.getLobbySize() + " players"));
 
-            send(new RequestEvent("What's your name?"));
+            send(new RequestEvent("What's your name?"));   //1-12
             waitName();
             send(new MessageEvent("Welcome " + name));
 
             if(firstPlayer) {
-                send(new RequestEvent("Insert lobby players number"));
+                send(new RequestEvent("Insert lobby players number"));   //1-13
                 int lobbySize = waitLobbySize();
                 server.lobby(this, name, lobbySize);
             }
@@ -109,13 +109,13 @@ public class Connection implements Runnable, CountdownInterface {
     private boolean unavailableLobby () throws IOException{
 
         if (!server.isLobbyCreated() && !firstPlayer) {
-            send(new ErrorEvent("Another player is already creating a lobby"));
+            send(new ErrorEvent("Another player is already creating a lobby"));  //4-13
             server.deregisterConnection(this);
             return true;
         }
 
         else if (server.isFullLobby()) {
-            send(new ErrorEvent("The lobby is full"));
+            send(new ErrorEvent("The lobby is full"));   //4-14
             server.deregisterConnection(this);
             return true;
         }
@@ -131,13 +131,13 @@ public class Connection implements Runnable, CountdownInterface {
             object = (Serializable) ois.readObject();
 
             while(!(object instanceof LoginNameEvent)) {
-                send(new ErrorEvent("Invalid input. Name required."));
-                send(new RequestEvent("Please, give me your name"));
+                send(new ErrorEvent("Invalid input. Name required."));   //4-15
+                send(new RequestEvent("What's your name?"));    //1-12
                 object = (Serializable) ois.readObject();
             }
 
             name = ((LoginNameEvent) object).getName();
-            if(!server.addName(name)) send(new ErrorEvent("This name has already been chosen"));
+            if(!server.addName(name)) send(new ErrorEvent("This name has already been chosen"));  //4-16
             else validName = true;
         }
     }
@@ -152,13 +152,13 @@ public class Connection implements Runnable, CountdownInterface {
             object = (Serializable) ois.readObject();
 
             while(!(object instanceof LobbySizeEvent)) {
-                send(new ErrorEvent("Invalid input. Number required."));
-                send(new RequestEvent("Please, insert lobby players number"));
+                send(new ErrorEvent("Invalid input. Number required."));   //4-17
+                send(new RequestEvent("Please, insert lobby players number"));  //1-13
                 object = (Serializable) ois.readObject();
             }
 
             lobbySize = ((LobbySizeEvent) object).getLobbySize();
-            if(!acceptedLobbySizes.contains(lobbySize)) send(new ErrorEvent("You can only create a 2/3 players lobby"));
+            if(!acceptedLobbySizes.contains(lobbySize)) send(new ErrorEvent("You can only create a 2/3 players lobby"));   //4-18
             else validInput = true;
         }
         return lobbySize;
@@ -170,7 +170,7 @@ public class Connection implements Runnable, CountdownInterface {
             Serializable read = (Serializable) ois.readObject();
 
             if(remoteView==null) {
-                send(new ErrorEvent("The game has not started yet. Please be patient"));
+                send(new ErrorEvent("The game has not started yet. Please be patient"));   //4-19
                 return;
             }
 

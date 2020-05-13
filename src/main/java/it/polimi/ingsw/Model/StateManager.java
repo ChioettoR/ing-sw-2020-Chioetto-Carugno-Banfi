@@ -24,7 +24,7 @@ public class StateManager extends MessageObservable {
 
     public synchronized boolean checkPlayerID(int playerID) throws IOException {
         if(playersManager.getCurrentPlayer().getID()!=playerID) {
-            notifyError(new ErrorEvent("It's not your turn!", playerID));
+            notifyError(new ErrorEvent("It's not your turn!", playerID));   //4-11
             return false;
         }
         return true;
@@ -32,7 +32,7 @@ public class StateManager extends MessageObservable {
 
     public boolean checkState(GameState gameState) throws IOException {
         if(this.gameState != gameState) {
-            notifyError(new ErrorEvent("Invalid input!", playersManager.getCurrentPlayer().getID()));
+            notifyError(new ErrorEvent("Invalid input!", playersManager.getCurrentPlayer().getID()));  //4-12
             return false;
         }
         return true;

@@ -42,7 +42,7 @@ public class PositioningManager extends ChangeObservable {
 
             //If you have positioned the first worker only
             else
-                notifyRequest(new RequestEvent("Position your second worker", playersManager.getCurrentPlayer().getID()));
+                notifyRequest(new RequestEvent("Position your second worker", playersManager.getCurrentPlayer().getID())); //1-09
         }
     }
 
@@ -50,19 +50,19 @@ public class PositioningManager extends ChangeObservable {
         stateManager.setGameState(GameState.SELECTING);
         playersManager.nextPlayerAndStartRound();
         notifyAllMessage(new AllMessageEvent("The round is started"));
-        notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));  //1-03
     }
 
     private void phaseFinished() throws IOException {
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));  //1-08
     }
 
     private boolean checkWrongTile(int x, int y) throws IOException {
         Tile tile = Grid.getGrid().getTile(x,y);
         if(tile == null || !tile.isEmpty()) {
-            notifyError(new ErrorEvent("Invalid tile", playersManager.getCurrentPlayer().getID()));
-            notifyRequest(new RequestEvent("Select another tile", playersManager.getCurrentPlayer().getID()));
+            notifyError(new ErrorEvent("Invalid tile", playersManager.getCurrentPlayer().getID()));  //4-08
+            notifyRequest(new RequestEvent("Select another tile", playersManager.getCurrentPlayer().getID())); //1-10
             return true;
         }
         return false;

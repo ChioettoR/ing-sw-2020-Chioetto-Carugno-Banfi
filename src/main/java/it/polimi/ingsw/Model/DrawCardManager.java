@@ -38,7 +38,7 @@ public class DrawCardManager extends CardObservable{
             return;
 
         if(cardName.equals("")) {
-            notifyError(new ErrorEvent("Please, specify the name of the card you want to pick", playersManager.getCurrentPlayer().getID()));
+            notifyError(new ErrorEvent("Please, specify the name of the card you want to pick", playersManager.getCurrentPlayer().getID())); //4-05
             return;
         }
         boolean rightCard = playerPicksTheCard(cardName);
@@ -50,9 +50,9 @@ public class DrawCardManager extends CardObservable{
     }
 
     public void transition() throws IOException {
-        notifySuccess(new SuccessEvent("All players joined the lobby", -1));
+        notifySuccess(new SuccessEvent("All players joined the lobby", -1)); //2-01
         notifyAllMessage(new AllMessageEvent("The game started"));
-        notifyRequest(new RequestEvent("Please, draw " + playersManager.getPlayersNumber() + " cards", PlayersManager.getPlayersManager().nextPlayer().getID()));
+        notifyRequest(new RequestEvent("Please, draw " + playersManager.getPlayersNumber() + " cards", PlayersManager.getPlayersManager().nextPlayer().getID())); //1-05
     }
 
     private ArrayList<CardSimplified> pickCardsFromDeck() {
@@ -68,7 +68,7 @@ public class DrawCardManager extends CardObservable{
         remainingCards = miniDeckSimplified.getMiniDeck();
         notifyDeck(new DeckEvent(miniDeckSimplified));
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID())); //1-06
         stateManager.setGameState(GameState.PICKING);
     }
 
@@ -80,7 +80,7 @@ public class DrawCardManager extends CardObservable{
                 pickCard(cardSimplified);
 
                 if(remainingCards.size()!=1)
-                    notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
+                    notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));  //1-06
 
                 else {
                     nextPhase();
@@ -94,14 +94,14 @@ public class DrawCardManager extends CardObservable{
     private void checkWrongCard(String cardName) throws IOException {
         for(CardSimplified cardSimplified : pickedCards) {
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
-                notifyError(new ErrorEvent("Card already picked by another player", playersManager.getCurrentPlayer().getID()));
-                notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));
+                notifyError(new ErrorEvent("Card already picked by another player", playersManager.getCurrentPlayer().getID())); //4-06
+                notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID())); //1-07
                 return;
             }
         }
 
-        notifyError(new ErrorEvent("Invalid card", playersManager.getCurrentPlayer().getID()));
-        notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));
+        notifyError(new ErrorEvent("Invalid card", playersManager.getCurrentPlayer().getID())); //4-07
+        notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));  //1-07
     }
 
     private void pickCard(CardSimplified cardSimplified) throws IOException {
@@ -119,7 +119,7 @@ public class DrawCardManager extends CardObservable{
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
         notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
+        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID())); //1-08
         stateManager.setGameState(GameState.POSITIONING);
     }
 }
