@@ -27,42 +27,37 @@ public class PositioningManager extends ChangeObservable {
         if(currentWorkersNumber < playersManager.getPlayersNumber()*totalWorkersNumber) {
 
             boolean wrongTile = checkWrongTile(x,y);
-            if(wrongTile)
-                return;
+            if(wrongTile) return;
 
             positionWorker(x,y);
 
             //If all players have finished positioning
-            if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber)
-                phaseFinishedForAllPlayers();
+            if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber) phaseFinishedForAllPlayers();
 
             //If you have finished positioning
-            else if(currentWorkersNumber % totalWorkersNumber==0)
-                phaseFinished();
+            else if(currentWorkersNumber % totalWorkersNumber==0) phaseFinished();
 
             //If you have positioned the first worker only
-            else
-                notifyRequest(new RequestEvent("Position your second worker", playersManager.getCurrentPlayer().getID())); //1-09
+            else notifyMessage(new MessageEvent(109, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         }
     }
 
     private void phaseFinishedForAllPlayers() throws IOException {
         stateManager.setGameState(GameState.SELECTING);
         playersManager.nextPlayerAndStartRound();
-        notifyAllMessage(new AllMessageEvent("The round is started"));
-        notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));  //1-03
+        notifyMessage(new MessageEvent(103, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     private void phaseFinished() throws IOException {
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));  //1-08
+        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     private boolean checkWrongTile(int x, int y) throws IOException {
         Tile tile = Grid.getGrid().getTile(x,y);
         if(tile == null || !tile.isEmpty()) {
-            notifyError(new ErrorEvent("Invalid tile", playersManager.getCurrentPlayer().getID()));  //4-08
-            notifyRequest(new RequestEvent("Select another tile", playersManager.getCurrentPlayer().getID())); //1-10
+            notifyMessage(new MessageEvent(408, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+            notifyMessage(new MessageEvent(110, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
             return true;
         }
         return false;

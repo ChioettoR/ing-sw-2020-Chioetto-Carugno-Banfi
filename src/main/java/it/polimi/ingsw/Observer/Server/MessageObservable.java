@@ -21,42 +21,10 @@ public class MessageObservable{
         }
     }
 
-    public void notifyError(ErrorEvent errorEvent) throws IOException {
-        synchronized (observers) {
-            for (ServerObserver observer : observers) {
-                observer.update(errorEvent);
-            }
-        }
-    }
-
-    public void notifySuccess(SuccessEvent successEvent) throws IOException {
-        synchronized (observers) {
-            for (ServerObserver observer : observers) {
-                observer.update(successEvent);
-            }
-        }
-    }
-
-    public void notifyRequest(RequestEvent requestEvent) throws IOException {
-        synchronized (observers) {
-            for (ServerObserver observer : observers) {
-                observer.update(requestEvent);
-            }
-        }
-    }
-
     public void notifyMessage(MessageEvent messageEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
                 observer.update(messageEvent);
-            }
-        }
-    }
-
-    public void notifyAllMessage(AllMessageEvent allMessageEvent) throws IOException {
-        synchronized (observers) {
-            for (ServerObserver observer : observers) {
-                observer.update(allMessageEvent);
             }
         }
     }

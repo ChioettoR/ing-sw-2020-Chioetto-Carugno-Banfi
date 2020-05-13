@@ -13,10 +13,20 @@ public class CLIStdinReader {
 
     Client client;
     Scanner stdin;
+    boolean isLogin = true;
+    boolean waiting = false;
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
 
     public CLIStdinReader(Client client) {
         this.client = client;
         stdin = new Scanner(System.in);
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -33,8 +43,9 @@ public class CLIStdinReader {
 
     private void read(String[] strings) throws IOException {
 
-        if(client.isLogin())
-            loginEvents(strings);
+        if(waiting) waitingEvents();
+
+        if(isLogin) loginEvents(strings);
 
         else if(strings.length==1)
             readOneString(strings[0]);
@@ -42,7 +53,7 @@ public class CLIStdinReader {
         else if(strings.length==2)
             readTwoStrings(strings[0], strings[1]);
 
-        else if(strings.length==3 && !client.isLogin())
+        else if(strings.length==3)
             readThreeString(strings[0], strings[1], strings[2]);
 
         else unknownInput();
@@ -55,8 +66,6 @@ public class CLIStdinReader {
 
         else if(isGridPosition(string)) {
             int[] coordinates = readGridString(string);
-            System.out.println(coordinates[0]);
-            System.out.println(coordinates[1]);
             client.update(new PositioningEvent(coordinates[0], coordinates[1]));
         }
 
@@ -95,7 +104,7 @@ public class CLIStdinReader {
             buildEventWithLevel(secondString, Integer.parseInt(thirdString));
     }
 
-    private void loginEvents(String[] strings) throws IOException {
+    private void loginEvents(String[] strings) {
 
         if(strings.length==1) {
             if(isNumeric(strings[0])) client.update(new LobbySizeEvent(Integer.parseInt(strings[0])));
@@ -106,6 +115,10 @@ public class CLIStdinReader {
             System.out.println("Names longer than one words are not accepted");
 
         else unknownInput();
+    }
+
+    private void waitingEvents() {
+        System.out.println("Waiting...");
     }
 
     private void actionEvents(String actionString, String gridString) throws IOException {
@@ -119,7 +132,7 @@ public class CLIStdinReader {
         else if(actionString.equalsIgnoreCase("build"))
             client.update(new BuildDecisionEvent(x, y));
 
-        else unknownInput();
+        else { unknownInput(); }
     }
 
     private void buildEventWithLevel(String gridString, int buildLevel) throws IOException {

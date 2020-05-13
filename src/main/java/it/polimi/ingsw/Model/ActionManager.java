@@ -29,7 +29,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     public void countdownEnded() throws IOException {
         undoTimer.cancel();
         availableActions.removeAvailableActionName(ActionType.UNDO);
-        notifyError(new ErrorEvent("Undo unavailable", playersManager.getCurrentPlayer().getID())); // 4-01
+        notifyMessage(new MessageEvent(401, playersManager.getCurrentPlayer().getID()));
         sendActions();
     }
 
@@ -103,7 +103,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             return;
 
         if(!availableActions.getAvailableActionsNames().contains(ActionType.MOVE)) {
-            notifyError(new ErrorEvent("Invalid action!", playersManager.getCurrentPlayer().getID())); //4-02
+            notifyMessage(new MessageEvent(402, playersManager.getCurrentPlayer().getID()));
             return;
         }
 
@@ -111,12 +111,8 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         Worker worker = playersManager.getCurrentWorker();
         Tile tile = Grid.getGrid().getTile(x, y);
 
-        if(!moveAction.canMove(worker, tile))
-            notifyError(new ErrorEvent("You can't move in this tile", playersManager.getCurrentPlayer().getID())); //4-03
-
-        else {
-            moveMethod(moveAction, worker, tile);
-        }
+        if(!moveAction.canMove(worker, tile))   notifyMessage(new MessageEvent(403, playersManager.getCurrentPlayer().getID()));
+        else moveMethod(moveAction, worker, tile);
     }
 
     public void build(int playerID, int x, int y, int buildLevel) throws IOException {
@@ -136,11 +132,8 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
 
         else {
-            if(!buildAction.canBuild(worker, tile, buildLevel))
-                notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID())); //4-04
-            else {
-                buildWithLevelMethod(buildAction, worker, tile, buildLevel);
-            }
+            if(!buildAction.canBuild(worker, tile, buildLevel)) notifyMessage(new MessageEvent(404, playersManager.getCurrentPlayer().getID()));
+            else buildWithLevelMethod(buildAction, worker, tile, buildLevel);
         }
     }
 
@@ -153,7 +146,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             return;
 
         if(!availableActions.getAvailableActionsNames().contains(ActionType.valueOf(action))) {
-            notifyError(new ErrorEvent("Invalid action!", playersManager.getCurrentPlayer().getID())); //4-02
+            notifyMessage(new MessageEvent(402, playersManager.getCurrentPlayer().getID()));
             return;
         }
 
@@ -310,8 +303,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     }
 
     private void buildWithoutLevelMethod(BuildAction buildAction, Worker worker, Tile tile) throws IOException {
-        if(!buildAction.canBuild(worker, tile))
-            notifyError(new ErrorEvent("You can't build in this tile", playersManager.getCurrentPlayer().getID())); //4-04
+        if(!buildAction.canBuild(worker, tile)) notifyMessage(new MessageEvent(404, playersManager.getCurrentPlayer().getID()));
         else {
             ArrayList<Tile> oldGrid = saveOldGrid();
             buildAction.build(worker, tile);
@@ -350,14 +342,14 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         ArrayList<Tile> availableTiles = availableActions.getMoveAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
         notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-        notifyRequest(new RequestEvent("Where do you want to move?", playersManager.getCurrentPlayer().getID()));  //1-01
+        notifyMessage(new MessageEvent(101, playersManager.getCurrentPlayer().getID()));
     }
 
     private void classicBuild() throws IOException {
         ArrayList<Tile> availableTiles = availableActions.getBuildAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
         notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
-        notifyRequest(new RequestEvent("Where do you want to build?", playersManager.getCurrentPlayer().getID())); // 1-02
+        notifyMessage(new MessageEvent(102, playersManager.getCurrentPlayer().getID()));
     }
 
     private void classicEndRound() throws IOException {
@@ -386,7 +378,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             playersManager.nextPlayerAndStartRound();
             index = 0;
             stateManager.setGameState(GameState.SELECTING);
-            notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID())); //1-03
+            notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
             return true;
         }
         return false;
@@ -399,7 +391,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             playersManager.nextPlayerAndStartRound();
             index = 0;
             stateManager.setGameState(GameState.SELECTING);
-            notifyRequest(new RequestEvent("Choose your worker", playersManager.getCurrentPlayer().getID()));  //1-03
+            notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
         }
         else sendActions();
     }
@@ -418,9 +410,9 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             ArrayList<Tile> oldGrid = saveOldGrid();
             resetGrid();
             sendChange(oldGrid);
-            notifyMessage(new MessageEvent("Your worker can't play", playersManager.getCurrentPlayer().getID()));  //3-01
+            notifyMessage(new MessageEvent(301, playersManager.getCurrentPlayer().getID()));
             if(!checkLose()) {
-                notifyRequest(new RequestEvent("Choose another worker", playersManager.getCurrentPlayer().getID())); //1-04
+                notifyMessage(new MessageEvent(104, playersManager.getCurrentPlayer().getID()));
                 stateManager.setGameState(GameState.SELECTING);
             }
             else checkWin();

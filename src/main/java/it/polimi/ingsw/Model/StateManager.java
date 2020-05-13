@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.ErrorEvent;
+import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Observer.Server.MessageObservable;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class StateManager extends MessageObservable {
 
     public synchronized boolean checkPlayerID(int playerID) throws IOException {
         if(playersManager.getCurrentPlayer().getID()!=playerID) {
-            notifyError(new ErrorEvent("It's not your turn!", playerID));   //4-11
+            notifyMessage(new MessageEvent(411, playerID));
             return false;
         }
         return true;
@@ -32,7 +32,7 @@ public class StateManager extends MessageObservable {
 
     public boolean checkState(GameState gameState) throws IOException {
         if(this.gameState != gameState) {
-            notifyError(new ErrorEvent("Invalid input!", playersManager.getCurrentPlayer().getID()));  //4-12
+            notifyMessage(new MessageEvent(412, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
             return false;
         }
         return true;
