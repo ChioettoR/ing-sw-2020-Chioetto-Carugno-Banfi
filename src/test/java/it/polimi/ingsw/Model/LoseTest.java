@@ -72,7 +72,7 @@ public class LoseTest implements ServerObserver {
     @Override
     public void update(ServerEvent serverEvent) throws IOException {
 
-        if(serverEvent instanceof MessageEvent || serverEvent instanceof RequestEvent || serverEvent instanceof ErrorEvent || serverEvent instanceof AllMessageEvent || serverEvent instanceof SuccessEvent )
+        if(serverEvent instanceof MessageEvent)
             return;
 
         if(updateCounter==0) {

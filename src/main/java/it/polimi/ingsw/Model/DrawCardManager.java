@@ -38,7 +38,7 @@ public class DrawCardManager extends CardObservable{
             return;
 
         if(cardName.equals("")) {
-            notifyError(new ErrorEvent("Please, specify the name of the card you want to pick", playersManager.getCurrentPlayer().getID()));
+            notifyMessage(new MessageEvent(405, playersManager.getCurrentPlayer().getID()));
             return;
         }
         boolean rightCard = playerPicksTheCard(cardName);
@@ -50,9 +50,8 @@ public class DrawCardManager extends CardObservable{
     }
 
     public void transition() throws IOException {
-        notifySuccess(new SuccessEvent("All players joined the lobby", -1));
-        notifyAllMessage(new AllMessageEvent("The game started"));
-        notifyRequest(new RequestEvent("Please, draw " + playersManager.getPlayersNumber() + " cards", PlayersManager.getPlayersManager().nextPlayer().getID()));
+        notifyMessage(new MessageEvent(201, -1));
+        notifyMessage(new MessageEvent(105, PlayersManager.getPlayersManager().nextPlayer().getID()));
     }
 
     private ArrayList<CardSimplified> pickCardsFromDeck() {
@@ -68,7 +67,7 @@ public class DrawCardManager extends CardObservable{
         remainingCards = miniDeckSimplified.getMiniDeck();
         notifyDeck(new DeckEvent(miniDeckSimplified));
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         stateManager.setGameState(GameState.PICKING);
     }
 
@@ -76,15 +75,9 @@ public class DrawCardManager extends CardObservable{
         for(CardSimplified cardSimplified : remainingCards) {
 
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
-
                 pickCard(cardSimplified);
-
-                if(remainingCards.size()!=1)
-                    notifyRequest(new RequestEvent("Pick your card", playersManager.getCurrentPlayer().getID()));
-
-                else {
-                    nextPhase();
-                }
+                if(remainingCards.size()!=1) notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+                else nextPhase();
                 return true;
             }
         }
@@ -94,22 +87,20 @@ public class DrawCardManager extends CardObservable{
     private void checkWrongCard(String cardName) throws IOException {
         for(CardSimplified cardSimplified : pickedCards) {
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
-                notifyError(new ErrorEvent("Card already picked by another player", playersManager.getCurrentPlayer().getID()));
-                notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));
+                notifyMessage(new MessageEvent(406, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+                notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
                 return;
             }
         }
-
-        notifyError(new ErrorEvent("Invalid card", playersManager.getCurrentPlayer().getID()));
-        notifyRequest(new RequestEvent("Pick another card", playersManager.getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(407, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     private void pickCard(CardSimplified cardSimplified) throws IOException {
-        CardSimplified chosenCardSimplified = cardSimplified;
-        remainingCards.remove(chosenCardSimplified);
-        pickedCards.add(chosenCardSimplified);
+        remainingCards.remove(cardSimplified);
+        pickedCards.add(cardSimplified);
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
-        notifyCard(new CardEvent(chosenCardSimplified, playersManager.getCurrentPlayer().getID()));
+        notifyCard(new CardEvent(cardSimplified, playersManager.getCurrentPlayer().getID()));
         ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
         notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy)));
         playersManager.nextPlayer();
@@ -119,7 +110,7 @@ public class DrawCardManager extends CardObservable{
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
         notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
         playersManager.nextPlayer();
-        notifyRequest(new RequestEvent("Position your first worker", playersManager.getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         stateManager.setGameState(GameState.POSITIONING);
     }
 }

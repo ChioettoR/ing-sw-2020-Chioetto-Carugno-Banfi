@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.CLI.CLIMessagesReader;
+import it.polimi.ingsw.Client.CLI.CLIEventsCommunication;
 import it.polimi.ingsw.Client.CLI.CLIStdinReader;
 import it.polimi.ingsw.CountdownInterface;
 import it.polimi.ingsw.CountdownTask;
@@ -19,18 +19,9 @@ public class Client implements ClientObserver, CountdownInterface {
     Socket socket;
     ObjectInputStream ois;
     ObjectOutputStream oos;
-    private boolean login;
     Timer countdownTimer;
     CountdownTask countdownTask;
     boolean firstPing = true;
-
-    public boolean isLogin() {
-        return login;
-    }
-
-    public void setLogin(boolean login) {
-        this.login = login;
-    }
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -57,7 +48,7 @@ public class Client implements ClientObserver, CountdownInterface {
         }
     }
 
-    public void run(MessagesReader messagesReader) throws IOException {
+    public void run(EventsReader eventsReader) throws IOException {
         connect();
         System.out.println("Connection established");
 
@@ -66,11 +57,10 @@ public class Client implements ClientObserver, CountdownInterface {
             try {
                 while (true) {
                     object = (Serializable) ois.readObject();
-                    messagesReader.read(object);
+                    eventsReader.read(object);
                 }
             }
-            catch (IOException e) {
-                System.out.println("Connection closed from the server side"); }
+            catch (IOException e) { System.out.println("Connection closed from the server side"); }
             catch (ClassNotFoundException e) { System.err.println("Serializable class not found"); }
             finally { closeConnection(); }
         });
@@ -79,17 +69,20 @@ public class Client implements ClientObserver, CountdownInterface {
     }
 
     public void runCLI() throws IOException {
-        run(new CLIMessagesReader(this));
-        new CLIStdinReader(this).run();
+
+        CLIStdinReader cliStdinReader = new CLIStdinReader(this);
+        CLIEventsCommunication cliEventsCommunication = new CLIEventsCommunication(cliStdinReader);
+
+        run(new EventsReader(this, cliEventsCommunication));
+        cliStdinReader.run();
     }
 
     public void runGUI() throws IOException {
-
+        
     }
 
     private void connect() throws IOException {
         socket = new Socket(this.ip, this.port);
-        login = true;
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
     }

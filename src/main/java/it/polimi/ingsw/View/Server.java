@@ -23,6 +23,7 @@ public class Server {
     private String lobbyName;
     private final Map<String, Connection> acceptedConnections = new LinkedHashMap<>();
     private final ArrayList<String> names = new ArrayList<>();
+    static final Object waiting = new Object();
 
     public boolean addName(String name) {
         if(!names.contains(name)) {
@@ -30,6 +31,10 @@ public class Server {
             return true;
         }
         return false;
+    }
+
+    public void awakeConnections() {
+        synchronized (waiting) { waiting.notifyAll();}
     }
 
     public int getLobbySize() {
@@ -49,7 +54,7 @@ public class Server {
     }
 
     public int getPlayersLeft() {
-        return lobbySize - connections.size();
+        return lobbySize - acceptedConnections.size();
     }
 
     private synchronized void registerConnection(Connection c) {
@@ -63,15 +68,18 @@ public class Server {
     }
 
     public synchronized void deregisterConnection(Connection c) {
+        if(c.isFirstPlayer()) {
+            if (lobbyCreated) deregisterAllConnections();
+            else { if(connections.size()>1) connections.get(1).setFirstPlayer(true); }
+        }
         names.remove(c.getName());
-        c.closeConnection();
         connections.remove(c);
         acceptedConnections.values().remove(c);
-        if(c.isFirstPlayer()) deregisterAllConnections();
+        c.closeConnection();
+        awakeConnections();
     }
 
     public synchronized  void deregisterAllConnections() {
-        if(!lobbyCreated) return;
         System.out.println("Deregister all clients...");
         for(Connection connection : connections) connection.closeConnection();
         connections.clear();

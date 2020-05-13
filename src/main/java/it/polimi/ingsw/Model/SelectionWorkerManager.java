@@ -28,17 +28,16 @@ public class SelectionWorkerManager extends MessageObservable {
         Worker worker = playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID);
 
         if(worker==null) {
-            notifyError(new ErrorEvent("It's not your worker!", playersManager.getCurrentPlayer().getID()));
-            notifyRequest(new RequestEvent("Select another worker", playersManager.getCurrentPlayer().getID()));
+            notifyMessage(new MessageEvent(409, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+            notifyMessage(new MessageEvent(104, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
             return;
         }
 
-        if(!worker.isAvailable())
-            notifyError(new ErrorEvent("This worker is unavailable", playersManager.getCurrentPlayer().getID()));
+        if(!worker.isAvailable()) notifyMessage(new MessageEvent(410, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
 
         playersManager.setCurrentWorker(playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID));
-        notifySuccess(new SuccessEvent("Worker selected", playersManager.getCurrentPlayer().getID()));
-        notifyRequest(new RequestEvent("Select the action you want to perform", playersManager.getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(202, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(111, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         actionManager.transition();
     }
 }

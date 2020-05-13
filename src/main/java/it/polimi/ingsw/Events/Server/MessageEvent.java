@@ -3,18 +3,18 @@ package it.polimi.ingsw.Events.Server;
 import java.io.Serializable;
 
 public class MessageEvent extends ServerEvent implements Serializable {
-    private final String string;
+    private final int messageID;
 
-    public String getString() {
-        return string;
+    public int getMessageID() {
+        return messageID;
     }
 
-    public MessageEvent(String string, int playerID) {
-        this.string = string;
+    public MessageEvent(int messageID, int playerID) {
+        this.messageID = messageID;
         super.playerID = playerID;
     }
 
-    public MessageEvent(String string) {
-        this.string = string;
+    public MessageEvent(int messageID) {
+        this.messageID = messageID;
     }
 }

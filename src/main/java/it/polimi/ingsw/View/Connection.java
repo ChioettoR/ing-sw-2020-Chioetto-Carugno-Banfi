@@ -1,11 +1,9 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.CountdownInterface;
-import it.polimi.ingsw.Events.Client.PongEvent;
+import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Events.Client.ClientEvent;
-import it.polimi.ingsw.Events.Client.LobbySizeEvent;
-import it.polimi.ingsw.Events.Client.LoginNameEvent;
+import it.polimi.ingsw.Model.PlayersManager;
 
 import java.io.*;
 import java.net.Socket;
@@ -21,11 +19,16 @@ public class Connection implements Runnable, CountdownInterface {
     private final Server server;
     private RemoteView remoteView;
     private boolean active = true;
-    private final boolean firstPlayer;
+    private boolean firstPlayer;
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
     Timer pingTimer;
     PingPongTask pingPongTask;
+    private static final Object lock = new Object();
+
+    public void setFirstPlayer(boolean firstPlayer) {
+        this.firstPlayer = firstPlayer;
+    }
 
     public boolean isFirstPlayer() {
         return firstPlayer;
@@ -60,7 +63,7 @@ public class Connection implements Runnable, CountdownInterface {
 
     public synchronized void closeConnection() {
         try{
-            pingTimer.cancel();
+            if(pingTimer!=null) pingTimer.cancel();
             socket.close();
             oos.close();
             ois.close();
@@ -71,34 +74,38 @@ public class Connection implements Runnable, CountdownInterface {
 
     @Override
     public void run() {
-        try{
+        try {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
 
-            if(unavailableLobby()) return;
+            checkLobbyCreated();
 
-            if(firstPlayer) send(new MessageEvent("No lobbies found. Create one"));
-            else send(new MessageEvent("Entered in " + server.getLobbyName() + "'s lobby of " + server.getLobbySize() + " players"));
+            synchronized (lock) {
 
-            send(new RequestEvent("What's your name?"));
-            waitName();
-            send(new MessageEvent("Welcome " + name));
+                send(new WaitingEvent(false));
 
-            if(firstPlayer) {
-                send(new RequestEvent("Insert lobby players number"));
-                int lobbySize = waitLobbySize();
-                server.lobby(this, name, lobbySize);
+                if (fullLobby()) return;
+
+                if (firstPlayer) send(new MessageEvent(303));
+                else send(new LobbyInfoEvent(server.getLobbyName(), server.getLobbySize()));
+                send(new MessageEvent(112));
+                waitName();
+
+                if (firstPlayer) {
+                    send(new MessageEvent(113));;
+                    int lobbySize = waitLobbySize();
+                    server.lobby(this, name, lobbySize);
+                    server.awakeConnections();
+                } else server.lobby(this, name);
+
+                int playersLeft = server.getPlayersLeft();
+                if (playersLeft == 1) send(new MessageEvent(304));
+                else if (playersLeft != 0) send(new MessageEvent(302));
+                else sendAll(new EndLoginEvent());
             }
-            else server.lobby(this, name);
-
-            int playersLeft = server.getPlayersLeft();
-            if (playersLeft==1) send(new MessageEvent("Waiting for another player to connect"));
-            else if(playersLeft!=0) send(new MessageEvent("Waiting for other " + playersLeft + " players to connect"));
-            else sendAll(new EndLoginEvent());
 
             waitInput();
         }
-
         catch(IOException | ClassNotFoundException e) {
             System.err.println("Connection interrupted");
             if(server.isFullLobby()) server.deregisterAllConnections();
@@ -106,16 +113,19 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
-    private boolean unavailableLobby () throws IOException{
+    private void checkLobbyCreated() throws IOException{
 
         if (!server.isLobbyCreated() && !firstPlayer) {
-            send(new ErrorEvent("Another player is already creating a lobby"));
-            server.deregisterConnection(this);
-            return true;
+            send(new MessageEvent(413));
+            send(new WaitingEvent(true));
+            try { synchronized (Server.waiting) { Server.waiting.wait(); } }
+            catch (InterruptedException e) { System.err.println(e.getMessage()); }
         }
+    }
 
-        else if (server.isFullLobby()) {
-            send(new ErrorEvent("The lobby is full"));
+    public boolean fullLobby() throws IOException {
+        if (server.isFullLobby()) {
+            send(new MessageEvent(414));
             server.deregisterConnection(this);
             return true;
         }
@@ -131,13 +141,13 @@ public class Connection implements Runnable, CountdownInterface {
             object = (Serializable) ois.readObject();
 
             while(!(object instanceof LoginNameEvent)) {
-                send(new ErrorEvent("Invalid input. Name required."));
-                send(new RequestEvent("Please, give me your name"));
+                send(new MessageEvent(415));
+                send(new MessageEvent(112));
                 object = (Serializable) ois.readObject();
             }
 
             name = ((LoginNameEvent) object).getName();
-            if(!server.addName(name)) send(new ErrorEvent("This name has already been chosen"));
+            if(!server.addName(name)) send(new MessageEvent(416));
             else validName = true;
         }
     }
@@ -152,13 +162,13 @@ public class Connection implements Runnable, CountdownInterface {
             object = (Serializable) ois.readObject();
 
             while(!(object instanceof LobbySizeEvent)) {
-                send(new ErrorEvent("Invalid input. Number required."));
-                send(new RequestEvent("Please, insert lobby players number"));
+                send(new MessageEvent(417));
+                send(new MessageEvent(113));
                 object = (Serializable) ois.readObject();
             }
 
             lobbySize = ((LobbySizeEvent) object).getLobbySize();
-            if(!acceptedLobbySizes.contains(lobbySize)) send(new ErrorEvent("You can only create a 2/3 players lobby"));
+            if(!acceptedLobbySizes.contains(lobbySize)) send(new MessageEvent(418));
             else validInput = true;
         }
         return lobbySize;
@@ -170,7 +180,7 @@ public class Connection implements Runnable, CountdownInterface {
             Serializable read = (Serializable) ois.readObject();
 
             if(remoteView==null) {
-                send(new ErrorEvent("The game has not started yet. Please be patient"));
+                send(new MessageEvent(419));
                 return;
             }
 
