@@ -23,9 +23,7 @@ public class CLIMessagesHandler implements MessagesHandler {
     }
 
     @Override
-    public void sendMessage(String message) {
-        printGeneric(message);
-    }
+    public void sendMessage(String message) { printGeneric(message); }
 
     @Override
     public void sendRequest(String request) {

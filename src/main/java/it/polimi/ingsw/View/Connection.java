@@ -80,18 +80,16 @@ public class Connection implements Runnable, CountdownInterface {
 
             checkLobbyCreated();
             if (fullLobby()) return;
-            //TODO:Inserire messaggio di attesa
+            send(new WaitingEvent(false));
+
+            if (firstPlayer) send(new MessageEvent(303));
+            else send(new LobbyInfoEvent(server.getLobbyName(), server.getLobbySize()));
+            send(new MessageEvent(112));
+            waitName();
 
             synchronized (lock) {
 
-                send(new WaitingEvent(false));
-
-                if (fullLobby()) return;
-
-                if (firstPlayer) send(new MessageEvent(303));
-                else send(new LobbyInfoEvent(server.getLobbyName(), server.getLobbySize()));
-                send(new MessageEvent(112));
-                waitName();
+                if(fullLobby()) return;
 
                 if (firstPlayer) {
                     send(new MessageEvent(113));;
@@ -104,6 +102,7 @@ public class Connection implements Runnable, CountdownInterface {
                 if (playersLeft == 1) send(new MessageEvent(304));
                 else if (playersLeft != 0) send(new MessageEvent(302));
                 else sendAll(new EndLoginEvent());
+
             }
 
             waitInput();
@@ -120,7 +119,11 @@ public class Connection implements Runnable, CountdownInterface {
         if (!server.isLobbyCreated() && !firstPlayer) {
             send(new MessageEvent(413));
             send(new WaitingEvent(true));
-            try { synchronized (Server.waiting) { Server.waiting.wait(); } }
+            try {
+                synchronized (Server.waiting) {
+                    while (!firstPlayer && !server.isLobbyCreated()) Server.waiting.wait();
+                }
+            }
             catch (InterruptedException e) { System.err.println(e.getMessage()); }
         }
     }
