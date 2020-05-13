@@ -25,6 +25,10 @@ public class Server {
     private final ArrayList<String> names = new ArrayList<>();
     static final Object waiting = new Object();
 
+    public Map<String, Connection> getAcceptedConnections() {
+        return acceptedConnections;
+    }
+
     public boolean addName(String name) {
         if(!names.contains(name)) {
             names.add(name);
@@ -63,11 +67,12 @@ public class Server {
     }
 
     public synchronized void sendAll(Serializable serializable) throws IOException {
-        for(Connection connection : connections)
+        for(Connection connection : acceptedConnections.values())
             connection.send(serializable);
     }
 
     public synchronized void deregisterConnection(Connection c) {
+        System.out.println("Deregister client...");
         if(c.isFirstPlayer()) {
             if (lobbyCreated) deregisterAllConnections();
             else { if(connections.size()>1) connections.get(1).setFirstPlayer(true); }

@@ -35,7 +35,7 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void card(CardSimplified card) { System.out.println(card.getName()); }
 
     @Override
-    public void action(ArrayList<String> actions) { System.out.println("Deck:"); actions.forEach(System.out::println); }
+    public void action(ArrayList<String> actions) {actions.forEach(System.out::println); }
 
     @Override
     public void availableTiles(ArrayList<TileSimplified> tiles) { for(TileSimplified tileSimplified : tiles) { System.out.println("x "+ tileSimplified.getX()); System.out.println("y " + tileSimplified.getY()); } }

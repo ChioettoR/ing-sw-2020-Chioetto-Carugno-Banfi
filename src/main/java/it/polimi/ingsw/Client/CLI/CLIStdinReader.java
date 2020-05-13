@@ -45,7 +45,7 @@ public class CLIStdinReader {
 
         if(waiting) waitingEvents();
 
-        if(isLogin) loginEvents(strings);
+        else if(isLogin) loginEvents(strings);
 
         else if(strings.length==1)
             readOneString(strings[0]);

@@ -79,6 +79,8 @@ public class Connection implements Runnable, CountdownInterface {
             oos = new ObjectOutputStream(socket.getOutputStream());
 
             checkLobbyCreated();
+            if (fullLobby()) return;
+            //TODO:Inserire messaggio di attesa
 
             synchronized (lock) {
 
@@ -108,7 +110,7 @@ public class Connection implements Runnable, CountdownInterface {
         }
         catch(IOException | ClassNotFoundException e) {
             System.err.println("Connection interrupted");
-            if(server.isFullLobby()) server.deregisterAllConnections();
+            if(server.isFullLobby() && server.getAcceptedConnections().containsValue(this)) server.deregisterAllConnections();
             else server.deregisterConnection(this);
         }
     }
