@@ -1,27 +1,31 @@
+package it.polimi.ingsw.Client.CLI;
+
+import it.polimi.ingsw.Client.CLI.CLIGridBuilder;
+
 public class CLITile {
 
-    int x;
-    int y;
+    private int x;
+    private int y;
     private StringWrapper[] rightBorder = new StringWrapper[CLIGridBuilder.verticalBorderSize];
     private StringWrapper[] leftBorder = new StringWrapper[CLIGridBuilder.verticalBorderSize];
     private StringWrapper[] upBorder = new StringWrapper[CLIGridBuilder.horizontalBorderSize];
     private StringWrapper[] downBorder = new StringWrapper[CLIGridBuilder.horizontalBorderSize];
     private StringWrapper[] words = new StringWrapper[CLIGridBuilder.wordsSize];
 
-    public CLITile(int x, int y) {
+    CLITile(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void color() {
+    void color() {
         setBorderColor(true);
     }
 
-    public void deColor() {
+    void deColor() {
         setBorderColor(false);
     }
 
-    public void setBorderColor(boolean colored) {
+    private void setBorderColor(boolean colored) {
 
         for (StringWrapper stringWrapper : rightBorder) {
             stringWrapper.setColored(colored);
@@ -48,43 +52,43 @@ public class CLITile {
         return y;
     }
 
-    public StringWrapper[] getRightBorder() {
+    StringWrapper[] getRightBorder() {
         return rightBorder;
     }
 
-    public void setRightBorder(StringWrapper[] rightBorder) {
+    void setRightBorder(StringWrapper[] rightBorder) {
         this.rightBorder = rightBorder;
     }
 
-    public StringWrapper[] getLeftBorder() {
+    StringWrapper[] getLeftBorder() {
         return leftBorder;
     }
 
-    public void setLeftBorder(StringWrapper[] leftBorder) {
+    void setLeftBorder(StringWrapper[] leftBorder) {
         this.leftBorder = leftBorder;
     }
 
-    public StringWrapper[] getUpBorder() {
+    StringWrapper[] getUpBorder() {
         return upBorder;
     }
 
-    public void setUpBorder(StringWrapper[] upBorder) {
+    void setUpBorder(StringWrapper[] upBorder) {
         this.upBorder = upBorder;
     }
 
-    public StringWrapper[] getDownBorder() {
+    StringWrapper[] getDownBorder() {
         return downBorder;
     }
 
-    public void setDownBorder(StringWrapper[] downBorder) {
+    void setDownBorder(StringWrapper[] downBorder) {
         this.downBorder = downBorder;
     }
 
-    public StringWrapper[] getWords() {
+    StringWrapper[] getWords() {
         return words;
     }
 
-    public void setWords(StringWrapper[] words) {
+    void setWords(StringWrapper[] words) {
         this.words = words;
     }
 }

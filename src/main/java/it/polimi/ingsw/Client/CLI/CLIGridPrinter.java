@@ -1,9 +1,14 @@
+package it.polimi.ingsw.Client.CLI;
+
+import it.polimi.ingsw.Client.Color;
+import it.polimi.ingsw.Model.TileSimplified;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class CLIGridPrinter {
 
-    public void print(CLIGrid CLIGrid) {
+    void print(CLIGrid CLIGrid) {
 
         int length = CLIGrid.getLength();
         int width = CLIGrid.getWidth();

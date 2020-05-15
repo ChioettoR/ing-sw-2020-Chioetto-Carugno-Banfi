@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class CLIEventsCommunication implements EventsCommunication {
 
-    CLIStdinReader cliStdinReader;
-    MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
+    private CLIStdinReader cliStdinReader;
+    private MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
