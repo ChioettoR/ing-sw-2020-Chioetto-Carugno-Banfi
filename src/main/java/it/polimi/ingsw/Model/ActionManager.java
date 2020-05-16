@@ -29,6 +29,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     public void countdownEnded() throws IOException {
         undoTimer.cancel();
         availableActions.removeAvailableActionName(ActionType.UNDO);
+        availableActions.removeAvailableActionName(ActionType.CONFIRM);
         notifyMessage(new MessageEvent(401, playersManager.getCurrentPlayer().getID()));
         sendActions();
     }
@@ -167,10 +168,14 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
                 classicUndo();
                 break;
             }
+            case CONFIRM: {
+                classicConfirm();
+                break;
+            }
         }
     }
 
-    private void sendActions() throws IOException {
+    public void sendActions() throws IOException {
         availableActions = new AvailableActions();
         ArrayList<Action> actionList = playersManager.getActionOrder();
         if(actionList.size()==0) {
@@ -332,6 +337,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private void undoCountdown() throws IOException {
         availableActions.getAvailableActionsNames().clear();
         availableActions.addAvailableActionName(ActionType.UNDO);
+        availableActions.addAvailableActionName(ActionType.CONFIRM);
         notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
         undoTimer = new Timer();
         undoTask = new CountdownTask(5, this);
@@ -371,6 +377,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             availableActions.getBuildAction().undo();
         sendChange(oldGrid);
         sendActions();
+    }
+
+    private void classicConfirm() throws IOException {
+        countdownEnded();
     }
 
     private boolean checkSize(ArrayList<Action> actionList) throws IOException {

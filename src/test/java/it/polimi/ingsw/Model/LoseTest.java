@@ -114,16 +114,22 @@ public class LoseTest implements ServerObserver {
         }
 
         else if(updateCounter==3) {
+            //Undo received
+            updateCounter++;
+            actionManager.sendActions();
+        }
+
+        else if(updateCounter==4) {
             assertTrue(serverEvent instanceof ChangeEvent);
+
             assertEquals(2, ((ChangeEvent) serverEvent).getTiles().size());
             assertEquals(1, ((ChangeEvent) serverEvent).getTiles().get(0).getX());
             assertEquals(1, ((ChangeEvent) serverEvent).getTiles().get(0).getY());
             assertEquals(2, ((ChangeEvent) serverEvent).getTiles().get(1).getX());
             assertEquals(2, ((ChangeEvent) serverEvent).getTiles().get(1).getY());
             assertEquals(1, ((ChangeEvent) serverEvent).getTiles().get(0).getWorkerSimplified().getLocalID());
-            assertEquals(1, ((ChangeEvent) serverEvent).getTiles().get(0).getWorkerSimplified().getPlayerID());
             assertEquals(1, ((ChangeEvent) serverEvent).getTiles().get(1).getWorkerSimplified().getLocalID());
-            assertEquals(0, ((ChangeEvent) serverEvent).getTiles().get(1).getWorkerSimplified().getPlayerID());
+
             assertEquals(Grid.getGrid().getTile(2,2), workerA1.getPosition());
             assertEquals(Grid.getGrid().getTile(1,1), workerM1.getPosition());
             updateCounter++;
