@@ -65,7 +65,7 @@ public class CLIDeck {
 
     private void createNameLine(StringBuilder stringBuilder, int length) {
         stringBuilder.append("│");
-        stringBuilder.append(StringUtils.center("Deck", length));
+        stringBuilder.append(StringUtils.center(name, length));
         stringBuilder.append("│");
     }
 

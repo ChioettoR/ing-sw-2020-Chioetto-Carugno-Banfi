@@ -9,18 +9,20 @@ import java.util.stream.Collectors;
 
 public class CLICardBuilder {
 
+    boolean deckCreated = false;
+    ArrayList<CLICard> allCards = new ArrayList<>();
     int cardLength = 17;
-    int blankSpaceHeight = 5;
+    int blankSpaceHeight = 3;
     int maxLineSize = 15;
     int cardsSpacing = 3;
 
-    public ArrayList<StringBuilder> createCards(ArrayList<String> names, ArrayList<String> effects) {
+    public ArrayList<StringBuilder> createCards(ArrayList<String> names, ArrayList<String> effects, ArrayList<String> descriptions) {
 
         ArrayList<CLICard> cards = new ArrayList<>();
 
         for(int j=0; j<names.size(); j++) {
 
-            CLICard cliCard = new CLICard();
+            CLICard cliCard = new CLICard(names.get(j), effects.get(j), descriptions.get(j));
             cards.add(cliCard);
             String name = names.get(j);
             String effect = effects.get(j);
@@ -85,9 +87,15 @@ public class CLICardBuilder {
             lowerLines.add(lowerBorder);
         }
 
+        if(!deckCreated) allCards = cards;
+        deckCreated = true;
         ArrayList<StringBuilder> lines;
         lines = mergeCards(cards);
         return lines;
+    }
+
+    public ArrayList<CLICard> getAllCards() {
+        return allCards;
     }
 
     private void createUpperBorder(StringBuilder stringBuilder, int length) {

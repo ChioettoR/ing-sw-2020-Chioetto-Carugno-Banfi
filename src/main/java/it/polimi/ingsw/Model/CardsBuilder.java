@@ -37,11 +37,13 @@ public class CardsBuilder {
                     Element eElement = (Element) nNode;
                     String name = eElement.getElementsByTagName("Name").item(0).getTextContent();
                     String effect = eElement.getElementsByTagName("Effects").item(0).getTextContent();
+                    String displayEffect = eElement.getElementsByTagName("DisplayEffects").item(0).getTextContent();
+                    String description = eElement.getElementsByTagName("Description").item(0).getTextContent();
                     Card card;
-                    if(GodPower.valueOf(effect).equals(GodPower.CompleteTowersObserver))
-                        card = new Card(name, GodPower.valueOf(effect), true);
-                    else
-                        card = new Card(name, GodPower.valueOf(effect));
+                    if(GodPower.valueOf(effect).equals(GodPower.CompleteTowersObserver)) card = new Card(name, GodPower.valueOf(effect), true);
+                    else card = new Card(name, GodPower.valueOf(effect));
+                    card.setEffectName(displayEffect);
+                    card.setDescription(description);
                     cards.add(card);
                 }
             }

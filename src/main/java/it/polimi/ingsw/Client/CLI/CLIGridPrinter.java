@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.Color;
-import it.polimi.ingsw.Model.TileSimplified;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,48 +82,6 @@ public class CLIGridPrinter {
             else border = cliTile.getDownBorder();
             for(StringWrapper s : border) {
                 if(!line.contains(s)) line.add(s);
-            }
-        }
-    }
-
-    public void print(CLIGrid CLIGrid, ArrayList<TileSimplified> tiles) {
-
-        int length = CLIGrid.getLength();
-        int width = CLIGrid.getWidth();
-        ArrayList<StringWrapper> firstLine = new ArrayList<>();
-        ArrayList<StringWrapper> secondLine = new ArrayList<>();
-        ArrayList<StringWrapper> thirdLine = new ArrayList<>();
-        ArrayList<StringWrapper> fourthLine = new ArrayList<>();
-        ArrayList<StringWrapper> fifthLine = new ArrayList<>();
-
-        for(int y=1; y<=width; y++) {
-
-            printHorizontalBorder(CLIGrid, length, y, true, firstLine);
-
-            printBlankLine(CLIGrid, length, y, 1, secondLine);
-
-            //Third line
-            for(int x=1; x<=length; x++) {
-                CLITile cliTile =  CLIGrid.getTile(x, y);
-                StringWrapper upBorder1 = cliTile.getLeftBorder()[2];
-                if(!thirdLine.contains(upBorder1)) thirdLine.add(upBorder1);
-                thirdLine.add(new StringWrapper("   "));
-                Collections.addAll(thirdLine, cliTile.getWords());
-                thirdLine.add(new StringWrapper("   "));
-                StringWrapper rightBorder1 = cliTile.getRightBorder()[2];
-                if(!thirdLine.contains(rightBorder1)) thirdLine.add(rightBorder1);
-            }
-
-            printBlankLine(CLIGrid, length, y, 3, fourthLine);
-
-            printLine(firstLine);
-            printLine(secondLine);
-            printLine(thirdLine);
-            printLine(fourthLine);
-
-            if(y==5) {
-                printHorizontalBorder(CLIGrid, 5, y, false, fifthLine);
-                printLine(fifthLine);
             }
         }
     }

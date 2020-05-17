@@ -77,8 +77,16 @@ public class DrawCardManager extends CardObservable{
 
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
                 pickCard(cardSimplified);
-                if(remainingCards.size()!=1) notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
-                else nextPhase();
+                if(remainingCards.size()!=1) {
+                    ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
+                    for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
+                    playersManager.nextPlayer();
+                    notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+                }
+                else {
+                    playersManager.nextPlayer();
+                    nextPhase();
+                }
                 return true;
             }
         }
@@ -102,9 +110,6 @@ public class DrawCardManager extends CardObservable{
         pickedCards.add(cardSimplified);
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
         notifyCard(new CardEvent(cardSimplified, playersManager.getCurrentPlayer().getID()));
-        ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
-        notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy)));
-        playersManager.nextPlayer();
     }
 
     private void nextPhase() throws IOException {

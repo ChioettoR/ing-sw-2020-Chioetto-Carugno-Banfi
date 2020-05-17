@@ -12,6 +12,11 @@ public class DeckEvent extends ServerEvent implements Serializable {
         super.playerID = -1;
     }
 
+    public DeckEvent(MiniDeckSimplified deck, int playerID) {
+        this.deck = deck;
+        super.playerID = playerID;
+    }
+
     public MiniDeckSimplified getDeck() {
         return deck;
     }

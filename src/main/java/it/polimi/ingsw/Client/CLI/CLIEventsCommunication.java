@@ -13,6 +13,8 @@ public class CLIEventsCommunication implements EventsCommunication {
     private final CLIStdinReader cliStdinReader;
     private final MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
     CLIGridManager cliGridManager = new CLIGridManager();
+    CLIDeck cliDeck = new CLIDeck();
+    CLICardBuilder cliCardBuilder = new CLICardBuilder();
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -34,10 +36,26 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void message(int messageID) { messagesReader.read(messageID); }
 
     @Override
-    public void deck(ArrayList<CardSimplified> cards) { cards.forEach(cardSimplified -> System.out.println(cardSimplified.getName())); }
+    public void deck(ArrayList<CardSimplified> cards) {
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> effects = new ArrayList<>();
+        ArrayList<String> descriptions = new ArrayList<>();
+
+        for(CardSimplified c : cards) {
+            names.add(c.getName());
+            effects.add(c.getEffectName());
+            descriptions.add(c.getDescription());
+        }
+
+        ArrayList<StringBuilder> stringBuilders = cliCardBuilder.createCards(names, effects, descriptions);
+        cliDeck.createDeck(stringBuilders);
+    }
 
     @Override
-    public void card(CardSimplified card) { System.out.println(card.getName()); }
+    public void card(CardSimplified card) {
+        System.out.println(card.getName());
+        cliGridManager.printGrid();
+    }
 
     @Override
     public void action(ArrayList<String> actions) {actions.forEach(System.out::println); }
@@ -52,7 +70,6 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void change(ArrayList<TileSimplified> tiles) {
-
         cliGridManager.changeGrid(tiles);
         cliGridManager.printGrid();
     }
