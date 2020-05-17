@@ -2,9 +2,10 @@ package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.*;
+import it.polimi.ingsw.Events.Server.MessageEvent;
+import it.polimi.ingsw.Model.ActionType;
 import org.junit.platform.commons.util.StringUtils;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -15,6 +16,11 @@ public class CLIStdinReader {
     Scanner stdin;
     boolean isLogin = true;
     boolean waiting = false;
+    ActionType selectedActionType;
+
+    public void setSelectedActionType(ActionType selectedActionType) {
+        this.selectedActionType = selectedActionType;
+    }
 
     public void setLogin(boolean login) {
         isLogin = login;
@@ -30,18 +36,18 @@ public class CLIStdinReader {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public void run() throws IOException, NoSuchElementException, IllegalStateException {
+    public void run() throws NoSuchElementException, IllegalStateException {
 
-        String inputLine = "";
+        String inputLine;
 
         while (true) {
             inputLine = stdin.nextLine();
-            if (inputLine.isEmpty() || StringUtils.isBlank(inputLine)) System.out.println("Please insert a valid input");
+            if (inputLine.isEmpty() || StringUtils.isBlank(inputLine)) client.read(new MessageEvent(420));
             else read(inputLine.split("\\s+"));
         }
     }
 
-    private void read(String[] strings) throws IOException {
+    private void read(String[] strings) {
 
         if(waiting) waitingEvents();
 
@@ -53,55 +59,55 @@ public class CLIStdinReader {
         else if(strings.length==2)
             readTwoStrings(strings[0], strings[1]);
 
-        else if(strings.length==3)
-            readThreeString(strings[0], strings[1], strings[2]);
-
         else unknownInput();
     }
 
-    private void readOneString(String string) throws IOException {
+    private void readOneString(String string) {
 
-        if(string.equalsIgnoreCase("draw"))
+        if(compareString(string, Input.DRAW))
             client.update(new DrawEvent());
 
-        else if(isGridPosition(string)) {
+        else if(isGridPosition(string) && selectedActionType==null) {
             int[] coordinates = readGridString(string);
             client.update(new PositioningEvent(coordinates[0], coordinates[1]));
         }
 
-        else if(string.equalsIgnoreCase("A"))
-            client.update(new SelectionEvent(1));
+        else if(isGridPosition(string))
+            actionEvents(string);
 
-        else if(string.equalsIgnoreCase("B"))
-            client.update(new SelectionEvent(2));
+        else if(string.length()==1 && !isNumeric(string) && isLetter(string.charAt(0)))
+            client.update(new SelectionEvent(convertLetter(string.charAt(0))));
 
-        else if(string.equalsIgnoreCase("pick"))
+        else if(compareString(string, Input.PICK))
             client.update(new PickCardEvent(""));
 
-        else if(string.equalsIgnoreCase("move") || string.equalsIgnoreCase("build") || string.equalsIgnoreCase("undo"))
-            client.update(new ActionSelectEvent(string.toUpperCase()));
+        else if(compareString(string, Input.MOVE))
+            client.update(new ActionSelectEvent(ActionType.MOVE.toString()));
+
+        else if(compareString(string, Input.BUILD))
+            client.update(new ActionSelectEvent(ActionType.BUILD.toString()));
+
+        else if(compareString(string, Input.UNDO))
+            client.update(new ActionSelectEvent(ActionType.UNDO.toString()));
+
+        else if(compareString(string, Input.CONFIRM))
+            client.update(new ActionSelectEvent(ActionType.CONFIRM.toString()));
 
         else unknownInput();
     }
 
-    private void readTwoStrings(String firstString, String secondString) throws IOException {
+    private void readTwoStrings(String firstString, String secondString) {
 
-        if(firstString.equalsIgnoreCase("pick"))
+        if(compareString(firstString, Input.PICK))
             client.update(new PickCardEvent(secondString));
 
-        else if(firstString.equalsIgnoreCase("end") && secondString.equalsIgnoreCase("round"))
-            client.update(new ActionSelectEvent("ENDROUND"));
+        else if(compareString(firstString+secondString, Input.END_ROUND))
+            client.update(new ActionSelectEvent(ActionType.ENDROUND.toString()));
 
-        else if(isGridPosition(secondString))
-            actionEvents(firstString, secondString);
+        else if(selectedActionType!=null && isGridPosition(firstString) && isNumeric(secondString))
+            buildEventWithLevel(firstString, Integer.parseInt(secondString));
 
         else unknownInput();
-    }
-
-    private void readThreeString(String firstString, String secondString, String thirdString) throws IOException {
-
-        if(firstString.equalsIgnoreCase("build") && isGridPosition(secondString) && isNumeric(thirdString))
-            buildEventWithLevel(secondString, Integer.parseInt(thirdString));
     }
 
     private void loginEvents(String[] strings) {
@@ -112,30 +118,32 @@ public class CLIStdinReader {
         }
 
         else if(strings.length>=2 && !isNumeric(strings[0]))
-            System.out.println("Names longer than one words are not accepted");
+            client.read(new MessageEvent(421));
 
         else unknownInput();
     }
 
     private void waitingEvents() {
-        System.out.println("Waiting...");
+        client.read(new MessageEvent(307));
     }
 
-    private void actionEvents(String actionString, String gridString) throws IOException {
+    private void actionEvents(String gridString) {
         int[] coordinates = readGridString(gridString);
         int x = coordinates[0];
         int y = coordinates[1];
 
-        if(actionString.equalsIgnoreCase("move"))
-            client.update(new MoveDecisionEvent(x, y));
-
-        else if(actionString.equalsIgnoreCase("build"))
-            client.update(new BuildDecisionEvent(x, y));
-
-        else { unknownInput(); }
+        switch (selectedActionType) {
+            case MOVE: {
+                client.update(new MoveDecisionEvent(x, y));
+                break;
+            }
+            case BUILD: {
+                client.update(new BuildDecisionEvent(x, y));
+            }
+        }
     }
 
-    private void buildEventWithLevel(String gridString, int buildLevel) throws IOException {
+    private void buildEventWithLevel(String gridString, int buildLevel) {
         int[] coordinates = readGridString(gridString);
         client.update(new BuildDecisionEvent(coordinates[0], coordinates[1], buildLevel));
     }
@@ -147,7 +155,7 @@ public class CLIStdinReader {
     }
 
     private void unknownInput() {
-        System.out.println("Unknown Input");
+        client.read(new MessageEvent(412));
     }
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
@@ -160,6 +168,27 @@ public class CLIStdinReader {
 
     private boolean isGridPosition(String string) {
         return (string.length() == 3 && Character.isDigit(string.charAt(0)) && string.charAt(1) == 'x' && Character.isDigit(string.charAt(2)));
+    }
+
+    private int convertLetter(char c) {
+        return Character.toUpperCase(c) - 64;
+    }
+
+    private boolean isLetter(char c) {
+        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
+    }
+
+    private boolean compareString(String userInput, Input input) {
+
+        String[] inputs = input.toString().split("_");
+        String[] userInputs = userInput.split("\\s+");
+        if(inputs.length!=userInputs.length) return false;
+
+        for(int i=0; i<inputs.length; i++) {
+            if(!inputs[i].equalsIgnoreCase(userInputs[i]))
+                return false;
+        }
+        return true;
     }
 }
 

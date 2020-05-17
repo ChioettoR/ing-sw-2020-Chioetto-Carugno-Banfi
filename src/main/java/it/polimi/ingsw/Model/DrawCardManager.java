@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.*;
+import it.polimi.ingsw.Events.Server.CardEvent;
+import it.polimi.ingsw.Events.Server.DeckEvent;
+import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Observer.Server.CardObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class DrawCardManager extends CardObservable{
     PlayersManager playersManager = PlayersManager.getPlayersManager();
@@ -50,7 +51,7 @@ public class DrawCardManager extends CardObservable{
     }
 
     public void transition() throws IOException {
-        notifyMessage(new MessageEvent(201, -1));
+        notifyMessage(new MessageEvent(305, -1));
         notifyMessage(new MessageEvent(105, PlayersManager.getPlayersManager().nextPlayer().getID()));
     }
 

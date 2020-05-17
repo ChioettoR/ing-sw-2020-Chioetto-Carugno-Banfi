@@ -5,8 +5,7 @@ import it.polimi.ingsw.Client.MessagesHandler;
 
 public class CLIMessagesHandler implements MessagesHandler {
 
-    private void printError(String error) { System.out.println(Color.ANSI_RED.escape() + error + Color.RESET); }
-    private void printSuccess(String success) { System.out.println(Color.ANSI_GREEN.escape() + success + Color.RESET); }
+    private void printError(String error) { System.out.println(Color.ANSI_RED.escape() + "ERROR: " + error + Color.RESET); }
     private void printGeneric(String message) { System.out.println(message); }
 
     @Override
@@ -15,11 +14,6 @@ public class CLIMessagesHandler implements MessagesHandler {
     @Override
     public void sendError(String error) {
         printError(error);
-    }
-
-    @Override
-    public void sendSuccess(String success) {
-        printSuccess(success);
     }
 
     @Override

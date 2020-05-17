@@ -417,7 +417,7 @@ public class CardsBuilder {
             @Override
             public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
                 if(isActionLock()) return false;
-                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) || ((buildActionStandard.correctTile(worker.getPosition(), tileWhereBuild)) && newLevel==4));
+                return (buildActionStandard.canBuild(worker, tileWhereBuild, newLevel) || ((buildActionStandard.correctTile(worker.getPosition(), tileWhereBuild)) && newLevel==4 && tileWhereBuild.isEmpty()));
             }
 
             @Override

@@ -29,6 +29,10 @@ public class Server {
         return acceptedConnections;
     }
 
+    public ArrayList<String> getNames() {
+        return names;
+    }
+
     public boolean addName(String name) {
         if(!names.contains(name)) {
             names.add(name);

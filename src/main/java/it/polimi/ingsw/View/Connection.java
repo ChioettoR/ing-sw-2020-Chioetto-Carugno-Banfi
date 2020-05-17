@@ -1,11 +1,19 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.CountdownInterface;
-import it.polimi.ingsw.Events.Client.*;
-import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Model.PlayersManager;
+import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Events.Client.LobbySizeEvent;
+import it.polimi.ingsw.Events.Client.LoginNameEvent;
+import it.polimi.ingsw.Events.Client.PongEvent;
+import it.polimi.ingsw.Events.Server.EndLoginEvent;
+import it.polimi.ingsw.Events.Server.LobbyInfoEvent;
+import it.polimi.ingsw.Events.Server.MessageEvent;
+import it.polimi.ingsw.Events.Server.WaitingEvent;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +109,7 @@ public class Connection implements Runnable, CountdownInterface {
                 int playersLeft = server.getPlayersLeft();
                 if (playersLeft == 1) send(new MessageEvent(304));
                 else if (playersLeft != 0) send(new MessageEvent(302));
-                else sendAll(new EndLoginEvent());
+                else sendAll(new EndLoginEvent(server.getNames()));
 
             }
 
@@ -184,17 +192,17 @@ public class Connection implements Runnable, CountdownInterface {
         while(isActive()) {
             Serializable read = (Serializable) ois.readObject();
 
-            if(remoteView==null) {
+            if(remoteView==null)
                 send(new MessageEvent(419));
-                return;
+
+            else {
+                if (read instanceof PongEvent)
+                    pongReceived();
+
+                ClientEvent event = (ClientEvent) read;
+                event.setPlayerID(remoteView.playerID);
+                remoteView.sendMessage(event);
             }
-
-            if(read instanceof PongEvent)
-                pongReceived();
-
-            ClientEvent event = (ClientEvent) read;
-            event.setPlayerID(remoteView.playerID);
-            remoteView.sendMessage(event);
         }
     }
 

@@ -3,16 +3,16 @@ package it.polimi.ingsw.Model;
 import java.io.Serializable;
 
 public class WorkerSimplified implements Serializable {
-    final int playerID;
+    final String playerName;
     final int localID;
 
-    public WorkerSimplified(int playerID, int localID) {
-        this.playerID = playerID;
+    public WorkerSimplified(String playerName, int localID) {
+        this.playerName = playerName;
         this.localID = localID;
     }
 
-    public int getPlayerID() {
-        return playerID;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public int getLocalID() {

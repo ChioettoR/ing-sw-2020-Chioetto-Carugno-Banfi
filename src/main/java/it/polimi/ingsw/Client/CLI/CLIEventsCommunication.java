@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.EventsCommunication;
 import it.polimi.ingsw.Client.MessagesReader;
+import it.polimi.ingsw.Model.ActionType;
 import it.polimi.ingsw.Model.CardSimplified;
 import it.polimi.ingsw.Model.TileSimplified;
 
@@ -9,8 +10,9 @@ import java.util.ArrayList;
 
 public class CLIEventsCommunication implements EventsCommunication {
 
-    private CLIStdinReader cliStdinReader;
-    private MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
+    private final CLIStdinReader cliStdinReader;
+    private final MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
+    CLIGridManager cliGridManager = new CLIGridManager();
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -23,7 +25,10 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void waiting(boolean isWaiting) { cliStdinReader.setWaiting(isWaiting); }
 
     @Override
-    public void endLogin() { cliStdinReader.setLogin(false); }
+    public void endLogin(ArrayList<String> names) {
+        cliStdinReader.setLogin(false);
+        cliGridManager.addPlayers(names);
+    }
 
     @Override
     public void message(int messageID) { messagesReader.read(messageID); }
@@ -38,10 +43,19 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void action(ArrayList<String> actions) {actions.forEach(System.out::println); }
 
     @Override
-    public void availableTiles(ArrayList<TileSimplified> tiles) { for(TileSimplified tileSimplified : tiles) { System.out.println("x "+ tileSimplified.getX()); System.out.println("y " + tileSimplified.getY()); } }
+    public void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType) {
+        cliStdinReader.setSelectedActionType(actionType);
+        for(TileSimplified t : tiles) cliGridManager.borderColorTile(t.getX(), t.getY());
+        cliGridManager.printGrid();
+        for(TileSimplified t : tiles) cliGridManager.resetColorTile(t.getX(), t.getY());
+    }
 
     @Override
-    public void change(ArrayList<TileSimplified> tiles) { for(TileSimplified tileSimplified : tiles) { System.out.println("x "+ tileSimplified.getX()); System.out.println("y " + tileSimplified.getY()); } }
+    public void change(ArrayList<TileSimplified> tiles) {
+
+        cliGridManager.changeGrid(tiles);
+        cliGridManager.printGrid();
+    }
 
     @Override
     public void win(boolean youWin, String winnerName) { if(youWin) System.out.println("YOU WIN!"); else System.out.println((winnerName + "Wins")); }

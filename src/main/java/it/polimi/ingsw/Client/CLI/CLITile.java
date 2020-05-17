@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Client.CLI;
 
-import it.polimi.ingsw.Client.CLI.CLIGridBuilder;
-
 public class CLITile {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private StringWrapper[] rightBorder = new StringWrapper[CLIGridBuilder.verticalBorderSize];
     private StringWrapper[] leftBorder = new StringWrapper[CLIGridBuilder.verticalBorderSize];
     private StringWrapper[] upBorder = new StringWrapper[CLIGridBuilder.horizontalBorderSize];

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CLIGrid {
 
-    private CLIGridPrinter CLIGridPrinter = new CLIGridPrinter();
+    private final CLIGridPrinter CLIGridPrinter = new CLIGridPrinter();
     private final ArrayList<CLITile> CLITiles = new ArrayList<>();
 
     CLITile getTile(int x, int y) {

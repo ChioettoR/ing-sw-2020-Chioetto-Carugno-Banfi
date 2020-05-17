@@ -2,7 +2,6 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.CountdownInterface;
 import it.polimi.ingsw.CountdownTask;
-import it.polimi.ingsw.Events.Client.ActionSelectEvent;
 import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Observer.Server.ActionObservable;
 
@@ -30,7 +29,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         undoTimer.cancel();
         availableActions.removeAvailableActionName(ActionType.UNDO);
         availableActions.removeAvailableActionName(ActionType.CONFIRM);
-        notifyMessage(new MessageEvent(401, playersManager.getCurrentPlayer().getID()));
+        notifyMessage(new MessageEvent(306, playersManager.getCurrentPlayer().getID()));
         sendActions();
     }
 
@@ -123,6 +122,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
 
         if(!stateManager.checkState(GameState.ACTING))
             return;
+
+        if(!availableActions.getAvailableActionsNames().contains(ActionType.BUILD)) {
+            notifyMessage(new MessageEvent(402, playersManager.getCurrentPlayer().getID()));
+            return;
+        }
 
         BuildAction buildAction = availableActions.getBuildAction();
         Worker worker = playersManager.getCurrentWorker();
@@ -347,14 +351,14 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private void classicMove() throws IOException {
         ArrayList<Tile> availableTiles = availableActions.getMoveAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
-        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID(), ActionType.MOVE));
         notifyMessage(new MessageEvent(101, playersManager.getCurrentPlayer().getID()));
     }
 
     private void classicBuild() throws IOException {
         ArrayList<Tile> availableTiles = availableActions.getBuildAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
-        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
+        notify(new AvailableTilesEvent((ArrayList<TileSimplified>)availableTiles.stream().map(Tile::simplify).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID(), ActionType.BUILD));
         notifyMessage(new MessageEvent(102, playersManager.getCurrentPlayer().getID()));
     }
 

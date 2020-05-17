@@ -39,14 +39,19 @@ public class CLIGridPrinter {
             printBlankLine(CLIGrid, length, y, 3, fourthLine);
 
             printLine(firstLine);
+            System.out.println("");
             printLine(secondLine);
+            System.out.println("");
             printLine(thirdLine);
+            System.out.println("");
             printLine(fourthLine);
 
             if(y==5) {
                 printHorizontalBorder(CLIGrid, 5, y, false, fifthLine);
+                System.out.println("");
                 printLine(fifthLine);
             }
+            System.out.println("");
         }
     }
 
@@ -63,7 +68,6 @@ public class CLIGridPrinter {
     }
 
     private void printLine(ArrayList<StringWrapper> line) {
-        System.out.println("");
         for(StringWrapper s : line) {
             if(s.isColored()) System.out.print(Color.ANSI_GREEN.escape() + s.getString() + Color.RESET);
             else System.out.print(s.getString());

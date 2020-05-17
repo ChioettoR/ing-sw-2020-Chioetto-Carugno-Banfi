@@ -33,7 +33,7 @@ public class MessagesReader {
                         break;
                     }
                     case (105): {
-                        message = "Draw";
+                        message = "Draw from the deck";
                         break;
                     }
                     case (106): {
@@ -45,7 +45,7 @@ public class MessagesReader {
                         break;
                     }
                     case (108): {
-                        message = "Position your fist worker";
+                        message = "Position your first worker";
                         break;
                     }
                     case (109): {
@@ -73,22 +73,6 @@ public class MessagesReader {
                 break;
             }
 
-            //Successes
-            case (2) : {
-                switch (messageID) {
-                    case (201): {
-                        message = "All players joined the lobby. The game has started";
-                        break;
-                    }
-                    case (202): {
-                        message = "Worker selected!";
-                        break;
-                    }
-                }
-                messagesHandler.sendSuccess(message);
-                break;
-            }
-
             //Messages
             case (3) : {
                 switch (messageID) {
@@ -97,7 +81,7 @@ public class MessagesReader {
                         break;
                     }
                     case (302): {
-                        message = "Waiting for other players";
+                        message = "Waiting for other players...";
                         break;
                     }
                     case (303): {
@@ -105,10 +89,23 @@ public class MessagesReader {
                         break;
                     }
                     case (304): {
-                        message = "Waiting for another player";
+                        message = "Waiting for another player...";
+                        break;
+                    }
+                    case(305) : {
+                        message = "All players joined the lobby. The game has started";
+                        break;
+                    }
+                    case (306): {
+                        message = "Action confirmed. Undo no longer available";
+                        break;
+                    }
+                    case (307): {
+                        message = "Waiting...";
                         break;
                     }
                 }
+
                 messagesHandler.sendMessage(message);
                 break;
             }
@@ -116,20 +113,16 @@ public class MessagesReader {
             //Errors
             case (4) : {
                 switch (messageID) {
-                    case (401): {
-                        message = "Undo no longer available";
-                        break;
-                    }
                     case (402): {
                         message = "Invalid action";
                         break;
                     }
                     case (403): {
-                        message = "You can't move in that tile";
+                        message = "You can't move in this tile";
                         break;
                     }
                     case (404): {
-                        message = "You can't build in that tile";
+                        message = "You can't build in this tile";
                         break;
                     }
                     case (405): {
@@ -137,11 +130,11 @@ public class MessagesReader {
                         break;
                     }
                     case (406): {
-                        message = "Card already picked";
+                        message = "Card already picked by another player";
                         break;
                     }
                     case (407): {
-                        message = "Invalid card";
+                        message = "Invalid card name";
                         break;
                     }
                     case (408): {
@@ -149,7 +142,7 @@ public class MessagesReader {
                         break;
                     }
                     case (409): {
-                        message = "It's not your worker";
+                        message = "Invalid worker";
                         break;
                     }
                     case (410): {
@@ -165,15 +158,15 @@ public class MessagesReader {
                         break;
                     }
                     case (413): {
-                        message = "Another player is creating the lobby";
+                        message = "Another player is creating the lobby. Please wait until he finishes...";
                         break;
                     }
                     case (414): {
-                        message = "The lobby is full";
+                        message = "Sorry, the lobby is full. Please try later";
                         break;
                     }
                     case (415): {
-                        message = "Invalid input. Name required";
+                        message = "Your name can't be a number. Please, insert a valid name";
                         break;
                     }
                     case (416): {
@@ -189,7 +182,16 @@ public class MessagesReader {
                         break;
                     }
                     case (419): {
-                        message = "The game hasn't started yet";
+                        message = "The game hasn't started yet, please be patient...";
+                        break;
+                    }
+                    case(420) : {
+                        message = "Please insert a non-empty input";
+                        break;
+                    }
+                    case(421) : {
+                        message = "Names longer thant one word are not accepted";
+                        break;
                     }
                 }
                 messagesHandler.sendError(message);

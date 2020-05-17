@@ -69,8 +69,7 @@ public class Tile {
 
     public void setEmpty(boolean empty) {
         isEmpty = empty;
-        if(empty)
-            worker = null;
+        if(empty) worker = null;
     }
 
     public Worker getWorker() {

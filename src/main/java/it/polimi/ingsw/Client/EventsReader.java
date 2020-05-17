@@ -22,7 +22,7 @@ public class EventsReader {
 
         else if(object instanceof WaitingEvent) eventsCommunication.waiting(((WaitingEvent) object).isWaiting());
 
-        else if(object instanceof EndLoginEvent) eventsCommunication.endLogin();
+        else if(object instanceof EndLoginEvent) eventsCommunication.endLogin(((EndLoginEvent) object).getNames());
 
         else if(object instanceof MessageEvent) eventsCommunication.message(((MessageEvent) object).getMessageID());
 
@@ -32,7 +32,7 @@ public class EventsReader {
 
         else if(object instanceof ActionEvent) eventsCommunication.action(((ActionEvent) object).getActions());
 
-        else if(object instanceof AvailableTilesEvent) eventsCommunication.availableTiles(((AvailableTilesEvent) object).getTiles());
+        else if(object instanceof AvailableTilesEvent) eventsCommunication.availableTiles(((AvailableTilesEvent) object).getTiles(), ((AvailableTilesEvent) object).getActionType());
 
         else if(object instanceof ChangeEvent) eventsCommunication.change(((ChangeEvent) object).getTiles());
 

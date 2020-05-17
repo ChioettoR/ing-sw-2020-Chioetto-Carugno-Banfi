@@ -22,6 +22,7 @@ public class Client implements ClientObserver, CountdownInterface {
     Timer countdownTimer;
     CountdownTask countdownTask;
     boolean firstPing = true;
+    EventsReader eventsReader;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -38,17 +39,21 @@ public class Client implements ClientObserver, CountdownInterface {
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
+    public void read(Serializable serializable) {
+        eventsReader.read(serializable);
+    }
+
     @Override
     public void update(ClientEvent event) {
 
         try { oos.writeObject(event); }
         catch (IOException e) {
-            System.out.println("Unable to send messages to the server");
+            System.err.println("Unable to send messages to the server");
             closeConnection();
         }
     }
 
-    public void run(EventsReader eventsReader) throws IOException {
+    public void run() throws IOException {
         connect();
         System.out.println("Connection established");
 
@@ -57,7 +62,7 @@ public class Client implements ClientObserver, CountdownInterface {
             try {
                 while (true) {
                     object = (Serializable) ois.readObject();
-                    eventsReader.read(object);
+                    read(object);
                 }
             }
             catch (IOException e) { System.out.println("Connection closed from the server side"); }
@@ -69,11 +74,10 @@ public class Client implements ClientObserver, CountdownInterface {
     }
 
     public void runCLI() throws IOException {
-
         CLIStdinReader cliStdinReader = new CLIStdinReader(this);
         CLIEventsCommunication cliEventsCommunication = new CLIEventsCommunication(cliStdinReader);
-
-        run(new EventsReader(this, cliEventsCommunication));
+        eventsReader = new EventsReader(this, cliEventsCommunication);
+        run();
         cliStdinReader.run();
     }
 

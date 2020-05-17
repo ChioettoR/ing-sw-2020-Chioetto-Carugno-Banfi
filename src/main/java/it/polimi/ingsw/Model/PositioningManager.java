@@ -70,7 +70,7 @@ public class PositioningManager extends ChangeObservable {
         tile.setWorker(worker);
         playersManager.getCurrentPlayer().setWorker(worker);
         int workerID = worker.getLocalID();
-        TileSimplified tileSimplified = new TileSimplified(x, y, 0, new WorkerSimplified(playersManager.getCurrentPlayer().getID(), workerID));
+        TileSimplified tileSimplified = new TileSimplified(x, y, 0, new WorkerSimplified(playersManager.getCurrentPlayer().getName(), workerID));
         ArrayList<TileSimplified> arrayList = new ArrayList<>();
         arrayList.add(tileSimplified);
         notify(new ChangeEvent(arrayList));
