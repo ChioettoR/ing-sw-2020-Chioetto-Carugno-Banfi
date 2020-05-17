@@ -2,57 +2,90 @@
     <God>
         <Name>Apollo</Name>
         <Effects>CanSwitch</Effects>
+        <DisplayEffects>You can switch position with opponent workers</DisplayEffects>
+        <Description>Your worker may move into an opponent worker's space (using normal movement rules) and
+            force their worker to the space yours just vacated (swapping their position).</Description>
     </God>
     <God>
         <Name>Artemis</Name>
         <Effects>CanMoveTwice</Effects>
+        <DisplayEffects>You can move twice, but no turning back</DisplayEffects>
+        <Description>Your worker may move one additional time, but not back to the space he started on.</Description>
     </God>
     <God>
         <Name>Athena</Name>
         <Effects>CantMoveUp</Effects>
+        <DisplayEffects>If you move up, they can't</DisplayEffects>
+        <Description>If one of your worker moved up on your last turn, opponent workers cannot move up
+            this turn.</Description>
     </God>
     <God>
         <Name>Atlas</Name>
         <Effects>CanBuildDome</Effects>
+        <DisplayEffects>You can build domes at any level</DisplayEffects>
+        <Description> Your worker may build a dome at any level including the ground.</Description>
     </God>
     <God>
         <Name>Demeter</Name>
         <Effects>CanBuildTwiceDifferent</Effects>
+        <DisplayEffects>You can build twice, but not on the same space</DisplayEffects>
+        <Description>Your worker may build one additional time, but not on the same space.</Description>
     </God>
     <God>
         <Name>Hephaestus</Name>
         <Effects>CanBuildTwice</Effects>
+        <DisplayEffects>You can build twice in the same space (not dome)</DisplayEffects>
+        <Description>Your worker may build one additional block (not dome) on top of your first block.</Description>
     </God>
     <God>
         <Name>Minotaur</Name>
         <Effects>CanPush</Effects>
+        <DisplayEffects>You can push opponent workers</DisplayEffects>
+        <Description>Your worker may move into an opponent worker's space (using normal movement rules),
+            if the next space in the same direction is unoccupied. Their worker is forced into that space (regardless of its level).</Description>
     </God>
     <God>
         <Name>Pan</Name>
         <Effects>MoveDownToWin</Effects>
+        <DisplayEffects>You can win moving down two or more levels</DisplayEffects>
+        <Description>You also win if your worker moves down two or more levels.</Description>
     </God>
     <God>
         <Name>Prometheus</Name>
         <Effects>BuildBeforeMove</Effects>
+        <DisplayEffects>If you don't move up, you may build both before and after moving</DisplayEffects>
+        <Description>If your worker does not move up, it may build both before and after moving.</Description>
     </God>
     <God>
         <Name>Chronus</Name>
         <Effects>CompleteTowersObserver</Effects>
+        <DisplayEffects>You can also win with five complete towers</DisplayEffects>
+        <Description>You also win when there are at least five complete towers on the board.</Description>
     </God>
     <God>
         <Name>Hestia</Name>
         <Effects>BuildTwiceNoPerimeter</Effects>
+        <DisplayEffects>You can build twice but the second build cannot be on the perimeter</DisplayEffects>
+        <Description>Your worker may build one additional time. The additional build cannot be on a perimeter space.</Description>
     </God>
     <God>
         <Name>Medusa</Name>
         <Effects>PetrifyOpponents</Effects>
+        <DisplayEffects>You petrify your opponents</DisplayEffects>
+        <Description>If any of your opponent's workers occupy lower neighboring spaces, replace them all with
+            blocks and remove them from the game.</Description>
     </God>
     <God>
         <Name>Triton</Name>
         <Effects>CanMoveMultipleTimesPerimeter</Effects>
+        <DisplayEffects>If you move onto perimeter, you can move again</DisplayEffects>
+        <Description>Each time your worker moves onto a perimeter space (ground or block), it may immediately move again.</Description>
     </God>
     <God>
         <Name>Zeus</Name>
         <Effects>CanBuildBelow</Effects>
+        <DisplayEffects>You can build below yourself</DisplayEffects>
+        <Description>Your worker may build under itself in its current space, forcing it up one level.
+            You do not win by forcing yourself up to the third level.</Description>
     </God>
 </GodCards>
