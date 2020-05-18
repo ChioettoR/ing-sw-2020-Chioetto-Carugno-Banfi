@@ -15,6 +15,7 @@ public class CLIEventsCommunication implements EventsCommunication {
     CLIGridManager cliGridManager = new CLIGridManager();
     CLIDeck cliDeck = new CLIDeck();
     CLICardBuilder cliCardBuilder = new CLICardBuilder();
+    int maxEffectLenght = 85;
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -92,8 +93,15 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void infoEffect(String cardName) {
+        String[] effectLines;
         String effect = cliCardBuilder.getDescription(cardName);
-        if(effect==null) messagesReader.read(407);
-        else System.out.println(effect);
+        if(effect.length() < maxEffectLenght){
+            if(effect==null) messagesReader.read(407);
+            else System.out.println(effect);
+        }else {
+            effectLines = effect.split("@", 0);
+            for(String s : effectLines)
+                System.out.println(s);
+        }
     }
 }
