@@ -16,9 +16,9 @@ public class EventsReader {
 
     public void read(Serializable object) {
 
-        if(object instanceof PingEvent) client.pingReceived();
+        if(object instanceof LobbyInfoEvent) eventsCommunication.lobbyInfo(((LobbyInfoEvent) object).getLobbyName(), ((LobbyInfoEvent) object).getLobbySize());
 
-        else if(object instanceof LobbyInfoEvent) eventsCommunication.lobbyInfo(((LobbyInfoEvent) object).getLobbyName(), ((LobbyInfoEvent) object).getLobbySize());
+        else if(object instanceof PlayerChosenCardEvent) eventsCommunication.playerChosenCard(((PlayerChosenCardEvent) object).getPlayerName(), ((PlayerChosenCardEvent) object).getCardName());
 
         else if(object instanceof WaitingEvent) eventsCommunication.waiting(((WaitingEvent) object).isWaiting());
 

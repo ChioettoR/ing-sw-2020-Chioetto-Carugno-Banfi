@@ -30,8 +30,6 @@ public class Connection implements Runnable, CountdownInterface {
     private boolean firstPlayer;
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
-    Timer pingTimer;
-    PingPongTask pingPongTask;
     private static final Object lock = new Object();
 
     public void setFirstPlayer(boolean firstPlayer) {
@@ -71,7 +69,6 @@ public class Connection implements Runnable, CountdownInterface {
 
     public synchronized void closeConnection() {
         try{
-            if(pingTimer!=null) pingTimer.cancel();
             socket.close();
             oos.close();
             ois.close();
@@ -196,25 +193,11 @@ public class Connection implements Runnable, CountdownInterface {
                 send(new MessageEvent(419));
 
             else {
-                if (read instanceof PongEvent)
-                    pongReceived();
-
                 ClientEvent event = (ClientEvent) read;
                 event.setPlayerID(remoteView.playerID);
                 remoteView.sendMessage(event);
             }
         }
-    }
-
-    public void startPing() {
-        pingTimer = new Timer();
-        pingPongTask = new PingPongTask(this);
-        pingTimer.schedule( pingPongTask, 10, 10000 );
-    }
-
-    private void pongReceived() {
-        System.out.println("PONG RECEIVED " + remoteView.playerID);
-        pingPongTask.cancelCountdown();
     }
 
     @Override

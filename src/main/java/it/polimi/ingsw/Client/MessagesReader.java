@@ -68,6 +68,10 @@ public class MessagesReader {
                         message = "Insert lobby players number";
                         break;
                     }
+                    case (114): {
+                        message = "Round ended. Wait till other players complete theirs";
+                        break;
+                    }
                 }
                 messagesHandler.sendRequest(message);
                 break;

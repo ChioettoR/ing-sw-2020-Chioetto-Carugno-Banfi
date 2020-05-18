@@ -132,7 +132,6 @@ public class Server {
             selectionWorkerManager.addObserver(remoteView);
             actionManager.addObserver(remoteView);
             stateManager.addObserver(remoteView);
-            connection.startPing();
         }
 
         stateManager.setGameState(GameState.DRAWING);

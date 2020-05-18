@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Events.Server.CardEvent;
 import it.polimi.ingsw.Events.Server.DeckEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
+import it.polimi.ingsw.Events.Server.PlayerChosenCardEvent;
 import it.polimi.ingsw.Observer.Server.CardObservable;
 
 import java.io.IOException;
@@ -73,20 +74,19 @@ public class DrawCardManager extends CardObservable{
     }
 
     private boolean playerPicksTheCard(String cardName) throws IOException {
-        for(CardSimplified cardSimplified : remainingCards) {
 
+        for(CardSimplified cardSimplified : remainingCards) {
             if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
+
                 pickCard(cardSimplified);
+
                 if(remainingCards.size()!=1) {
                     ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
                     for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
                     playersManager.nextPlayer();
                     notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
                 }
-                else {
-                    playersManager.nextPlayer();
-                    nextPhase();
-                }
+                else nextPhase();
                 return true;
             }
         }
@@ -109,11 +109,14 @@ public class DrawCardManager extends CardObservable{
         remainingCards.remove(cardSimplified);
         pickedCards.add(cardSimplified);
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
+        notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), cardSimplified.getName()));
         notifyCard(new CardEvent(cardSimplified, playersManager.getCurrentPlayer().getID()));
     }
 
     private void nextPhase() throws IOException {
+        playersManager.nextPlayer();
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
+        notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), remainingCards.get(0).getName()));
         notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
         playersManager.nextPlayer();
         notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));

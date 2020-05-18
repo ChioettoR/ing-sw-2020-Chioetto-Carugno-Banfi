@@ -2,7 +2,7 @@ package it.polimi.ingsw.Observer.Server;
 
 import it.polimi.ingsw.Events.Server.CardEvent;
 import it.polimi.ingsw.Events.Server.DeckEvent;
-import it.polimi.ingsw.Observer.Client.ClientObserver;
+import it.polimi.ingsw.Events.Server.PlayerChosenCardEvent;
 
 import java.io.IOException;
 
@@ -23,4 +23,12 @@ public class CardObservable extends MessageObservable {
             }
         }
     }
-}
+
+    public void notifyPower(PlayerChosenCardEvent playerChosenCardEvent) throws IOException {
+        synchronized (observers) {
+            for (ServerObserver observer : observers) {
+                observer.update(playerChosenCardEvent);
+            }
+        }
+    }
+ }

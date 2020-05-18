@@ -14,9 +14,11 @@ public interface EventsCommunication {
     void message(int messageID);
     void deck(ArrayList<CardSimplified> cards);
     void card(CardSimplified card);
+    void playerChosenCard(String playerName, String cardName);
     void action(ArrayList<String> actions);
     void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType);
     void change(ArrayList<TileSimplified> tiles);
     void win(boolean youWin, String winnerName);
     void lose();
+    void infoEffect(String cardName);
 }

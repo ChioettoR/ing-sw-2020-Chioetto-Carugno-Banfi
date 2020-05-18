@@ -27,16 +27,17 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void waiting(boolean isWaiting) { cliStdinReader.setWaiting(isWaiting); }
 
     @Override
+    public void message(int messageID) { messagesReader.read(messageID); }
+
+    @Override
     public void endLogin(ArrayList<String> names) {
         cliStdinReader.setLogin(false);
         cliGridManager.addPlayers(names);
     }
 
     @Override
-    public void message(int messageID) { messagesReader.read(messageID); }
-
-    @Override
     public void deck(ArrayList<CardSimplified> cards) {
+
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> effects = new ArrayList<>();
         ArrayList<String> descriptions = new ArrayList<>();
@@ -58,7 +59,16 @@ public class CLIEventsCommunication implements EventsCommunication {
     }
 
     @Override
-    public void action(ArrayList<String> actions) {actions.forEach(System.out::println); }
+    public void playerChosenCard(String playerName, String cardName) {
+        System.out.println("player " + playerName);
+        System.out.println("card" + cardName);
+    }
+
+    @Override
+    public void action(ArrayList<String> actions) {
+        messagesReader.read(111);
+        actions.forEach(System.out::println);
+    }
 
     @Override
     public void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType) {
@@ -79,4 +89,11 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void lose() { System.out.println("YOU LOSE!"); }
+
+    @Override
+    public void infoEffect(String cardName) {
+        String effect = cliCardBuilder.getDescription(cardName);
+        if(effect==null) messagesReader.read(407);
+        else System.out.println(effect);
+    }
 }

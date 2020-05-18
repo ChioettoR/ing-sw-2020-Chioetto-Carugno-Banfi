@@ -101,6 +101,9 @@ public class CLIStdinReader {
         if(compareString(firstString, Input.PICK))
             client.update(new PickCardEvent(secondString));
 
+        else if(compareString(firstString, Input.INFO))
+            client.getEventsCommunication().infoEffect(secondString);
+
         else if(compareString(firstString+secondString, Input.END_ROUND))
             client.update(new ActionSelectEvent(ActionType.ENDROUND.toString()));
 
