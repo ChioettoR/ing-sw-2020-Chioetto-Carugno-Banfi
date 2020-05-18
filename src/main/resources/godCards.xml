@@ -9,7 +9,7 @@
         <Name>Artemis</Name>
         <Effects>CanMoveTwice</Effects>
         <DisplayEffects>You can move twice, but no turning back</DisplayEffects>
-        <Description>Your worker may move one additional time, but not back to the space he started on. </Description>
+        <Description>Your worker may move one additional time, but not back to the space he started on.</Description>
     </God>
     <God>
         <Name>Athena</Name>
@@ -21,19 +21,19 @@
         <Name>Atlas</Name>
         <Effects>CanBuildDome</Effects>
         <DisplayEffects>You can build domes at any level</DisplayEffects>
-        <Description>Your worker may build a dome at any level including the ground. </Description>
+        <Description>Your worker may build a dome at any level including the ground.</Description>
     </God>
     <God>
         <Name>Demeter</Name>
         <Effects>CanBuildTwiceDifferent</Effects>
         <DisplayEffects>You can build twice, but not on the same space</DisplayEffects>
-        <Description>Your worker may build one additional time, but not on the same space. </Description>
+        <Description>Your worker may build one additional time, but not on the same space.</Description>
     </God>
     <God>
         <Name>Hephaestus</Name>
         <Effects>CanBuildTwice</Effects>
         <DisplayEffects>You can build twice in the same space (not dome)</DisplayEffects>
-        <Description>Your worker may build one additional block (not dome) on top of your first block. </Description>
+        <Description>Your worker may build one additional block (not dome) on top of your first block.</Description>
     </God>
     <God>
         <Name>Minotaur</Name>
