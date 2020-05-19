@@ -104,7 +104,7 @@ public class CLIStdinReader {
         else if(compareString(firstString, Input.INFO))
             client.getEventsCommunication().infoEffect(secondString);
 
-        else if(compareString(firstString+secondString, Input.END_ROUND))
+        else if(compareString(firstString + " " + secondString, Input.END_ROUND))
             client.update(new ActionSelectEvent(ActionType.ENDROUND.toString()));
 
         else if(selectedActionType!=null && isGridPosition(firstString) && isNumeric(secondString))
