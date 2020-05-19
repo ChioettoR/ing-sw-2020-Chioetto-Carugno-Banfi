@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Model.TileSimplified;
 
 import java.util.ArrayList;
@@ -8,10 +9,11 @@ public class CLIGridManager {
 
     private final CLIGrid CLIGrid;
     private final CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
-    private final CLIGridChanger CLIGridChanger = new CLIGridChanger(cliPlayersManager);
+    private final CLIGridChanger CLIGridChanger;
 
-    public CLIGridManager() {
+    public CLIGridManager(CLIPlayersManager cliPlayersManager) {
         CLIGrid = new CLIGridBuilder().createGrid();
+        CLIGridChanger = new CLIGridChanger(cliPlayersManager);
     }
 
     public void changeGrid(ArrayList<TileSimplified> tiles) {
@@ -26,9 +28,8 @@ public class CLIGridManager {
         CLIGrid.print();
     }
 
-    public void addPlayers(ArrayList<String> names) {
-        for(String name : names)
-            cliPlayersManager.addPlayer(name);
+    public void printGrid(ArrayList<String> names, ArrayList<Color> colors) {
+        CLIGrid.print(names, colors);
     }
 
     public void resetColorTile(int x, int y) {

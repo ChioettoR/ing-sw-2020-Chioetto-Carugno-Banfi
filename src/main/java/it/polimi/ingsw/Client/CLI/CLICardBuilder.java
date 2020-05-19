@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client.CLI;
 
-import it.polimi.ingsw.Model.Card;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

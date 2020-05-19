@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.CLI.CLIActionPrinter;
+
+import java.util.ArrayList;
+
 public class MessagesReader {
 
     MessagesHandler messagesHandler;
@@ -33,7 +37,7 @@ public class MessagesReader {
                         break;
                     }
                     case (105): {
-                        message = "Draw from the deck";
+                        message = "Wait until other players pick their card";
                         break;
                     }
                     case (106): {
@@ -69,7 +73,11 @@ public class MessagesReader {
                         break;
                     }
                     case (114): {
-                        message = "Round ended. Wait till other players complete theirs";
+                        message = "Wait until other players position their workers";
+                        break;
+                    }
+                    case (115): {
+                        message = "Wait until other players complete their round";
                         break;
                     }
                 }
@@ -200,6 +208,14 @@ public class MessagesReader {
                 }
                 messagesHandler.sendError(message);
                 break;
+            }
+
+            //Square messages
+            case (5) : {
+                if (messageID == 501) message = "DRAW";
+                ArrayList<String> list = new ArrayList<>();
+                list.add(message);
+                new CLIActionPrinter().printAction(list);
             }
         }
     }

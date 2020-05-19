@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.Color;
+
 import java.util.ArrayList;
 
 public class CLIGrid {
@@ -28,7 +30,7 @@ public class CLIGrid {
         return CLITiles;
     }
 
-    void print() {
-        CLIGridPrinter.print(this);
-    }
+    void print() { CLIGridPrinter.print(this, false, new ArrayList<>(), new ArrayList<>()); }
+
+    void print(ArrayList<String> names, ArrayList<Color> colors) { CLIGridPrinter.print(this, true, names, colors); }
 }

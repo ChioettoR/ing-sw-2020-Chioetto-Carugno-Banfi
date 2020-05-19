@@ -7,20 +7,28 @@ import java.util.Collections;
 
 public class CLIGridPrinter {
 
-    void print(CLIGrid CLIGrid) {
+    int leftSpacing = 3;
 
+    void print(CLIGrid CLIGrid, boolean printNames, ArrayList<String> names, ArrayList<Color> colors) {
+
+        int namesLength = names.size();
         int length = CLIGrid.getLength();
         int width = CLIGrid.getWidth();
+        ArrayList<StringWrapper> zeroLine = new ArrayList<>();
         ArrayList<StringWrapper> firstLine = new ArrayList<>();
         ArrayList<StringWrapper> secondLine = new ArrayList<>();
         ArrayList<StringWrapper> thirdLine = new ArrayList<>();
         ArrayList<StringWrapper> fourthLine = new ArrayList<>();
         ArrayList<StringWrapper> fifthLine = new ArrayList<>();
 
+        createZeroLine(zeroLine);
+        for(StringWrapper s : zeroLine)
+            System.out.print(s.getString());
+        System.out.println("");
+
         for(int y=1; y<=width; y++) {
 
             printHorizontalBorder(CLIGrid, length, y, true, firstLine);
-
             printBlankLine(CLIGrid, length, y, 1, secondLine);
 
             //Third line
@@ -34,21 +42,23 @@ public class CLIGridPrinter {
                 StringWrapper rightBorder1 = cliTile.getRightBorder()[2];
                 if(!thirdLine.contains(rightBorder1)) thirdLine.add(rightBorder1);
             }
-
             printBlankLine(CLIGrid, length, y, 3, fourthLine);
 
-            printLine(firstLine);
+            printLine(firstLine, y, false);
+            if(printNames && namesLength>0 && y==1) printName(names.get(0), colors.get(0));
             System.out.println("");
-            printLine(secondLine);
+            printLine(secondLine, y, false);
+            if(printNames && namesLength>1 && y==1) printName(names.get(1), colors.get(1));
             System.out.println("");
-            printLine(thirdLine);
+            printLine(thirdLine, y, true);
+            if(printNames && namesLength>2 && y==1) printName(names.get(2), colors.get(2));
             System.out.println("");
-            printLine(fourthLine);
+            printLine(fourthLine, y, false);
 
             if(y==5) {
                 printHorizontalBorder(CLIGrid, 5, y, false, fifthLine);
                 System.out.println("");
-                printLine(fifthLine);
+                printLine(fifthLine, y, false);
             }
             System.out.println("");
         }
@@ -66,7 +76,9 @@ public class CLIGridPrinter {
         }
     }
 
-    private void printLine(ArrayList<StringWrapper> line) {
+    private void printLine(ArrayList<StringWrapper> line, int y, boolean writeNumber) {
+        if(writeNumber) line.add(0, new StringWrapper(y +  "  "));
+        else line.add(0, new StringWrapper("   "));
         for(StringWrapper s : line) {
             if(s.isColored()) System.out.print(Color.ANSI_GREEN.escape() + s.getString() + Color.RESET);
             else System.out.print(s.getString());
@@ -84,5 +96,21 @@ public class CLIGridPrinter {
                 if(!line.contains(s)) line.add(s);
             }
         }
+    }
+
+    private void createZeroLine(ArrayList<StringWrapper> line) {
+        for (int i = 0; i < leftSpacing; i++)
+            line.add(new StringWrapper(" "));
+
+        for(int x=1; x<6; x++) {
+            for (int i = 0; i < 5; i++) line.add(new StringWrapper(" "));
+            line.add(new StringWrapper(Integer.toString(x)));
+            for (int i = 0; i < 4; i++) line.add(new StringWrapper(" "));
+        }
+    }
+
+    private void printName(String name, Color color) {
+        System.out.print("  " + color.escape() + "───" + Color.RESET);
+        System.out.print(" " + name);
     }
 }

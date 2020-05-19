@@ -12,10 +12,12 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     private final CLIStdinReader cliStdinReader;
     private final MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
-    CLIGridManager cliGridManager = new CLIGridManager();
     CLIDeck cliDeck = new CLIDeck();
     CLICardBuilder cliCardBuilder = new CLICardBuilder();
-    int maxEffectLenght = 85;
+    CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
+    CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
+    CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
+    int maxEffectLength = 85;
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -33,12 +35,11 @@ public class CLIEventsCommunication implements EventsCommunication {
     @Override
     public void endLogin(ArrayList<String> names) {
         cliStdinReader.setLogin(false);
-        cliGridManager.addPlayers(names);
+        for(String name : names) cliPlayersManager.addPlayer(name);
     }
 
     @Override
     public void deck(ArrayList<CardSimplified> cards) {
-
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> effects = new ArrayList<>();
         ArrayList<String> descriptions = new ArrayList<>();
@@ -55,34 +56,32 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void card(CardSimplified card) {
-        System.out.println(card.getName());
-        cliGridManager.printGrid();
+        cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
     }
 
     @Override
     public void playerChosenCard(String playerName, String cardName) {
-        System.out.println("player " + playerName);
-        System.out.println("card" + cardName);
+        cliPlayersManager.getPlayer(playerName).setCardName(cardName);
     }
 
     @Override
     public void action(ArrayList<String> actions) {
         messagesReader.read(111);
-        actions.forEach(System.out::println);
+        cliActionPrinter.printAction(actions);
     }
 
     @Override
     public void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType) {
         cliStdinReader.setSelectedActionType(actionType);
         for(TileSimplified t : tiles) cliGridManager.borderColorTile(t.getX(), t.getY());
-        cliGridManager.printGrid();
+        cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
         for(TileSimplified t : tiles) cliGridManager.resetColorTile(t.getX(), t.getY());
     }
 
     @Override
     public void change(ArrayList<TileSimplified> tiles) {
         cliGridManager.changeGrid(tiles);
-        cliGridManager.printGrid();
+        cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
     }
 
     @Override
@@ -95,13 +94,14 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void infoEffect(String cardName) {
         String[] effectLines;
         String effect = cliCardBuilder.getDescription(cardName);
-        if(effect.length() < maxEffectLenght){
-            if(effect==null) messagesReader.read(407);
-            else System.out.println(effect);
-        }else {
+
+        if(effect==null) messagesReader.read(407);
+
+        else if(effect.length() < maxEffectLength) System.out.println(effect);
+
+        else {
             effectLines = effect.split("@", 0);
-            for(String s : effectLines)
-                System.out.println(s);
+            for(String s : effectLines) System.out.println(s);
         }
     }
 }

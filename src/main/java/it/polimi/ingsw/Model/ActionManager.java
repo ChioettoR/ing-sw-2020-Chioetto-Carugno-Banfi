@@ -390,6 +390,8 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private boolean checkSize(ArrayList<Action> actionList) throws IOException {
         if((actionList.size()<=index)) {
             playersManager.nextPlayerAndStartRound();
+            for(Player p : playersManager.getNextPlayers())
+                notifyMessage(new MessageEvent(115, p.getID()));
             index = 0;
             stateManager.setGameState(GameState.SELECTING);
             notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
@@ -403,6 +405,8 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         index++;
         if((actionList.size()<=index)) {
             playersManager.nextPlayerAndStartRound();
+            for(Player p : playersManager.getNextPlayers())
+                notifyMessage(new MessageEvent(115, p.getID()));
             index = 0;
             stateManager.setGameState(GameState.SELECTING);
             notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));

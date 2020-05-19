@@ -34,10 +34,10 @@ public class PositioningManager extends ChangeObservable {
             //If all players have finished positioning
             if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber) phaseFinishedForAllPlayers();
 
-            //If you have finished positioning
+                //If you have finished positioning
             else if(currentWorkersNumber % totalWorkersNumber==0) phaseFinished();
 
-            //If you have positioned the first worker only
+                //If you have positioned the first worker only
             else notifyMessage(new MessageEvent(109, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         }
     }
@@ -45,11 +45,15 @@ public class PositioningManager extends ChangeObservable {
     private void phaseFinishedForAllPlayers() throws IOException {
         stateManager.setGameState(GameState.SELECTING);
         playersManager.nextPlayerAndStartRound();
+        for(Player p : playersManager.getNextPlayers())
+            notifyMessage(new MessageEvent(115, p.getID()));
         notifyMessage(new MessageEvent(103, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     private void phaseFinished() throws IOException {
         playersManager.nextPlayer();
+        for(Player p : playersManager.getNextPlayers())
+            notifyMessage(new MessageEvent(114, p.getID()));
         notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 

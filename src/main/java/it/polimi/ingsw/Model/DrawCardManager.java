@@ -28,8 +28,9 @@ public class DrawCardManager extends CardObservable{
             return;
 
         ArrayList<CardSimplified> cardsSimplified = pickCardsFromDeck();
-
         sendCards(cardsSimplified);
+        for(Player p : playersManager.getNextPlayers())
+            notifyMessage(new MessageEvent(105, p.getID()));
     }
 
     public void pick(int playerID, String cardName) throws IOException {
@@ -53,7 +54,7 @@ public class DrawCardManager extends CardObservable{
 
     public void transition() throws IOException {
         notifyMessage(new MessageEvent(305, -1));
-        notifyMessage(new MessageEvent(105, PlayersManager.getPlayersManager().nextPlayer().getID()));
+        notifyMessage(new MessageEvent(501, PlayersManager.getPlayersManager().nextPlayer().getID()));
     }
 
     private ArrayList<CardSimplified> pickCardsFromDeck() {
@@ -84,6 +85,8 @@ public class DrawCardManager extends CardObservable{
                     ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
                     for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
                     playersManager.nextPlayer();
+                    for(Player p : playersManager.getNextPlayers())
+                        notifyMessage(new MessageEvent(105, p.getID()));
                     notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
                 }
                 else nextPhase();
@@ -120,6 +123,7 @@ public class DrawCardManager extends CardObservable{
         notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
         playersManager.nextPlayer();
         notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(114, p.getID()));
         stateManager.setGameState(GameState.POSITIONING);
     }
 }
