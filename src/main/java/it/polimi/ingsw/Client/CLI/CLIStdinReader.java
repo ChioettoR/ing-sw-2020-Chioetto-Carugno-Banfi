@@ -4,7 +4,6 @@ import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.ActionType;
-import org.junit.platform.commons.util.StringUtils;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class CLIStdinReader {
 
         while (true) {
             inputLine = stdin.nextLine();
-            if (inputLine.isEmpty() || StringUtils.isBlank(inputLine)) client.read(new MessageEvent(420));
+            if (inputLine.isEmpty() || inputLine.isBlank()) client.read(new MessageEvent(420));
             else read(inputLine.split("\\s+"));
         }
     }

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.Client;
-
 import java.io.IOException;
 
 public class ClientApp {
