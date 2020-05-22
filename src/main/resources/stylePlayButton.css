@@ -1,0 +1,4 @@
+.playButton{
+    -fx-background-image:url('button-play-normal.png');
+    -fx-background-size: 100% 100%;
+}

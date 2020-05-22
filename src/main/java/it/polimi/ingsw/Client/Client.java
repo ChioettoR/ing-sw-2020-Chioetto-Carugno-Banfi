@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.CLI.CLIEventsCommunication;
 import it.polimi.ingsw.Client.CLI.CLIStdinReader;
 import it.polimi.ingsw.Client.GUI.GUIEventsCommunication;
-import it.polimi.ingsw.Client.GUI.GUIMain;
 import it.polimi.ingsw.CountdownInterface;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Observer.Client.ClientObserver;
@@ -85,11 +84,9 @@ public class Client implements ClientObserver, CountdownInterface {
         cliStdinReader.run();
     }
 
-    public void runGUI() throws IOException {
+    public void setupGUI() throws IOException {
         eventsCommunication = new GUIEventsCommunication();
         eventsReader = new EventsReader(this, eventsCommunication);
-        GUIMain.launch();
-        run();
     }
 
     private void connect() throws IOException {

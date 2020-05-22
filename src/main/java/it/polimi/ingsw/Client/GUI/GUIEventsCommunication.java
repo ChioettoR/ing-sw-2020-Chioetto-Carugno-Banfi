@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Client.EventsCommunication;
+import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Model.ActionType;
 import it.polimi.ingsw.Model.CardSimplified;
 import it.polimi.ingsw.Model.TileSimplified;
@@ -8,6 +9,24 @@ import it.polimi.ingsw.Model.TileSimplified;
 import java.util.ArrayList;
 
 public class GUIEventsCommunication implements EventsCommunication {
+
+    StagesManager stagesManager;
+    //GUIRoundStage guiRoundStage;
+    GUILoginStage guiLoginStage;
+    private MessagesReader messagesReader;
+
+    public void setStagesManager(StagesManager stagesManager) {
+        this.stagesManager = stagesManager;
+        messagesReader = new MessagesReader(new GUIMessagesHandler(stagesManager));
+    }
+
+    public void setGuiLoginStage(GUILoginStage guiLoginStage) {
+        this.guiLoginStage = guiLoginStage;
+    }
+
+//    public void setGuiRoundStage(GUIRoundStage guiRoundStage) {
+//        this.guiRoundStage = guiRoundStage;
+//    }
 
     @Override
     public void lobbyInfo(String lobbyName, int lobbySize) {
@@ -21,12 +40,12 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void endLogin(ArrayList<String> names) {
-
+        stagesManager.endLogin(names);
     }
 
     @Override
     public void message(int messageID) {
-
+        messagesReader.read(messageID);
     }
 
     @Override
