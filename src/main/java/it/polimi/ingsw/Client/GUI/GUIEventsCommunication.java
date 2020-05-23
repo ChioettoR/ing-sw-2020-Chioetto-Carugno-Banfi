@@ -30,12 +30,15 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void lobbyInfo(String lobbyName, int lobbySize) {
-
+        messagesReader.lobbyInfo(lobbyName, lobbySize);
     }
 
     @Override
     public void waiting(boolean isWaiting) {
-
+        if(!isWaiting)
+            guiLoginStage.waitWake();
+        else
+            guiLoginStage.waitError();
     }
 
     @Override

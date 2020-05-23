@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="startLoginScreen" stylesheets="@styleLogin.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUILoginPanelController">
+   <AnchorPane fx:id="waitingPlayers" styleClass="waitingPlayers" stylesheets="@styleLogin.css" visible="false">
+      <children>
+         <AnchorPane fx:id="lobbyFound" styleClass="lobbyFound" stylesheets="@styleLogin.css" visible="false">
+            <children>
+               <AnchorPane fx:id="lobbyCreation" styleClass="lobbyCreation" stylesheets="@styleLogin.css" visible="false">
+                  <children>
+                     <AnchorPane fx:id="backGround" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="backGround" stylesheets="@styleLogin.css" visible="false">
+                        <VBox layoutX="100.0" layoutY="235.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="415.0" style="-fx-background-color: transparent;">
+                           <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="415.0">
+                              <children>
+                                 <VBox fx:id="errorVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="350.0" styleClass="errorVBox" stylesheets="@styleLogin.css">
+                                    <VBox.margin>
+                                       <Insets left="32.0" />
+                                    </VBox.margin>
+                                    <children>
+                                       <VBox prefHeight="41.0" prefWidth="350.0">
+                                          <children>
+                                             <Text fx:id="errorText" fill="#b80000" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="257.0">
+                                                <font>
+                                                   <Font name="Candara" size="14.0" />
+                                                </font>
+                                                <VBox.margin>
+                                                   <Insets left="47.0" top="13.0" />
+                                                </VBox.margin>
+                                             </Text>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox fx:id="nameTextVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="415.0" styleClass="nameTextVBox" stylesheets="@styleLogin.css">
+                                    <children>
+                                       <VBox>
+                                          <children>
+                                             <HBox fx:id="hBoxText" alignment="CENTER">
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <Image url="@heropower_inactive.png" />
+                                                </ImageView>
+                                                <TextField fx:id="nameText" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkName" prefHeight="26.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-prompt-text-fill: grey; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;">
+                                                   <font>
+                                                      <Font name="Candara Light" size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                                <VBox.margin>
+                                                   <Insets top="15.0" />
+                                                </VBox.margin>
+                                             </HBox>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </VBox>
+                        </VBox>
+                        <VBox fx:id="lobbyPartVBox" layoutX="100.0" layoutY="235.0" prefHeight="155.0" prefWidth="415.0" visible="false">
+                           <children>
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="415.0" />
+                              <VBox fx:id="choosePlayerNumbers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="415.0" style="-fx-background-color: transparent;" styleClass="choosePlayerNumbers" stylesheets="@styleLogin.css">
+                                 <children>
+                                    <Text fx:id="chooseText" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the players number" textAlignment="CENTER" wrappingWidth="415.0">
+                                       <font>
+                                          <Font name="Candara" size="16.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="415.0">
+                                       <children>
+                                          <CheckBox fx:id="two" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleTwoBox" pickOnBounds="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="two" stylesheets="@styleLogin.css">
+                                             <HBox.margin>
+                                                <Insets left="155.0" right="50.0" />
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox fx:id="three" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleThreeBox" prefHeight="30.0" prefWidth="30.0" styleClass="three" stylesheets="@styleLogin.css">
+                                             <HBox.margin>
+                                                <Insets right="85.0" />
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" top="15.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <AnchorPane fx:id="startButtonPart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="415.0">
+                                       <children>
+                                          <Button fx:id="buttonStart" contentDisplay="TEXT_ONLY" layoutX="132.0" layoutY="5.0" mnemonicParsing="false" onAction="#getStarted" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="startButton" stylesheets="@styleLogin.css" textAlignment="CENTER" textFill="WHITE">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="messageVBox" layoutX="100.0" layoutY="509.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="415.0" styleClass="messageVBox" stylesheets="@styleLogin.css">
+                           <children>
+                              <Text fx:id="successText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="308.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="55.0" top="50.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Candara Light" size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </AnchorPane>
+                  </children>
+               </AnchorPane>
+            </children>
+         </AnchorPane>
+      </children>
+   </AnchorPane>
+   <Button fx:id="playButton" layoutX="490.0" layoutY="492.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#changeScreen" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent;" styleClass="playButton" stylesheets="@styleLogin.css" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+</AnchorPane>

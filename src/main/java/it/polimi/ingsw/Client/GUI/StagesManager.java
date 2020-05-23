@@ -19,6 +19,8 @@ public class StagesManager extends Application {
     GUILoginStage guiLoginStage = new GUILoginStage();
     boolean login = true;
 
+
+
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
@@ -53,8 +55,14 @@ public class StagesManager extends Application {
         if(login) Platform.runLater(() -> guiLoginStage.readError(message));
     }
 
-    public void lobbyInfo(String lobbyName, int lobbySize) {
+    @Override
+    public void stop(){
+        client.closeConnection();
+    }
 
+    public void lobbyInfo(String lobbyName, int lobbySize) {
+        if(login)
+            Platform.runLater(() -> guiLoginStage.lobbyInfo(lobbyName, lobbySize));
     }
 
     public void endLogin(ArrayList<String> names) {

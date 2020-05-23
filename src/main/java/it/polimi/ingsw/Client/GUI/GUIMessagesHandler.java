@@ -12,7 +12,7 @@ public class GUIMessagesHandler implements MessagesHandler {
 
     @Override
     public void sendLobbyInfo(String lobbyName, int lobbySize) {
-
+        stagesManager.lobbyInfo(lobbyName, lobbySize);
     }
 
     @Override

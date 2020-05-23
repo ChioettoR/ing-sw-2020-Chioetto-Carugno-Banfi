@@ -11,11 +11,11 @@ public class GUILoginStage {
 
     public void start(Stage stage, StagesManager stagesManager) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/login.fxml"));
+        loader.setLocation(getClass().getResource("/Login/login.fxml"));
         Parent root = loader.load();
         guiLoginPanelController = loader.getController();
         guiLoginPanelController.setStagesManager(stagesManager);
-        stage.setScene(new Scene(root, 864, 864));
+        stage.setScene(new Scene(root, 600, 600));
         stage.setResizable(false);
         stage.show();
     }
@@ -30,5 +30,18 @@ public class GUILoginStage {
 
     public void readError(String message) {
         guiLoginPanelController.setError(message);
+    }
+
+    public void lobbyInfo(String lobbyName, int lobbySize) {
+        String message = "Entered in " + lobbyName + "'s lobby of " + lobbySize + " players";
+        guiLoginPanelController.setMessage(message);
+    }
+
+    public void waitWake(){
+        guiLoginPanelController.wakeUpClient();
+    }
+
+    public void waitError(){
+        guiLoginPanelController.setWaiting(true);
     }
 }

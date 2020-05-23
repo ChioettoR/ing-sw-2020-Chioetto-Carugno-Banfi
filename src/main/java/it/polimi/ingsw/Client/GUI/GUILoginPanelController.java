@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.GUI;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 public class GUILoginPanelController {
 
     boolean isLogin = true;
-    boolean waiting = false;
+    boolean isWaiting = false;
 
     StagesManager stagesManager;
 
@@ -57,6 +58,15 @@ public class GUILoginPanelController {
     private AnchorPane backGround;
 
     @FXML
+    private AnchorPane lobbyFound;
+
+    @FXML
+    private AnchorPane lobbyCreation;
+
+    @FXML
+    private AnchorPane waitingPlayers;
+
+    @FXML
     private TextField nameText;
 
     @FXML
@@ -75,6 +85,21 @@ public class GUILoginPanelController {
     private Text successText;
 
     @FXML
+    private VBox errorVBox;
+
+    @FXML
+    private VBox messageVBOX;
+
+    @FXML
+    private VBox nameTextVBox;
+
+    @FXML
+    private VBox choosePlayerNumbers;
+
+    @FXML
+    private VBox lobbyPartVBox;
+
+    @FXML
     private Text chooseText;
 
     @FXML
@@ -91,9 +116,16 @@ public class GUILoginPanelController {
 
     @FXML
     void changeScreen(ActionEvent event) {
+        waitingPlayers.setVisible(true);
+        lobbyFound.setVisible(true);
+        lobbyCreation.setVisible(true);
         backGround.setVisible(true);
         playButton.setVisible(false);
         playButton.setDisable(true);
+        if(isWaiting){
+            backGround.setVisible(false);
+            backGround.setDisable(true);
+        }
     }
 
     @FXML
@@ -116,7 +148,6 @@ public class GUILoginPanelController {
             string = nameText.getText();
             if(string.isBlank()) setError("Insert a valid string");
             else if (isNumeric(string)) setError("Your name can't be a number. Please, insert a valid name");
-                //stagesManager.send(new LobbySizeEvent(Integer.parseInt(string)));
             else if(string.split("\\s+").length>1) setError("Names longer than one word are not accepted");
             else stagesManager.send(new LoginNameEvent(string));
         }
@@ -126,20 +157,8 @@ public class GUILoginPanelController {
     void getStarted(ActionEvent event) {
         if(two.isSelected()){
             stagesManager.send(new LobbySizeEvent(3));
-            lobbyPart.setVisible(false);
-            startButtonPart.setVisible(false);
-            hBoxText.setDisable(false);
-            hBoxText.setVisible(true);
-            nameText.setPromptText("");
-            errorText.setVisible(false);
         }else if(three.isSelected()){
             stagesManager.send(new LobbySizeEvent(3));
-            lobbyPart.setVisible(false);
-            startButtonPart.setVisible(false);
-            hBoxText.setDisable(false);
-            hBoxText.setVisible(true);
-            nameText.setPromptText("");
-            errorText.setVisible(false);
         }
     }
 
@@ -153,19 +172,32 @@ public class GUILoginPanelController {
     public void setMessage(String message) {
         successText.setText(message);
         successText.setVisible(true);
+        if(message.equals("Waiting for another player...")){
+            backGround.setVisible(false);
+            backGround.setDisable(true);
+            lobbyCreation.setVisible(false);
+            lobbyCreation.setDisable(true);
+            lobbyFound.setVisible(false);
+            lobbyFound.setDisable(true);
+        }else if(message.equals("Waiting for other players...")){
+            backGround.setVisible(false);
+            backGround.setDisable(true);
+            lobbyCreation.setVisible(false);
+            lobbyCreation.setDisable(true);
+            lobbyFound.setVisible(false);
+            lobbyFound.setDisable(true);
+        }
     }
 
     public void setRequest(String message) {
         nameText.setText("");
         nameText.setPromptText(message);
         nameText.setMaxWidth(210);
-        vBox.setVisible(true);
-        lobbyPart.setVisible(false);
         if(nameText.getPromptText().equals("Insert lobby players number")){
-            startButtonPart.setVisible(true);
-            lobbyPart.setVisible(true);
-            hBoxText.setVisible(false);
-            hBoxText.setDisable(true);
+            successText.setText("");
+            errorVBox.setVisible(false);
+            nameTextVBox.setVisible(false);
+            lobbyPartVBox.setVisible(true);
         }
     }
 
@@ -173,5 +205,17 @@ public class GUILoginPanelController {
         nameText.setText("");
         errorText.setText(message);
         errorText.setVisible(true);
+    }
+
+    public void wakeUpClient(){
+        backGround.setVisible(true);
+        backGround.setDisable(false);
+        nameText.setText("");
+        errorText.setText("");
+        errorText.setVisible(true);
+    }
+
+    public void setWaiting(boolean waiting) {
+        isWaiting = waiting;
     }
 }

@@ -1,0 +1,95 @@
+.startLoginScreen{
+    -fx-background-image:url('startLoginScreen.png');
+    -fx-background-size: 100% 100%;
+}
+
+.backGround{
+    -fx-background-image:url('backgroundScreen.png');
+    -fx-background-size: 100% 100%;
+}
+
+.messageVBox{
+    -fx-background-image: url('panel_heroPower.png');
+    -fx-background-size: 100% 100%;
+}
+
+.errorVBox{
+    -fx-background-image: url('inputBarPart2.png');
+    -fx-background-size: 100% 100%;
+}
+
+.waitingPlayers{
+    -fx-background-image: url('waitingPlayers.png');
+    -fx-background-size: 100% 100%;
+}
+
+.lobbyCreation{
+    -fx-background-image: url('lobbyCreation.png');
+    -fx-background-size: 100% 100%;
+}
+
+.lobbyFound{
+    -fx-background-image: url('lobbyFound.png');
+    -fx-background-size: 100% 100%;
+}
+
+.nameTextVBox{
+    -fx-background-image: url('inputBarPart1.png');
+    -fx-background-size: 100% 100%;
+}
+
+.choosePlayerNumbers{
+    -fx-background-image: url('choosePlayersNumber.png');
+    -fx-background-size: 100% 100%;
+}
+
+.playButton{
+    -fx-background-image:url('button-play-normal.png');
+    -fx-background-size: 100% 100%;
+}
+
+.startButton{
+    -fx-background-image:url('startTheGame.png');
+    -fx-background-size: 100% 100%;
+}
+
+.startButton:pressed{
+    -fx-background-image:url('startTheGamePressed.png');
+    -fx-background-size: 100% 100%;
+}
+
+.two>.box {
+    -fx-background-color: transparent;
+    -fx-background-image: url("button2.png");
+    -fx-background-size: 100% 100%;
+    -fx-padding: 8px;
+}
+
+.two:selected>.box{
+    -fx-background-color: transparent;
+    -fx-background-image: url("button2selected.png");
+    -fx-background-size: 100% 100%;
+    -fx-padding: 8px;
+}
+
+.two .mark {
+    -fx-background-color: transparent;
+}
+
+.three>.box {
+    -fx-background-color: transparent;
+    -fx-background-image: url("button3.png");
+    -fx-background-size: 100% 100%;
+    -fx-padding: 8px;
+}
+
+.three:selected>.box{
+    -fx-background-color: transparent;
+    -fx-background-image: url("button3selected.png");
+    -fx-background-size: 100% 100%;
+    -fx-padding: 8px;
+}
+
+.three .mark {
+    -fx-background-color: transparent;
+}

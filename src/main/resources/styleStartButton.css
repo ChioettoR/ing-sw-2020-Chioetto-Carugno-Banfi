@@ -1,8 +1,0 @@
-.startButton{
-    -fx-background-image:url('clp_skip_btn.png');
-    -fx-background-size: 100% 100%;
-}
-.startButton:pressed{
-    -fx-background-image:url('clp_skip_btn_pressed.png');
-    -fx-background-size: 100% 100%;
-}
