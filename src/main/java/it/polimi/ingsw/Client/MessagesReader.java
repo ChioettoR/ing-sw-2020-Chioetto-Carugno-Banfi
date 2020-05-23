@@ -213,9 +213,7 @@ public class MessagesReader {
             //Square messages
             case (5) : {
                 if (messageID == 501) message = "DRAW";
-                ArrayList<String> list = new ArrayList<>();
-                list.add(message);
-                new CLIActionPrinter().printAction(list);
+                messagesHandler.sendDrawMessage(message);
             }
         }
     }
