@@ -20,6 +20,9 @@ public class Grid {
         return grid;
     }
 
+    /**
+     * Resets the grid
+     */
     public void reset() {
         completeTowersCount = 0;
         tiles.clear();
@@ -135,6 +138,11 @@ public class Grid {
         return neighbours.contains(nextTile);
     }
 
+    /**
+     * Checks if the tile is Perimeter or not
+     * @param tileWhereBuild tile checked
+     * @return true if is perimeter, false otherwise
+     */
     public boolean isPerimeterTile(Tile tileWhereBuild){
         ArrayList<Tile> perimeterTiles = new ArrayList<>(tiles);
         perimeterTiles.removeIf(tile -> tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());

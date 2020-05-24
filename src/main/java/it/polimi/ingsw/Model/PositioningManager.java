@@ -16,6 +16,13 @@ public class PositioningManager extends ChangeObservable {
         this.stateManager = stateManager;
     }
 
+    /**
+     * This method allows the player to position his workers
+     * @param playerID id of the player
+     * @param x X axis of the grid
+     * @param y Y axis of the grid
+     * @throws IOException when socket closes
+     */
     public void positioning(int playerID, int x, int y) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
@@ -42,6 +49,10 @@ public class PositioningManager extends ChangeObservable {
         }
     }
 
+    /**
+     * Invoked when Position Phase ends, prepares the grid and the players to the game
+     * @throws IOException when socket closes
+     */
     private void phaseFinishedForAllPlayers() throws IOException {
         stateManager.setGameState(GameState.SELECTING);
         playersManager.nextPlayerAndStartRound();
@@ -50,6 +61,10 @@ public class PositioningManager extends ChangeObservable {
         notifyMessage(new MessageEvent(103, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
+    /**
+     * Invoked when only a player finished positioning
+     * @throws IOException when socket closes
+     */
     private void phaseFinished() throws IOException {
         playersManager.nextPlayer();
         for(Player p : playersManager.getNextPlayers())
@@ -57,6 +72,11 @@ public class PositioningManager extends ChangeObservable {
         notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
+    /**
+     * Checks if the tile is null or full
+     * @return true if wrong, false otherwise
+     * @throws IOException when socket closes
+     */
     private boolean checkWrongTile(int x, int y) throws IOException {
         Tile tile = Grid.getGrid().getTile(x,y);
         if(tile == null || !tile.isEmpty()) {
@@ -67,6 +87,10 @@ public class PositioningManager extends ChangeObservable {
         return false;
     }
 
+    /**
+     * This method creates and positions a new worker on the grid
+     * @throws IOException when socket closes
+     */
     private void positionWorker(int x, int y) throws IOException {
         Tile tile = Grid.getGrid().getTile(x,y);
         Worker worker = new Worker();

@@ -24,6 +24,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     TimerTask undoTask;
 
 
+    /**
+     *
+     * @throws IOException when socket closes
+     */
     @Override
     public void countdownEnded() throws IOException {
         undoTimer.cancel();
@@ -33,6 +37,8 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         sendActions();
     }
 
+
+
     private class AvailableActions {
         MoveAction moveAction;
         int moveActionIndex;
@@ -41,6 +47,9 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         int buildActionIndex;
         private final ArrayList<ActionType> availableActionsNames = new ArrayList<>();
 
+        /**
+         * Initialization of Available Actions
+         */
         public AvailableActions() {
             this.moveActionIndex = -1;
             this.buildActionIndex = -1;
@@ -62,14 +71,25 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             return moveAction;
         }
 
+        /**
+         * Used to add in tail the name of an availableActionName
+         * @param availableActionName is the name of action we are adding to the list
+         */
         public void addAvailableActionName(ActionType availableActionName) {
             availableActionsNames.add(availableActionName);
         }
-
+        /**
+         * Used to remove the name of an availableAction
+         * @param availableActionName is the name of action we are adding to the list
+         */
         public void removeAvailableActionName(ActionType availableActionName) {
             availableActionsNames.remove(availableActionName);
         }
 
+        /**
+         * Used to add in tail the availableAction
+         * @param availableAction is the action we are adding the list
+         */
         public void addAvailableAction(UserAction availableAction) {
 
             if(availableAction instanceof MoveAction) {
@@ -94,6 +114,13 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         this.stateManager = stateManager;
     }
 
+    /**
+     * Receives the coordinates(x, y), checks if is the playerID turn, then moves the worker in that position
+     * @param playerID indicates the player in that turn
+     * @param x X axis position
+     * @param y Y axis position
+     * @throws IOException when socket closes
+     */
     public void move(int playerID, int x, int y) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
@@ -115,6 +142,14 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         else moveMethod(moveAction, worker, tile);
     }
 
+    /**
+     * Receives the coordinates(x, y), checks if is the playerID turn, then builds in that position
+     * @param playerID indicates the player in that turn
+     * @param x X axis position
+     * @param y Y axis position
+     * @param buildLevel level of new building in the tile(x, y)
+     * @throws IOException when socket closes
+     */
     public void build(int playerID, int x, int y, int buildLevel) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
@@ -142,6 +177,12 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
     }
 
+    /**
+     * Checks if the received action is one from the available actions in the list, then he proceeds to do it
+     * @param playerID indicates the player in that turn
+     * @param action the action checked
+     * @throws IOException when socket closes
+     */
     public void actionSelect(int playerID, String action) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
@@ -179,6 +220,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
     }
 
+    /**
+     * Sends the available actions
+     * @throws IOException when socket closes
+     */
     public void sendActions() throws IOException {
         availableActions = new AvailableActions();
         ArrayList<Action> actionList = playersManager.getActionOrder();
@@ -207,11 +252,19 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
     }
 
+    /**
+     * Is a transition method, saves the grid and sends the available actions
+     * @throws IOException when socket closes
+     */
     public void transition() throws IOException {
         saveGrid();
         sendActions();
     }
 
+    /**
+     * Saves the all grid in an ArrayList<Tile> before doing an action and returns it
+     * @return the grid saved
+     */
     private ArrayList<Tile> saveOldGrid() {
         ArrayList<Tile> oldGrid = new ArrayList<>();
         for(Tile t : Grid.getGrid().getTiles()) {
@@ -224,6 +277,9 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         return oldGrid;
     }
 
+    /**
+     * Saves the grid in the initial phase of the turn, used in case of multiple actions to delete
+     */
     private void saveGrid() {
 
         savedWorkers.clear();
@@ -240,6 +296,9 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             savedLevels.add(tile.getLevels());
     }
 
+    /**
+     * Clears all the grid
+     */
     private void resetGrid() {
 
         for(int i=0; i<savedWorkers.size(); i++) {
@@ -258,6 +317,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             Grid.getGrid().getTiles().get(i).setLevels(savedLevels.get(i));
     }
 
+    /**
+     * Checks all the changes from the current grid to the oldGrid received and notifies all of them
+     * @param oldGrid is the grid saved before doing the action
+     * @throws IOException when socket closes
+     */
     private void sendChange(ArrayList<Tile> oldGrid) throws IOException {
         ArrayList<Tile> newGrid = Grid.getGrid().getTiles();
         ArrayList<TileSimplified> modifiedTiles = new ArrayList<>();
@@ -273,6 +337,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         notify(new ChangeEvent(modifiedTiles));
     }
 
+    /**
+     * Used to check the winner
+     * @return true when a winner is selected, otherwise false
+     * @throws IOException when socket closes
+     */
     private boolean checkWin() throws IOException {
         int winnerID = playersManager.getPlayerWinnerID();
         if(winnerID!=-1) {
@@ -288,6 +357,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         return false;
     }
 
+    /**
+     *  Used to check the loser
+     * @return true when a loser is selected, otherwise false
+     * @throws IOException when socket closes
+     */
     private boolean checkLose() throws IOException {
         ArrayList<Worker> workers = playersManager.getCurrentPlayer().getWorkers();
         if(workers.stream().noneMatch(Worker::isAvailable)) {
@@ -299,6 +373,13 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         return false;
     }
 
+    /**
+     * Receives the moveAction, the worker's id and the tile, moves the worker into that tile and changes the grid
+     * @param moveAction action from the playerID's list of actions
+     * @param worker name of the worker moved
+     * @param tile tile where worker moves
+     * @throws IOException when socket closes
+     */
     private void moveMethod(MoveAction moveAction, Worker worker, Tile tile) throws IOException {
         ArrayList<Tile> oldGrid = saveOldGrid();
         moveAction.move(worker, tile);
@@ -311,6 +392,13 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         //sendActions();
     }
 
+    /**
+     * This method implements a move without the request of a buildLevel, checks if the the buildAction is available and then does it
+     * @param buildAction action for the playedID's list of actions
+     * @param worker name of the worker that builds
+     * @param tile tile where worker moves
+     * @throws IOException when socket closes
+     */
     private void buildWithoutLevelMethod(BuildAction buildAction, Worker worker, Tile tile) throws IOException {
         if(!buildAction.canBuild(worker, tile)) notifyMessage(new MessageEvent(404, playersManager.getCurrentPlayer().getID()));
         else {
@@ -322,6 +410,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
     }
 
+    /**
+     * Method used when correctly built, sends the change done to the grid
+     * @param oldGrid the grid saved before the build
+     * @throws IOException when socket closes
+     */
     private void sendBuildChanges(ArrayList<Tile> oldGrid) throws IOException {
         sendChange(oldGrid);
         if(checkWin()) return;
@@ -330,6 +423,14 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         //sendActions();
     }
 
+    /**
+     * Receives the buildAction, the worker's id and the tile, build  into that tile with the worker and changes the grid,
+     * @param buildAction action from the playerID's list of actions
+     * @param worker name of the worker that build
+     * @param tile tile where build
+     * @param buildLevel new level of the building on the tile
+     * @throws IOException when socket closes
+     */
     private void buildWithLevelMethod(BuildAction buildAction, Worker worker, Tile tile, int buildLevel) throws IOException {
         ArrayList<Tile> oldGrid = saveOldGrid();
         buildAction.build(worker, tile, buildLevel);
@@ -338,6 +439,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         undoCountdown();
     }
 
+    /**
+     * This countdown is used after the select of an action and permits the player to UNDO that action during this countdown
+     * @throws IOException when socket closes
+     */
     private void undoCountdown() throws IOException {
         availableActions.getAvailableActionsNames().clear();
         availableActions.addAvailableActionName(ActionType.UNDO);
@@ -348,6 +453,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         undoTimer.schedule(undoTask, 0, 1000);
     }
 
+    /**
+     * This is the standard move action
+     * @throws IOException when socket closes
+     */
     private void classicMove() throws IOException {
         ArrayList<Tile> availableTiles = availableActions.getMoveAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
@@ -355,6 +464,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         notifyMessage(new MessageEvent(101, playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * This is the standard build action
+     * @throws IOException when socket closes
+     */
     private void classicBuild() throws IOException {
         ArrayList<Tile> availableTiles = availableActions.getBuildAction().getAvailableTilesForAction(playersManager.getCurrentWorker());
         stateManager.setGameState(GameState.ACTING);
@@ -362,11 +475,19 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         notifyMessage(new MessageEvent(102, playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * This is the standard end round without the implementation of god powers
+     * @throws IOException when socket closes
+     */
     private void classicEndRound() throws IOException {
         index++;
         sendActions();
     }
 
+    /**
+     * This is the standard UNDO used to cancel an action previously committed to the server
+     * @throws IOException when socket closes
+     */
     private void classicUndo() throws IOException {
         undoTimer.cancel();
         int moveIndex = availableActions.getMoveActionIndex();
@@ -383,10 +504,20 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         sendActions();
     }
 
+    /**
+     * This is the classic confirm action used to confirm an action without waiting the UNDO Countdown
+     * @throws IOException when socket closes
+     */
     private void classicConfirm() throws IOException {
         countdownEnded();
     }
 
+    /**
+     * Used to check if the player has or not new available actions to do
+     * @param actionList the list of actions of the player in that turn
+     * @return true if the player can do some actions, false otherwise
+     * @throws IOException when socket closes
+     */
     private boolean checkSize(ArrayList<Action> actionList) throws IOException {
         if((actionList.size()<=index)) {
             playersManager.nextPlayerAndStartRound();
@@ -400,6 +531,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         return false;
     }
 
+    /**
+     * Automatic actions done between players round
+     * @throws IOException when socket closes
+     */
     private void roundActionMethod(Action currentAction, ArrayList<Action> actionList) throws IOException {
         ((RoundAction) currentAction).doAction();
         index++;
@@ -414,6 +549,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         else sendActions();
     }
 
+    /**
+     *If found a notOptional action, forces the player to do it.
+     * @param currentAction the action need to be done by the player
+     * @throws IOException when socket closes
+     */
     private void userActionNotOptional(Action currentAction) throws IOException {
         ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
         if(availableTiles.size()==0) {
@@ -448,12 +588,22 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             availableActions.addAvailableAction((UserAction) currentAction);
     }
 
+    /**
+     * Ends the round
+     * @throws IOException when socket closes
+     */
     private void endRound() throws IOException {
         availableActions.addAvailableActionName(ActionType.ENDROUND);
         stateManager.setGameState(GameState.ACTIONSELECTING);
         notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * Selects the Optional and non optional actions available for the player in that moment
+     * @param currentAction the current action done by the player
+     * @param actionList list of actions of the player
+     * @throws IOException when socket closes
+     */
     private void userActionOptional(Action currentAction, ArrayList<Action> actionList) throws IOException {
         ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
 

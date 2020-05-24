@@ -12,11 +12,17 @@ public class Deck {
         deck = this;
     }
 
+    /**
+     * Resets all the deck
+     */
     public void reset() {
         cardsList.clear();
         completeTowersObserver = null;
     }
 
+    /**
+     * Calls the cardsBuilder method for the creation of the cards
+     */
     public void createCards() {
         ArrayList<Card> cardArrayList = cardsBuilder.createCards();
         for(Card card : cardArrayList)

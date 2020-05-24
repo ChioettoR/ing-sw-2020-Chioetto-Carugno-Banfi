@@ -17,6 +17,12 @@ public class SelectionWorkerManager extends MessageObservable {
         this.actionManager = actionManager;
     }
 
+    /**
+     * This method selects the worker from the list of workers
+     * @param playerID id of the player
+     * @param workerID id of the worker selected
+     * @throws IOException when socket closes
+     */
     public void selection(int playerID, int workerID) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))

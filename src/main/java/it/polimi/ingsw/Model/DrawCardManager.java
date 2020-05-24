@@ -19,6 +19,11 @@ public class DrawCardManager extends CardObservable{
         this.stateManager = stateManager;
     }
 
+    /**
+     * Draws from the deck a defined number of cards, one card per player, and shows them
+     * @param playerID parameter used to check if the player is the one who has to draw the card in that moment
+     * @throws IOException when socket closes
+     */
     public void draw(int playerID) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
@@ -33,6 +38,12 @@ public class DrawCardManager extends CardObservable{
             notifyMessage(new MessageEvent(105, p.getID()));
     }
 
+    /**
+     * Associates the card received to the player
+     * @param playerID ID of the player
+     * @param cardName name of the card to associate
+     * @throws IOException when socket closes
+     */
     public void pick(int playerID, String cardName) throws IOException {
         if(!stateManager.checkPlayerID(playerID))
             return;
@@ -57,6 +68,10 @@ public class DrawCardManager extends CardObservable{
         notifyMessage(new MessageEvent(501, PlayersManager.getPlayersManager().nextPlayer().getID()));
     }
 
+    /**
+     * Method invoked by draw, picks the cards from the deck and returns them
+     * @return the cardsSimplified from the deck
+     */
     private ArrayList<CardSimplified> pickCardsFromDeck() {
         ArrayList<CardSimplified> cardsSimplified = new ArrayList<>();
         for (int i=0; i<playersManager.getPlayersNumber(); i++)
@@ -64,6 +79,11 @@ public class DrawCardManager extends CardObservable{
         return cardsSimplified;
     }
 
+    /**
+     * Method invoked by draw, sends the cards
+     * @param cardsSimplified the cardsSimplified from the deck
+     * @throws IOException when socket closes
+     */
     private void sendCards(ArrayList<CardSimplified> cardsSimplified) throws IOException {
         MiniDeckSimplified miniDeckSimplified = new MiniDeckSimplified(cardsSimplified);
         pickedCards = new ArrayList<>();
@@ -74,6 +94,12 @@ public class DrawCardManager extends CardObservable{
         stateManager.setGameState(GameState.PICKING);
     }
 
+    /**
+     *Method invoked when a player picks a card, notifies the pick
+     * @param cardName name of the card picked
+     * @return true if picked, false otherwise
+     * @throws IOException when socket closes
+     */
     private boolean playerPicksTheCard(String cardName) throws IOException {
 
         for(CardSimplified cardSimplified : remainingCards) {
@@ -108,6 +134,11 @@ public class DrawCardManager extends CardObservable{
         notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
+    /**
+     * Invoked after a card pick, removes the card from the remaining ones and adds it to the picked ones
+     * @param cardSimplified name of the card picked
+     * @throws IOException when socket closes
+     */
     private void pickCard(CardSimplified cardSimplified) throws IOException {
         remainingCards.remove(cardSimplified);
         pickedCards.add(cardSimplified);
@@ -116,6 +147,10 @@ public class DrawCardManager extends CardObservable{
         notifyCard(new CardEvent(cardSimplified, playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * Invoked when a turn is ended, changes the player
+     * @throws IOException when socket closes
+     */
     private void nextPhase() throws IOException {
         playersManager.nextPlayer();
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
