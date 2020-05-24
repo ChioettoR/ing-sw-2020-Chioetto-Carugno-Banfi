@@ -37,11 +37,27 @@ public class GUILoginStage {
         guiLoginPanelController.setMessage(message);
     }
 
-    public void waitWake(){
+    public void waitWake() {
         guiLoginPanelController.wakeUpClient();
     }
 
-    public void waitError(){
+    public void waitError() {
         guiLoginPanelController.setWaiting(true);
+    }
+
+    public void waitingPlayer() {
+        guiLoginPanelController.waitingPlayer();
+    }
+
+    public void waitingPlayers() {
+        guiLoginPanelController.waitingPlayers();
+    }
+
+    public void insertNumber() {
+        guiLoginPanelController.insertNumber();
+    }
+
+    public void lobbyFull() {
+        guiLoginPanelController.lobbyFull();
     }
 }

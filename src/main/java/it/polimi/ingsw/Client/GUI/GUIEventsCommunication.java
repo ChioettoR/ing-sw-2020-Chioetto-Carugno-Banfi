@@ -5,7 +5,9 @@ import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Model.ActionType;
 import it.polimi.ingsw.Model.CardSimplified;
 import it.polimi.ingsw.Model.TileSimplified;
+import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GUIEventsCommunication implements EventsCommunication {
@@ -49,6 +51,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     @Override
     public void message(int messageID) {
         messagesReader.read(messageID);
+        handleMessages(messageID);
     }
 
     @Override
@@ -94,5 +97,26 @@ public class GUIEventsCommunication implements EventsCommunication {
     @Override
     public void infoEffect(String cardName) {
 
+    }
+
+    public void disconnection() {
+        Platform.runLater(() -> {
+            try {
+                stagesManager.setDisconnectedScene();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void handleMessages(int messageID){
+        if(messageID == 304)
+            guiLoginStage.waitingPlayer();
+        else if(messageID == 302)
+            guiLoginStage.waitingPlayers();
+        else if(messageID == 113)
+            guiLoginStage.insertNumber();
+        else if(messageID == 414)
+            guiLoginStage.lobbyFull();
     }
 }

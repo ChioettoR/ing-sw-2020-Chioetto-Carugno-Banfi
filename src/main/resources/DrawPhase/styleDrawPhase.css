@@ -1,0 +1,4 @@
+.backGround{
+    -fx-background-image:url('backgroundScreen.png');
+    -fx-background-size: 100% 100%;
+}

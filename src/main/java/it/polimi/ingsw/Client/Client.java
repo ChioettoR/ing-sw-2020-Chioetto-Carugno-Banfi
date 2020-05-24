@@ -22,6 +22,7 @@ public class Client implements ClientObserver, CountdownInterface {
     ObjectOutputStream oos;
     EventsReader eventsReader;
     EventsCommunication eventsCommunication;
+    CLIStdinReader cliStdinReader;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -37,7 +38,8 @@ public class Client implements ClientObserver, CountdownInterface {
             socket.close();
             oos.close();
             ois.close();
-            System.exit(0);
+            if(cliStdinReader != null) System.exit(0);
+            else ((GUIEventsCommunication) eventsCommunication).disconnection();
         }
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
@@ -77,7 +79,7 @@ public class Client implements ClientObserver, CountdownInterface {
     }
 
     public void runCLI() throws IOException {
-        CLIStdinReader cliStdinReader = new CLIStdinReader(this);
+        cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);
         eventsReader = new EventsReader(this, eventsCommunication);
         run();

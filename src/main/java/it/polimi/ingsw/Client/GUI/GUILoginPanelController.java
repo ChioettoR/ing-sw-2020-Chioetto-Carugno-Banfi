@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
+import it.polimi.ingsw.Client.MessagesHandler;
+import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
 import javafx.animation.AnimationTimer;
@@ -23,6 +25,7 @@ public class GUILoginPanelController {
 
     boolean isLogin = true;
     boolean isWaiting = false;
+    int buttonClickedCounter = 0;
 
     StagesManager stagesManager;
 
@@ -43,67 +46,37 @@ public class GUILoginPanelController {
     }
 
     @FXML
-    private CheckBox two;
-
-    @FXML
-    private CheckBox three;
-
-    @FXML
-    private Button startButton;
-
-    @FXML
-    private VBox loginPanel;
-
-    @FXML
     private AnchorPane backGround;
-
-    @FXML
-    private AnchorPane lobbyFound;
-
-    @FXML
-    private AnchorPane lobbyCreation;
-
-    @FXML
-    private AnchorPane waitingPlayers;
-
-    @FXML
-    private TextField nameText;
-
-    @FXML
-    private Text errorText;
-
-    @FXML
-    private VBox lobbyPart;
-
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private HBox hBoxText;
-
-    @FXML
-    private Text successText;
 
     @FXML
     private VBox errorVBox;
 
     @FXML
-    private VBox messageVBOX;
+    private Text errorText;
 
     @FXML
     private VBox nameTextVBox;
 
     @FXML
-    private VBox choosePlayerNumbers;
+    private HBox hBoxText;
+
+    @FXML
+    private TextField nameText;
 
     @FXML
     private VBox lobbyPartVBox;
 
     @FXML
+    private VBox choosePlayerNumbers;
+
+    @FXML
     private Text chooseText;
 
     @FXML
-    private AnchorPane startLoginScreen;
+    private CheckBox two;
+
+    @FXML
+    private CheckBox three;
 
     @FXML
     private AnchorPane startButtonPart;
@@ -112,19 +85,36 @@ public class GUILoginPanelController {
     private Button buttonStart;
 
     @FXML
+    private VBox messageVBOX;
+
+    @FXML
+    private Text successText;
+
+    @FXML
     private Button playButton;
 
     @FXML
+    private AnchorPane lobbyCreation;
+
+    @FXML
+    private AnchorPane lobbyFound;
+
+    @FXML
+    private AnchorPane waitingPlayers;
+
+    @FXML
+    private AnchorPane waitingPlayer;
+
+    @FXML
     void changeScreen(ActionEvent event) {
-        waitingPlayers.setVisible(true);
-        lobbyFound.setVisible(true);
-        lobbyCreation.setVisible(true);
+        buttonClickedCounter++;
         backGround.setVisible(true);
         playButton.setVisible(false);
         playButton.setDisable(true);
         if(isWaiting){
             backGround.setVisible(false);
             backGround.setDisable(true);
+            lobbyCreation.setVisible(true);
         }
     }
 
@@ -156,7 +146,7 @@ public class GUILoginPanelController {
     @FXML
     void getStarted(ActionEvent event) {
         if(two.isSelected()){
-            stagesManager.send(new LobbySizeEvent(3));
+            stagesManager.send(new LobbySizeEvent(2));
         }else if(three.isSelected()){
             stagesManager.send(new LobbySizeEvent(3));
         }
@@ -172,33 +162,12 @@ public class GUILoginPanelController {
     public void setMessage(String message) {
         successText.setText(message);
         successText.setVisible(true);
-        if(message.equals("Waiting for another player...")){
-            backGround.setVisible(false);
-            backGround.setDisable(true);
-            lobbyCreation.setVisible(false);
-            lobbyCreation.setDisable(true);
-            lobbyFound.setVisible(false);
-            lobbyFound.setDisable(true);
-        }else if(message.equals("Waiting for other players...")){
-            backGround.setVisible(false);
-            backGround.setDisable(true);
-            lobbyCreation.setVisible(false);
-            lobbyCreation.setDisable(true);
-            lobbyFound.setVisible(false);
-            lobbyFound.setDisable(true);
-        }
     }
 
     public void setRequest(String message) {
         nameText.setText("");
         nameText.setPromptText(message);
         nameText.setMaxWidth(210);
-        if(nameText.getPromptText().equals("Insert lobby players number")){
-            successText.setText("");
-            errorVBox.setVisible(false);
-            nameTextVBox.setVisible(false);
-            lobbyPartVBox.setVisible(true);
-        }
     }
 
     public void setError(String message) {
@@ -208,14 +177,52 @@ public class GUILoginPanelController {
     }
 
     public void wakeUpClient(){
-        backGround.setVisible(true);
-        backGround.setDisable(false);
-        nameText.setText("");
-        errorText.setText("");
-        errorText.setVisible(true);
+        if(isWaiting) {
+            lobbyCreation.setVisible(false);
+            if(!backGround.isVisible()){
+                playButton.setDisable(false);
+                playButton.setVisible(true);
+                isWaiting = false;
+                backGround.setDisable(false);
+                if(buttonClickedCounter == 1){
+                    buttonClickedCounter++;
+                    backGround.setVisible(true);
+                    playButton.setVisible(false);
+                    playButton.setDisable(true);
+                }
+            }
+            nameText.setText("");
+            errorText.setText("");
+            errorText.setVisible(true);
+        }
     }
 
     public void setWaiting(boolean waiting) {
         isWaiting = waiting;
+    }
+
+    public void waitingPlayer() {
+        backGround.setVisible(false);
+        backGround.setDisable(true);
+        waitingPlayer.setVisible(true);
+    }
+
+    public void waitingPlayers() {
+        backGround.setVisible(false);
+        backGround.setDisable(true);
+        waitingPlayers.setVisible(true);
+    }
+
+    public void insertNumber() {
+        successText.setText("");
+        errorVBox.setVisible(false);
+        nameTextVBox.setVisible(false);
+        lobbyPartVBox.setVisible(true);
+    }
+
+    public void lobbyFull() {
+        backGround.setVisible(true);
+        backGround.setDisable(false);
+        lobbyFound.setVisible(true);
     }
 }

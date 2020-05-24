@@ -4,6 +4,9 @@ import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -74,5 +77,14 @@ public class StagesManager extends Application {
         StagesManager.ip = ip;
         StagesManager.port = port;
         Application.launch();
+    }
+
+    public void setDisconnectedScene() throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Disconnection/disconnection.fxml"));
+        Parent disconnection = loader.load();
+        stage.setScene(new Scene(disconnection, 600, 600));
+        stage.setResizable(false);
+        stage.show();
     }
 }
