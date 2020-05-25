@@ -8,6 +8,10 @@ public class CLIDeck {
     String name = "Deck";
     int verticalBorder = 3;
 
+    /**
+     * Creates the deck that contains all the cards, invoking the methods in this class
+     * @param cardsLine the line of the cards
+     */
     public void createDeck(ArrayList<StringBuilder> cardsLine) {
 
         int length = cardsLine.get(0).toString().trim().length() + verticalBorder*2;
@@ -34,16 +38,31 @@ public class CLIDeck {
         print(lines);
     }
 
+    /**
+     * Creates the blank spaces of the deck
+     * @param stringBuilder contains information about the string
+     * @param length length of the deck
+     */
     private void createBlankSpace(StringBuilder stringBuilder, int length) {
         stringBuilder.append(" ".repeat(Math.max(0, length)));
     }
 
+    /**
+     * Creates the upper part of the deck
+     * @param stringBuilder contains information about the string
+     * @param length length of the deck
+     */
     private void createUpperLine(StringBuilder stringBuilder, int length) {
         stringBuilder.append('┌');
         stringBuilder.append("─".repeat(Math.max(0, length)));
         stringBuilder.append('┐');
     }
 
+    /**
+     * Creates the lower part of the deck
+     * @param stringBuilder contains information about the string
+     * @param length length of the deck
+     */
     private void createLowerLine(StringBuilder stringBuilder, int length) {
         stringBuilder.append('└');
         stringBuilder.append("─".repeat(Math.max(0, length)));
@@ -63,12 +82,22 @@ public class CLIDeck {
         return borders;
     }
 
+    /**
+     * Creates the line containing the name of the card
+     * @param stringBuilder contains information about the string
+     * @param length length of the deck
+     */
     private void createNameLine(StringBuilder stringBuilder, int length) {
         stringBuilder.append("│");
         stringBuilder.append(StringUtils.center(name, length));
         stringBuilder.append("│");
     }
 
+    /**
+     * Creates the all lines that belong to the card inside the deck
+     * @param stringBuilders contain information about the strings
+     * @return returns the lines created
+     */
     private ArrayList<StringBuilder> createCardsLine(ArrayList<StringBuilder> stringBuilders) {
 
         ArrayList<StringBuilder> newLines = new ArrayList<>();
@@ -85,6 +114,10 @@ public class CLIDeck {
         return newLines;
     }
 
+    /**
+     * Prints all the deck
+     * @param lines lines that belong to the deck
+     */
     private void print(ArrayList<StringBuilder> lines) {
         for(StringBuilder s : lines) { System.out.println(s.toString().trim()); }
     }

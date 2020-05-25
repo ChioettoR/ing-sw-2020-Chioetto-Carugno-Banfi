@@ -15,6 +15,11 @@ class CLIGridChanger {
         this.cliPlayersManager = cliPlayersManager;
     }
 
+    /**
+     * This method is the one that applies all the changes to the grid
+     * @param CLIGrid grid
+     * @param tiles list of changed tiles
+     */
     void change(CLIGrid CLIGrid, ArrayList<TileSimplified> tiles) {
 
         for(TileSimplified tileSimplified : tiles) {
@@ -108,6 +113,12 @@ class CLIGridChanger {
         }
     }
 
+    /**
+     * Method invoked to change the level on a tile
+     * @param cliTile tile changed
+     * @param buildLevel newlevel
+     * @param levelOnly true if there are only buildings and no workers on it, false otherwise
+     */
     private void changeLevel(CLITile cliTile, int buildLevel, boolean levelOnly) {
         int position;
         if(levelOnly) position = 1;
@@ -115,6 +126,12 @@ class CLIGridChanger {
         cliTile.getWords()[position] = new StringWrapper(Integer.toString(buildLevel));
     }
 
+    /**
+     * Method invoked to change the worker on a tile
+     * @param cliTile tile changed
+     * @param workerSimplified simplified name of the worker
+     * @param workerOnly true if there is only the worker on that tile and no buildings on it, false otherwise
+     */
     private void changeWorker(CLITile cliTile, WorkerSimplified workerSimplified, boolean workerOnly) {
         int position;
         if(workerOnly) position = 1;
@@ -125,18 +142,33 @@ class CLIGridChanger {
         cliTile.getWords()[position] = new StringWrapper(color.escape() + getCharForNumber(workerID) + Color.RESET);
     }
 
+    /**
+     * Applies changes on a tile
+     * @param cliTile tile changed
+     * @param buildLevel new building level
+     * @param workerSimplified worker on that tile
+     */
     private void changeAll(CLITile cliTile, int buildLevel, WorkerSimplified workerSimplified) {
         changeLevel(cliTile, buildLevel, false);
         changeWorker(cliTile, workerSimplified, false);
         cliTile.getWords()[1] = new StringWrapper("/");
     }
 
+    /**
+     * Invoked when a worker is moved on a tile with a building, this method writes correctly the letters inside that tile
+     * @param cliTile tiles to modify
+     * @param newPosition position of the letters on the string
+     */
     private void shiftPosition(CLITile cliTile, int newPosition) {
         StringWrapper oldPosition = cliTile.getWords()[1];
         cliTile.getWords()[1] = new StringWrapper("/");
         cliTile.getWords()[newPosition] = oldPosition;
     }
 
+    /**
+     * Clears all the tiles
+     * @param cliTile tile to clear
+     */
     private void clearAll(CLITile cliTile) {
         cliTile.getWords()[0] = new StringWrapper(" ");
         cliTile.getWords()[1] = new StringWrapper(" ");
@@ -149,6 +181,11 @@ class CLIGridChanger {
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /**
+     * Checks if the string is a number
+     * @param strNum string to check
+     * @return true if is a number, false otherwise
+     */
     public boolean isNumeric(String strNum) {
         if (strNum == null)
             return false;

@@ -11,6 +11,13 @@ public class CLICardBuilder {
     int maxLineSize = 15;
     int cardsSpacing = 3;
 
+    /**
+     * This method creates all the cards invoking the other methods in this class and bringing all the variables from the CLICard class
+     * @param names name of the card
+     * @param effects type of the effect
+     * @param descriptions description of the effect
+     * @return the created cards
+     */
     public ArrayList<StringBuilder> createCards(ArrayList<String> names, ArrayList<String> effects, ArrayList<String> descriptions) {
 
         ArrayList<CLICard> cards = new ArrayList<>();
@@ -92,28 +99,53 @@ public class CLICardBuilder {
         return effectsMap.get(cardName);
     }
 
+    /**
+     * Creates the upper part of the card
+     * @param stringBuilder string containing information about the card
+     * @param length length of the card
+     */
     private void createUpperBorder(StringBuilder stringBuilder, int length) {
         stringBuilder.append("┌");
         stringBuilder.append("─".repeat(Math.max(0, length)));
         stringBuilder.append("┐");
     }
 
+    /**
+     * Creates the lower part of the card
+     * @param stringBuilder string containing information about the card
+     * @param length length of the card
+     */
     private void createLowerBorder(StringBuilder stringBuilder, int length) {
         stringBuilder.append("└");
         stringBuilder.append("─".repeat(Math.max(0, length)));
         stringBuilder.append("┘");
     }
 
+    /**
+     * Creates the blank spaces on the central part of the card
+     * @param stringBuilder string containing information about the card
+     * @param length length of the card
+     */
     private void createBlankSpace(StringBuilder stringBuilder, int length) {
         stringBuilder.append(" ".repeat(Math.max(0, length)));
     }
 
+    /**
+     * Creates the middle space on the central part of the card
+     * @param stringBuilder string containing information about the card
+     * @param length length of the card
+     */
     private void createMiddleSpace(StringBuilder stringBuilder, int length) {
         stringBuilder.append("├");
         stringBuilder.append("─".repeat(Math.max(0, length)));
         stringBuilder.append("┤");
     }
 
+    /**
+     * This method calculates how long is the effect and creates the correct blank spaces and the correct lines to center it and size it
+     * @param cardEffect string containing the effect of the card
+     * @return returns the string centered and spaced
+     */
     private ArrayList<StringBuilder> createEffectSpace(String cardEffect) {
         String[] separatedEffectWords;
         separatedEffectWords = cardEffect.split("\\s+");
@@ -156,6 +188,11 @@ public class CLICardBuilder {
         return centeredEffectLines;
     }
 
+    /**
+     * This method merges all the string created in the method in this class, creating the cards
+     * @param cards address of the card
+     * @return returns the merged lines of that card
+     */
     private ArrayList<StringBuilder> mergeCards(ArrayList<CLICard> cards) {
 
         ArrayList<ArrayList<StringBuilder>> allCardsLines = new ArrayList<>();

@@ -3,7 +3,10 @@ package it.polimi.ingsw.Client.CLI;
 import java.util.ArrayList;
 
 public class CLIActionPrinter {
-
+    /**
+     * printAction merges the available action buttons and invoked the print method to print them
+     * @param names name of the action
+     */
     public void printAction(ArrayList<String> names) {
 
         ArrayList<ArrayList<StringBuilder>> actionsLines = new ArrayList<>();
@@ -37,6 +40,10 @@ public class CLIActionPrinter {
         print(actionsLines);
     }
 
+    /**
+     * Prints all the actions spacing them horizontally
+     * @param actionsLines line containing the action word
+     */
     private void print(ArrayList<ArrayList<StringBuilder>> actionsLines) {
 
         ArrayList<StringBuilder> mergedLines = new ArrayList<>();

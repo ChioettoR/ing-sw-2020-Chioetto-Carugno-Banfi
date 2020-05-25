@@ -38,6 +38,10 @@ public class CLIEventsCommunication implements EventsCommunication {
         for(String name : names) cliPlayersManager.addPlayer(name);
     }
 
+    /**
+     * Invokes the CLI methods to build the deck and the cards
+     * @param cards name of the cards needed
+     */
     @Override
     public void deck(ArrayList<CardSimplified> cards) {
         ArrayList<String> names = new ArrayList<>();
@@ -64,12 +68,21 @@ public class CLIEventsCommunication implements EventsCommunication {
         cliPlayersManager.getPlayer(playerName).setCardName(cardName);
     }
 
+    /**
+     * Prints the available actions
+     * @param actions list of actions
+     */
     @Override
     public void action(ArrayList<String> actions) {
         messagesReader.read(111);
         cliActionPrinter.printAction(actions);
     }
 
+    /**
+     * Colors the available tiles on the grid
+     * @param tiles list of available tiles
+     * @param actionType type of the action
+     */
     @Override
     public void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType) {
         cliStdinReader.setSelectedActionType(actionType);
@@ -78,18 +91,34 @@ public class CLIEventsCommunication implements EventsCommunication {
         for(TileSimplified t : tiles) cliGridManager.resetColorTile(t.getX(), t.getY());
     }
 
+    /**
+     * Method invoked when a change is done on the tiles
+     * @param tiles list of changed tiles
+     */
     @Override
     public void change(ArrayList<TileSimplified> tiles) {
         cliGridManager.changeGrid(tiles);
         cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
     }
 
+    /**
+     * Print method for the victory
+     * @param youWin true if winnerName wins, false otherwise
+     * @param winnerName name of the winner
+     */
     @Override
     public void win(boolean youWin, String winnerName) { if(youWin) System.out.println("YOU WIN!"); else System.out.println((winnerName + "Wins")); }
 
+    /**
+     * Print method for the lose
+     */
     @Override
     public void lose() { System.out.println("YOU LOSE!"); }
 
+    /**
+     * Prints the effect of the card requested
+     * @param cardName name of the card
+     */
     @Override
     public void infoEffect(String cardName) {
         String[] effectLines;

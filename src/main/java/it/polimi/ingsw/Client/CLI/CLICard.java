@@ -12,6 +12,12 @@ public class CLICard {
     private ArrayList<StringBuilder> effectLines;
     private ArrayList<StringBuilder> lowerLines;
 
+    /**
+     * Contains all the variables that belong to the card
+     * @param name name of the card
+     * @param effectName type of the effect
+     * @param description description of the effect
+     */
     public CLICard(String name, String effectName, String description) {
         this.name = name;
         this.effectName = effectName;

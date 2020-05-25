@@ -9,6 +9,13 @@ public class CLIGridPrinter {
 
     int leftSpacing = 3;
 
+    /**
+     * Prints all the grid merging it with the methods in this class
+     * @param CLIGrid grid to print
+     * @param printNames true if need to print player name, false otherwise
+     * @param names list of names
+     * @param colors list of colors
+     */
     void print(CLIGrid CLIGrid, boolean printNames, ArrayList<String> names, ArrayList<Color> colors) {
 
         int namesLength = names.size();
@@ -64,6 +71,14 @@ public class CLIGridPrinter {
         }
     }
 
+    /**
+     * Prints the blank lines in the grid
+     * @param cliGrid grid
+     * @param length length of the grid
+     * @param y spacer
+     * @param lineNumber number of line to modify
+     * @param line line to modify
+     */
     private void printBlankLine(CLIGrid cliGrid, int length, int y, int lineNumber, ArrayList<StringWrapper> line) {
 
         for(int x=1; x<=length; x++) {
@@ -76,6 +91,12 @@ public class CLIGridPrinter {
         }
     }
 
+    /**
+     * Prints the corrected tile
+     * @param line line to print
+     * @param y spacer
+     * @param writeNumber true if
+     */
     private void printLine(ArrayList<StringWrapper> line, int y, boolean writeNumber) {
         if(writeNumber) line.add(0, new StringWrapper(y +  "  "));
         else line.add(0, new StringWrapper("   "));
@@ -86,6 +107,14 @@ public class CLIGridPrinter {
         line.clear();
     }
 
+    /**
+     * Prints the Horizontal border corrected with all the numbers
+     * @param cliGrid grid
+     * @param length length of the grid
+     * @param y spacer
+     * @param up true if upper border needs to be copied, false otherwise
+     * @param line line to modify
+     */
     private void printHorizontalBorder(CLIGrid cliGrid, int length, int y, boolean up, ArrayList<StringWrapper> line) {
         for(int x=1; x<=length; x++) {
             CLITile cliTile =  cliGrid.getTile(x, y);
@@ -98,6 +127,10 @@ public class CLIGridPrinter {
         }
     }
 
+    /**
+     * Creates the numbers line
+     * @param line line to modify
+     */
     private void createZeroLine(ArrayList<StringWrapper> line) {
         for (int i = 0; i < leftSpacing; i++)
             line.add(new StringWrapper(" "));

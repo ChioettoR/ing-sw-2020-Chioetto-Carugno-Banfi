@@ -23,6 +23,10 @@ public class CLITile {
         setBorderColor(false);
     }
 
+    /**
+     * Colors the border of a tile
+     * @param colored true if colored, false otherwise
+     */
     private void setBorderColor(boolean colored) {
 
         for (StringWrapper stringWrapper : rightBorder) {

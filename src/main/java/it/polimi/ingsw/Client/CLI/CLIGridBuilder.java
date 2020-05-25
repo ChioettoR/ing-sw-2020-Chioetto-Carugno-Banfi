@@ -6,6 +6,10 @@ public class CLIGridBuilder {
     static int verticalBorderSize = 5;
     static int wordsSize = 3;
 
+    /**
+     * Created the whole grid invoking the creation methods in this class
+     * @return returns the grid created
+     */
     public CLIGrid createGrid() {
         CLIGrid CLIGrid = new CLIGrid();
         int length = CLIGrid.getLength();
@@ -62,6 +66,10 @@ public class CLIGridBuilder {
         return CLIGrid;
     }
 
+    /**
+     * Creates the Horizontal border of the grid
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] createHorizontalBorder() {
         StringWrapper[] horizontalBorder = new StringWrapper[horizontalBorderSize];
 
@@ -73,6 +81,12 @@ public class CLIGridBuilder {
         return horizontalBorder;
     }
 
+    /**
+     * Creates the Horizontal border of the grid with corners
+     * @param cornerLeft left corner of the grid
+     * @param cornerRight right corner of the grid
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] createHorizontalBorder(StringWrapper cornerLeft, StringWrapper cornerRight) {
         StringWrapper[] horizontalBorder = new StringWrapper[horizontalBorderSize];
 
@@ -85,6 +99,11 @@ public class CLIGridBuilder {
         return horizontalBorder;
     }
 
+    /**
+     * Create the Horizontal border of the grid with a left border
+     * @param cornerLeft left corner of the grid
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] createHorizontalBorder(StringWrapper cornerLeft) {
         StringWrapper[] horizontalBorder = new StringWrapper[horizontalBorderSize];
 
@@ -97,6 +116,10 @@ public class CLIGridBuilder {
         return horizontalBorder;
     }
 
+    /**
+     * Creates the Vertical border of the grid
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] createVerticalBorder() {
         StringWrapper[] verticalBorder = new StringWrapper[verticalBorderSize];
 
@@ -108,6 +131,12 @@ public class CLIGridBuilder {
         return verticalBorder;
     }
 
+    /**
+     * Creates the Vertical border of the grid with corners
+     * @param cornerUp upper corner of the grid
+     * @param cornerDown lower corner of the grid
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] createVerticalBorder(StringWrapper cornerUp, StringWrapper cornerDown) {
         StringWrapper[] verticalBorder = new StringWrapper[verticalBorderSize];
 
@@ -120,10 +149,24 @@ public class CLIGridBuilder {
         return verticalBorder;
     }
 
+    /**
+     * This method copies the lower border of the Tile(x, y)
+     * @param CLIGrid grid
+     * @param x X axis of the tile to copy
+     * @param y Y axis of the tile to copy
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] stealBorderDown(CLIGrid CLIGrid, int x, int y) {
         return CLIGrid.getTile(x,y).getDownBorder();
     }
 
+    /**
+     * This method copies the right border of the Tile(x, y)
+     * @param CLIGrid grid
+     * @param x X axis of the tile to copy
+     * @param y Y axis of the tile to copy
+     * @return returns the merged part of the grid
+     */
     private StringWrapper[] stealBorderRight(CLIGrid CLIGrid, int x, int y) {
         return CLIGrid.getTile(x,y).getRightBorder();
     }

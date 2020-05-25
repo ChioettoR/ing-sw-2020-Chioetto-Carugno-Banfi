@@ -34,6 +34,11 @@ public class CLIStdinReader {
         this.waiting = waiting;
     }
 
+    /**
+     * Runs the stdin reader
+     * @throws NoSuchElementException if no line was found
+     * @throws IllegalStateException if the scanner is closed
+     */
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() throws NoSuchElementException, IllegalStateException {
 
@@ -46,6 +51,10 @@ public class CLIStdinReader {
         }
     }
 
+    /**
+     * Reads the array of strings
+     * @param strings strings to read
+     */
     private void read(String[] strings) {
 
         if(waiting) waitingEvents();
@@ -61,6 +70,10 @@ public class CLIStdinReader {
         else unknownInput();
     }
 
+    /**
+     * Reads only one string
+     * @param string string to read
+     */
     private void readOneString(String string) {
 
         if(compareString(string, Input.DRAW))
@@ -95,6 +108,11 @@ public class CLIStdinReader {
         else unknownInput();
     }
 
+    /**
+     * Reads only two string
+     * @param firstString first string to read
+     * @param secondString second string to read
+     */
     private void readTwoStrings(String firstString, String secondString) {
 
         if(compareString(firstString, Input.PICK))
@@ -112,6 +130,10 @@ public class CLIStdinReader {
         else unknownInput();
     }
 
+    /**
+     * Input of the login events
+     * @param strings array of strings
+     */
     private void loginEvents(String[] strings) {
 
         if(strings.length==1) {
@@ -129,6 +151,10 @@ public class CLIStdinReader {
         client.read(new MessageEvent(307));
     }
 
+    /**
+     * Reads the actions
+     * @param gridString string to read
+     */
     private void actionEvents(String gridString) {
         int[] coordinates = readGridString(gridString);
         int x = coordinates[0];
@@ -180,6 +206,12 @@ public class CLIStdinReader {
         return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
     }
 
+    /**
+     * Compares user input with expected input
+     * @param userInput user input
+     * @param input expected input
+     * @return true if correct, false otherwise
+     */
     private boolean compareString(String userInput, Input input) {
 
         String[] inputs = input.toString().split("_");

@@ -16,6 +16,10 @@ public class CLIPlayersManager {
         cliColorPool.add(CLIColorPool.CYAN);
     }
 
+    /**
+     * Adds the player and colors it
+     * @param name name of the player
+     */
     public void addPlayer(String name) {
 
         CLIColorPool colorEnum = cliColorPool.get(cliPlayers.size());
@@ -75,6 +79,11 @@ public class CLIPlayersManager {
         return null;
     }
 
+    /**
+     * Colors the string received
+     * @param name name to color
+     * @return returns the string colored
+     */
     public Color color(String name) {
         for(CLIPlayer cliPlayer : cliPlayers)
             if(cliPlayer.getName().equals(name)) return cliPlayer.getColor();

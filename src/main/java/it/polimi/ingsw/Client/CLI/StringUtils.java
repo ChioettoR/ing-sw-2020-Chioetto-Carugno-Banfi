@@ -6,6 +6,13 @@ public class StringUtils {
         return center(s, size, ' ');
     }
 
+    /**
+     * Centers the string received
+     * @param s string received
+     * @param size size of the whole string to size
+     * @param pad character used to center
+     * @return
+     */
     public static String center(String s, int size, char pad) {
         if (s == null || size <= s.length()) return s;
         StringBuilder sb = new StringBuilder(size);
