@@ -46,7 +46,13 @@ public class GUILoginPanelController {
     }
 
     @FXML
+    private AnchorPane startLoginScreen;
+
+    @FXML
     private AnchorPane backGround;
+
+    @FXML
+    private AnchorPane serverUnavailable;
 
     @FXML
     private VBox errorVBox;
@@ -224,5 +230,11 @@ public class GUILoginPanelController {
         backGround.setVisible(true);
         backGround.setDisable(false);
         lobbyFound.setVisible(true);
+    }
+
+    public void serverUnavailable(){
+        startLoginScreen.setDisable(true);
+        startLoginScreen.setVisible(false);
+        serverUnavailable.setVisible(true);
     }
 }

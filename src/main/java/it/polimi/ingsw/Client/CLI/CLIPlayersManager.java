@@ -7,18 +7,18 @@ import java.util.ArrayList;
 public class CLIPlayersManager {
 
     ArrayList<CLIPlayer> cliPlayers = new ArrayList<>();
-    ArrayList<ColorPool> colorPool;
+    ArrayList<CLIColorPool> cliColorPool;
 
     public CLIPlayersManager() {
-        colorPool = new ArrayList<>();
-        colorPool.add(ColorPool.YELLOW);
-        colorPool.add(ColorPool.MAGENTA);
-        colorPool.add(ColorPool.CYAN);
+        cliColorPool = new ArrayList<>();
+        cliColorPool.add(CLIColorPool.YELLOW);
+        cliColorPool.add(CLIColorPool.MAGENTA);
+        cliColorPool.add(CLIColorPool.CYAN);
     }
 
     public void addPlayer(String name) {
 
-        ColorPool colorEnum = colorPool.get(cliPlayers.size());
+        CLIColorPool colorEnum = cliColorPool.get(cliPlayers.size());
         Color color;
 
         switch (colorEnum) {

@@ -32,6 +32,6 @@ public class GUIMessagesHandler implements MessagesHandler {
 
     @Override
     public void sendDrawMessage(String draw) {
-        System.out.println(draw);
+        stagesManager.readDrawMessage(draw);
     }
 }

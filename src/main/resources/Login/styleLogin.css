@@ -1,3 +1,8 @@
+.serverUnavailable{
+    -fx-background-image:url('serverUnavailable.png');
+    -fx-background-size: 100% 100%;
+}
+
 .startLoginScreen{
     -fx-background-image:url('startLoginScreen.png');
     -fx-background-size: 100% 100%;

@@ -60,4 +60,8 @@ public class GUILoginStage {
     public void lobbyFull() {
         guiLoginPanelController.lobbyFull();
     }
+
+    public void serverUnavailable(){
+        guiLoginPanelController.serverUnavailable();
+    }
 }

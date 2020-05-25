@@ -15,6 +15,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     StagesManager stagesManager;
     //GUIRoundStage guiRoundStage;
     GUILoginStage guiLoginStage;
+    GUIDrawStage guiDrawStage;
     private MessagesReader messagesReader;
 
     public void setStagesManager(StagesManager stagesManager) {
@@ -24,6 +25,10 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     public void setGuiLoginStage(GUILoginStage guiLoginStage) {
         this.guiLoginStage = guiLoginStage;
+    }
+
+    public void setGuiDrawStage(GUIDrawStage guiDrawStage) {
+        this.guiDrawStage = guiDrawStage;
     }
 
 //    public void setGuiRoundStage(GUIRoundStage guiRoundStage) {
@@ -51,7 +56,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     @Override
     public void message(int messageID) {
         messagesReader.read(messageID);
-        handleMessages(messageID);
+        stagesManager.messagesToDirect(messageID);
     }
 
     @Override
@@ -109,14 +114,4 @@ public class GUIEventsCommunication implements EventsCommunication {
         });
     }
 
-    public void handleMessages(int messageID){
-        if(messageID == 304)
-            guiLoginStage.waitingPlayer();
-        else if(messageID == 302)
-            guiLoginStage.waitingPlayers();
-        else if(messageID == 113)
-            guiLoginStage.insertNumber();
-        else if(messageID == 414)
-            guiLoginStage.lobbyFull();
-    }
 }

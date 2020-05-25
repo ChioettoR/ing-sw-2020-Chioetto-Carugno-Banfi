@@ -86,7 +86,7 @@ public class Client implements ClientObserver, CountdownInterface {
         cliStdinReader.run();
     }
 
-    public void setupGUI() throws IOException {
+    public void setupGUI() {
         eventsCommunication = new GUIEventsCommunication();
         eventsReader = new EventsReader(this, eventsCommunication);
     }

@@ -2,3 +2,22 @@
     -fx-background-image:url('backgroundScreen.png');
     -fx-background-size: 100% 100%;
 }
+
+.drawCards{
+    -fx-background-image: url('drawCards.png');
+    -fx-background-size: 100% 100%;
+}
+
+.closeInfoButton{
+    -fx-background-image: url('Santorini_GenericPopup_closebtn.png');
+    -fx-background-size: 100% 100%;
+}
+
+.closeInfoButton:pressed{
+    -fx-background-image: url('Santorini_GenericPopup_closebtn_pressed.png');
+    -fx-background-size: 100% 100%;
+}
+
+.infoButton{
+    -fx-background-color: transparent;
+}
