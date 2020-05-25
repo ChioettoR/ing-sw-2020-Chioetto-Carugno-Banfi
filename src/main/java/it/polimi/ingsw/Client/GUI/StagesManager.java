@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Model.CardSimplified;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +21,13 @@ public class StagesManager extends Application {
     Stage stage;
     GUILoginStage guiLoginStage = new GUILoginStage();
     GUIDrawStage guiDrawStage = new GUIDrawStage();
+    GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
     boolean serverUp = false;
     GUIPhase guiPhase = GUIPhase.LOGIN;
+
+    public GUIPlayersManager getGuiPlayersManager() {
+        return guiPlayersManager;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -41,9 +47,9 @@ public class StagesManager extends Application {
         client.update(event);
     }
 
-    public void setDrawStage(Stage stage, ArrayList<String> names) {
+    public void setDrawStage(Stage stage, GUIPlayersManager guiPlayersManager) {
         guiPhase = GUIPhase.DRAW;
-        Platform.runLater(() -> guiDrawStage.start(stage, names));
+        Platform.runLater(() -> guiDrawStage.start(stage,this, guiPlayersManager));
     }
 
     public void readMessage(String message) {
@@ -58,7 +64,7 @@ public class StagesManager extends Application {
 
     public void readError(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readError(message));
-        //else if(guiPhase == GUIPhase.DRAW)
+        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readError(message));
     }
 
     public void readDrawMessage(String draw) {
@@ -75,7 +81,8 @@ public class StagesManager extends Application {
     }
 
     public void endLogin(ArrayList<String> names) {
-        setDrawStage(stage, names);
+        setNames(names);
+        setDrawStage(stage, guiPlayersManager);
     }
 
     public static void launch(String ip, int port) throws IOException {
@@ -98,5 +105,24 @@ public class StagesManager extends Application {
         else if(messageID == 302) Platform.runLater(() -> guiLoginStage.waitingPlayers());
         else if(messageID == 113) Platform.runLater(() -> guiLoginStage.insertNumber());
         else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
+    }
+
+    public void sendDeck(ArrayList<CardSimplified> cards) {
+        if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.sendDeck(cards));
+    }
+
+    public void playerChosenCard(String playerName, String cardName) {
+        if(guiPhase == GUIPhase.DRAW){
+            Platform.runLater(() -> guiDrawStage.setCardsImages(playerName, cardName));
+            guiPlayersManager.getPlayer(playerName).setCardName(cardName);
+        }
+    }
+
+    public void sendCard() {
+        if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.sendCard());
+    }
+
+    public void setNames(ArrayList<String> names) {
+        for (String name : names) guiPlayersManager.addPlayer(name);
     }
 }

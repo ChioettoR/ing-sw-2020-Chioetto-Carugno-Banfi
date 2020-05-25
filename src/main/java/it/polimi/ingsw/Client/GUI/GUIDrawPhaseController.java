@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Client.GUI;
 
+import it.polimi.ingsw.Events.Client.DrawEvent;
+import it.polimi.ingsw.Events.Client.PickCardEvent;
+import it.polimi.ingsw.Model.CardSimplified;
+import it.polimi.ingsw.Model.PlayersManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,12 +11,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+
 public class GUIDrawPhaseController {
 
+    GUICards guiCards;
     StagesManager stagesManager;
 
     public void setStagesManager(StagesManager stagesManager) {
         this.stagesManager = stagesManager;
+    }
+
+    public void setGuiCards(GUICards guiCards) {
+        this.guiCards = guiCards;
     }
 
     @FXML
@@ -165,7 +176,7 @@ public class GUIDrawPhaseController {
     private Text infoGodName;
 
     @FXML
-    private Text infoGodDescription;
+    private Text infoDescription;
 
     @FXML
     private Button closeInfoButton;
@@ -358,8 +369,8 @@ public class GUIDrawPhaseController {
         return infoGodName;
     }
 
-    public Text getInfoGodDescription() {
-        return infoGodDescription;
+    public Text getInfoDescription() {
+        return infoDescription;
     }
 
     public Button getCloseInfoButton() {
@@ -378,12 +389,98 @@ public class GUIDrawPhaseController {
         drawPhasePane.setVisible(true);
     }
 
+
     @FXML
-    void checkInfo(ActionEvent event) {
+    void checkInfoDown2p1(ActionEvent event) {
+        setInfoPane();
+        String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName2p1.getText()).getCardName();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoDown2p2(ActionEvent event) {
+        setInfoPane();
+        String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName2p2.getText()).getCardName();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoDown3p1(ActionEvent event) {
+        setInfoPane();
+        String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p1.getText()).getCardName();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoDown3p2(ActionEvent event) {
+        setInfoPane();
+        String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p2.getText()).getCardName();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoDown3p3(ActionEvent event) {
+        setInfoPane();
+        String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p3.getText()).getCardName();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoUp2p1(ActionEvent event) {
+        setInfoPane();
+        String godName = godName2p1.getText();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoUp2p2(ActionEvent event) {
+        setInfoPane();
+        String godName = godName2p2.getText();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoUp3p1(ActionEvent event) {
+        setInfoPane();
+        String godName = godName3p1.getText();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoUp3p2(ActionEvent event) {
+        setInfoPane();
+        String godName = godName3p2.getText();
+        setInfo(godName);
+    }
+
+    @FXML
+    void checkInfoUp3p3(ActionEvent event) {
+        setInfoPane();
+        String godName = godName3p3.getText();
+        setInfo(godName);
+    }
+
+    @FXML
+    void drawCards(ActionEvent event) {
+        draw.setDisable(true);
+        draw.setVisible(false);
+        stagesManager.send(new DrawEvent());
+    }
+
+    public void setInfoPane() {
         drawPhasePane.setDisable(true);
         drawPhasePane.setVisible(false);
         infoPane.setDisable(false);
         infoPane.setVisible(true);
     }
 
+    public void setInfo(String godName) {
+        infoGodName.setText(godName);
+        infoGodImage.setImage(guiCards.getSmallImage(godName));
+        infoDescription.setText(guiCards.getDescription(godName));
+    }
+
+    public void sendToStagesManager(String cardName) {
+        stagesManager.send(new PickCardEvent(cardName));
+    }
 }

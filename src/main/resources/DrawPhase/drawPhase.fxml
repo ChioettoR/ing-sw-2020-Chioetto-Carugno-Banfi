@@ -18,11 +18,7 @@
                      <children>
                         <AnchorPane layoutX="92.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fx:id="godImageUp2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@full_0000s_0014_god_and_hero_cards_0042_zeus.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="godImageUp2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
@@ -38,32 +34,34 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="346.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fx:id="godImageUp2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@full_0000s_0014_god_and_hero_cards_0042_zeus.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageUp2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" focusTraversable="true" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
                               </ImageView>
-                              <Text fx:id="godName2p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+                              <Text fx:id="godName2p2" focusTraversable="true" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                                  <font>
                                     <Font name="Candara" size="12.0" />
                                  </font>
                               </Text>
-                              <ImageView pickOnBounds="true" preserveRatio="true">
+                              <ImageView focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -72,11 +70,7 @@
                      <children>
                         <AnchorPane layoutX="28.5" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fx:id="godImageUp3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@full_0000s_0014_god_and_hero_cards_0042_zeus.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="godImageUp3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
@@ -92,16 +86,12 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fx:id="godImageUp3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@full_0000s_0014_god_and_hero_cards_0042_zeus.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="godImageUp3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
@@ -117,16 +107,12 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="409.5" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fx:id="godImageUp3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@full_0000s_0014_god_and_hero_cards_0042_zeus.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="godImageUp3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
@@ -142,16 +128,16 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="draw" prefHeight="270.0" prefWidth="600.0" visible="false">
                      <children>
-                        <Button fx:id="drawCards" layoutX="225.0" layoutY="28.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="229.0" prefWidth="150.0" styleClass="drawCards" stylesheets="@styleDrawPhase.css">
+                        <Button fx:id="drawCards" layoutX="225.0" layoutY="28.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#drawCards" prefHeight="229.0" prefWidth="150.0" styleClass="drawCards" stylesheets="@styleDrawPhase.css">
                            <cursor>
-                              <Cursor fx:constant="MOVE" />
+                              <Cursor fx:constant="HAND" />
                            </cursor></Button>
                      </children>
                   </AnchorPane>
@@ -167,11 +153,6 @@
                            </image>
                         </ImageView>
                         <Text fx:id="messageText" layoutX="155.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="290.0">
-                           <font>
-                              <Font name="Candara" size="14.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="messageText1" layoutX="165.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="290.0">
                            <font>
                               <Font name="Candara" size="14.0" />
                            </font>
@@ -200,8 +181,8 @@
                      <children>
                         <AnchorPane layoutX="92.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="godImageDown2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageDown2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
@@ -216,13 +197,13 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown2p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="346.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="godImageDown2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageDown2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
@@ -237,17 +218,17 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown2p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="downThreeCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
+                  <AnchorPane fx:id="downThreeCardsPane" prefHeight="270.0" prefWidth="600.0">
                      <children>
                         <AnchorPane layoutX="28.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="godImageDown3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageDown3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
@@ -262,13 +243,13 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="219.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="godImageDown3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageDown3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
@@ -283,13 +264,13 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="409.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
-                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="godImageDown3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="godImageDown3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@nameBar.png" />
                                  </image>
@@ -304,7 +285,7 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfo" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -336,7 +317,7 @@
                         <Font name="Candara" size="18.0" />
                      </font>
                   </Text>
-                  <Text fx:id="infoGodDescription" layoutX="20.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level." wrappingWidth="140.0">
+                  <Text fx:id="infoDescription" layoutX="20.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level." wrappingWidth="155.0">
                      <font>
                         <Font name="Candara" size="12.0" />
                      </font>

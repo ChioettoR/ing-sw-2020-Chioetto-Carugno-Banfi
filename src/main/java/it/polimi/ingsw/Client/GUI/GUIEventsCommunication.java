@@ -61,17 +61,17 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void deck(ArrayList<CardSimplified> cards) {
-
+        stagesManager.sendDeck(cards);
     }
 
     @Override
     public void card(CardSimplified card) {
-
+        stagesManager.sendCard();
     }
 
     @Override
     public void playerChosenCard(String playerName, String cardName) {
-
+        stagesManager.playerChosenCard(playerName, cardName);
     }
 
     @Override
