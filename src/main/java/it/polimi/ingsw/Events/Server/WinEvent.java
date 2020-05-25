@@ -14,6 +14,12 @@ public class WinEvent extends ServerEvent implements Serializable {
         return youWin;
     }
 
+    /**
+     * Win event of a certain player
+     * @param string name of the winner
+     * @param youWin true if is the winner, false otherwise
+     * @param playerID id of the winner
+     */
     public WinEvent(String string, boolean youWin, int playerID) {
         this.winnerName = string;
         this.youWin = youWin;

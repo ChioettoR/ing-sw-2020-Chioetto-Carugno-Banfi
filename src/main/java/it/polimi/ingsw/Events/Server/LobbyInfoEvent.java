@@ -14,6 +14,11 @@ public class LobbyInfoEvent extends ServerEvent implements Serializable {
         return lobbySize;
     }
 
+    /**
+     * Event with information about lobby
+     * @param lobbyName name of the first player who created the lobby
+     * @param lobbySize size of the lobby
+     */
     public LobbyInfoEvent(String lobbyName, int lobbySize) {
         this.lobbyName = lobbyName;
         this.lobbySize = lobbySize;

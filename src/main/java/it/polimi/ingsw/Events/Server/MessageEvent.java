@@ -9,6 +9,11 @@ public class MessageEvent extends ServerEvent implements Serializable {
         return messageID;
     }
 
+    /**
+     * Event with a specific ID message directed to a specific playerID
+     * @param messageID ID of the message
+     * @param playerID player's ID
+     */
     public MessageEvent(int messageID, int playerID) {
         this.messageID = messageID;
         super.playerID = playerID;

@@ -8,7 +8,11 @@ import it.polimi.ingsw.Observer.Client.ClientObserver;
 import java.io.IOException;
 
 public class ActionObservable extends MessageObservable {
-
+    /**
+     *This is a notify for the client of actionEvent
+     * @param actionEvent action event notified
+     * @throws IOException when socket closes
+     */
     public void notify(ActionEvent actionEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
@@ -16,7 +20,11 @@ public class ActionObservable extends MessageObservable {
             }
         }
     }
-
+    /**
+     *This is a notify for the client of the available tiles for him
+     * @param availableTilesEvent available tile event notified
+     * @throws IOException when socket closes
+     */
     public void notify(AvailableTilesEvent availableTilesEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
@@ -24,7 +32,11 @@ public class ActionObservable extends MessageObservable {
             }
         }
     }
-
+    /**
+     *This is a notify for the client of actionEvent
+     * @param changeEvent action event notified
+     * @throws IOException when socket closes
+     */
     public void notify(ChangeEvent changeEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {

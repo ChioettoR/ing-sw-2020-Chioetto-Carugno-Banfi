@@ -18,6 +18,10 @@ public class CardsBuilder {
         CompleteTowersObserver, BuildTwiceNoPerimeter, PetrifyOpponents, CanMoveMultipleTimesPerimeter, CanBuildBelow
     }
 
+    /**
+     * This method creates the whole cards without the effects from the godCards.xml
+     * @return the cards
+     */
     public ArrayList<Card> createCards() {
 
         ArrayList<Card> cards = new ArrayList<>();
@@ -54,6 +58,10 @@ public class CardsBuilder {
         return cards;
     }
 
+    /**
+     * This method implements the effect of the cards from the godCards.xml
+     * @param card card to implement
+     */
     public void createAction(Card card) {
 
         GodPower godPower = card.getGodPower();
@@ -128,6 +136,10 @@ public class CardsBuilder {
 
     }
 
+    /**
+     * Implements an effect where you can switch position with opponent workers
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanSwitch() {
 
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
@@ -211,7 +223,10 @@ public class CardsBuilder {
         actions.add(buildActionStandard);
         return actions;
     }
-
+    /**
+     * Implements an effect where you can move twice, but no turning back
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanMoveTwice() {
 
         MoveActionStandard firstMoveActionStandard = new MoveActionStandard();
@@ -280,7 +295,10 @@ public class CardsBuilder {
         actions.add(buildActionStandard);
         return actions;
     }
-
+    /**
+     * Implements an effect where if you move up, the opponents can't move up in the same turn
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCantMoveUp() {
 
         RoundAction roundAction = new RoundAction() {
@@ -398,7 +416,10 @@ public class CardsBuilder {
         actions.add(roundAction);
         return actions;
     }
-
+    /**
+     * Implements an effect where you can build domes at any level
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanBuildDome() {
 
         BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
@@ -465,7 +486,10 @@ public class CardsBuilder {
         return actions;
     }
 
-
+    /**
+     * Implements an effect where you can build twice, but not on the same space
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanBuildTwiceDifferent() {
 
         BuildActionStandard firstBuildActionStandard = new BuildActionStandard();
@@ -534,7 +558,10 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         return actions;
     }
-
+    /**
+     * Implements an effect where you can build twice, but only in the same space (not dome)
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanBuildTwice() {
 
         BuildActionStandard firstBuildActionStandard = new BuildActionStandard();
@@ -603,7 +630,10 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         return actions;
     }
-
+    /**
+     * Implements an effect where your worker may move into an opponent worker's space (using normal movement rules),if the next space in the same direction is unoccupied. Their worker is forced into that space (regardless of its level)
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanPush() {
 
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
@@ -692,7 +722,10 @@ public class CardsBuilder {
         return actions;
     }
 
-
+    /**
+     * Implements an effect where you also win if your worker moves down two or more levels
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createMoveDownToWin() {
         MoveActionDecorator moveActionDecorator = new MoveActionDecorator() {
 
@@ -762,7 +795,10 @@ public class CardsBuilder {
         actions.add(buildActionStandard);
         return actions;
     }
-
+    /**
+     * Implements an effect where if you don't move up, you may build both before and after moving
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createBuildBeforeMove() {
 
         MoveActionStandard moveActionStandard = new MoveActionStandard();
@@ -835,7 +871,10 @@ public class CardsBuilder {
         actions.add(secondBuildActionStandard);
         return actions;
     }
-
+    /**
+     * Implements an effect where you can also win with five complete towers
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCompleteTowersObserver(){
 
         MoveActionStandard moveActionStandard = new MoveActionStandard();
@@ -845,7 +884,10 @@ public class CardsBuilder {
         actions.add(buildActionStandard);
         return actions;
     }
-
+    /**
+     * Implements an effect where you can build twice but the second build cannot be on the perimeter of the game board
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createBuildTwiceNoPerimeter(){
         BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
 
@@ -912,7 +954,10 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         return actions;
     }
-
+    /**
+     * Implements an effect where if you move infinite times onto perimeter, you can move again
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanMoveMultipleTimesPerimeter(){
 
         ArrayList <Action> actions = new ArrayList<>();
@@ -1021,7 +1066,10 @@ public class CardsBuilder {
         actions.add(new BuildActionStandard());
         return actions;
     }
-
+    /**
+     * Implements an effect where workers can build below themselves
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createCanBuildBelow(){
 
         BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
@@ -1093,7 +1141,10 @@ public class CardsBuilder {
         actions.add(buildActionDecorator);
         return actions;
     }
-
+    /**
+     * Implements an effect where if any of your opponent's workers occupy lower neighboring spaces, replace them all with blocks and remove them from the game
+     * @return actions available for this effect
+     */
     public ArrayList<Action> createPetrifyOpponents() {
         RoundAction roundAction = new RoundAction() {
             boolean actionLock = false;

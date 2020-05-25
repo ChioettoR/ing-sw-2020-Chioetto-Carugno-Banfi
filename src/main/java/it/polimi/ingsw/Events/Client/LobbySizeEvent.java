@@ -9,6 +9,10 @@ public class LobbySizeEvent extends ClientEvent implements Serializable {
         return lobbySize;
     }
 
+    /**
+     * Triggers with the size of the lobby
+     * @param lobbySize size of the lobby
+     */
     public LobbySizeEvent(int lobbySize) {
         this.lobbySize = lobbySize;
     }

@@ -12,6 +12,10 @@ public class ChangeEvent extends ServerEvent implements Serializable {
         return tiles;
     }
 
+    /**
+     * Event for the changes made to the grid
+     * @param tiles tiles changed
+     */
     public ChangeEvent(ArrayList<TileSimplified> tiles) {
         this.tiles = tiles;
         super.playerID = -1;

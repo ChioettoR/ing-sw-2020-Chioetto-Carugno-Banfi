@@ -20,7 +20,11 @@ public class MessageObservable{
             observers.remove(observer);
         }
     }
-
+    /**
+     *This is a notify for the client of a messageEvent
+     * @param messageEvent message event notified
+     * @throws IOException when socket closes
+     */
     public void notifyMessage(MessageEvent messageEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
@@ -28,7 +32,11 @@ public class MessageObservable{
             }
         }
     }
-
+    /**
+     *This is a notify for the client of winEvent
+     * @param winEvent win event notified
+     * @throws IOException when socket closes
+     */
     public void notifyWin(WinEvent winEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
@@ -36,7 +44,11 @@ public class MessageObservable{
             }
         }
     }
-
+    /**
+     *This is a notify for the client of loseEvent
+     * @param loseEvent lose event notified
+     * @throws IOException when socket closes
+     */
     public void notifyLose(LoseEvent loseEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
