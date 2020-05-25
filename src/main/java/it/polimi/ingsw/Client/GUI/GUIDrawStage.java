@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GUIDrawStage{
@@ -13,14 +14,19 @@ public class GUIDrawStage{
     GUIDrawPhaseController guiDrawPhaseController;
     GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
 
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage, ArrayList<String> names){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/DrawPhase/drawPhase.fxml"));
-        Parent root = loader.load();
-        guiDrawPhaseController = loader.getController();
-        stage.setScene(new Scene(root, 600, 600));
-        stage.setResizable(false);
-        stage.show();
+        Parent root;
+        try {
+            root = loader.load();
+            guiDrawPhaseController = loader.getController();
+            setNames(names);
+            stage.setScene(new Scene(root, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException e) { e.printStackTrace();}
     }
 
     public void readMessage(String message) {
@@ -48,14 +54,14 @@ public class GUIDrawStage{
             guiDrawPhaseController.getDownTwoCardsPane().setVisible(true);
             guiDrawPhaseController.getPlayerName2p1().setText(names.get(0));
             guiDrawPhaseController.getPlayerName2p2().setText(names.get(1));
-        }else {
+        }
+        else {
             guiDrawPhaseController.getDownThreeCardsPane().setVisible(true);
             guiDrawPhaseController.getDownTwoCardsPane().setVisible(false);
             guiDrawPhaseController.getPlayerName3p1().setText(names.get(0));
             guiDrawPhaseController.getPlayerName3p2().setText(names.get(1));
             guiDrawPhaseController.getPlayerName3p3().setText(names.get(2));
         }
-
     }
 
     public void draw(String draw) {

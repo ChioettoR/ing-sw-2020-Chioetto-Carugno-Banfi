@@ -101,15 +101,13 @@ public class Connection implements Runnable, CountdownInterface {
                     int lobbySize = waitLobbySize();
                     server.lobby(this, name, lobbySize);
                     server.awakeConnections();
-                } else server.lobby(this, name);
+                }
+                else server.lobby(this, name);
 
                 int playersLeft = server.getPlayersLeft();
                 if (playersLeft == 1) send(new MessageEvent(304));
                 else if (playersLeft != 0) send(new MessageEvent(302));
-                else sendAll(new EndLoginEvent(server.getNames()));
-
             }
-
             waitInput();
         }
         catch(IOException | ClassNotFoundException e) {

@@ -2,6 +2,8 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Communication.Communication;
 import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Events.Server.EndLoginEvent;
+import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.*;
 
 import java.io.IOException;
@@ -134,6 +136,8 @@ public class Server {
             stateManager.addObserver(remoteView);
         }
 
+        sendAll(new MessageEvent(305));
+        sendAll(new EndLoginEvent(getNames()));
         stateManager.setGameState(GameState.DRAWING);
         drawCardManager.transition();
     }

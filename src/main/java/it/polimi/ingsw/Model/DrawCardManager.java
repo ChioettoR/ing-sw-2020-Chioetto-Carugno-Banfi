@@ -64,7 +64,6 @@ public class DrawCardManager extends CardObservable{
     }
 
     public void transition() throws IOException {
-        notifyMessage(new MessageEvent(305, -1));
         notifyMessage(new MessageEvent(501, PlayersManager.getPlayersManager().nextPlayer().getID()));
     }
 
