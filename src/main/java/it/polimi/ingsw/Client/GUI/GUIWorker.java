@@ -25,7 +25,7 @@ public class GUIWorker {
         else basePath = getClass().getResource("/femaleWorker.obj").getPath();
 
         MeshView[] mesh;
-        importer.read(basePath);
+        importer.read("file://" + basePath);
         mesh = importer.getImport();
         workerMesh = mesh[0];
         workerMesh.setMaterial(material);

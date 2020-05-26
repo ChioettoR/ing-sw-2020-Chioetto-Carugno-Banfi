@@ -102,7 +102,7 @@ public class Deck {
         }
 
         for (Card card : cardsList) {
-            if (card.getName().equals(name))
+            if (card.getName().equalsIgnoreCase(name))
                 return card;
         }
         System.out.println("The deck doesn't contain the requested card");

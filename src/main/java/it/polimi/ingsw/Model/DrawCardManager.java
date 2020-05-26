@@ -1,13 +1,11 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.CardEvent;
-import it.polimi.ingsw.Events.Server.DeckEvent;
-import it.polimi.ingsw.Events.Server.MessageEvent;
-import it.polimi.ingsw.Events.Server.PlayerChosenCardEvent;
+import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Observer.Server.CardObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class DrawCardManager extends CardObservable{
     PlayersManager playersManager = PlayersManager.getPlayersManager();
@@ -19,23 +17,34 @@ public class DrawCardManager extends CardObservable{
         this.stateManager = stateManager;
     }
 
-    /**
-     * Draws from the deck a defined number of cards, one card per player, and shows them
-     * @param playerID parameter used to check if the player is the one who has to draw the card in that moment
-     * @throws IOException when socket closes
-     */
-    public void draw(int playerID) throws IOException {
+    //TODO: JAVADOC
+
+    public void allCardsChosen(int playerID, ArrayList<String> cards) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
             return;
 
-        if(!stateManager.checkState(GameState.DRAWING))
+        if(!stateManager.checkState(GameState.CHOOSING))
             return;
 
-        ArrayList<CardSimplified> cardsSimplified = pickCardsFromDeck();
-        sendCards(cardsSimplified);
-        for(Player p : playersManager.getNextPlayers())
-            notifyMessage(new MessageEvent(105, p.getID()));
+        if(cards.size()!=playersManager.getPlayersNumber()) {
+            notifyMessage(new MessageEvent(422, playersManager.getCurrentPlayer().getID()));
+            return;
+        }
+
+        ArrayList<Card> allCards = new ArrayList<>();
+
+        for(String c : cards) {
+            Card card = Deck.getDeck().getCardByName(c);
+            if(card==null || allCards.contains(card)) {
+                notifyMessage(new MessageEvent(407, playersManager.getCurrentPlayer().getID()));
+                return;
+            }
+            allCards.add(card);
+        }
+
+        sendCards((ArrayList<CardSimplified>) allCards.stream().map(Card::simplify).collect(Collectors.toList()));
+        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));
     }
 
     /**
@@ -64,18 +73,11 @@ public class DrawCardManager extends CardObservable{
     }
 
     public void transition() throws IOException {
-        notifyMessage(new MessageEvent(501, PlayersManager.getPlayersManager().nextPlayer().getID()));
-    }
-
-    /**
-     * Method invoked by draw, picks the cards from the deck and returns them
-     * @return the cardsSimplified from the deck
-     */
-    private ArrayList<CardSimplified> pickCardsFromDeck() {
-        ArrayList<CardSimplified> cardsSimplified = new ArrayList<>();
-        for (int i=0; i<playersManager.getPlayersNumber(); i++)
-            cardsSimplified.add(Deck.getDeck().pickCard().simplify());
-        return cardsSimplified;
+        int messageID = 0;
+        if(playersManager.getPlayersNumber()==3) messageID = 501;
+        else if(playersManager.getPlayersNumber()==2) messageID = 502;
+        notifyMessage(new MessageEvent(messageID, PlayersManager.getPlayersManager().nextPlayer().getID()));
+        notifyFullDeck(new FullDeckEvent( (ArrayList<CardSimplified>) Deck.getDeck().getCardsList().stream().map(Card::simplify).collect(Collectors.toList()), PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     /**

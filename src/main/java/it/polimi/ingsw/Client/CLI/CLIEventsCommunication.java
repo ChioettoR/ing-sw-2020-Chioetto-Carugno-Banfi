@@ -133,4 +133,10 @@ public class CLIEventsCommunication implements EventsCommunication {
             for(String s : effectLines) System.out.println(s);
         }
     }
+
+    @Override
+    public void fullDeck(ArrayList<CardSimplified> cards) {
+        for(CardSimplified c : cards) { cliCardBuilder.addDescription(c.getName(), c.getDescription()); }
+        cards.forEach(cardSimplified -> System.out.println(cardSimplified.getName()));
+    }
 }

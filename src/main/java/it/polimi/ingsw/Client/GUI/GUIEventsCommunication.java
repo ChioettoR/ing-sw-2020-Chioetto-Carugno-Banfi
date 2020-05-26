@@ -112,6 +112,11 @@ public class GUIEventsCommunication implements EventsCommunication {
     @Override
     public void infoEffect(String cardName) { }
 
+    @Override
+    public void fullDeck(ArrayList<CardSimplified> cards) {
+
+    }
+
     public void disconnection() {
         Platform.runLater(() -> {
             try { stagesManager.setDisconnectedScene(); }

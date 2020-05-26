@@ -21,4 +21,5 @@ public interface EventsCommunication {
     void win(boolean youWin, String winnerName);
     void lose();
     void infoEffect(String cardName);
+    void fullDeck(ArrayList<CardSimplified> cards);
 }

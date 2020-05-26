@@ -138,7 +138,7 @@ public class Server {
 
         sendAll(new MessageEvent(305));
         sendAll(new EndLoginEvent(getNames()));
-        stateManager.setGameState(GameState.DRAWING);
+        stateManager.setGameState(GameState.CHOOSING);
         drawCardManager.transition();
     }
 

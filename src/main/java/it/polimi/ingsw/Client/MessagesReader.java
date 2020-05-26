@@ -1,9 +1,5 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.CLI.CLIActionPrinter;
-
-import java.util.ArrayList;
-
 public class MessagesReader {
 
     MessagesHandler messagesHandler;
@@ -202,7 +198,11 @@ public class MessagesReader {
                         break;
                     }
                     case(421) : {
-                        message = "Names longer thant one word are not accepted";
+                        message = "Names longer than one word are not accepted";
+                        break;
+                    }
+                    case(422) : {
+                        message = "Invalid chosen cards number";
                         break;
                     }
                 }
@@ -212,8 +212,17 @@ public class MessagesReader {
 
             //Square messages
             case (5) : {
-                if (messageID == 501) message = "DRAW";
-                messagesHandler.sendDrawMessage(message);
+                switch (messageID) {
+                    case (501): {
+                        message = "CHOOSE 3 CARDS";
+                        break;
+                    }
+                    case (502) : {
+                        message = "CHOOSE 2 CARDS";
+                        break;
+                    }
+                }
+                messagesHandler.sendChooseMessage(message);
             }
         }
     }

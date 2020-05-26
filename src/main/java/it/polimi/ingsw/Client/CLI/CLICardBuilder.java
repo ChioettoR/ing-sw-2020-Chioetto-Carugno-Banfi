@@ -95,6 +95,10 @@ public class CLICardBuilder {
         return lines;
     }
 
+    public void addDescription(String cardName, String description) {
+        effectsMap.put(cardName, description);
+    }
+
     public String getDescription(String cardName) {
         return effectsMap.get(cardName);
     }

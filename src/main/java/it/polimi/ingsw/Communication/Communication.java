@@ -3,6 +3,7 @@ package it.polimi.ingsw.Communication;
 import it.polimi.ingsw.Model.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Communication implements CommunicationInterface {
 
@@ -18,9 +19,10 @@ public class Communication implements CommunicationInterface {
         this.actionManager = actionManager;
     }
 
+
     @Override
-    public void draw(int playerID) throws IOException {
-        drawCardManager.draw(playerID);
+    public void allPlayersCards(int playerID, ArrayList<String> cards) throws IOException {
+        drawCardManager.allCardsChosen(playerID, cards);
     }
 
     @Override

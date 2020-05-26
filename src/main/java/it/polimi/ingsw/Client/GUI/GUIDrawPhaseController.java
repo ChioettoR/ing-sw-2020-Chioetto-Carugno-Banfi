@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.GUI;
 
-import it.polimi.ingsw.Events.Client.DrawEvent;
+import it.polimi.ingsw.Events.Client.AllPlayersCardsEvent;
 import it.polimi.ingsw.Events.Client.PickCardEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -460,7 +460,8 @@ public class GUIDrawPhaseController {
     void drawCards(ActionEvent event) {
         draw.setDisable(true);
         draw.setVisible(false);
-        stagesManager.send(new DrawEvent());
+        //TODO:
+        //stagesManager.send(new AllPlayersCardsEvent());
     }
 
     public void setInfoPane() {

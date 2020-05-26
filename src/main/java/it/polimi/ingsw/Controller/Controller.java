@@ -15,8 +15,8 @@ public class Controller {
 
     public void send(ClientEvent event) throws IOException {
 
-        if (event instanceof DrawEvent)
-            communication.draw(event.getPlayerID());
+        if (event instanceof AllPlayersCardsEvent)
+            communication.allPlayersCards(event.getPlayerID(), ((AllPlayersCardsEvent) event).getCards());
 
         else if (event instanceof PickCardEvent)
             communication.pick(event.getPlayerID(), ((PickCardEvent) event).getCardName());

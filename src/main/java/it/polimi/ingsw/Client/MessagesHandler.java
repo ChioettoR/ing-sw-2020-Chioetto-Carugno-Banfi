@@ -8,5 +8,5 @@ public interface MessagesHandler {
     void sendError(String error);
     void sendMessage(String message);
     void sendRequest(String request);
-    void sendDrawMessage(String draw);
+    void sendChooseMessage(String draw);
 }

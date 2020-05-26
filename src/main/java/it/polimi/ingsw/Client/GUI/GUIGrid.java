@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Client.GUI;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
-import javafx.scene.PointLight;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -49,7 +46,7 @@ public class GUIGrid {
 
         baseMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/isle.png")));
         String basePath = getClass().getResource("/isle.obj").getPath();
-        objModelImporter.read(basePath);
+        objModelImporter.read("file://" + basePath);
         m = objModelImporter.getImport();
         gridBase = m[0];
         gridBase.setMaterial(baseMaterial);

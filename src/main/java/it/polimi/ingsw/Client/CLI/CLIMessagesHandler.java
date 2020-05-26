@@ -27,7 +27,7 @@ public class CLIMessagesHandler implements MessagesHandler {
     }
 
     @Override
-    public void sendDrawMessage(String draw) {
+    public void sendChooseMessage(String draw) {
         ArrayList<String> list = new ArrayList<>();
         list.add(draw);
         new CLIActionPrinter().printAction(list);

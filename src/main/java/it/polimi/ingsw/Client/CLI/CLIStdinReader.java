@@ -5,9 +5,12 @@ import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.ActionType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CLIStdinReader {
 
@@ -47,7 +50,11 @@ public class CLIStdinReader {
         while (true) {
             inputLine = stdin.nextLine();
             if (inputLine.isEmpty() || inputLine.isBlank()) client.read(new MessageEvent(420));
-            else read(inputLine.split("\\s+"));
+            else {
+                String[] strings = inputLine.split(",");
+                if(strings.length>=2) allCardsEvent(strings);
+                else read(inputLine.split("\\s+"));
+            }
         }
     }
 
@@ -70,16 +77,22 @@ public class CLIStdinReader {
         else unknownInput();
     }
 
+    public void allCardsEvent(String[] cards) {
+        ArrayList<String> allCardsList = new ArrayList<> (Arrays.asList(cards));
+        allCardsList = (ArrayList<String>) allCardsList.stream().map(String::trim).collect(Collectors.toList());
+        client.update(new AllPlayersCardsEvent(allCardsList));
+    }
+
     /**
      * Reads only one string
      * @param string string to read
      */
     private void readOneString(String string) {
 
-        if(compareString(string, Input.DRAW))
-            client.update(new DrawEvent());
+//        if(compareString(string, Input.DRAW))
+//            client.update(new AllPlayersCardsEvent());
 
-        else if(isGridPosition(string) && selectedActionType==null) {
+        if(isGridPosition(string) && selectedActionType==null) {
             int[] coordinates = readGridString(string);
             client.update(new PositioningEvent(coordinates[0], coordinates[1]));
         }

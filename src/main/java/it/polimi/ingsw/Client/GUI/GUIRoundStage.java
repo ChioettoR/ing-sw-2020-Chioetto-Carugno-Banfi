@@ -78,6 +78,12 @@ public class GUIRoundStage {
 
         guiGridManager.createGrid();
         gridAnimations(group, camera);
+
+//        guiGridManager.build(1, 1, 1);
+//        guiGridManager.build(2, 1, 1);
+//        guiGridManager.build(1, 2, 1);
+//        guiGridManager.build(2, 2, 1);
+
         eventHandler(stage);
         try { buildingsImages(stage, subScene); }
         catch (IOException e) { e.printStackTrace(); }

@@ -39,5 +39,7 @@ public class EventsReader {
         else if(object instanceof  WinEvent) eventsCommunication.win(((WinEvent) object).isYouWin(), ((WinEvent) object).getWinnerName());
 
         else if(object instanceof LoseEvent) eventsCommunication.lose();
+
+        else if(object instanceof FullDeckEvent) eventsCommunication.fullDeck(((FullDeckEvent) object).getCards());
     }
 }
