@@ -536,7 +536,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
      * @throws IOException when socket closes
      */
     private void roundActionMethod(Action currentAction, ArrayList<Action> actionList) throws IOException {
+        ArrayList<Tile> oldGrid = saveOldGrid();
         ((RoundAction) currentAction).doAction();
+        sendChange(oldGrid);
+        if(checkWin())
+            return;
         index++;
         if((actionList.size()<=index)) {
             playersManager.nextPlayerAndStartRound();

@@ -68,13 +68,12 @@ class CLIGridChanger {
                     if(workerSimplified!=null && buildLevel==0)
                         changeWorker(cliTile, workerSimplified, true);
 
-                        //No worker and no build level
+                    //No worker and no build level
                     else if(workerSimplified == null && buildLevel==0) clearAll(cliTile);
 
-                        //No worker and build level
+                    //No worker and build level
                     else if(workerSimplified == null) {
-                        shiftPosition(cliTile, 0);
-                        changeLevel(cliTile, buildLevel, false);
+                        changeLevel(cliTile, buildLevel, true);
                     }
 
                     //New worker and build Level

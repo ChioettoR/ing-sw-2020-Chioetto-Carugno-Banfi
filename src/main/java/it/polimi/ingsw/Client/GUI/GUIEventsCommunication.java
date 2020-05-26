@@ -55,8 +55,8 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void message(int messageID) {
-        messagesReader.read(messageID);
         stagesManager.messagesToDirect(messageID);
+        messagesReader.read(messageID);
     }
 
     @Override

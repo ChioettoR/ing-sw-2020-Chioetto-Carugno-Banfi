@@ -234,4 +234,8 @@ public class GUIDrawStage{
         guiDrawPhaseController.getUpPane().setVisible(false);
     }
 
+    public void roundTransition() {
+        guiDrawPhaseController.getMiddlePane().setVisible(false);
+    }
+
 }

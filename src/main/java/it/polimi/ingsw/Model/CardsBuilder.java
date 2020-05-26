@@ -1172,12 +1172,13 @@ public class CardsBuilder {
                 ArrayList<Tile> tilesCopy = new ArrayList<>(tiles);
                 for(Tile t : tiles) {
                     Worker worker = t.getWorker();
-                    if(worker!=null && worker.getPlayerID()== playersManager.getCurrentWorker().getPlayerID())
+                    if(worker.getPlayerID() == playersManager.getCurrentWorker().getPlayerID())
                         tilesCopy.remove(t);
                 }
                 ArrayList<Worker> workers = (ArrayList<Worker>) tilesCopy.stream().map(Tile::getWorker).collect(Collectors.toList());
                 for(Worker w : workers){
                     w.getPosition().setLevel(w.getPosition().getLevel() + 1);
+                    w.getPosition().setWorker(null);
                     playersManager.deleteWorker(w);
                 }
             }

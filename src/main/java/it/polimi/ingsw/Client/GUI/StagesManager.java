@@ -3,12 +3,15 @@ package it.polimi.ingsw.Client.GUI;
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Model.CardSimplified;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,6 +108,8 @@ public class StagesManager extends Application {
         else if(messageID == 302) Platform.runLater(() -> guiLoginStage.waitingPlayers());
         else if(messageID == 113) Platform.runLater(() -> guiLoginStage.insertNumber());
         else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
+        else if(messageID == 108) roundTransition();
+        else if(messageID == 114) roundTransition();
     }
 
     public void sendDeck(ArrayList<CardSimplified> cards) {
@@ -124,5 +129,11 @@ public class StagesManager extends Application {
 
     public void setNames(ArrayList<String> names) {
         for (String name : names) guiPlayersManager.addPlayer(name);
+    }
+
+    public void roundTransition() {
+        guiPhase = GUIPhase.ROUND;
+        guiDrawStage.roundTransition();
+        //TODO: TIMER PER LA TRANSITION
     }
 }

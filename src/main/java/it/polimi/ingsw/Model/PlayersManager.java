@@ -85,7 +85,7 @@ public class PlayersManager {
      * Removes the current player from the game and sets current player int to -1
      */
     public void deletePlayer(Player player) {
-        if(player ==null)
+        if(player == null)
             System.out.println("The currentPlayer to delete is null");
 
         else if(!players.contains(player))
