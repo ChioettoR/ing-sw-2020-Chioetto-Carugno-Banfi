@@ -2,8 +2,6 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Events.Client.DrawEvent;
 import it.polimi.ingsw.Events.Client.PickCardEvent;
-import it.polimi.ingsw.Model.CardSimplified;
-import it.polimi.ingsw.Model.PlayersManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,14 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-
 public class GUIDrawPhaseController {
 
     GUICards guiCards;
-    StagesManager stagesManager;
+    GUIStagesManager stagesManager;
 
-    public void setStagesManager(StagesManager stagesManager) {
+    public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
     }
 

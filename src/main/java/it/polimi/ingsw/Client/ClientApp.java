@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.GUI.StagesManager;
+import it.polimi.ingsw.Client.GUI.GUIStagesManager;
 
 import java.io.IOException;
 
@@ -9,12 +9,11 @@ public class ClientApp {
     public static void main(String[] args) {
 
         String ip = "127.0.0.1";
-        int port = 12345;
+        int port = 1267;
 
-        try {
-            if(args.length!=0) new Client("127.0.0.1", 12345).runCLI();
-            else StagesManager.launch(ip, port);
-        }
+        if(args.length!=0) try { new Client("127.0.0.1", 1267).runCLI(); }
         catch (IOException e) { System.err.println("Server unavailable"); }
+
+        else GUIStagesManager.launch(ip, port);
     }
 }

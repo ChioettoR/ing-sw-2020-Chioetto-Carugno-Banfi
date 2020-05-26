@@ -9,7 +9,7 @@ public class GUILoginStage {
 
     GUILoginPanelController guiLoginPanelController;
 
-    public void start(Stage stage, StagesManager stagesManager) throws Exception {
+    public void start(Stage stage, GUIStagesManager stagesManager) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Login/login.fxml"));
         Parent root = loader.load();

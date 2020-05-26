@@ -1,11 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
-import it.polimi.ingsw.Client.MessagesHandler;
-import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,11 +19,10 @@ import java.util.regex.Pattern;
 
 public class GUILoginPanelController {
 
-    boolean isLogin = true;
     boolean isWaiting = false;
     int buttonClickedCounter = 0;
 
-    StagesManager stagesManager;
+    GUIStagesManager stagesManager;
 
     public TextField getNameText() {
         return nameText;
@@ -41,7 +36,7 @@ public class GUILoginPanelController {
         return successText;
     }
 
-    public void setStagesManager(StagesManager stagesManager) {
+    public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
     }
 
@@ -117,23 +112,22 @@ public class GUILoginPanelController {
         backGround.setVisible(true);
         playButton.setVisible(false);
         playButton.setDisable(true);
-        if(isWaiting){
-            backGround.setVisible(false);
-            backGround.setDisable(true);
-            lobbyCreation.setVisible(true);
-        }
+
+        if(!isWaiting) return;
+
+        backGround.setVisible(false);
+        backGround.setDisable(true);
+        lobbyCreation.setVisible(true);
     }
 
     @FXML
     void handleThreeBox(MouseEvent event) {
-        if (three.isSelected())
-            two.setSelected(false);
+        if (three.isSelected()) two.setSelected(false);
     }
 
     @FXML
     void handleTwoBox(MouseEvent event) {
-        if (two.isSelected())
-            three.setSelected(false);
+        if (two.isSelected()) three.setSelected(false);
     }
 
     @FXML
@@ -151,11 +145,8 @@ public class GUILoginPanelController {
 
     @FXML
     void getStarted(ActionEvent event) {
-        if(two.isSelected()){
-            stagesManager.send(new LobbySizeEvent(2));
-        }else if(three.isSelected()){
-            stagesManager.send(new LobbySizeEvent(3));
-        }
+        if(two.isSelected()){ stagesManager.send(new LobbySizeEvent(2)); }
+        else if(three.isSelected()){ stagesManager.send(new LobbySizeEvent(3)); }
     }
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
@@ -183,24 +174,29 @@ public class GUILoginPanelController {
     }
 
     public void wakeUpClient(){
-        if(isWaiting) {
-            lobbyCreation.setVisible(false);
-            if(!backGround.isVisible()){
-                playButton.setDisable(false);
-                playButton.setVisible(true);
-                isWaiting = false;
-                backGround.setDisable(false);
-                if(buttonClickedCounter == 1){
-                    buttonClickedCounter++;
-                    backGround.setVisible(true);
-                    playButton.setVisible(false);
-                    playButton.setDisable(true);
-                }
+
+        if(!isWaiting) return;
+
+        lobbyCreation.setVisible(false);
+
+        if(!backGround.isVisible()) {
+
+            playButton.setDisable(false);
+            playButton.setVisible(true);
+            isWaiting = false;
+            backGround.setDisable(false);
+
+            if(buttonClickedCounter == 1) {
+
+                buttonClickedCounter++;
+                backGround.setVisible(true);
+                playButton.setVisible(false);
+                playButton.setDisable(true);
             }
-            nameText.setText("");
-            errorText.setText("");
-            errorText.setVisible(true);
         }
+        nameText.setText("");
+        errorText.setText("");
+        errorText.setVisible(true);
     }
 
     public void setWaiting(boolean waiting) {

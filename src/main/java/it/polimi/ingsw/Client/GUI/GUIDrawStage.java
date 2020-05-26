@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Model.CardSimplified;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +23,7 @@ public class GUIDrawStage{
     GUICards guiCards = new GUICards();
 
 
-    public void start(Stage stage, StagesManager stagesManager, GUIPlayersManager guiPlayersManager){
+    public void start(Stage stage, GUIStagesManager stagesManager, GUIPlayersManager guiPlayersManager){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/DrawPhase/drawPhase.fxml"));
         Parent root;
@@ -64,11 +63,10 @@ public class GUIDrawStage{
         guiDrawPhaseController.getErrorText().setText(error);
     }
 
-
-
     public void setTextNames(ArrayList<String> names) {
         guiDrawPhaseController.getDrawPhasePane().setVisible(true);
         guiDrawPhaseController.getDownPane().setVisible(true);
+
         if(names.size() == 2) {
             guiDrawPhaseController.getDownThreeCardsPane().setVisible(false);
             guiDrawPhaseController.getDownTwoCardsPane().setVisible(true);
@@ -185,7 +183,6 @@ public class GUIDrawStage{
                 event.consume();
             });
         }
-
     }
 
     public void setDownPaneForDrag() {
@@ -230,12 +227,15 @@ public class GUIDrawStage{
         }
     }
 
+    public void roundTransition(int seconds) {
+        guiDrawPhaseController.getMiddlePane().setVisible(true);
+        guiDrawPhaseController.getErrorPane().setVisible(false);
+        guiDrawPhaseController.getMessagePane().setVisible(true);
+        guiDrawPhaseController.getMessageText().setText("Round starts in: " + seconds);
+    }
+
     public void sendCard() {
         guiDrawPhaseController.getUpPane().setVisible(false);
     }
-
-    public void roundTransition() {
-        guiDrawPhaseController.getMiddlePane().setVisible(false);
-    }
-
 }
+

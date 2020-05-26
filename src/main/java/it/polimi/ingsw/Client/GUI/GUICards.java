@@ -71,15 +71,9 @@ public class GUICards {
         }
     };
 
-
     public GUICards() {
-        for(int i=0; i<names.size(); i++) {
-            fullImageMap.put(names.get(i), fullImagePath.get(i));
-        }
-
-        for(int i=0; i<names.size(); i++) {
-            smallImageMap.put(names.get(i), smallImagePath.get(i));
-        }
+        for(int i=0; i<names.size(); i++) { fullImageMap.put(names.get(i), fullImagePath.get(i)); }
+        for(int i=0; i<names.size(); i++) { smallImageMap.put(names.get(i), smallImagePath.get(i)); }
     }
 
     public Image getFullImage(String name) {

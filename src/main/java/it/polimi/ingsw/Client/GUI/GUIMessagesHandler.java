@@ -4,9 +4,9 @@ import it.polimi.ingsw.Client.MessagesHandler;
 
 public class GUIMessagesHandler implements MessagesHandler {
 
-    StagesManager stagesManager;
+    GUIStagesManager stagesManager;
 
-    public GUIMessagesHandler(StagesManager stagesManager) {
+    public GUIMessagesHandler(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
     }
 
@@ -31,7 +31,5 @@ public class GUIMessagesHandler implements MessagesHandler {
     }
 
     @Override
-    public void sendDrawMessage(String draw) {
-        stagesManager.readDrawMessage(draw);
-    }
+    public void sendDrawMessage(String draw) { stagesManager.readDrawMessage(draw); }
 }

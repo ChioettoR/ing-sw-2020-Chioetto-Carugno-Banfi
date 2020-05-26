@@ -4,17 +4,14 @@ import java.util.ArrayList;
 
 public class GUIPlayersManager {
 
-
     ArrayList<GUIPlayer> guiPlayers = new ArrayList<>();
     ArrayList<GUIColorPool> guiColorPool;
-
 
     public GUIPlayersManager() {
         guiColorPool = new ArrayList<>();
         guiColorPool.add(GUIColorPool.SILVER);
         guiColorPool.add(GUIColorPool.DARKBROWN);
         guiColorPool.add(GUIColorPool.LIGHTBROWN);
-
     }
 
     public void addPlayer(String name) {
@@ -41,13 +38,11 @@ public class GUIPlayersManager {
             }
         }
         guiPlayers.add(new GUIPlayer(name, color));
-
     }
 
     public ArrayList<String> getNames() {
         ArrayList<String> names = new ArrayList<>();
-        for(GUIPlayer p : guiPlayers)
-            names.add(p.getName());
+        for(GUIPlayer p : guiPlayers) names.add(p.getName());
         return names;
     }
 
@@ -58,15 +53,12 @@ public class GUIPlayersManager {
     }
 
     public GUIPlayer getPlayer(String name) {
-        for(GUIPlayer p : guiPlayers)
-            if(p.getName().equals(name)) return p;
+        for(GUIPlayer p : guiPlayers) if(p.getName().equals(name)) return p;
         return null;
     }
 
     public javafx.scene.paint.Color color(String name) {
-        for(GUIPlayer guiPlayer : guiPlayers)
-            if(guiPlayer.getName().equals(name)) return guiPlayer.getColor();
+        for(GUIPlayer guiPlayer : guiPlayers) if(guiPlayer.getName().equals(name)) return guiPlayer.getColor();
         return null;
     }
-
 }

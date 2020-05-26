@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.BuildingsController">
+   <BorderPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <HBox fillHeight="false" layoutX="10.0" layoutY="10.0" prefHeight="63.0" prefWidth="130.0" AnchorPane.leftAnchor="10.0">
+      <children>
+         <ImageView fx:id="baseBlock1" fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="mediumBlock1" fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="10.0">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="highBlock1" fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="20.0">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="dome1" fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="30.0">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+      </children>
+   </HBox>
+    <HBox fillHeight="false" prefHeight="63.0" prefWidth="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="baseBlock" fitHeight="150.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" translateX="6.5" translateY="5.0" HBox.hgrow="ALWAYS">
+            <Image url="@baseBlock.png" />
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </ImageView>
+        <ImageView fx:id="mediumBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.7" translateX="10.0" translateY="4.0">
+            <Image url="@mediumBlock.png" />
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </ImageView>
+        <ImageView fx:id="highBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7" translateX="10.0" translateY="3.0">
+            <Image url="@highBlock.png" />
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </ImageView>
+        <ImageView fx:id="dome" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" translateX="10.0">
+            <Image url="@dome.png" />
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </ImageView>
+    </HBox>
+</AnchorPane>

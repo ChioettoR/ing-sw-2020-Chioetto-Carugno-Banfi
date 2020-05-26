@@ -2,7 +2,7 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
-import it.polimi.ingsw.Model.CardSimplified;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -16,7 +16,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class StagesManager extends Application {
+public class GUIStagesManager extends Application {
 
     private static Client client;
     private static String ip;
@@ -24,9 +24,12 @@ public class StagesManager extends Application {
     Stage stage;
     GUILoginStage guiLoginStage = new GUILoginStage();
     GUIDrawStage guiDrawStage = new GUIDrawStage();
+    GUIRoundStage guiRoundStage = new GUIRoundStage();
     GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
     boolean serverUp = false;
     GUIPhase guiPhase = GUIPhase.LOGIN;
+    int timer = 5;
+    int seconds = timer;
 
     public GUIPlayersManager getGuiPlayersManager() {
         return guiPlayersManager;
@@ -41,8 +44,9 @@ public class StagesManager extends Application {
         eventsCommunication.setStagesManager(this);
         eventsCommunication.setGuiLoginStage(guiLoginStage);
         eventsCommunication.setGuiDrawStage(guiDrawStage);
+        eventsCommunication.setGuiRoundStage(guiRoundStage);
         guiLoginStage.start(stage, this);
-        try { client.run();serverUp = true; }
+        try { client.run(); serverUp = true; }
         catch(Exception e) { guiLoginStage.serverUnavailable(); }
     }
 
@@ -58,20 +62,23 @@ public class StagesManager extends Application {
     public void readMessage(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readMessage(message));
         else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readMessage(message));
+        else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readMessage(message));
     }
 
     public void readRequest(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readRequest(message));
         else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readRequest(message));
+        else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readMessage(message));
     }
 
     public void readError(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readError(message));
         else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readError(message));
+        else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readError(message));
     }
 
     public void readDrawMessage(String draw) {
-        if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.draw(draw));
+        Platform.runLater(() -> guiDrawStage.draw(draw));
     }
 
     @Override
@@ -80,7 +87,7 @@ public class StagesManager extends Application {
     }
 
     public void lobbyInfo(String lobbyName, int lobbySize) {
-        if(guiPhase == GUIPhase.LOGIN ) Platform.runLater(() -> guiLoginStage.lobbyInfo(lobbyName, lobbySize));
+        Platform.runLater(() -> guiLoginStage.lobbyInfo(lobbyName, lobbySize));
     }
 
     public void endLogin(ArrayList<String> names) {
@@ -88,9 +95,9 @@ public class StagesManager extends Application {
         setDrawStage(stage, guiPlayersManager);
     }
 
-    public static void launch(String ip, int port) throws IOException {
-        StagesManager.ip = ip;
-        StagesManager.port = port;
+    public static void launch(String ip, int port) {
+        GUIStagesManager.ip = ip;
+        GUIStagesManager.port = port;
         Application.launch();
     }
 
@@ -108,23 +115,13 @@ public class StagesManager extends Application {
         else if(messageID == 302) Platform.runLater(() -> guiLoginStage.waitingPlayers());
         else if(messageID == 113) Platform.runLater(() -> guiLoginStage.insertNumber());
         else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
-        else if(messageID == 108) roundTransition();
-        else if(messageID == 114) roundTransition();
-    }
-
-    public void sendDeck(ArrayList<CardSimplified> cards) {
-        if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.sendDeck(cards));
+        else if(messageID == 108 && guiPhase == GUIPhase.DRAW) roundTransition();
+        else if(messageID == 114 && guiPhase == GUIPhase.DRAW) roundTransition();
     }
 
     public void playerChosenCard(String playerName, String cardName) {
-        if(guiPhase == GUIPhase.DRAW){
-            Platform.runLater(() -> guiDrawStage.setCardsImages(playerName, cardName));
-            guiPlayersManager.getPlayer(playerName).setCardName(cardName);
-        }
-    }
-
-    public void sendCard() {
-        if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.sendCard());
+        Platform.runLater(() -> guiDrawStage.setCardsImages(playerName, cardName));
+        guiPlayersManager.getPlayer(playerName).setCardName(cardName);
     }
 
     public void setNames(ArrayList<String> names) {
@@ -133,7 +130,15 @@ public class StagesManager extends Application {
 
     public void roundTransition() {
         guiPhase = GUIPhase.ROUND;
-        guiDrawStage.roundTransition();
-        //TODO: TIMER PER LA TRANSITION
+        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
+        animation.setCycleCount(timer+1);
+        animation.setOnFinished(event -> Platform.runLater(() -> guiRoundStage.start(stage, this)));
+        animation.play();
+    }
+
+    private void CountDown() {
+        Platform.runLater(() -> guiDrawStage.roundTransition(seconds));
+        seconds--;
     }
 }
+
