@@ -17,7 +17,6 @@ public class CLIGridPrinter {
      * @param colors list of colors
      */
     void print(CLIGrid CLIGrid, boolean printNames, ArrayList<String> names, ArrayList<Color> colors) {
-
         int namesLength = names.size();
         int length = CLIGrid.getLength();
         int width = CLIGrid.getWidth();
@@ -28,6 +27,7 @@ public class CLIGridPrinter {
         ArrayList<StringWrapper> fourthLine = new ArrayList<>();
         ArrayList<StringWrapper> fifthLine = new ArrayList<>();
 
+        clearScreen();
         createZeroLine(zeroLine);
         for(StringWrapper s : zeroLine)
             System.out.print(s.getString());
@@ -145,5 +145,9 @@ public class CLIGridPrinter {
     private void printName(String name, Color color) {
         System.out.print("  " + color.escape() + "───" + Color.RESET);
         System.out.print(" " + name);
+    }
+    private synchronized void clearScreen(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

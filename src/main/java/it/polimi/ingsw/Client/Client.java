@@ -23,6 +23,7 @@ public class Client implements ClientObserver, CountdownInterface {
     EventsReader eventsReader;
     EventsCommunication eventsCommunication;
     CLIStdinReader cliStdinReader;
+    public static final String ANSI_CYAN = "\u001B[36m";
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -61,6 +62,13 @@ public class Client implements ClientObserver, CountdownInterface {
     public void run() throws IOException {
         connect();
         System.out.println("Connection established");
+        System.out.println(ANSI_CYAN +
+                        "███████╗ █████╗ ███╗   ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗██╗\n" +
+                        "██╔════╝██╔══██╗████╗  ██║╚══██╔══╝██╔═══██╗██╔══██╗██║████╗  ██║██║\n" +
+                        "███████╗███████║██╔██╗ ██║   ██║   ██║   ██║██████╔╝██║██╔██╗ ██║██║\n" +
+                        "╚════██║██╔══██║██║╚██╗██║   ██║   ██║   ██║██╔══██╗██║██║╚██╗██║██║\n" +
+                        "███████║██║  ██║██║ ╚████║   ██║   ╚██████╔╝██║  ██║██║██║ ╚████║██║\n" +
+                        "╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝\n " + Color.RESET);
 
         Thread messagesRead = new Thread(() -> {
             Serializable object;
