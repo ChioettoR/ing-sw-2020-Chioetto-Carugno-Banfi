@@ -13,6 +13,7 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,6 +27,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-    public class GUIRoundStage extends Application {
+    public class GUIRoundStage {
 
     final double rotationSpeed = 100;
     final double zoomSpeed = 10;
@@ -52,6 +54,7 @@ import java.util.TreeMap;
     GUIStagesManager stagesManager;
     HashMap<ActionType, String> buttonsStyle = new HashMap<>();
     boolean buttonTranslated = false;
+    Scene scene;
 
     private final int maxFOV = 40;
     private final int minFOV = 25;
@@ -72,7 +75,11 @@ import java.util.TreeMap;
         return stagesManager;
     }
 
-    public void start(Stage stage, GUIStagesManager stagesManager) {
+        public ActionType getSelectedActionType() {
+            return selectedActionType;
+        }
+
+        public void start(Stage stage, GUIStagesManager stagesManager) {
 
         this.stagesManager = stagesManager;
 
@@ -90,15 +97,28 @@ import java.util.TreeMap;
         guiGridManager.createGrid();
         gridAnimations(group, camera);
 
-//        guiGridManager.build(1, 1, 1);
-//        guiGridManager.build(2, 1, 1);
-//        guiGridManager.build(1, 2, 1);
-//        guiGridManager.build(2, 2, 1);
-
         eventHandler(stage);
         try { buildingsImages(stage, subScene); }
         catch (IOException e) { e.printStackTrace(); }
         stage.show();
+    }
+
+    public void changeGridCursor() {
+//        Image image;
+//        if(selectedActionType==null) {
+//            //TODO : positioning cursor
+//        }
+//        else if(selectedActionType==ActionType.BUILD) {
+//            image = new Image(getClass().getResourceAsStream("/hammerCursor.png"));
+//            scene.setCursor(new ImageCursor(image));
+//        }
+//        else if(selectedActionType==ActionType.MOVE) {
+//            //TODO : move cursor
+//        }
+    }
+
+    public void resetCursor() {
+        scene.setCursor(Cursor.DEFAULT);
     }
 
     public void gridBuild(int x, int y, int buildLevel) {
@@ -198,7 +218,8 @@ import java.util.TreeMap;
             db.setContent(content);
             event.consume();
         });
-        stage.setScene(new Scene(root,WIDTH, HEIGHT));
+        scene = new Scene(root, WIDTH, HEIGHT);
+        stage.setScene(scene);
         stage.setResizable(true);
     }
 
@@ -260,26 +281,6 @@ import java.util.TreeMap;
                 case D: { dPressed = false; rotationVelocity.set(0); break; }
             }
         });
-    }
-
-    @Override
-    public void start(Stage stage) {
-        SmartGroup group = new SmartGroup();
-        guiGridManager = new GUIGridManager(group, this);
-
-        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
-        PerspectiveCamera camera = createCamera();
-        subScene.setCamera(camera);
-        stage.setResizable(true);
-        stage.setMinWidth(400);
-        stage.setMinHeight(400);
-
-        guiGridManager.createGrid();
-        gridAnimations(group, camera);
-        eventHandler(stage);
-        try { buildingsImages(stage, subScene); }
-        catch (IOException e) { e.printStackTrace(); }
-        stage.show();
     }
 
     private void activeButtonCenter(ActionType actionType, boolean onlyCenter) {

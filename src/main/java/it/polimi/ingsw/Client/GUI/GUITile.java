@@ -88,9 +88,12 @@ public class GUITile {
     public void setGUIWorker(GUIWorker guiWorker) {
 
         this.guiWorker = guiWorker;
-        if(guiWorker==null) return;
-        guiWorker.setGuiTile(this);
-        moveWorker(guiWorker);
+        if(guiWorker!=null) {
+            guiWorker.getWorkerMesh().setVisible(true);
+            guiWorker.getWorkerMesh().setDisable(false);
+            guiWorker.setGuiTile(this);
+            moveWorker(guiWorker);
+        }
     }
 
     public int getLastLevel() {

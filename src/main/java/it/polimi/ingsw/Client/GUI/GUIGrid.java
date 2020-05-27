@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Client.GUI;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -110,6 +112,10 @@ public class GUIGrid {
         availableTilesMesh.setTranslateZ((3-y)*size/5);
 
         tileMesh.setOnMousePressed(mouseEvent -> guiGridManager.gridPosition(x, y));
+
+        tileMesh.setOnMouseEntered(mouseEvent -> guiGridManager.getGuiRoundStage().changeGridCursor());
+
+        tileMesh.setOnMouseExited(mouseEvent -> guiGridManager.getGuiRoundStage().resetCursor());
 
         tileMesh.setOnDragOver(event -> {
             if (event.getDragboard().hasString()) event.acceptTransferModes(TransferMode.COPY_OR_MOVE);

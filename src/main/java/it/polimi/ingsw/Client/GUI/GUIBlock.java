@@ -99,6 +99,10 @@ public class GUIBlock {
         blockMesh = mesh[0];
         blockMesh.setMaterial(material);
         blockMesh.setOnMousePressed(mouseEvent -> guiGridManager.gridPosition(tile.getX(), tile.getY()));
+
+        blockMesh.setOnMouseEntered(mouseEvent -> guiGridManager.getGuiRoundStage().changeGridCursor());
+        blockMesh.setOnMouseExited(mouseEvent -> guiGridManager.getGuiRoundStage().resetCursor());
+
         blockMesh.setOnDragOver(event -> {
             if (event.getDragboard().hasString()) event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             event.consume();

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.*;
+import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Observer.Server.MessageObservable;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SelectionWorkerManager extends MessageObservable {
 

@@ -28,6 +28,10 @@ public class GUIGridManager {
         guiRoundStage.gridPosition(x, y);
     }
 
+    public GUIRoundStage getGuiRoundStage() {
+        return guiRoundStage;
+    }
+
     public void gridBuild(int x, int y, int buildLevel) { guiRoundStage.gridBuild(x, y, buildLevel); }
 
     public GUIGrid getGrid() {
@@ -59,6 +63,11 @@ public class GUIGridManager {
             else guiWorker.getGuiTile().setGUIWorker(null);
             tile.setGUIWorker(guiWorker);
         })).start();
+    }
+
+    public void deleteWorker(GUIWorker g) {
+        g.getGuiTile().setGUIWorker(null);
+        group.getChildren().remove(g.getWorkerMesh());
     }
 
     public void setWorkerNull(int x, int y) {

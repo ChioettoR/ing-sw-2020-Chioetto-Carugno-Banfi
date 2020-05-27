@@ -7,6 +7,7 @@ import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class GUIEventsCommunication implements EventsCommunication {
 
@@ -87,14 +88,63 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void change(ArrayList<TileSimplified> tiles) {
-        guiRoundStage.getGuiGridManager().deColor();
-        for(TileSimplified t : tiles) {
-            int level = t.getBuildLevel();
+        Platform.runLater( () -> {
+            guiRoundStage.getGuiGridManager().deColor();
+
+            for(TileSimplified t : tiles) {
+                int level = t.getBuildLevel();
+                int x = t.getX();
+                int y = t.getY();
+                guiRoundStage.getGuiGridManager().build(level, x, y);
+            }
+
+            ArrayList<TileSimplified> tileWithWorkerMaybeDeleted = new ArrayList<>();
+            ArrayList<GUIWorker> workersMaybeDeleted = new ArrayList<>();
+
+            ArrayList<TileSimplified> tilesWithWorkerNull = (ArrayList<TileSimplified>) tiles.stream().filter(tileSimplified -> tileSimplified.getWorkerSimplified() == null).collect(Collectors.toList());
+            for (TileSimplified t : tilesWithWorkerNull) {
+                GUITile tile = guiRoundStage.guiGridManager.getGrid().getTile(t.getX(), t.getY());
+                if (tile.getGUIWorker() != null) {
+                    workersMaybeDeleted.add(tile.getGUIWorker());
+                    tileWithWorkerMaybeDeleted.add(t);
+                }
+            }
+
+            ArrayList<TileSimplified> tilesWithWorkerNotDeleted = new ArrayList<>();
+            ArrayList<GUIWorker> workerNotDeleted = new ArrayList<>();
+
+            for (GUIWorker w : workersMaybeDeleted) {
+                for (TileSimplified t : tiles) {
+                    WorkerSimplified workerSimplified = t.getWorkerSimplified();
+                    if (workerSimplified != null && workerSimplified.getLocalID() == w.getWorkerID() && workerSimplified.getPlayerName().equals(w.getPlayerName())) {
+                        workerNotDeleted.add(w);
+                        tilesWithWorkerNotDeleted.add(t);
+                    }
+                }
+            }
+
+            ArrayList<TileSimplified> tileWithWorkerDeleted = new ArrayList<>(tileWithWorkerMaybeDeleted);
+            tileWithWorkerDeleted.removeAll(tilesWithWorkerNotDeleted);
+            ArrayList<TileSimplified> finalTiles = new ArrayList<>(tiles);
+            finalTiles.removeAll(tileWithWorkerDeleted);
+
+            ArrayList<GUIWorker> workerDeleted = new ArrayList<>(workersMaybeDeleted);
+            workerDeleted.removeAll(workerNotDeleted);
+
+            for (GUIWorker g : workerDeleted) {
+                guiRoundStage.getGuiGridManager().deleteWorker(g);
+            }
+
+            changeEffect(finalTiles);
+        });
+    }
+
+    public void changeEffect(ArrayList<TileSimplified> tiles) {
+        for (TileSimplified t : tiles) {
             int x = t.getX();
             int y = t.getY();
-            Platform.runLater(() -> guiRoundStage.getGuiGridManager().build(level,x , y));
             WorkerSimplified w = t.getWorkerSimplified();
-            if(w==null) guiRoundStage.getGuiGridManager().setWorkerNull(x, y);
+            if (w == null) guiRoundStage.getGuiGridManager().setWorkerNull(x, y);
             else guiRoundStage.getGuiGridManager().setWorker(w.getPlayerName(), w.getLocalID(), x, y);
         }
     }
