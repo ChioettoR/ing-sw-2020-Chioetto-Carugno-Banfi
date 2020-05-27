@@ -2,17 +2,28 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Events.Client.AllPlayersCardsEvent;
 import it.polimi.ingsw.Events.Client.PickCardEvent;
+import it.polimi.ingsw.Model.CardSimplified;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 
 public class GUIDrawPhaseController {
 
     GUICards guiCards;
     GUIStagesManager stagesManager;
+
+    ArrayList<String> cardNames = new ArrayList<>();
+    ArrayList<String> namesToSend = new ArrayList<>();
+    int godIndex = 0;
 
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
@@ -20,6 +31,14 @@ public class GUIDrawPhaseController {
 
     public void setGuiCards(GUICards guiCards) {
         this.guiCards = guiCards;
+    }
+
+    public ArrayList<String> getNamesToSend() {
+        return namesToSend;
+    }
+
+    public void addNamesToSend(String name) {
+        namesToSend.add(name);
     }
 
     @FXML
@@ -89,6 +108,28 @@ public class GUIDrawPhaseController {
 
     @FXML
     private Text godName3p3;
+
+    @FXML
+    private ImageView godImageToChoose;
+
+    @FXML
+    private Text godNameToChoose;
+
+    @FXML
+    private Button infoButtonToChoose;
+
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private Button nextButton;
+
+    @FXML
+    private AnchorPane threeCardsPane;
+
+    @FXML
+    private AnchorPane twoCardsPane;
+
 
     //middlePane
 
@@ -163,6 +204,9 @@ public class GUIDrawPhaseController {
     @FXML
     private Text playerName3p3;
 
+    @FXML
+    private AnchorPane cardsToSelect;
+
     //infoPane
 
     @FXML
@@ -180,6 +224,24 @@ public class GUIDrawPhaseController {
     @FXML
     private ImageView infoGodImage;
 
+    @FXML
+    private ImageView godToSelect3p1;
+
+    @FXML
+    private ImageView godToSelect3p2;
+
+    @FXML
+    private ImageView godToSelect3p3;
+
+    @FXML
+    private ImageView godToSelect2p1;
+
+    @FXML
+    private ImageView godToSelect2p2;
+
+    public int getGodIndex() {
+        return godIndex;
+    }
 
     public AnchorPane getDrawPhasePane() {
         return drawPhasePane;
@@ -263,6 +325,26 @@ public class GUIDrawPhaseController {
 
     public Text getGodName3p3() {
         return godName3p3;
+    }
+
+    public ImageView getGodImageToChoose() {
+        return godImageToChoose;
+    }
+
+    public Text getGodNameToChoose() {
+        return godNameToChoose;
+    }
+
+    public Button getInfoButtonToChoose() {
+        return infoButtonToChoose;
+    }
+
+    public AnchorPane getThreeCardsPane() {
+        return threeCardsPane;
+    }
+
+    public AnchorPane getTwoCardsPane() {
+        return twoCardsPane;
     }
 
     public AnchorPane getMiddlePane() {
@@ -377,6 +459,34 @@ public class GUIDrawPhaseController {
         return infoGodImage;
     }
 
+    public AnchorPane getCardsToSelect() {
+        return cardsToSelect;
+    }
+
+    public GUICards getGuiCards() {
+        return guiCards;
+    }
+
+    public ImageView getGodToSelect3p1() {
+        return godToSelect3p1;
+    }
+
+    public ImageView getGodToSelect3p2() {
+        return godToSelect3p2;
+    }
+
+    public ImageView getGodToSelect3p3() {
+        return godToSelect3p3;
+    }
+
+    public ImageView getGodToSelect2p1() {
+        return godToSelect2p1;
+    }
+
+    public ImageView getGodToSelect2p2() {
+        return godToSelect2p2;
+    }
+
     @FXML
     void returnToDraw(ActionEvent event) {
         infoPane.setDisable(true);
@@ -457,11 +567,91 @@ public class GUIDrawPhaseController {
     }
 
     @FXML
+    void goBack(ActionEvent event) {
+        godIndex--;
+        if(godIndex < 0)
+            godIndex = cardNames.size() - 1;
+        String godName = cardNames.get(godIndex);
+        godImageToChoose.setImage(guiCards.getFullImage(godName));
+        godNameToChoose.setText(godName);
+
+        infoButtonToChoose.setOnDragDetected(e -> {
+            Dragboard db = infoButtonToChoose.startDragAndDrop(TransferMode.ANY);
+            SnapshotParameters snapshotParameters = new SnapshotParameters();
+            db.setDragView(godImageToChoose.snapshot(snapshotParameters, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString(godName);
+            db.setContent(content);
+            e.consume();
+        });
+    }
+
+    @FXML
+    void goNext(ActionEvent event) {
+        godIndex++;
+        if(godIndex == cardNames.size())
+            godIndex = 0;
+        String godName = cardNames.get(godIndex);
+        godImageToChoose.setImage(guiCards.getFullImage(godName));
+        godNameToChoose.setText(godName);
+
+        infoButtonToChoose.setOnDragDetected(e -> {
+            Dragboard db = infoButtonToChoose.startDragAndDrop(TransferMode.ANY);
+            SnapshotParameters snapshotParameters = new SnapshotParameters();
+            db.setDragView(godImageToChoose.snapshot(snapshotParameters, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString(godName);
+            db.setContent(content);
+            e.consume();
+        });
+
+    }
+
+    @FXML
+    void deselect2p1(ActionEvent event) {
+        namesToSend.remove(namesToSend.get(0));
+        godToSelect2p1.setImage(null);
+    }
+
+    @FXML
+    void deselect2p2(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deselect3p1(ActionEvent event) {
+        namesToSend.remove(namesToSend.get(0));
+        godToSelect3p1.setImage(null);
+        if(godToSelect3p2.getImage() != null) {
+            godToSelect3p1.setImage(godToSelect3p2.getImage());
+            godToSelect3p2.setImage(null);
+        }
+    }
+
+    @FXML
+    void deselect3p2(ActionEvent event) {
+        namesToSend.remove(namesToSend.get(1));
+        godToSelect3p2.setImage(null);
+    }
+
+    @FXML
+    void deselect3p3(ActionEvent event) {
+
+    }
+
+    @FXML
     void drawCards(ActionEvent event) {
         draw.setDisable(true);
         draw.setVisible(false);
         //TODO:
         //stagesManager.send(new AllPlayersCardsEvent());
+    }
+
+    @FXML
+    void checkInfoToChoose(ActionEvent event) {
+        setInfoPane();
+        String godName = godNameToChoose.getText();
+        setInfo(godName);
     }
 
     public void setInfoPane() {
@@ -479,5 +669,18 @@ public class GUIDrawPhaseController {
 
     public void sendToStagesManager(String cardName) {
         stagesManager.send(new PickCardEvent(cardName));
+    }
+
+    public void setFullDeck(ArrayList<CardSimplified> cards) {
+        for(CardSimplified c : cards) cardNames.add(c.getName());
+    }
+
+    public void sendToServer() {
+        draw.setDisable(true);
+        draw.setVisible(false);
+        cardsToSelect.setDisable(true);
+        cardsToSelect.setVisible(false);
+        ArrayList<String> cardsToSend = new ArrayList<>(namesToSend);
+        stagesManager.send(new AllPlayersCardsEvent(cardsToSend));
     }
 }

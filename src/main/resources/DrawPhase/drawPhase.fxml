@@ -135,10 +135,29 @@
                   </AnchorPane>
                   <AnchorPane fx:id="draw" prefHeight="270.0" prefWidth="600.0" visible="false">
                      <children>
-                        <Button fx:id="drawCards" layoutX="225.0" layoutY="28.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#drawCards" prefHeight="229.0" prefWidth="150.0" styleClass="drawCards" stylesheets="@styleDrawPhase.css">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Button>
+                        <AnchorPane fx:id="choosePane" layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
+                           <children>
+                              <ImageView fx:id="godImageToChoose" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@nameBar.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="godNameToChoose" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+                                 <font>
+                                    <Font name="Candara" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@frame.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="infoButtonToChoose" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoToChoose" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="backButton" layoutX="159.0" layoutY="120.0" mnemonicParsing="false" onAction="#goBack" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goBackButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false" onAction="#goNext" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goNextButton" stylesheets="@styleDrawPhase.css" />
                      </children>
                   </AnchorPane>
                </children>
@@ -288,6 +307,67 @@
                               <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
                            </children>
                         </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="cardsToSelect" layoutX="450.0" prefHeight="330.0" prefWidth="150.0" visible="false">
+         <children>
+            <AnchorPane fx:id="threeCardsPane" prefHeight="330.0" prefWidth="150.0" visible="false">
+               <children>
+                  <AnchorPane layoutX="47.5" layoutY="21.75" prefHeight="81.0" prefWidth="55.0">
+                     <children>
+                        <ImageView fx:id="godToSelect3p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@frame.png" />
+                           </image></ImageView>
+                        <Button fx:id="buttonToDeselect3p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                     </children></AnchorPane>
+                  <AnchorPane layoutX="47.5" layoutY="124.5" prefHeight="81.0" prefWidth="55.0">
+                     <children>
+                        <ImageView fx:id="godToSelect3p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@frame.png" />
+                           </image></ImageView>
+                        <Button fx:id="buttonToDeselect3p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                     </children></AnchorPane>
+                  <AnchorPane layoutX="47.5" layoutY="227.25" prefHeight="81.0" prefWidth="55.0">
+                     <children>
+                        <ImageView fx:id="godToSelect3p3" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@frame.png" />
+                           </image></ImageView>
+                        <Button fx:id="buttonToDeselect3p3" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p3" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                     </children></AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="twoCardsPane" prefHeight="330.0" prefWidth="150.0" visible="false">
+               <children>
+                  <AnchorPane layoutX="47.5" layoutY="56.0" prefHeight="81.0" prefWidth="55.0">
+                     <children>
+                        <ImageView fx:id="godToSelect2p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@frame.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="buttonToDeselect2p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="47.5" layoutY="193.0" prefHeight="81.0" prefWidth="55.0">
+                     <children>
+                        <ImageView fx:id="godToSelect2p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@frame.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="buttonToDeselect2p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
                      </children>
                   </AnchorPane>
                </children>

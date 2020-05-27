@@ -117,6 +117,9 @@ public class GUIStagesManager extends Application {
         else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
         else if(messageID == 108 && guiPhase == GUIPhase.DRAW) roundTransition();
         else if(messageID == 114 && guiPhase == GUIPhase.DRAW) roundTransition();
+        else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.threeCardsShow());
+        else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.twoCardsShow());
+        else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showAgain());
     }
 
     public void playerChosenCard(String playerName, String cardName) {
