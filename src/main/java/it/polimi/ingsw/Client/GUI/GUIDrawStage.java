@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Model.CardSimplified;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +15,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,8 +94,6 @@ public class GUIDrawStage{
     }
 
     public void sendDeck(ArrayList<CardSimplified> cards) {
-
-        for (CardSimplified card : cards) guiCards.addDescription(card);
 
         if(cards.size() == 2) {
             guiDrawPhaseController.getUpPane().setVisible(true);
@@ -236,6 +238,111 @@ public class GUIDrawStage{
 
     public void sendCard() {
         guiDrawPhaseController.getUpPane().setVisible(false);
+    }
+
+    public void sendFullDeck(ArrayList<CardSimplified> cards) {
+
+        int godIndex;
+
+        for (CardSimplified card : cards) guiCards.addDescription(card);
+
+        guiDrawPhaseController.setFullDeck(cards);
+        guiDrawPhaseController.getDraw().setVisible(true);
+        godIndex = guiDrawPhaseController.getGodIndex();
+        String godName = cards.get(godIndex).getName();
+        guiDrawPhaseController.getGodImageToChoose().setImage(guiCards.getFullImage(godName));
+        guiDrawPhaseController.getGodNameToChoose().setText(godName);
+
+        Button infoButtonToChoose = guiDrawPhaseController.getInfoButtonToChoose();
+        ImageView godImageToChoose = guiDrawPhaseController.getGodImageToChoose();
+
+        infoButtonToChoose.setOnDragDetected(event -> {
+            Dragboard db = infoButtonToChoose.startDragAndDrop(TransferMode.ANY);
+            SnapshotParameters snapshotParameters = new SnapshotParameters();
+            db.setDragView(godImageToChoose.snapshot(snapshotParameters, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString(godName);
+            db.setContent(content);
+            event.consume();
+        });
+    }
+
+    public void threeCardsShow() {
+        guiDrawPhaseController.getCardsToSelect().setVisible(true);
+        guiDrawPhaseController.getCardsToSelect().setDisable(false);
+        guiDrawPhaseController.getTwoCardsPane().setVisible(false);
+        guiDrawPhaseController.getTwoCardsPane().setDisable(true);
+        guiDrawPhaseController.getThreeCardsPane().setDisable(false);
+        guiDrawPhaseController.getThreeCardsPane().setVisible(true);
+        setRightPaneForDrag();
+    }
+
+    public void twoCardsShow() {
+        guiDrawPhaseController.getCardsToSelect().setVisible(true);
+        guiDrawPhaseController.getCardsToSelect().setDisable(false);
+        guiDrawPhaseController.getThreeCardsPane().setVisible(false);
+        guiDrawPhaseController.getThreeCardsPane().setDisable(true);
+        guiDrawPhaseController.getTwoCardsPane().setDisable(false);
+        guiDrawPhaseController.getTwoCardsPane().setVisible(true);
+        setRightPaneForDrag();
+    }
+
+    public void setRightPaneForDrag() {
+        AnchorPane rightPane = guiDrawPhaseController.getCardsToSelect();
+        rightPane.setOnDragOver(event -> {
+            if (event.getDragboard().hasString()) event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            event.consume();
+        });
+
+        rightPane.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                String godName = db.getString();
+                if(guiDrawPhaseController.getThreeCardsPane().isVisible()) {
+                    if(guiDrawPhaseController.getGodToSelect3p1().getImage() == null) {
+                        guiDrawPhaseController.getGodToSelect3p1().setImage(guiCards.getFullImage(godName));
+                        guiDrawPhaseController.addNamesToSend(godName);
+                    }
+                    else if(guiDrawPhaseController.getGodToSelect3p2().getImage() == null)  {
+                        guiDrawPhaseController.getGodToSelect3p2().setImage(guiCards.getFullImage(godName));
+                        guiDrawPhaseController.addNamesToSend(godName);
+                    }
+                    else if(guiDrawPhaseController.getGodToSelect3p3().getImage() == null) {
+                        guiDrawPhaseController.getGodToSelect3p3().setImage(guiCards.getFullImage(godName));
+                        guiDrawPhaseController.addNamesToSend(godName);
+                        guiDrawPhaseController.sendToServer();
+                    }
+                }
+                else {
+                    if(guiDrawPhaseController.getGodToSelect2p1().getImage() == null) {
+                        guiDrawPhaseController.getGodToSelect2p1().setImage(guiCards.getFullImage(godName));
+                        guiDrawPhaseController.addNamesToSend(godName);
+                    }
+                    else if(guiDrawPhaseController.getGodToSelect2p2().getImage() == null) {
+                        guiDrawPhaseController.getGodToSelect2p2().setImage(guiCards.getFullImage(godName));
+                        guiDrawPhaseController.addNamesToSend(godName);
+                        guiDrawPhaseController.sendToServer();
+                    }
+                }
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+    public void showAgain() {
+        guiDrawPhaseController.getDraw().setDisable(false);
+        guiDrawPhaseController.getDraw().setVisible(true);
+        guiDrawPhaseController.getCardsToSelect().setDisable(false);
+        guiDrawPhaseController.getCardsToSelect().setVisible(true);
+        guiDrawPhaseController.getGodToSelect2p1().setImage(null);
+        guiDrawPhaseController.getGodToSelect2p2().setImage(null);
+        guiDrawPhaseController.getGodToSelect3p1().setImage(null);
+        guiDrawPhaseController.getGodToSelect3p2().setImage(null);
+        guiDrawPhaseController.getGodToSelect3p3().setImage(null);
+        guiDrawPhaseController.getNamesToSend().clear();
     }
 }
 

@@ -214,11 +214,11 @@ public class MessagesReader {
             case (5) : {
                 switch (messageID) {
                     case (501): {
-                        message = "CHOOSE 3 CARDS";
+                        message = "CHOOSE THREE CARDS";
                         break;
                     }
                     case (502) : {
-                        message = "CHOOSE 2 CARDS";
+                        message = "CHOOSE TWO CARDS";
                         break;
                     }
                 }

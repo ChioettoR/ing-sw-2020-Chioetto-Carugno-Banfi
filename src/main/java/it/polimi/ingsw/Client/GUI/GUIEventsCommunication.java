@@ -113,9 +113,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     public void infoEffect(String cardName) { }
 
     @Override
-    public void fullDeck(ArrayList<CardSimplified> cards) {
-
-    }
+    public void fullDeck(ArrayList<CardSimplified> cards) { Platform.runLater(() -> guiDrawStage.sendFullDeck(cards)); }
 
     public void disconnection() {
         Platform.runLater(() -> {
