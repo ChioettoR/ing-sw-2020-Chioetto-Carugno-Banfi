@@ -17,7 +17,12 @@ public class DrawCardManager extends CardObservable{
         this.stateManager = stateManager;
     }
 
-    //TODO: JAVADOC
+    /**
+     *This method is responsible of the initial phase of choosing cards by the first player
+     * @param playerID player's id
+     * @param cards list of cards
+     * @throws IOException when socket closes
+     */
 
     public void allCardsChosen(int playerID, ArrayList<String> cards) throws IOException {
 
