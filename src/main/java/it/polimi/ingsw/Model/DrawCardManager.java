@@ -43,6 +43,8 @@ public class DrawCardManager extends CardObservable{
             allCards.add(card);
         }
 
+        for(Card c : allCards) Deck.getDeck().createAction(c);
+
         sendCards((ArrayList<CardSimplified>) allCards.stream().map(Card::simplify).collect(Collectors.toList()));
         for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));
     }

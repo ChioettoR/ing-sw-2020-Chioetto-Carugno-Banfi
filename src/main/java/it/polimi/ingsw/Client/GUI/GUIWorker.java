@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
+import it.polimi.ingsw.Events.Client.SelectionEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
@@ -13,8 +14,11 @@ public class GUIWorker {
     private GUITile guiTile;
     private final String playerName;
     private final int workerID;
+    GUIRoundStage guiRoundStage;
 
-    public GUIWorker(String playerName, int workerID, Color color) {
+    public GUIWorker(String playerName, int workerID, Color color, GUIRoundStage guiRoundStage) {
+
+        this.guiRoundStage = guiRoundStage;
 
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseColor(color);
@@ -32,7 +36,7 @@ public class GUIWorker {
         workerMesh.setScaleX(scaleSize);
         workerMesh.setScaleY(scaleSize);
         workerMesh.setScaleZ(scaleSize);
-        workerMesh.setOnMousePressed(mouseEvent -> System.out.println(playerName + " " + workerID));
+        workerMesh.setOnMousePressed(mouseEvent -> guiRoundStage.getStagesManager().send(new SelectionEvent(workerID, playerName)));
 
         this.playerName = playerName;
         this.workerID = workerID;

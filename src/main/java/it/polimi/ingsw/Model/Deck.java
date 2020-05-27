@@ -75,6 +75,10 @@ public class Deck {
         return selectedCard;
     }
 
+    public void createAction(Card card) {
+        cardsBuilder.createAction(card);
+    }
+
     /**
      * Deletes all cards from the deck
      */

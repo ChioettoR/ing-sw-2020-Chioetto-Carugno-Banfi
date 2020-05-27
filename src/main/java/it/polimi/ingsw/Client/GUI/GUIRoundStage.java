@@ -1,8 +1,10 @@
     package it.polimi.ingsw.Client.GUI;
 
+import it.polimi.ingsw.Events.Client.ActionSelectEvent;
 import it.polimi.ingsw.Events.Client.BuildDecisionEvent;
 import it.polimi.ingsw.Events.Client.MoveDecisionEvent;
 import it.polimi.ingsw.Events.Client.PositioningEvent;
+import it.polimi.ingsw.Model.Action;
 import it.polimi.ingsw.Model.ActionType;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -29,8 +31,12 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class GUIRoundStage {
+    public class GUIRoundStage extends Application {
 
     final double rotationSpeed = 100;
     final double zoomSpeed = 10;
@@ -44,6 +50,8 @@ public class GUIRoundStage {
     BuildingsController buildingsController;
     ActionType selectedActionType;
     GUIStagesManager stagesManager;
+    HashMap<ActionType, String> buttonsStyle = new HashMap<>();
+    boolean buttonTranslated = false;
 
     private final int maxFOV = 40;
     private final int minFOV = 25;
@@ -72,6 +80,9 @@ public class GUIRoundStage {
         guiGridManager = new GUIGridManager(group, this);
 
         SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+        stage.sizeToScene();
+        stage.setMinWidth(400);
+        stage.setMinHeight(400);
         PerspectiveCamera camera = createCamera();
         subScene.setCamera(camera);
         stage.setResizable(true);
@@ -88,10 +99,6 @@ public class GUIRoundStage {
         try { buildingsImages(stage, subScene); }
         catch (IOException e) { e.printStackTrace(); }
         stage.show();
-    }
-
-    public void showActions() {
-
     }
 
     public void gridBuild(int x, int y, int buildLevel) {
@@ -123,6 +130,9 @@ public class GUIRoundStage {
     }
 
     private void buildingsImages(Stage stage, SubScene subScene) throws IOException {
+
+        initializeButtonsStyle();
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/buildings.fxml"));
         Parent root = loader.load();
@@ -140,6 +150,10 @@ public class GUIRoundStage {
         pane.setCenter(subScene);
         subScene.widthProperty().bind(pane.widthProperty());
         subScene.heightProperty().bind(pane.heightProperty());
+        subScene.toBack();
+
+        StackPane stackPane = buildingsController.getStackPane();
+        stackPane.toFront();
 
         baseBlock.setOnDragDetected(event -> {
             Dragboard db = baseBlock.startDragAndDrop(TransferMode.ANY);
@@ -246,5 +260,102 @@ public class GUIRoundStage {
                 case D: { dPressed = false; rotationVelocity.set(0); break; }
             }
         });
+    }
+
+    @Override
+    public void start(Stage stage) {
+        SmartGroup group = new SmartGroup();
+        guiGridManager = new GUIGridManager(group, this);
+
+        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+        PerspectiveCamera camera = createCamera();
+        subScene.setCamera(camera);
+        stage.setResizable(true);
+        stage.setMinWidth(400);
+        stage.setMinHeight(400);
+
+        guiGridManager.createGrid();
+        gridAnimations(group, camera);
+        eventHandler(stage);
+        try { buildingsImages(stage, subScene); }
+        catch (IOException e) { e.printStackTrace(); }
+        stage.show();
+    }
+
+    private void activeButtonCenter(ActionType actionType, boolean onlyCenter) {
+        if(onlyCenter) {
+            buildingsController.getLeftButton().setDisable(true);
+            buildingsController.getLeftButton().setVisible(false);
+            buildingsController.getRightButton().setDisable(true);
+            buildingsController.getRightButton().setVisible(false);
+        }
+        buildingsController.getCenterButton().setDisable(false);
+        buildingsController.getCenterButton().setVisible(true);
+        buildingsController.getCenterButton().getStylesheets().clear();
+        buildingsController.getCenterButton().getStylesheets().add(getStyle(actionType));
+        buildingsController.getCenterButton().setOnAction(event -> sendActionToClient(actionType.toString()));
+    }
+
+    public void showActions(ArrayList<String> actions) {
+        ArrayList<ActionType> actionTypes = new ArrayList<>();
+        for(String action : actions) actionTypes.add(ActionType.valueOf(action));
+        if(actionTypes.size()==1) activeButtonCenter(actionTypes.get(0), true);
+        else if(actionTypes.size()==2) activeBorderButtons(actionTypes.get(0), actionTypes.get(1), true);
+        else if(actionTypes.size()==3) {
+            activeBorderButtons(actionTypes.get(0), actionTypes.get(2), false);
+            activeButtonCenter(actionTypes.get(1), false);
+        }
+    }
+
+    private void activeBorderButtons(ActionType actionTypeLeft, ActionType actionTypeRight, boolean onlyBorders) {
+        int buttonTranslation = 50;
+        buildingsController.getLeftButton().setDisable(false);
+        buildingsController.getLeftButton().setVisible(true);
+        buildingsController.getRightButton().setDisable(false);
+        buildingsController.getRightButton().setVisible(true);
+        buildingsController.getRightButton().getStylesheets().clear();
+        buildingsController.getRightButton().getStylesheets().add(getStyle(actionTypeRight));
+        buildingsController.getRightButton().setOnAction(event -> sendActionToClient(actionTypeRight.toString()));
+        buildingsController.getLeftButton().getStylesheets().clear();
+        buildingsController.getLeftButton().getStylesheets().add(getStyle(actionTypeLeft));
+        buildingsController.getLeftButton().setOnAction(event -> sendActionToClient(actionTypeLeft.toString()));
+        if(onlyBorders) {
+            buildingsController.getCenterButton().setDisable(true);
+            buildingsController.getCenterButton().setVisible(false);
+            if(!buttonTranslated) {
+                buildingsController.getLeftButton().setTranslateX(buttonTranslation);
+                buildingsController.getRightButton().setTranslateX(-buttonTranslation);
+                buttonTranslated = true;
+            }
+        }
+        else {
+            if(buttonTranslated) {
+                buildingsController.getLeftButton().setTranslateX(-buttonTranslation);
+                buildingsController.getRightButton().setTranslateX(+buttonTranslation);
+                buttonTranslated = false;
+            }
+        }
+    }
+
+    public void sendActionToClient(String action) {
+        buildingsController.getCenterButton().setDisable(true);
+        buildingsController.getCenterButton().setVisible(false);
+        buildingsController.getLeftButton().setDisable(true);
+        buildingsController.getLeftButton().setVisible(false);
+        buildingsController.getRightButton().setDisable(true);
+        buildingsController.getRightButton().setVisible(false);
+        stagesManager.send(new ActionSelectEvent(action));
+    }
+
+    private void initializeButtonsStyle() {
+        buttonsStyle.put(ActionType.MOVE,"styleButtonMove.css");
+        buttonsStyle.put(ActionType.BUILD,"styleButtonBuild.css");
+        buttonsStyle.put(ActionType.CONFIRM,"styleButtonConfirm.css");
+        buttonsStyle.put(ActionType.UNDO,"styleButtonUndo.css");
+        buttonsStyle.put(ActionType.ENDROUND,"styleButtonEndRound.css");
+    }
+
+    private String getStyle(ActionType action) {
+        return buttonsStyle.get(action);
     }
 }

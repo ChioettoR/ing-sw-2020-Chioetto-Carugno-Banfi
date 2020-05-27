@@ -95,6 +95,8 @@ public class GUIDrawStage{
 
     public void sendDeck(ArrayList<CardSimplified> cards) {
 
+        for (CardSimplified card : cards) guiCards.addDescription(card);
+
         if(cards.size() == 2) {
             guiDrawPhaseController.getUpPane().setVisible(true);
             guiDrawPhaseController.getUpThreeCardsPane().setDisable(true);

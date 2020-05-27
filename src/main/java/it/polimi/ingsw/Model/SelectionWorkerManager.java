@@ -23,13 +23,18 @@ public class SelectionWorkerManager extends MessageObservable {
      * @param workerID id of the worker selected
      * @throws IOException when socket closes
      */
-    public void selection(int playerID, int workerID) throws IOException {
+    public void selection(int playerID, int workerID, String playerName) throws IOException {
 
         if(!stateManager.checkPlayerID(playerID))
             return;
 
         if(!stateManager.checkState(GameState.SELECTING))
             return;
+
+        if(playerName!=null && !playerName.equals(playersManager.getCurrentPlayer().getName())) {
+            notifyMessage(new MessageEvent(409, playersManager.getCurrentPlayer().getID()));
+            return;
+        }
 
         Worker worker = playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID);
 

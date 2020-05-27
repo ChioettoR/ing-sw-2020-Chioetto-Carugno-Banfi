@@ -36,8 +36,8 @@ public class Communication implements CommunicationInterface {
     }
 
     @Override
-    public void selection(int playerID, int workerID) throws IOException {
-        selectionWorkerManager.selection(playerID, workerID);
+    public void selection(int playerID, int workerID, String playerName) throws IOException {
+        selectionWorkerManager.selection(playerID, workerID, playerName);
     }
 
     @Override

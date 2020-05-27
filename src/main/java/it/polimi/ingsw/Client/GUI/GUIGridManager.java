@@ -40,7 +40,7 @@ public class GUIGridManager {
 
     public GUIWorker createWorker(String playerName, int workerID, int x, int y, Color color) {
         GUITile tile = grid.getTile(x, y);
-        GUIWorker guiWorker = new GUIWorker(playerName, workerID, color);
+        GUIWorker guiWorker = new GUIWorker(playerName, workerID, color, guiRoundStage);
         workers.add(guiWorker);
         guiWorker.setGuiTile(tile);
         tile.setGUIWorker(guiWorker);

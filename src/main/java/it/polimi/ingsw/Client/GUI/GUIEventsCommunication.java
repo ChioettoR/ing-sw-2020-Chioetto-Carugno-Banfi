@@ -72,7 +72,7 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void action(ArrayList<String> actions) {
-        guiRoundStage.showActions();
+        Platform.runLater( () -> guiRoundStage.showActions(actions));
     }
 
     @Override
