@@ -84,7 +84,8 @@ public class LastActionSave {
      * @param position The previous position of the worker
      */
     private void undoPosition(Worker worker, Tile position) {
-        worker.getPosition().setEmpty(true);
+        if(worker.getPosition().getWorker() == worker)
+            worker.getPosition().setEmpty(true);
         worker.setPosition(position);
         position.setWorker(worker);
     }
