@@ -8,6 +8,7 @@ import javafx.scene.PointLight;
 import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MeshView;
+import javafx.scene.shape.Sphere;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -92,12 +93,26 @@ public class GUIGridManager {
     public void createGrid() {
         float gridSize = 280;
         int tileHeight = 6;
+
+        setupLight();
+
         grid = new GUIGrid(gridSize, tileHeight, this);
         group.getChildren().add(grid.getGridInvisible());
         group.getChildren().addAll(grid.getMeshes());
         group.getChildren().add(grid.getSea());
         group.getChildren().addAll(grid.getTiles().stream().map(GUITile::getTileMesh).collect(Collectors.toList()));
         group.getChildren().addAll(grid.getTiles().stream().map(GUITile::getTileMeshAvailable).collect(Collectors.toList()));
+    }
+
+    public void setupLight() {
+        AmbientLight ambientLight = new AmbientLight();
+        ambientLight.setColor(Color.web("#999999"));
+        PointLight pointLight = new PointLight();
+        pointLight.setTranslateY(-1000);
+        pointLight.setColor(Color.GRAY);
+        pointLight.setTranslateX(40);
+        group.getChildren().add(ambientLight);
+        group.getChildren().add(pointLight);
     }
 
     public void build(int level, int x, int y) {

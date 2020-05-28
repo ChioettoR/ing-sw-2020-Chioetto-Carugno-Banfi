@@ -46,11 +46,6 @@ public class GUIEventsCommunication implements EventsCommunication {
     }
 
     @Override
-    public void spectator() {
-
-    }
-
-    @Override
     public void endLogin(ArrayList<String> names) {
         stagesManager.endLogin(names);
     }
@@ -155,13 +150,14 @@ public class GUIEventsCommunication implements EventsCommunication {
     }
 
     @Override
-    public void win(boolean youWin, String winnerName) {
-
+    public void win(String winnerName) {
+        System.out.println(winnerName + "WINS");
     }
 
     @Override
     public void lose() {
-
+        System.out.println("loser :(");
+        System.out.println("spettatore");
     }
 
     @Override

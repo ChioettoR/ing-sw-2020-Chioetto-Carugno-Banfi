@@ -37,6 +37,8 @@ public class GUIWorker {
         workerMesh.setScaleY(scaleSize);
         workerMesh.setScaleZ(scaleSize);
         workerMesh.setOnMousePressed(mouseEvent -> guiRoundStage.getStagesManager().send(new SelectionEvent(workerID, playerName)));
+        workerMesh.setOnMouseEntered(mouseEvent -> guiRoundStage.changeWorkerCursor());
+        workerMesh.setOnMouseDragExited(mouseDragEvent -> guiRoundStage.resetCursor());
 
         this.playerName = playerName;
         this.workerID = workerID;

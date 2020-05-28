@@ -1,13 +1,12 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Events.Server.LoseEvent;
-import it.polimi.ingsw.Events.Server.SpectatorEvent;
-import it.polimi.ingsw.Observer.Server.SpectatorObservable;
+import it.polimi.ingsw.Observer.Server.MessageObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlayersManager extends SpectatorObservable {
+public class PlayersManager extends MessageObservable {
 
     private final ArrayList<Player> players = new ArrayList<>();
     private IDManager idManager = new IDManager();
@@ -160,7 +159,6 @@ public class PlayersManager extends SpectatorObservable {
                 p.deleteWorker(worker);
                 if(p.getWorkers().size() == 0) {
                     notifyLose(new LoseEvent(p.getID()));
-                    notify(new SpectatorEvent(p.getID()));
                     deletePlayer(p);
                 }
                 return;

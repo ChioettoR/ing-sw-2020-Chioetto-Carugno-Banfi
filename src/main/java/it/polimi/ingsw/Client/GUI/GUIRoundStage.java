@@ -1,4 +1,4 @@
-    package it.polimi.ingsw.Client.GUI;
+package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Events.Client.ActionSelectEvent;
 import it.polimi.ingsw.Events.Client.BuildDecisionEvent;
@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-    public class GUIRoundStage {
+public class GUIRoundStage{
 
     final double rotationSpeed = 100;
     final double zoomSpeed = 10;
@@ -75,11 +75,11 @@ import java.util.TreeMap;
         return stagesManager;
     }
 
-        public ActionType getSelectedActionType() {
-            return selectedActionType;
-        }
+    public ActionType getSelectedActionType() {
+        return selectedActionType;
+    }
 
-        public void start(Stage stage, GUIStagesManager stagesManager) {
+    public void start(Stage stage, GUIStagesManager stagesManager) {
 
         this.stagesManager = stagesManager;
 
@@ -104,17 +104,11 @@ import java.util.TreeMap;
     }
 
     public void changeGridCursor() {
-//        Image image;
-//        if(selectedActionType==null) {
-//            //TODO : positioning cursor
-//        }
-//        else if(selectedActionType==ActionType.BUILD) {
-//            image = new Image(getClass().getResourceAsStream("/hammerCursor.png"));
-//            scene.setCursor(new ImageCursor(image));
-//        }
-//        else if(selectedActionType==ActionType.MOVE) {
-//            //TODO : move cursor
-//        }
+        scene.setCursor(Cursor.HAND);
+    }
+
+    public void changeWorkerCursor() {
+        scene.setCursor(Cursor.CROSSHAIR);
     }
 
     public void resetCursor() {
@@ -281,6 +275,15 @@ import java.util.TreeMap;
                 case D: { dPressed = false; rotationVelocity.set(0); break; }
             }
         });
+    }
+
+    public void resetButtons() {
+        buildingsController.getLeftButton().setDisable(true);
+        buildingsController.getLeftButton().setVisible(false);
+        buildingsController.getRightButton().setDisable(true);
+        buildingsController.getRightButton().setVisible(false);
+        buildingsController.getCenterButton().setDisable(true);
+        buildingsController.getCenterButton().setVisible(false);
     }
 
     private void activeButtonCenter(ActionType actionType, boolean onlyCenter) {

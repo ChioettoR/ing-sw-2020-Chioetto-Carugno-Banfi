@@ -28,16 +28,16 @@
             </StackPane>
         </bottom></BorderPane>
     <HBox fillHeight="false" layoutX="10.0" layoutY="10.0" prefHeight="63.0" prefWidth="130.0" AnchorPane.leftAnchor="10.0">
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
             <Image url="@buildingsButton.png" />
         </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="10.0">
+        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="10.0">
             <Image url="@buildingsButton.png" />
         </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="20.0">
+        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="20.0">
             <Image url="@buildingsButton.png" />
         </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" translateX="30.0">
+        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="30.0">
             <Image url="@buildingsButton.png" />
         </ImageView>
     </HBox>

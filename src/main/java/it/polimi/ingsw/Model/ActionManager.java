@@ -346,11 +346,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         int winnerID = playersManager.getPlayerWinnerID();
         if(winnerID!=-1) {
             String winnerName = playersManager.getPlayerWithID(winnerID).getName();
-            notifyWin(new WinEvent(winnerName, true, winnerID));
-            for(Player p : playersManager.getNextPlayers()) {
-                notifyWin(new WinEvent(winnerName, false, p.getID()));
-                notifyLose(new LoseEvent(p.getID()));
-            }
+            notifyWin(new WinEvent(winnerName, -1));
             stateManager.setGameState(GameState.END);
             return true;
         }

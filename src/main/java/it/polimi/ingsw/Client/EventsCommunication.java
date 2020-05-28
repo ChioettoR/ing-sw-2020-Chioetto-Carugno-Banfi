@@ -10,7 +10,6 @@ public interface EventsCommunication {
 
     void lobbyInfo(String lobbyName, int lobbySize);
     void waiting(boolean isWaiting);
-    void spectator();
     void endLogin(ArrayList<String> names);
     void message(int messageID);
     void deck(ArrayList<CardSimplified> cards);
@@ -19,7 +18,7 @@ public interface EventsCommunication {
     void action(ArrayList<String> actions);
     void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType);
     void change(ArrayList<TileSimplified> tiles);
-    void win(boolean youWin, String winnerName);
+    void win(String winnerName);
     void lose();
     void infoEffect(String cardName);
     void fullDeck(ArrayList<CardSimplified> cards);

@@ -30,11 +30,6 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void waiting(boolean isWaiting) { cliStdinReader.setWaiting(isWaiting); }
 
     @Override
-    public void spectator() {
-        cliStdinReader.setSpectator(true);
-    }
-
-    @Override
     public void message(int messageID) { messagesReader.read(messageID); }
 
     @Override
@@ -108,13 +103,11 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     /**
      * Print method for the victory
-     * @param youWin true if winnerName wins, false otherwise
      * @param winnerName name of the winner
      */
     @Override
-    public void win(boolean youWin, String winnerName) {
-        if(youWin) System.out.println("YOU WIN!");
-        else System.out.println((winnerName + "Wins"));
+    public void win(String winnerName) {
+        System.out.println((winnerName + "WINS!"));
         cliStdinReader.getClient().closeConnection();
     }
 
@@ -122,7 +115,10 @@ public class CLIEventsCommunication implements EventsCommunication {
      * Print method for the lose
      */
     @Override
-    public void lose() { System.out.println("YOU LOSE!"); }
+    public void lose() {
+        cliStdinReader.setSpectator(true);
+        System.out.println("YOU LOSE!");
+    }
 
     /**
      * Prints the effect of the card requested

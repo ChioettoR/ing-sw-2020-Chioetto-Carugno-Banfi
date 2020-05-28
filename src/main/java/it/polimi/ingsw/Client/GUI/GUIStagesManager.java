@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Model.Player;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,6 +31,10 @@ public class GUIStagesManager extends Application {
     GUIPhase guiPhase = GUIPhase.LOGIN;
     int timer = 5;
     int seconds = timer;
+
+    public GUIDrawStage getGuiDrawStage() {
+        return guiDrawStage;
+    }
 
     public GUIPlayersManager getGuiPlayersManager() {
         return guiPlayersManager;
@@ -84,6 +89,7 @@ public class GUIStagesManager extends Application {
     @Override
     public void stop(){
         if(serverUp) client.closeConnection();
+        System.exit(0);
     }
 
     public void lobbyInfo(String lobbyName, int lobbySize) {
@@ -120,6 +126,7 @@ public class GUIStagesManager extends Application {
         else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.threeCardsShow());
         else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.twoCardsShow());
         else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showAgain());
+        else if(messageID == 306 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.resetButtons());
     }
 
     public void playerChosenCard(String playerName, String cardName) {

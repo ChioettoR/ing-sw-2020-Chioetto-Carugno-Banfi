@@ -22,8 +22,6 @@ public class EventsReader {
 
         else if(object instanceof WaitingEvent) eventsCommunication.waiting(((WaitingEvent) object).isWaiting());
 
-        else if(object instanceof SpectatorEvent) eventsCommunication.spectator();
-
         else if(object instanceof EndLoginEvent) eventsCommunication.endLogin(((EndLoginEvent) object).getNames());
 
         else if(object instanceof MessageEvent) eventsCommunication.message(((MessageEvent) object).getMessageID());
@@ -38,7 +36,7 @@ public class EventsReader {
 
         else if(object instanceof ChangeEvent) eventsCommunication.change(((ChangeEvent) object).getTiles());
 
-        else if(object instanceof  WinEvent) eventsCommunication.win(((WinEvent) object).isYouWin(), ((WinEvent) object).getWinnerName());
+        else if(object instanceof  WinEvent) eventsCommunication.win(((WinEvent) object).getWinnerName());
 
         else if(object instanceof LoseEvent) eventsCommunication.lose();
 
