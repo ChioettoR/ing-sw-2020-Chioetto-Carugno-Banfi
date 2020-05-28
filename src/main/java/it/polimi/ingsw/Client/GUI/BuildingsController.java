@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 public class BuildingsController {
 
@@ -36,6 +37,73 @@ public class BuildingsController {
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private ImageView imageRound1;
+
+    @FXML
+    private ImageView nameBar1;
+
+    @FXML
+    private Text nameText1;
+
+    @FXML
+    private ImageView frame1;
+
+    @FXML
+    private Button buttonInfo1;
+
+    @FXML
+    private ImageView imageRound2;
+
+    @FXML
+    private ImageView nameBar2;
+
+    @FXML
+    private Text nameText2;
+
+    @FXML
+    private ImageView frame2;
+
+    @FXML
+    private Button buttonInfo2;
+
+    @FXML
+    private ImageView imageRound3;
+
+    @FXML
+    private ImageView nameBar3;
+
+    @FXML
+    private Text nameText3;
+
+    @FXML
+    private ImageView frame3;
+
+    @FXML
+    private Button buttonInfo3;
+
+    @FXML
+    private StackPane infoStackPane;
+
+    @FXML
+    private ImageView infoGodImage;
+
+    @FXML
+    private Button closeInfoButton;
+
+    @FXML
+    private Text infoGodName;
+
+    @FXML
+    private Text infoDescription;
+
+    @FXML
+    private StackPane rightPane;
+
+    @FXML
+    private BorderPane borderPaneCards;
+
 
     public StackPane getStackPane() {
         return stackPane;
@@ -71,5 +139,93 @@ public class BuildingsController {
 
     public ImageView getDome() {
         return dome;
+    }
+
+    public ImageView getImageRound1() {
+        return imageRound1;
+    }
+
+    public ImageView getNameBar1() {
+        return nameBar1;
+    }
+
+    public Text getNameText1() {
+        return nameText1;
+    }
+
+    public ImageView getFrame1() {
+        return frame1;
+    }
+
+    public Button getButtonInfo1() {
+        return buttonInfo1;
+    }
+
+    public ImageView getImageRound2() {
+        return imageRound2;
+    }
+
+    public ImageView getNameBar2() {
+        return nameBar2;
+    }
+
+    public Text getNameText2() {
+        return nameText2;
+    }
+
+    public ImageView getFrame2() {
+        return frame2;
+    }
+
+    public Button getButtonInfo2() {
+        return buttonInfo2;
+    }
+
+    public ImageView getImageRound3() {
+        return imageRound3;
+    }
+
+    public ImageView getNameBar3() {
+        return nameBar3;
+    }
+
+    public Text getNameText3() {
+        return nameText3;
+    }
+
+    public ImageView getFrame3() {
+        return frame3;
+    }
+
+    public Button getButtonInfo3() {
+        return buttonInfo3;
+    }
+
+    public StackPane getInfoStackPane() {
+        return infoStackPane;
+    }
+
+    public ImageView getInfoGodImage() {
+        return infoGodImage;
+    }
+
+    public Button getCloseInfoButton() {
+        return closeInfoButton;
+    }
+
+    public Text getInfoGodName() {
+        return infoGodName;
+    }
+
+    public Text getInfoDescription() {
+        return infoDescription;
+    }
+
+    public StackPane getRightPane() {
+        return rightPane;
+    }
+
+    public BorderPane getBorderPaneCards() {
+        return borderPaneCards;
     }
 }

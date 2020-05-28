@@ -39,7 +39,7 @@ public class GUIBlock {
         switch (level) {
 
             case 1 : {
-                objModelImporter.read(baseBlockPath);
+                objModelImporter.read("file://" + baseBlockPath);
                 workerHeight = 26;
                 nextBlockHeight = 21;
                 domeHeight = 18;
@@ -52,7 +52,7 @@ public class GUIBlock {
             }
 
             case 2 : {
-                objModelImporter.read(mediumBlockPath);
+                objModelImporter.read("file://" + mediumBlockPath);
                 workerHeight = 26;
                 nextBlockHeight = 18;
                 domeHeight = 18;
@@ -65,7 +65,7 @@ public class GUIBlock {
             }
 
             case 3 : {
-                objModelImporter.read(highBlockPath);
+                objModelImporter.read("file://" + highBlockPath);
                 workerHeight = 22;
                 nextBlockHeight = 0;
                 domeHeight = 15;
@@ -78,7 +78,7 @@ public class GUIBlock {
             }
 
             case 4 : {
-                objModelImporter.read(dome);
+                objModelImporter.read("file://" + dome);
                 material.setDiffuseColor(Color.web("0d63bf"));
             }
 

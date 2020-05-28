@@ -106,7 +106,7 @@ public class GUIGridManager {
 
     public void setupLight() {
         AmbientLight ambientLight = new AmbientLight();
-        ambientLight.setColor(Color.web("#999999"));
+        ambientLight.setColor(Color.web("#8a8a8a"));
         PointLight pointLight = new PointLight();
         pointLight.setTranslateY(-1000);
         pointLight.setColor(Color.GRAY);

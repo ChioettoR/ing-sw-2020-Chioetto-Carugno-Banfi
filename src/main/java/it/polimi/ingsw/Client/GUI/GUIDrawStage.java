@@ -46,6 +46,10 @@ public class GUIDrawStage{
         catch (IOException e) { e.printStackTrace();}
     }
 
+    public GUICards getGuiCards() {
+        return guiCards;
+    }
+
     public void readMessage(String message) {
         guiDrawPhaseController.getMiddlePane().setVisible(true);
         guiDrawPhaseController.getErrorPane().setVisible(false);

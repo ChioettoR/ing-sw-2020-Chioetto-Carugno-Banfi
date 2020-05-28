@@ -52,6 +52,8 @@ public class GUIRoundStage{
     BuildingsController buildingsController;
     ActionType selectedActionType;
     GUIStagesManager stagesManager;
+    GUIPlayersManager guiPlayersManager;
+    GUICards guiCards;
     HashMap<ActionType, String> buttonsStyle = new HashMap<>();
     boolean buttonTranslated = false;
     Scene scene;
@@ -98,6 +100,7 @@ public class GUIRoundStage{
         gridAnimations(group, camera);
 
         eventHandler(stage);
+        guiCards = stagesManager.getGuiDrawStage().getGuiCards();
         try { buildingsImages(stage, subScene); }
         catch (IOException e) { e.printStackTrace(); }
         stage.show();
@@ -168,6 +171,8 @@ public class GUIRoundStage{
 
         StackPane stackPane = buildingsController.getStackPane();
         stackPane.toFront();
+
+        playersCardShow();
 
         baseBlock.setOnDragDetected(event -> {
             Dragboard db = baseBlock.startDragAndDrop(TransferMode.ANY);
@@ -362,4 +367,83 @@ public class GUIRoundStage{
     private String getStyle(ActionType action) {
         return buttonsStyle.get(action);
     }
+
+    private void playersCardShow() {
+        ArrayList<String> playerNames;
+        GUIPlayer player1;
+        GUIPlayer player2;
+        GUIPlayer player3;
+        guiPlayersManager = stagesManager.getGuiPlayersManager();
+        playerNames = guiPlayersManager.getNames();
+        if(playerNames.size() == 3) {
+            setVisibleAll();
+            buildingsController.getCloseInfoButton().setOnAction(event -> closeInfo());
+            player1 = guiPlayersManager.getPlayer(playerNames.get(0));
+            buildingsController.getImageRound1().setImage(guiCards.getFullImage(player1.getCardName()));
+            buildingsController.getNameText1().setText(player1.getName());
+            buildingsController.getButtonInfo1().setOnAction(event -> setInfo(player1.getCardName()));
+            player2 = guiPlayersManager.getPlayer(playerNames.get(1));
+            buildingsController.getImageRound2().setImage(guiCards.getFullImage(player2.getCardName()));
+            buildingsController.getNameText2().setText(player2.getName());
+            buildingsController.getButtonInfo2().setOnAction(event -> setInfo(player2.getCardName()));
+            player3 = guiPlayersManager.getPlayer(playerNames.get(2));
+            buildingsController.getImageRound3().setImage(guiCards.getFullImage(player3.getCardName()));
+            buildingsController.getNameText3().setText(player3.getName());
+            buildingsController.getButtonInfo3().setOnAction(event -> setInfo(player3.getCardName()));
+        }
+        else {
+            setVisibleTwo();
+            buildingsController.getCloseInfoButton().setOnAction(event -> closeInfo());
+            player1 = guiPlayersManager.getPlayer(playerNames.get(0));
+            buildingsController.getImageRound1().setImage(guiCards.getFullImage(player1.getCardName()));
+            buildingsController.getNameText1().setText(player1.getName());
+            buildingsController.getButtonInfo1().setOnAction(event -> setInfo(player1.getCardName()));
+            player2 = guiPlayersManager.getPlayer(playerNames.get(1));
+            buildingsController.getImageRound2().setImage(guiCards.getFullImage(player2.getCardName()));
+            buildingsController.getNameText2().setText(player2.getName());
+            buildingsController.getButtonInfo2().setOnAction(event -> setInfo(player2.getCardName()));
+        }
+    }
+
+    private void setVisibleAll() {
+        setVisibleTwo();
+        buildingsController.getImageRound3().setVisible(true);
+        buildingsController.getNameBar3().setVisible(true);
+        buildingsController.getNameText3().setVisible(true);
+        buildingsController.getFrame3().setVisible(true);
+        buildingsController.getButtonInfo3().setVisible(true);
+    }
+
+    private void setVisibleTwo() {
+        buildingsController.getBorderPaneCards().setVisible(true);
+        buildingsController.getBorderPaneCards().setPickOnBounds(false);
+
+        buildingsController.getImageRound1().setVisible(true);
+        buildingsController.getNameBar1().setVisible(true);
+        buildingsController.getNameText1().setVisible(true);
+        buildingsController.getFrame1().setVisible(true);
+        buildingsController.getButtonInfo1().setVisible(true);
+
+        buildingsController.getImageRound2().setVisible(true);
+        buildingsController.getNameBar2().setVisible(true);
+        buildingsController.getNameText2().setVisible(true);
+        buildingsController.getFrame2().setVisible(true);
+        buildingsController.getButtonInfo2().setVisible(true);
+    }
+
+    private void setInfo(String cardName) {
+        buildingsController.getRightPane().setVisible(false);
+        buildingsController.getRightPane().setDisable(true);
+        buildingsController.getInfoStackPane().setVisible(true);
+        buildingsController.getInfoGodImage().setImage(guiCards.getSmallImage(cardName));
+        buildingsController.getInfoGodName().setText(cardName);
+        buildingsController.getInfoDescription().setText(guiCards.getDescription(cardName));
+    }
+
+    private void closeInfo() {
+        buildingsController.getRightPane().setVisible(true);
+        buildingsController.getRightPane().setDisable(false);
+        buildingsController.getInfoStackPane().setVisible(false);
+    }
+
 }

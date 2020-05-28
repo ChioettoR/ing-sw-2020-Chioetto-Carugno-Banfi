@@ -9,8 +9,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.BuildingsController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.BuildingsController">
     <BorderPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <bottom>
             <StackPane fx:id="stackPane" prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -67,4 +69,160 @@
             </cursor>
         </ImageView>
     </HBox>
+   <BorderPane fx:id="borderPaneCards" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <right>
+         <StackPane fx:id="rightPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fx:id="imageRound1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="465.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@DrawPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Franchino" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <StackPane.margin>
+                     <Insets bottom="460.0" />
+                  </StackPane.margin>
+                  <font>
+                     <Font name="Candara" size="9.0" />
+                  </font>
+               </Text>
+               <ImageView fx:id="frame1" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@corniceSilver.png" />
+                  </image>
+               </ImageView>
+               <Button fx:id="buttonInfo1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+               </Button>
+               <ImageView fx:id="imageRound2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="135.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@DrawPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText2" strokeType="OUTSIDE" strokeWidth="0.0" text="Giuseppina" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <font>
+                     <Font name="Candara" size="9.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets bottom="130.0" />
+                  </StackPane.margin>
+               </Text>
+               <ImageView fx:id="frame2" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <image>
+                     <Image url="@corniceLightBrown.png" />
+                  </image>
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <Button fx:id="buttonInfo2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </Button>
+               <ImageView fx:id="imageRound3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="206.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@DrawPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText3" strokeType="OUTSIDE" strokeWidth="0.0" text="Carlo" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <font>
+                     <Font size="9.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets top="208.0" />
+                  </StackPane.margin>
+               </Text>
+               <ImageView fx:id="frame3" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@corniceDarkBrown.png" />
+                  </image>
+               </ImageView>
+               <Button fx:id="buttonInfo3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+               </Button>
+            </children>
+         </StackPane>
+      </right>
+      <center>
+         <StackPane fx:id="infoStackPane" focusTraversable="true" prefHeight="150.0" prefWidth="200.0" visible="false" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@DrawPhase/rectangleInfo.png" />
+                  </image>
+               </ImageView>
+               <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@DrawPhase/podium-characters-Zeus.png" />
+                  </image>
+                  <StackPane.margin>
+                     <Insets left="165.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <Button fx:id="closeInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@DrawPhase/styleDrawPhase.css" text="Button">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <StackPane.margin>
+                     <Insets bottom="160.0" left="270.0" />
+                  </StackPane.margin>
+               </Button>
+               <Text fx:id="infoGodName" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeus" textAlignment="CENTER" wrappingWidth="150.0">
+                  <font>
+                     <Font name="Candara" size="18.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets bottom="140.0" />
+                  </StackPane.margin>
+               </Text>
+               <Text fx:id="infoDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level." wrappingWidth="155.0">
+                  <font>
+                     <Font name="Candara" size="12.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets right="110.0" />
+                  </StackPane.margin>
+               </Text>
+            </children>
+         </StackPane>
+      </center>
+      <left>
+         <StackPane focusTraversable="true" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      </left>
+   </BorderPane>
 </AnchorPane>
