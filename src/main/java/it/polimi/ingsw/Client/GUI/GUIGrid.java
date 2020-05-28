@@ -42,7 +42,7 @@ public class GUIGrid {
         int scaleSize = 137;
 
         bordersMaterial.setDiffuseColor(Color.GREEN);
-        invisibleMaterial.setDiffuseColor(Color.web("#ffff0000"));
+        invisibleMaterial.setDiffuseColor(Color.TRANSPARENT);
 
         MeshView[] m;
 
@@ -61,6 +61,7 @@ public class GUIGrid {
         gridInvisible.setRotationAxis(Rotate.X_AXIS);
         gridInvisible.setRotate(90);
         gridInvisible.setMaterial(invisibleMaterial);
+        gridInvisible.setTranslateY(3.5);
 
         this.size = size;
         this.tileHeight = tileHeight;
@@ -96,17 +97,15 @@ public class GUIGrid {
         Box tileMesh = guiTile.getTileMesh();
         Box availableTilesMesh = guiTile.getTileMeshAvailable();
 
-        tileMesh.getTransforms().setAll(gridInvisible.getTransforms());
         tileMesh.setRotationAxis(Rotate.X_AXIS);
         tileMesh.setRotate(gridInvisible.getRotate());
-        tileMesh.setTranslateY((float) -tileHeight/2);
+        tileMesh.setTranslateY(gridInvisible.getTranslateY() - (float) tileHeight/2);
         tileMesh.setTranslateX((x-3)*size/5);
         tileMesh.setTranslateZ((3-y)*size/5);
 
-        availableTilesMesh.getTransforms().setAll(gridInvisible.getTransforms());
         availableTilesMesh.setRotationAxis(Rotate.X_AXIS);
         availableTilesMesh.setRotate(gridInvisible.getRotate());
-        availableTilesMesh.setTranslateY((float) -tileHeight/2);
+        availableTilesMesh.setTranslateY(gridInvisible.getTranslateY() + 0.43 - (float) tileHeight/2);
         availableTilesMesh.setTranslateX((x-3)*size/5);
         availableTilesMesh.setTranslateZ((3-y)*size/5);
 

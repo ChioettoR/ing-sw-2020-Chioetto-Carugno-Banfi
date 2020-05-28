@@ -92,7 +92,7 @@ public class GUIGridManager {
 
     public void createGrid() {
         float gridSize = 280;
-        int tileHeight = 6;
+        int tileHeight = 10;
 
         setupLight();
 

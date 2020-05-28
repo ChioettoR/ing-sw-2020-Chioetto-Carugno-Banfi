@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GUIRoundStage{
+public class GUIRoundStage extends Application{
 
     final double rotationSpeed = 100;
     final double zoomSpeed = 10;
@@ -79,6 +79,41 @@ public class GUIRoundStage{
 
     public ActionType getSelectedActionType() {
         return selectedActionType;
+    }
+
+    @Override
+    public void start(Stage stage) {
+
+        SmartGroup group = new SmartGroup();
+        guiGridManager = new GUIGridManager(group, this);
+
+        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+        stage.sizeToScene();
+        stage.setMinWidth(650);
+        stage.setMinHeight(650);
+        PerspectiveCamera camera = createCamera();
+        subScene.setCamera(camera);
+        stage.setResizable(true);
+
+        guiGridManager.createGrid();
+        gridAnimations(group, camera);
+
+        guiGridManager.createWorker("marco", 1, 1,1, Color.GOLD);
+        guiGridManager.createWorker("marco", 1, 2,1, Color.BLANCHEDALMOND);
+        guiGridManager.build(1, 1, 1);
+        guiGridManager.build(2, 1, 1);
+        guiGridManager.build(3, 1, 1);
+
+        guiGridManager.build(1, 3, 3);
+        guiGridManager.build(1, 5, 5);
+
+        guiGridManager.highLight(4, 4);
+
+
+        eventHandler(stage);
+        try { buildingsImages(stage, subScene); }
+        catch (IOException e) { e.printStackTrace(); }
+        stage.show();
     }
 
     public void start(Stage stage, GUIStagesManager stagesManager) {

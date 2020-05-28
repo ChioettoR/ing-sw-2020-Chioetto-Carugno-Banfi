@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
 import javafx.scene.PointLight;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -25,15 +26,17 @@ public class GUITile {
 
         this.guiGridManager = guiGridManager;
 
-        workerHeight = height - 22;
+        workerHeight = height - 29;
         this.x = x;
         this.y = y;
 
         tileMesh = new Box(size, size, height);
         invisibleMaterial.setDiffuseColor(Color.TRANSPARENT);
         tileMesh.setMaterial(invisibleMaterial);
-        tileMeshAvailable = new Box(size-10, size-10, height-5);
+        tileMeshAvailable = new Box(size-10, size-10, height + 1);
         tileMeshAvailable.setMaterial(invisibleMaterial);
+        tileMeshAvailable.setMouseTransparent(true);
+        tileMeshAvailable.setPickOnBounds(false);
     }
 
     public Box getTileMesh() {
@@ -71,9 +74,8 @@ public class GUITile {
         if(levels.size()==0) {
             worker.getWorkerMesh().getTransforms().addAll(tileMesh.getTransforms());
             worker.getWorkerMesh().setTranslateX(tileMesh.getTranslateX());
-            worker.getWorkerMesh().setTranslateY(tileMesh.getTranslateY());
+            worker.getWorkerMesh().setTranslateY(tileMesh.getTranslateY() + workerHeight);
             worker.getWorkerMesh().setTranslateZ(tileMesh.getTranslateZ());
-            worker.getWorkerMesh().setTranslateY(workerHeight);
             return;
         }
         GUIBlock block = levels.get(levels.size()-1);
@@ -108,7 +110,7 @@ public class GUITile {
 
     public MeshView build(int level) {
 
-        int baseBlockHeight = 10;
+        float baseBlockHeight = 13.8f;
 
         GUIBlock guiBlock = new GUIBlock(level, this, guiGridManager);
 
