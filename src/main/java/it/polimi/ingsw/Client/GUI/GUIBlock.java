@@ -22,10 +22,6 @@ public class GUIBlock {
     private final float nextBlockZTranslation;
     ObjModelImporter objModelImporter = new ObjModelImporter();
     PhongMaterial material = new PhongMaterial();
-    String baseBlockPath = getClass().getResource("/baseBlock.obj").getPath();
-    String mediumBlockPath = getClass().getResource("/mediumBlock.obj").getPath();
-    String highBlockPath = getClass().getResource("/highBlock.obj").getPath();
-    String dome = getClass().getResource("/dome.obj").getPath();
     GUIGridManager guiGridManager;
 
     public GUIBlock(int level, GUITile tile, GUIGridManager guiGridManager) {
@@ -39,7 +35,7 @@ public class GUIBlock {
         switch (level) {
 
             case 1 : {
-                objModelImporter.read("file://" + baseBlockPath);
+                objModelImporter.read(getClass().getResource("/baseBlock.obj"));
                 workerHeight = 26;
                 nextBlockHeight = 21;
                 domeHeight = 18;
@@ -52,7 +48,7 @@ public class GUIBlock {
             }
 
             case 2 : {
-                objModelImporter.read("file://" + mediumBlockPath);
+                objModelImporter.read(getClass().getResource("/mediumBlock.obj"));
                 workerHeight = 26;
                 nextBlockHeight = 18;
                 domeHeight = 18;
@@ -65,7 +61,7 @@ public class GUIBlock {
             }
 
             case 3 : {
-                objModelImporter.read("file://" + highBlockPath);
+                objModelImporter.read(getClass().getResource("/highBlock.obj"));
                 workerHeight = 22;
                 nextBlockHeight = 0;
                 domeHeight = 15;
@@ -78,7 +74,7 @@ public class GUIBlock {
             }
 
             case 4 : {
-                objModelImporter.read("file://" + dome);
+                objModelImporter.read(getClass().getResource("/dome.obj"));
                 material.setDiffuseColor(Color.web("0d63bf"));
             }
 

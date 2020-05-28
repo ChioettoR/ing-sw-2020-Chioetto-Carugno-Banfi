@@ -47,8 +47,7 @@ public class GUIGrid {
         MeshView[] m;
 
         baseMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/isle.png")));
-        String basePath = getClass().getResource("/isle.obj").getPath();
-        objModelImporter.read("file://" + basePath);
+        objModelImporter.read(getClass().getResource("/isle.obj"));
         m = objModelImporter.getImport();
         gridBase = m[0];
         gridBase.setMaterial(baseMaterial);

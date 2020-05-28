@@ -24,12 +24,9 @@ public class GUIWorker {
         material.setDiffuseColor(color);
         int scaleSize = 16;
 
-        String basePath;
-        if(workerID==1) basePath = getClass().getResource("/maleWorker.obj").getPath();
-        else basePath = getClass().getResource("/femaleWorker.obj").getPath();
-
         MeshView[] mesh;
-        importer.read("file://" + basePath);
+        if(workerID==1) importer.read(getClass().getResource("/maleWorker.obj"));
+        else importer.read(getClass().getResource("/femaleWorker.obj"));
         mesh = importer.getImport();
         workerMesh = mesh[0];
         workerMesh.setMaterial(material);
@@ -38,7 +35,7 @@ public class GUIWorker {
         workerMesh.setScaleZ(scaleSize);
         workerMesh.setOnMousePressed(mouseEvent -> guiRoundStage.getStagesManager().send(new SelectionEvent(workerID, playerName)));
         workerMesh.setOnMouseEntered(mouseEvent -> guiRoundStage.changeWorkerCursor());
-        workerMesh.setOnMouseDragExited(mouseDragEvent -> guiRoundStage.resetCursor());
+        workerMesh.setOnMouseExited(mouseDragEvent -> guiRoundStage.resetCursor());
 
         this.playerName = playerName;
         this.workerID = workerID;
