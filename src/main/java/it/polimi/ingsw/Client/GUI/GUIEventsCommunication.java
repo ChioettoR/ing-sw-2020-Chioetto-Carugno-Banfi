@@ -46,6 +46,11 @@ public class GUIEventsCommunication implements EventsCommunication {
     }
 
     @Override
+    public void spectator() {
+
+    }
+
+    @Override
     public void endLogin(ArrayList<String> names) {
         stagesManager.endLogin(names);
     }

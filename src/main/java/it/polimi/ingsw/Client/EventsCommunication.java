@@ -10,6 +10,7 @@ public interface EventsCommunication {
 
     void lobbyInfo(String lobbyName, int lobbySize);
     void waiting(boolean isWaiting);
+    void spectator();
     void endLogin(ArrayList<String> names);
     void message(int messageID);
     void deck(ArrayList<CardSimplified> cards);

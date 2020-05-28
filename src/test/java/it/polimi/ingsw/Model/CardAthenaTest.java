@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,7 +78,7 @@ class CardAthenaTest {
      * Testing the Athena card
      */
     @Test
-    void testAthena() {
+    void testAthena() throws IOException {
         System.out.println("TEST: I'm testing Athena Card");
         PlayersManager playersManager = PlayersManager.getPlayersManager();
         buildAction.build(worker, grid.getTiles().get(1));

@@ -1,8 +1,13 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Events.Server.LoseEvent;
+import it.polimi.ingsw.Events.Server.SpectatorEvent;
+import it.polimi.ingsw.Observer.Server.SpectatorObservable;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlayersManager {
+public class PlayersManager extends SpectatorObservable {
 
     private final ArrayList<Player> players = new ArrayList<>();
     private IDManager idManager = new IDManager();
@@ -143,7 +148,7 @@ public class PlayersManager {
      * Deletes a worker from the game
      * @param worker The worker you want to delete from the game
      */
-    public void deleteWorker(Worker worker) {
+    public void deleteWorker(Worker worker) throws IOException {
         for(Player p : players) {
             if(p.getID()==worker.getPlayerID()) {
                 Tile workerPosition = worker.getPosition();
@@ -154,6 +159,8 @@ public class PlayersManager {
                 worker.getPosition().setEmpty(true);
                 p.deleteWorker(worker);
                 if(p.getWorkers().size() == 0) {
+                    notifyLose(new LoseEvent(p.getID()));
+                    notify(new SpectatorEvent(p.getID()));
                     deletePlayer(p);
                 }
                 return;
@@ -165,7 +172,7 @@ public class PlayersManager {
     /**
      * Deletes the selected worker from the game
      */
-    public void deleteCurrentWorker() {
+    public void deleteCurrentWorker() throws IOException {
         deleteWorker(getCurrentWorker());
     }
 

@@ -129,6 +129,7 @@ public class Server {
             RemoteView remoteView = new RemoteView(player.getID(), connection, controller);
             connection.setRemoteView(remoteView);
 
+            PlayersManager.getPlayersManager().addObserver(remoteView);
             drawCardManager.addObserver(remoteView);
             positioningManager.addObserver(remoteView);
             selectionWorkerManager.addObserver(remoteView);

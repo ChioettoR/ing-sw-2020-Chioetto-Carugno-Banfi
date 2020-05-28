@@ -205,6 +205,10 @@ public class MessagesReader {
                         message = "Invalid chosen cards number";
                         break;
                     }
+                    case (423) : {
+                        message = "You are a spectator";
+                        break;
+                    }
                 }
                 messagesHandler.sendError(message);
                 break;

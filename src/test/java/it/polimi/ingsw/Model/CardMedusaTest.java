@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,7 +70,7 @@ class CardMedusaTest {
      * Testing Medusa card
      */
     @Test
-    void testMedusa() {
+    void testMedusa() throws IOException {
         System.out.println("TEST: I'm testing Medusa Card");
         PlayersManager.getPlayersManager().setCurrentWorker(workerA);
         buildAction.build(workerA, grid.getTiles().get(6));

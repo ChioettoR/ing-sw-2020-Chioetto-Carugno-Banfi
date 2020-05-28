@@ -19,6 +19,15 @@ public class CLIStdinReader {
     boolean isLogin = true;
     boolean waiting = false;
     ActionType selectedActionType;
+    boolean spectator = false;
+
+    public void setSpectator(boolean spectator) {
+        this.spectator = spectator;
+    }
+
+    public Client getClient() {
+        return client;
+    }
 
     public void setSelectedActionType(ActionType selectedActionType) {
         this.selectedActionType = selectedActionType;
@@ -49,11 +58,14 @@ public class CLIStdinReader {
 
         while (true) {
             inputLine = stdin.nextLine();
-            if (inputLine.isEmpty() || inputLine.isBlank()) client.read(new MessageEvent(420));
+            if(spectator) client.read(new MessageEvent(423));
             else {
-                String[] strings = inputLine.split(",");
-                if(strings.length>=2) allCardsEvent(strings);
-                else read(inputLine.split("\\s+"));
+                if (inputLine.isEmpty() || inputLine.isBlank()) client.read(new MessageEvent(420));
+                else {
+                    String[] strings = inputLine.split(",");
+                    if (strings.length >= 2) allCardsEvent(strings);
+                    else read(inputLine.split("\\s+"));
+                }
             }
         }
     }

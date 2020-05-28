@@ -3,6 +3,8 @@ package it.polimi.ingsw.Model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersManagerTest {
@@ -35,11 +37,11 @@ class PlayersManagerTest {
     }
 
     @Test
-    void addAndDeletePlayersTest() {
+    void addAndDeletePlayersTest() throws IOException {
         addAndDeletePlayers();
     }
 
-    void addAndDeletePlayers() {
+    void addAndDeletePlayers() throws IOException {
         playersManager = PlayersManager.getPlayersManager();
         grid = Grid.getGrid();
         grid.createGrid(5,5);
@@ -91,7 +93,7 @@ class PlayersManagerTest {
     /**
      * Testing deletePlayers
      */
-    public void deletePlayers() {
+    public void deletePlayers() throws IOException {
         System.out.println("TEST: I'm deleting players from the game");
         playersManager.deletePlayer(player);
         //Checking if the Player "player" is no longer in the Player's list after deletePlayer
@@ -145,7 +147,7 @@ class PlayersManagerTest {
     /**
      * Testing deleteWorker trying to delete workers with no player assigned
      */
-    void deleteWorker() {
+    void deleteWorker() throws IOException {
         System.out.println("TEST: I'm deleting workers");
         playersManager.deleteWorker(worker);
         assert(!player.getWorkers().contains(worker));
@@ -163,7 +165,7 @@ class PlayersManagerTest {
     /**
      * Testing deleteCurrentWorker and setCurrentWorker
      */
-    void deleteCurrentWorker() {
+    void deleteCurrentWorker() throws IOException {
         System.out.println("TEST: I'm deleting current workers");
         playersManager.setCurrentWorker(worker);
         assert(playersManager.getCurrentWorker()==worker);

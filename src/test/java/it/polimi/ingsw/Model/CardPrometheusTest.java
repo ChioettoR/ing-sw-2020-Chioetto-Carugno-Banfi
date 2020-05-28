@@ -33,13 +33,13 @@ class CardPrometheusTest {
         currentTile.setWorker(worker);
         new CardsBuilder().createAction(card);
         actionOrder = card.getActionOrder();
-        Action action = actionOrder.get(0);
+        Action action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;
-        action = actionOrder.get(1);
+        action = actionOrder.get(2);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
-        action = actionOrder.get(2);
+        action = actionOrder.get(3);
         assertTrue(action instanceof BuildAction);
         buildAction2 = (BuildAction) action;
     }

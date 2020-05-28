@@ -22,6 +22,8 @@ public class EventsReader {
 
         else if(object instanceof WaitingEvent) eventsCommunication.waiting(((WaitingEvent) object).isWaiting());
 
+        else if(object instanceof SpectatorEvent) eventsCommunication.spectator();
+
         else if(object instanceof EndLoginEvent) eventsCommunication.endLogin(((EndLoginEvent) object).getNames());
 
         else if(object instanceof MessageEvent) eventsCommunication.message(((MessageEvent) object).getMessageID());

@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -804,6 +805,26 @@ public class CardsBuilder {
         MoveActionStandard moveActionStandard = new MoveActionStandard();
         BuildActionStandard secondBuildActionStandard = new BuildActionStandard();
 
+        RoundAction roundAction = new RoundAction() {
+
+            private boolean actionLock = false;
+
+            @Override
+            public void doAction() throws IOException {
+                moveActionStandard.setCantMoveUp(false);
+            }
+
+            @Override
+            public void setActionLock(boolean actionLock) {
+                this.actionLock = actionLock;
+            }
+
+            @Override
+            public boolean isActionLock() {
+                return actionLock;
+            }
+        };
+
         BuildActionDecorator buildActionDecorator = new BuildActionDecorator() {
 
             final BuildActionStandard buildActionStandard = new BuildActionStandard();
@@ -866,6 +887,7 @@ public class CardsBuilder {
 
         buildActionDecorator.setOptional(true);
         ArrayList <Action> actions = new ArrayList<>();
+        actions.add(roundAction);
         actions.add(buildActionDecorator);
         actions.add(moveActionStandard);
         actions.add(secondBuildActionStandard);
@@ -966,17 +988,20 @@ public class CardsBuilder {
 
             final MoveActionStandard moveActionStandard = new MoveActionStandard();
             int indexBuildAction = 2;
+            boolean perimeterMove = false;
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
                 if(canMove(worker, tileWhereMove)) {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(Grid.getGrid().isPerimeterTile(tileWhereMove)) {
-                        if(indexBuildAction>=actions.size()) indexBuildAction=2;
+                       perimeterMove = true;
+                       if(indexBuildAction>=actions.size()) indexBuildAction=2;
                        actions.add(indexBuildAction, this);
                        setOptional(true);
                        indexBuildAction++;
                     }
+                    else perimeterMove = false;
                 }
             }
 
@@ -1012,10 +1037,12 @@ public class CardsBuilder {
 
             @Override
             public void undo() {
-                if(indexBuildAction==3) setOptional(false);
-                if(indexBuildAction>2) {
-                    indexBuildAction--;
-                    actions.remove(indexBuildAction);
+                if(perimeterMove) {
+                    if (indexBuildAction == 3) setOptional(false);
+                    if (indexBuildAction > 2) {
+                        indexBuildAction--;
+                        actions.remove(indexBuildAction);
+                    }
                 }
                 moveActionStandard.undo();
             }
@@ -1160,9 +1187,8 @@ public class CardsBuilder {
             }
 
             @Override
-            public void doAction() {
-                if(actionLock)
-                    return;
+            public void doAction() throws IOException {
+                if(actionLock) return;
                 PlayersManager playersManager = PlayersManager.getPlayersManager();
                 Tile tempTile = playersManager.getCurrentWorker().getPosition();
                 ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
