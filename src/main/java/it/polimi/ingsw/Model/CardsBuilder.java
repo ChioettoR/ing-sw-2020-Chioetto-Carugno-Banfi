@@ -835,7 +835,6 @@ public class CardsBuilder {
                 if(canBuild(worker, tileWhereBuild, newLevel)) {
                     buildActionStandard.standardBuild(tileWhereBuild, newLevel);
                     moveActionStandard.setCantMoveUp(true);
-                    secondBuildActionStandard.setActionLock(true);
                 }
             }
 
@@ -871,6 +870,7 @@ public class CardsBuilder {
 
             @Override
             public void undo() {
+                moveActionStandard.setCantMoveUp(false);
                 buildActionStandard.undo();
             }
 
