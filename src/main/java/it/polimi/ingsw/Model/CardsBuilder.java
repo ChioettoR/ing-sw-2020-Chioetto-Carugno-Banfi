@@ -1189,23 +1189,27 @@ public class CardsBuilder {
             @Override
             public void doAction() throws IOException {
                 if(actionLock) return;
+
                 PlayersManager playersManager = PlayersManager.getPlayersManager();
-                Tile tempTile = playersManager.getCurrentWorker().getPosition();
-                ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
-                if(tiles == null || tiles.size() == 0)
-                    return;
-                tiles.removeIf(tile -> tile.getLevel() >= tempTile.getLevel() || tile.isEmpty());
-                ArrayList<Tile> tilesCopy = new ArrayList<>(tiles);
-                for(Tile t : tiles) {
-                    Worker worker = t.getWorker();
-                    if(worker.getPlayerID() == playersManager.getCurrentWorker().getPlayerID())
-                        tilesCopy.remove(t);
-                }
-                ArrayList<Worker> workers = (ArrayList<Worker>) tilesCopy.stream().map(Tile::getWorker).collect(Collectors.toList());
-                for(Worker w : workers){
-                    w.getPosition().setLevel(w.getPosition().getLevel() + 1);
-                    w.getPosition().setWorker(null);
-                    playersManager.deleteWorker(w);
+                ArrayList<Worker> allWorkers =  playersManager.getCurrentPlayer().getWorkers();
+                ArrayList<Tile> allTiles = (ArrayList<Tile>) allWorkers.stream().map(Worker::getPosition).collect(Collectors.toList());
+
+                for(Tile tempTile : allTiles) {
+                    ArrayList<Tile> tiles = Grid.getGrid().getNeighbours(tempTile);
+                    if (tiles == null || tiles.size() == 0) return;
+                    tiles.removeIf(tile -> tile.getLevel() >= tempTile.getLevel() || tile.isEmpty());
+                    ArrayList<Tile> tilesCopy = new ArrayList<>(tiles);
+                    for (Tile t : tiles) {
+                        Worker worker = t.getWorker();
+                        if (worker.getPlayerID() == playersManager.getCurrentWorker().getPlayerID())
+                            tilesCopy.remove(t);
+                    }
+                    ArrayList<Worker> workers = (ArrayList<Worker>) tilesCopy.stream().map(Tile::getWorker).collect(Collectors.toList());
+                    for (Worker w : workers) {
+                        w.getPosition().setLevel(w.getPosition().getLevel() + 1);
+                        w.getPosition().setWorker(null);
+                        playersManager.deleteWorker(w);
+                    }
                 }
             }
         };

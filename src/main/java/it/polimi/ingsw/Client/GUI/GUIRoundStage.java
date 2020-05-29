@@ -4,41 +4,31 @@ import it.polimi.ingsw.Events.Client.ActionSelectEvent;
 import it.polimi.ingsw.Events.Client.BuildDecisionEvent;
 import it.polimi.ingsw.Events.Client.MoveDecisionEvent;
 import it.polimi.ingsw.Events.Client.PositioningEvent;
-import it.polimi.ingsw.Model.Action;
 import it.polimi.ingsw.Model.ActionType;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
-import javafx.scene.layout.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class GUIRoundStage extends Application{
+public class GUIRoundStage {
 
     final double rotationSpeed = 100;
     final double zoomSpeed = 10;
@@ -79,41 +69,6 @@ public class GUIRoundStage extends Application{
 
     public ActionType getSelectedActionType() {
         return selectedActionType;
-    }
-
-    @Override
-    public void start(Stage stage) {
-
-        SmartGroup group = new SmartGroup();
-        guiGridManager = new GUIGridManager(group, this);
-
-        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
-        stage.sizeToScene();
-        stage.setMinWidth(650);
-        stage.setMinHeight(650);
-        PerspectiveCamera camera = createCamera();
-        subScene.setCamera(camera);
-        stage.setResizable(true);
-
-        guiGridManager.createGrid();
-        gridAnimations(group, camera);
-
-        guiGridManager.createWorker("marco", 1, 1,1, Color.GOLD);
-        guiGridManager.createWorker("marco", 1, 2,1, Color.BLANCHEDALMOND);
-        guiGridManager.build(1, 1, 1);
-        guiGridManager.build(2, 1, 1);
-        guiGridManager.build(3, 1, 1);
-
-        guiGridManager.build(1, 3, 3);
-        guiGridManager.build(1, 5, 5);
-
-        guiGridManager.highLight(4, 4);
-
-
-        eventHandler(stage);
-        try { buildingsImages(stage, subScene); }
-        catch (IOException e) { e.printStackTrace(); }
-        stage.show();
     }
 
     public void start(Stage stage, GUIStagesManager stagesManager) {
@@ -480,5 +435,4 @@ public class GUIRoundStage extends Application{
         buildingsController.getRightPane().setDisable(false);
         buildingsController.getInfoStackPane().setVisible(false);
     }
-
 }
