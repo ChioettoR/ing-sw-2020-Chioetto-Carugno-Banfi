@@ -28,10 +28,9 @@ public class CardsBuilder {
         ArrayList<Card> cards = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/godCards.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(fXmlFile);
+            Document doc = dBuilder.parse(getClass().getResourceAsStream("/godCards.xml"));
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("God");
 
