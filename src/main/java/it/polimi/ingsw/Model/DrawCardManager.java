@@ -96,10 +96,10 @@ public class DrawCardManager extends CardObservable{
         MiniDeckSimplified miniDeckSimplified = new MiniDeckSimplified(cardsSimplified);
         pickedCards = new ArrayList<>();
         remainingCards = miniDeckSimplified.getMiniDeck();
-        notifyDeck(new DeckEvent(miniDeckSimplified));
-        playersManager.nextPlayer();
-        notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
         stateManager.setGameState(GameState.PICKING);
+        playersManager.nextPlayer();
+        notifyDeck(new DeckEvent(miniDeckSimplified));
+        notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     /**
@@ -117,8 +117,8 @@ public class DrawCardManager extends CardObservable{
 
                 if(remainingCards.size()!=1) {
                     ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
-                    for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
                     playersManager.nextPlayer();
+                    for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
                     for(Player p : playersManager.getNextPlayers())
                         notifyMessage(new MessageEvent(105, p.getID()));
                     notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));

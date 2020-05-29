@@ -73,8 +73,8 @@ class CardPrometheusTest {
         moveAction.move(worker, grid.getTiles().get(5));
         assertEquals(grid.getTiles().get(5), worker.getPosition());
         buildAction2.build(worker, grid.getTiles().get(10));
-        assertEquals(0, grid.getTiles().get(10).getLevel());
-        assertTrue(buildAction2.isActionLock());
+        assertEquals(1, grid.getTiles().get(10).getLevel());
+        assertFalse(buildAction2.isActionLock());
         assertTrue(moveAction.isCantMoveUp());
 
         player.resetActionsValues();
@@ -88,6 +88,5 @@ class CardPrometheusTest {
         assertEquals(1, worker.getPosition().getLevel());
         buildAction2.build(worker, grid.getTiles().get(2));
         assertEquals(1, grid.getTiles().get(2).getLevel());
-
     }
 }
