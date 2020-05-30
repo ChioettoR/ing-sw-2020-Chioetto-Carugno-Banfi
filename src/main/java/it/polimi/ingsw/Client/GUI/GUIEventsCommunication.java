@@ -151,11 +151,12 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void win(String winnerName) {
-        //Platform.runLater(() -> stagesManager.win(winnerName));
+        Platform.runLater(() -> stagesManager.win(winnerName));
     }
 
     @Override
     public void lose() {
+        Platform.runLater(() -> messagesReader.read(308));
     }
 
     @Override

@@ -120,6 +120,10 @@ public class MessagesReader {
                         message = "Waiting...";
                         break;
                     }
+                    case (308): {
+                        message = "YOU LOSE!";
+                        break;
+                    }
                 }
 
                 messagesHandler.sendMessage(message);

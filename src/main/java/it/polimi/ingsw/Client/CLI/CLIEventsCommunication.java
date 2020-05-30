@@ -117,7 +117,7 @@ public class CLIEventsCommunication implements EventsCommunication {
     @Override
     public void lose() {
         cliStdinReader.setSpectator(true);
-        System.out.println("YOU LOSE!");
+        messagesReader.read(308);
     }
 
     /**

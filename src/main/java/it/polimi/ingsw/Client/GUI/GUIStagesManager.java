@@ -163,10 +163,11 @@ public class GUIStagesManager extends Application {
             loader.setLocation(getClass().getResource("/Win/win.fxml"));
             Parent root = loader.load();
             winController = loader.getController();
-            //winController.getTitle().setFont(Font.loadFont("Win/looney.ttf", 200));
-            winController.getTitle().setText("The winner is: " + winnerName + "!");
             stage.setScene(new Scene(root, 600, 600));
             stage.setResizable(false);
+            final Font looney = Font.loadFont(getClass().getResourceAsStream("/Win/looney.ttf"), 40);
+            winController.getTitle().setFont(looney);
+            winController.getTitle().setText("     " + winnerName + " WON");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
