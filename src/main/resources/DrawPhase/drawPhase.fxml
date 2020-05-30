@@ -160,6 +160,41 @@
                         <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false" onAction="#goNext" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goNextButton" stylesheets="@styleDrawPhase.css" />
                      </children>
                   </AnchorPane>
+                  <AnchorPane fx:id="startPlayerPane" prefHeight="270.0" prefWidth="600.0" visible="false">
+                     <children>
+                        <AnchorPane fx:id="dragStartingPlayer" layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
+                           <children>
+                              <ImageView fx:id="startPlayerGod" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@nameBar.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="startPlayerName" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drag the player here" textAlignment="CENTER" wrappingWidth="150.0">
+                                 <font>
+                                    <Font name="Candara" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ImageView fitWidth="140.0" layoutX="11.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@nameBar.png" />
+                                 </image>
+                              </ImageView>
+                              <Text layoutX="6.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Player" textAlignment="CENTER" wrappingWidth="150.0">
+                                 <font>
+                                    <Font name="Candara" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@frame.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="startPlayerButtonInfo" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="middlePane" layoutY="270.0" prefHeight="60.0" prefWidth="600.0">

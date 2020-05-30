@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -29,47 +30,77 @@
                 </Button>
             </StackPane>
         </bottom></BorderPane>
-    <HBox fillHeight="false" layoutX="10.0" layoutY="10.0" prefHeight="63.0" prefWidth="130.0" AnchorPane.leftAnchor="10.0">
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-            <Image url="@buildingsButton.png" />
-        </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="10.0">
-            <Image url="@buildingsButton.png" />
-        </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="20.0">
-            <Image url="@buildingsButton.png" />
-        </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateX="30.0">
-            <Image url="@buildingsButton.png" />
-        </ImageView>
-    </HBox>
-    <HBox fillHeight="false" prefHeight="63.0" prefWidth="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <ImageView fx:id="baseBlock" fitHeight="150.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" translateX="6.5" translateY="5.0" HBox.hgrow="ALWAYS">
-            <Image url="@baseBlock.png" />
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </ImageView>
-        <ImageView fx:id="mediumBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.7" translateX="10.0" translateY="4.0">
-            <Image url="@mediumBlock.png" />
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </ImageView>
-        <ImageView fx:id="highBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.7" scaleY="0.7" translateX="10.0" translateY="3.0">
-            <Image url="@highBlock.png" />
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </ImageView>
-        <ImageView fx:id="dome" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" translateX="10.0">
-            <Image url="@dome.png" />
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </ImageView>
-    </HBox>
-   <BorderPane fx:id="borderPaneCards" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <VBox prefHeight="130.0" prefWidth="63.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <children>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+      </children>
+   </VBox>
+   <VBox prefHeight="130.0" prefWidth="63.0">
+      <children>
+           <ImageView fx:id="baseBlock" fitHeight="150.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" translateX="7.0" translateY="7.0">
+               <Image url="@baseBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="mediumBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.65" translateX="4.0">
+               <Image url="@mediumBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="highBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.65" translateX="4.0" translateY="-10.0">
+               <Image url="@highBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="dome" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" translateX="4.0" translateY="-22.0">
+               <Image url="@dome.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+           </ImageView>
+      </children>
+   </VBox>
+   <BorderPane fx:id="borderPaneCards" focusTraversable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <right>
          <StackPane fx:id="rightPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
@@ -222,7 +253,34 @@
          </StackPane>
       </center>
       <left>
-         <StackPane focusTraversable="true" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         <StackPane focusTraversable="true" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
       </left>
+      <top>
+         <StackPane pickOnBounds="false" prefHeight="88.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fitHeight="88.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@messageBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="466.0">
+                  <font>
+                     <Font name="Candara" size="14.0" />
+                  </font>
+               </Text>
+               <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="466.0">
+                  <font>
+                     <Font name="Candara" size="14.0" />
+                  </font>
+               </Text>
+            </children>
+            <BorderPane.margin>
+               <Insets top="10.0" />
+            </BorderPane.margin>
+         </StackPane>
+      </top>
+      <bottom>
+         <StackPane pickOnBounds="false" prefHeight="88.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      </bottom>
    </BorderPane>
 </AnchorPane>

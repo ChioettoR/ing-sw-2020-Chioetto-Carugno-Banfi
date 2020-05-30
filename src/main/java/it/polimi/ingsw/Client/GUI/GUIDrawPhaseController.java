@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Events.Client.AllPlayersCardsEvent;
+import it.polimi.ingsw.Events.Client.FirstPlayerChosenEvent;
 import it.polimi.ingsw.Events.Client.PickCardEvent;
 import it.polimi.ingsw.Model.CardSimplified;
 import javafx.event.ActionEvent;
@@ -130,6 +131,20 @@ public class GUIDrawPhaseController {
     @FXML
     private AnchorPane twoCardsPane;
 
+    @FXML
+    private AnchorPane startPlayerPane;
+
+    @FXML
+    private ImageView startPlayerGod;
+
+    @FXML
+    private Text startPlayerName;
+
+    @FXML
+    private Button startPlayerButtonInfo;
+
+    @FXML
+    private AnchorPane dragStartingPlayer;
 
     //middlePane
 
@@ -487,6 +502,26 @@ public class GUIDrawPhaseController {
         return godToSelect2p2;
     }
 
+    public AnchorPane getStartPlayerPane() {
+        return startPlayerPane;
+    }
+
+    public ImageView getStartPlayerGod() {
+        return startPlayerGod;
+    }
+
+    public Text getStartPlayerName() {
+        return startPlayerName;
+    }
+
+    public Button getStartPlayerButtonInfo() {
+        return startPlayerButtonInfo;
+    }
+
+    public AnchorPane getDragStartingPlayer() {
+        return dragStartingPlayer;
+    }
+
     @FXML
     void returnToDraw(ActionEvent event) {
         infoPane.setDisable(true);
@@ -682,5 +717,9 @@ public class GUIDrawPhaseController {
         cardsToSelect.setVisible(false);
         ArrayList<String> cardsToSend = new ArrayList<>(namesToSend);
         stagesManager.send(new AllPlayersCardsEvent(cardsToSend));
+    }
+
+    public void sendToStageTheFirstPlayer(String playerName) {
+        stagesManager.send(new FirstPlayerChosenEvent(playerName));
     }
 }

@@ -104,6 +104,12 @@ public class BuildingsController {
     @FXML
     private BorderPane borderPaneCards;
 
+    @FXML
+    private Text messageText;
+
+    @FXML
+    private Text errorText;
+
 
     public StackPane getStackPane() {
         return stackPane;
@@ -227,5 +233,13 @@ public class BuildingsController {
 
     public BorderPane getBorderPaneCards() {
         return borderPaneCards;
+    }
+
+    public Text getMessageText() {
+        return messageText;
+    }
+
+    public Text getErrorText() {
+        return errorText;
     }
 }

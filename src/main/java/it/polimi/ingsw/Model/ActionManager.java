@@ -627,6 +627,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
                 if((currentAction instanceof MoveAction && availableActions.getMoveActionIndex()!=-1) || (currentAction instanceof BuildAction && availableActions.getBuildActionIndex()!=-1))
                     System.err.println("FATAL ERROR: Adding two actions of the same type to the available actions");
                 else {
+                    availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
                     if(availableTiles.size()!=0) availableActions.addAvailableAction((UserAction) currentAction);
                     stateManager.setGameState(GameState.ACTIONSELECTING);
                     index++;

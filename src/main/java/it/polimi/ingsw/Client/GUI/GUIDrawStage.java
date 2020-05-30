@@ -350,5 +350,105 @@ public class GUIDrawStage{
         guiDrawPhaseController.getGodToSelect3p3().setImage(null);
         guiDrawPhaseController.getNamesToSend().clear();
     }
+
+    public void selectFirstPlayer(ArrayList<String> names) {
+        guiDrawPhaseController.getUpPane().setVisible(true);
+        guiDrawPhaseController.getUpTwoCardsPane().setVisible(false);
+        guiDrawPhaseController.getUpThreeCardsPane().setVisible(false);
+        guiDrawPhaseController.getDraw().setVisible(false);
+        guiDrawPhaseController.getStartPlayerPane().setVisible(true);
+
+        AnchorPane dragStartingPlayer = guiDrawPhaseController.getDragStartingPlayer();
+        dragStartingPlayer.setOnDragOver(event -> {
+            if (event.getDragboard().hasString()) event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            event.consume();
+        });
+
+        dragStartingPlayer.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                String playerName = db.getString();
+                guiDrawPhaseController.getStartPlayerName().setText(playerName);
+                guiDrawPhaseController.getStartPlayerGod().setImage(guiCards.getFullImage(guiPlayersManager.getPlayer(playerName).getCardName()));
+                guiDrawPhaseController.sendToStageTheFirstPlayer(playerName);
+                dragStartingPlayer.setOnDragDropped(e -> {});
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+
+        if(names.size() == 2) {
+
+            Button godButtonDown2p1 = guiDrawPhaseController.getInfoButtonDown2p1();
+            ImageView godImageDown2p1 = guiDrawPhaseController.getGodImageDown2p1();
+
+            godButtonDown2p1.setOnDragDetected(event -> {
+                Dragboard db = godButtonDown2p1.startDragAndDrop(TransferMode.ANY);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                db.setDragView(godImageDown2p1.snapshot(snapshotParameters, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString(guiDrawPhaseController.getPlayerName2p1().getText());
+                db.setContent(content);
+                event.consume();
+            });
+
+            Button godButtonDown2p2 = guiDrawPhaseController.getInfoButtonDown2p2();
+            ImageView godImageDown2p2 = guiDrawPhaseController.getGodImageDown2p2();
+
+            godButtonDown2p2.setOnDragDetected(event -> {
+                Dragboard db = godButtonDown2p2.startDragAndDrop(TransferMode.ANY);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                db.setDragView(godImageDown2p2.snapshot(snapshotParameters, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString(guiDrawPhaseController.getPlayerName2p2().getText());
+                db.setContent(content);
+                event.consume();
+            });
+
+        }
+        else {
+
+            Button godButtonDown3p1 = guiDrawPhaseController.getInfoButtonDown3p1();
+            ImageView godImageDown3p1 = guiDrawPhaseController.getGodImageDown3p1();
+
+            godButtonDown3p1.setOnDragDetected(event -> {
+                Dragboard db = godButtonDown3p1.startDragAndDrop(TransferMode.ANY);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                db.setDragView(godImageDown3p1.snapshot(snapshotParameters, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString(guiDrawPhaseController.getPlayerName3p1().getText());
+                db.setContent(content);
+                event.consume();
+            });
+
+            Button godButtonDown3p2 = guiDrawPhaseController.getInfoButtonDown3p2();
+            ImageView godImageDown3p2 = guiDrawPhaseController.getGodImageDown3p2();
+
+            godButtonDown3p2.setOnDragDetected(event -> {
+                Dragboard db = godButtonDown3p2.startDragAndDrop(TransferMode.ANY);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                db.setDragView(godImageDown3p2.snapshot(snapshotParameters, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString(guiDrawPhaseController.getPlayerName3p2().getText());
+                db.setContent(content);
+                event.consume();
+            });
+
+            Button godButtonDown3p3 = guiDrawPhaseController.getInfoButtonDown3p3();
+            ImageView godImageDown3p3 = guiDrawPhaseController.getGodImageDown3p3();
+
+            godButtonDown3p3.setOnDragDetected(event -> {
+                Dragboard db = godButtonDown3p3.startDragAndDrop(TransferMode.ANY);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                db.setDragView(godImageDown3p3.snapshot(snapshotParameters, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString(guiDrawPhaseController.getPlayerName3p3().getText());
+                db.setContent(content);
+                event.consume();
+            });
+        }
+    }
 }
 
