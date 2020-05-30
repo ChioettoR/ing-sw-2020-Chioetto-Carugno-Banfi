@@ -21,6 +21,9 @@ public class FirstPlayerManager extends FirstPlayerObservable {
     public void transition() throws IOException {
         names = (ArrayList<String>) playersManager.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
         notify(new FirstPlayerEvent(names, playersManager.getCurrentPlayer().getID()));
+        for(Player p : playersManager.getNextPlayers()) {
+            notifyMessage(new MessageEvent(117, p.getID()));
+        }
     }
 
     public void firstPlayerChosen(int playerID, String firstPlayerName) throws IOException {
@@ -33,14 +36,14 @@ public class FirstPlayerManager extends FirstPlayerObservable {
 
         if(!names.contains(firstPlayerName)) notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
         else {
-            for(Player p : playersManager.getPlayers()) {
-                if(p.getName().equalsIgnoreCase(firstPlayerName)) {
-                    playersManager.setNextPlayerIndex(playersManager.getPlayers().indexOf(p));
+            for(int i=0; i<playersManager.getPlayersNumber(); i++) {
+                if(playersManager.getPlayers().get(i).getName().equalsIgnoreCase(firstPlayerName)) {
+                    playersManager.setNextPlayerIndex(i);
                     firstPlayerSelected();
                     return;
                 }
-                notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
             }
+            notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
         }
     }
 

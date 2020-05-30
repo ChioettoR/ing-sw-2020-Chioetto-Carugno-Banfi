@@ -112,9 +112,6 @@ public class CLIStdinReader {
         else if(string.length()==1 && !isNumeric(string) && isLetter(string.charAt(0)))
             client.update(new SelectionEvent(convertLetter(string.charAt(0))));
 
-        else if(!isNumeric(string))
-            client.update(new FirstPlayerChosenEvent(string));
-
         else if(compareString(string, Input.PICK))
             client.update(new PickCardEvent(""));
 
@@ -129,6 +126,9 @@ public class CLIStdinReader {
 
         else if(compareString(string, Input.CONFIRM))
             client.update(new ActionSelectEvent(ActionType.CONFIRM.toString()));
+
+        else if(!isNumeric(string))
+            client.update(new FirstPlayerChosenEvent(string));
 
         else unknownInput();
     }
