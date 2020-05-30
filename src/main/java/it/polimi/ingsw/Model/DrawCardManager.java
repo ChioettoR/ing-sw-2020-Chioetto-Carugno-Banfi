@@ -7,72 +7,76 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class DrawCardManager extends CardObservable{
+public class DrawCardManager extends CardObservable {
     PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     ArrayList<CardSimplified> pickedCards;
     ArrayList<CardSimplified> remainingCards;
+    FirstPlayerManager firstPlayerManager;
 
-    public DrawCardManager(StateManager stateManager) {
+    public DrawCardManager(StateManager stateManager, FirstPlayerManager firstPlayerManager) {
         this.stateManager = stateManager;
+        this.firstPlayerManager = firstPlayerManager;
     }
 
     /**
-     *This method is responsible of the initial phase of choosing cards by the first player
+     * This method is responsible of the initial phase of choosing cards by the first player
+     *
      * @param playerID player's id
-     * @param cards list of cards
+     * @param cards    list of cards
      * @throws IOException when socket closes
      */
 
     public void allCardsChosen(int playerID, ArrayList<String> cards) throws IOException {
 
-        if(!stateManager.checkPlayerID(playerID))
+        if (!stateManager.checkPlayerID(playerID))
             return;
 
-        if(!stateManager.checkState(GameState.CHOOSING))
+        if (!stateManager.checkState(GameState.CHOOSING))
             return;
 
-        if(cards.size()!=playersManager.getPlayersNumber()) {
+        if (cards.size() != playersManager.getPlayersNumber()) {
             notifyMessage(new MessageEvent(422, playersManager.getCurrentPlayer().getID()));
             return;
         }
 
         ArrayList<Card> allCards = new ArrayList<>();
 
-        for(String c : cards) {
+        for (String c : cards) {
             Card card = Deck.getDeck().getCardByName(c);
-            if(card==null || allCards.contains(card)) {
+            if (card == null || allCards.contains(card)) {
                 notifyMessage(new MessageEvent(407, playersManager.getCurrentPlayer().getID()));
                 return;
             }
             allCards.add(card);
         }
 
-        for(Card c : allCards) Deck.getDeck().createAction(c);
+        for (Card c : allCards) Deck.getDeck().createAction(c);
 
         sendCards((ArrayList<CardSimplified>) allCards.stream().map(Card::simplify).collect(Collectors.toList()));
-        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));
+        for (Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));
     }
 
     /**
      * Associates the card received to the player
+     *
      * @param playerID ID of the player
      * @param cardName name of the card to associate
      * @throws IOException when socket closes
      */
     public void pick(int playerID, String cardName) throws IOException {
-        if(!stateManager.checkPlayerID(playerID))
+        if (!stateManager.checkPlayerID(playerID))
             return;
 
-        if(!stateManager.checkState(GameState.PICKING))
+        if (!stateManager.checkState(GameState.PICKING))
             return;
 
-        if(cardName.equals("")) {
+        if (cardName.equals("")) {
             notifyMessage(new MessageEvent(405, playersManager.getCurrentPlayer().getID()));
             return;
         }
         boolean rightCard = playerPicksTheCard(cardName);
-        if(rightCard){
+        if (rightCard) {
             return;
         }
 
@@ -81,14 +85,15 @@ public class DrawCardManager extends CardObservable{
 
     public void transition() throws IOException {
         int messageID = 0;
-        if(playersManager.getPlayersNumber()==3) messageID = 501;
-        else if(playersManager.getPlayersNumber()==2) messageID = 502;
+        if (playersManager.getPlayersNumber() == 3) messageID = 501;
+        else if (playersManager.getPlayersNumber() == 2) messageID = 502;
         notifyMessage(new MessageEvent(messageID, PlayersManager.getPlayersManager().nextPlayer().getID()));
-        notifyFullDeck(new FullDeckEvent( (ArrayList<CardSimplified>) Deck.getDeck().getCardsList().stream().map(Card::simplify).collect(Collectors.toList()), PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+        notifyFullDeck(new FullDeckEvent((ArrayList<CardSimplified>) Deck.getDeck().getCardsList().stream().map(Card::simplify).collect(Collectors.toList()), PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 
     /**
      * Method invoked by draw, sends the cards
+     *
      * @param cardsSimplified the cardsSimplified from the deck
      * @throws IOException when socket closes
      */
@@ -103,27 +108,28 @@ public class DrawCardManager extends CardObservable{
     }
 
     /**
-     *Method invoked when a player picks a card, notifies the pick
+     * Method invoked when a player picks a card, notifies the pick
+     *
      * @param cardName name of the card picked
      * @return true if picked, false otherwise
      * @throws IOException when socket closes
      */
     private boolean playerPicksTheCard(String cardName) throws IOException {
 
-        for(CardSimplified cardSimplified : remainingCards) {
-            if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
+        for (CardSimplified cardSimplified : remainingCards) {
+            if (cardSimplified.getName().equalsIgnoreCase(cardName)) {
 
                 pickCard(cardSimplified);
 
-                if(remainingCards.size()!=1) {
+                if (remainingCards.size() != 1) {
                     ArrayList<CardSimplified> cardsSimplifiedCopy = new ArrayList<>(remainingCards);
                     playersManager.nextPlayer();
-                    for(Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
-                    for(Player p : playersManager.getNextPlayers())
+                    for (Player p : playersManager.getNextPlayers())
+                        notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));
+                    for (Player p : playersManager.getNextPlayers())
                         notifyMessage(new MessageEvent(105, p.getID()));
                     notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
-                }
-                else nextPhase();
+                } else nextPhase();
                 return true;
             }
         }
@@ -131,8 +137,8 @@ public class DrawCardManager extends CardObservable{
     }
 
     private void checkWrongCard(String cardName) throws IOException {
-        for(CardSimplified cardSimplified : pickedCards) {
-            if(cardSimplified.getName().equalsIgnoreCase(cardName)) {
+        for (CardSimplified cardSimplified : pickedCards) {
+            if (cardSimplified.getName().equalsIgnoreCase(cardName)) {
                 notifyMessage(new MessageEvent(406, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
                 notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
                 return;
@@ -144,6 +150,7 @@ public class DrawCardManager extends CardObservable{
 
     /**
      * Invoked after a card pick, removes the card from the remaining ones and adds it to the picked ones
+     *
      * @param cardSimplified name of the card picked
      * @throws IOException when socket closes
      */
@@ -157,6 +164,7 @@ public class DrawCardManager extends CardObservable{
 
     /**
      * Invoked when a turn is ended, changes the player
+     *
      * @throws IOException when socket closes
      */
     private void nextPhase() throws IOException {
@@ -164,9 +172,7 @@ public class DrawCardManager extends CardObservable{
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
         notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), remainingCards.get(0).getName()));
         notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
-        playersManager.nextPlayer();
-        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
-        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(114, p.getID()));
-        stateManager.setGameState(GameState.POSITIONING);
+        stateManager.setGameState(GameState.FIRSTPLAYERSELECTION);
+        firstPlayerManager.transition();
     }
 }

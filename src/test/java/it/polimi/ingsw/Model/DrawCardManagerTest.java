@@ -19,7 +19,7 @@ public class DrawCardManagerTest implements ServerObserver {
     Player player1 = new Player("Marcello");
     Player player2 = new Player("Franco");
     StateManager stateManager = new StateManager();
-    DrawCardManager drawCardManager = new DrawCardManager(stateManager);
+    DrawCardManager drawCardManager = new DrawCardManager(stateManager, null);
     int updateCounter;
     String cardName1;
     String cardName2;

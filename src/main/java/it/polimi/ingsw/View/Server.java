@@ -115,11 +115,12 @@ public class Server {
 
         new Builder().build();
         StateManager stateManager = new StateManager();
-        DrawCardManager drawCardManager = new DrawCardManager(stateManager);
+        FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager);
+        DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
         PositioningManager positioningManager = new PositioningManager(stateManager);
         ActionManager actionManager = new ActionManager(stateManager);
         SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
-        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager);
+        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager, firstPlayerManager);
         Controller controller = new Controller(communication);
 
         for(int i=0; i<lobbySize; i++) {
@@ -130,6 +131,7 @@ public class Server {
             connection.setRemoteView(remoteView);
 
             PlayersManager.getPlayersManager().addObserver(remoteView);
+            firstPlayerManager.addObserver(remoteView);
             drawCardManager.addObserver(remoteView);
             positioningManager.addObserver(remoteView);
             selectionWorkerManager.addObserver(remoteView);

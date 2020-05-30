@@ -24,6 +24,9 @@ public class Controller {
         else if (event instanceof PositioningEvent)
             communication.positioning(event.getPlayerID(), ((PositioningEvent) event).getX(), ((PositioningEvent) event).getY());
 
+        else if(event instanceof FirstPlayerChosenEvent)
+            communication.firstPlayerChoose(event.getPlayerID(), ((FirstPlayerChosenEvent) event).getName());
+
         else if (event instanceof SelectionEvent)
             communication.selection(event.getPlayerID(), ((SelectionEvent) event).getWorkerID(), ((SelectionEvent) event).getPlayerName());
 

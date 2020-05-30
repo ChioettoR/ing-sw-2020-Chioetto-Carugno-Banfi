@@ -76,6 +76,14 @@ public class MessagesReader {
                         message = "Wait until other players complete their round";
                         break;
                     }
+                    case (116) : {
+                        message = "Select the first player";
+                        break;
+                    }
+                    case (117) : {
+                        message = "Wait until the Challenger chooses the first player";
+                        break;
+                    }
                 }
                 messagesHandler.sendRequest(message);
                 break;
@@ -207,6 +215,14 @@ public class MessagesReader {
                     }
                     case (423) : {
                         message = "You are a spectator";
+                        break;
+                    }
+                    case (424) : {
+                        message = "The name you chose is too long";
+                        break;
+                    }
+                    case (425) : {
+                        message = "Invalid player selection";
                         break;
                     }
                 }

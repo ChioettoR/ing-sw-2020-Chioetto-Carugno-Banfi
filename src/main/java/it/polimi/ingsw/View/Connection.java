@@ -31,6 +31,7 @@ public class Connection implements Runnable, CountdownInterface {
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
     private static final Object lock = new Object();
+    int maxNameLength = 16;
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
@@ -156,6 +157,7 @@ public class Connection implements Runnable, CountdownInterface {
 
             name = ((LoginNameEvent) object).getName();
             if(!server.addName(name)) send(new MessageEvent(416));
+            else if(name.length()>maxNameLength) send(new MessageEvent(424));
             else validName = true;
         }
     }

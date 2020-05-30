@@ -151,13 +151,11 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void win(String winnerName) {
-        System.out.println(winnerName + "WINS");
+        //Platform.runLater(() -> stagesManager.win(winnerName));
     }
 
     @Override
     public void lose() {
-        System.out.println("loser :(");
-        System.out.println("spettatore");
     }
 
     @Override
@@ -165,6 +163,11 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void fullDeck(ArrayList<CardSimplified> cards) { Platform.runLater(() -> guiDrawStage.sendFullDeck(cards)); }
+
+    @Override
+    public void firstPlayerSelection(ArrayList<String> names) {
+
+    }
 
     public void disconnection() {
         Platform.runLater(() -> {

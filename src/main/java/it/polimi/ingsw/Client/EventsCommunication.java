@@ -22,4 +22,5 @@ public interface EventsCommunication {
     void lose();
     void infoEffect(String cardName);
     void fullDeck(ArrayList<CardSimplified> cards);
+    void firstPlayerSelection(ArrayList<String> names);
 }

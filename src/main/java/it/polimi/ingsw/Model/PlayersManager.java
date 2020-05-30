@@ -37,6 +37,10 @@ public class PlayersManager extends MessageObservable {
         currentActionOrder.clear();
     }
 
+    public void setNextPlayerIndex(int nextPlayerIndex) {
+        this.nextPlayerIndex = nextPlayerIndex;
+    }
+
     public int getPlayerWinnerID() {
         return playerWinnerID;
     }

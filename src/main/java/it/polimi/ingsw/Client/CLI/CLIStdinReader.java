@@ -101,9 +101,6 @@ public class CLIStdinReader {
      */
     private void readOneString(String string) {
 
-//        if(compareString(string, Input.DRAW))
-//            client.update(new AllPlayersCardsEvent());
-
         if(isGridPosition(string) && selectedActionType==null) {
             int[] coordinates = readGridString(string);
             client.update(new PositioningEvent(coordinates[0], coordinates[1]));
@@ -114,6 +111,9 @@ public class CLIStdinReader {
 
         else if(string.length()==1 && !isNumeric(string) && isLetter(string.charAt(0)))
             client.update(new SelectionEvent(convertLetter(string.charAt(0))));
+
+        else if(!isNumeric(string))
+            client.update(new FirstPlayerChosenEvent(string));
 
         else if(compareString(string, Input.PICK))
             client.update(new PickCardEvent(""));

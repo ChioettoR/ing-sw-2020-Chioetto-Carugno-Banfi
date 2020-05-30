@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client.GUI;
 
-import javafx.scene.PointLight;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;

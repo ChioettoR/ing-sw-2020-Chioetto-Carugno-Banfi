@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Client;
+import it.polimi.ingsw.Events.Client.FirstPlayerChosenEvent;
 import it.polimi.ingsw.Events.Server.WaitingEvent;
 import it.polimi.ingsw.Events.Server.*;
 
@@ -31,6 +32,8 @@ public class EventsReader {
         else if(object instanceof CardEvent) eventsCommunication.card(((CardEvent) object).getCard());
 
         else if(object instanceof ActionEvent) eventsCommunication.action(((ActionEvent) object).getActions());
+
+        else if(object instanceof FirstPlayerEvent) eventsCommunication.firstPlayerSelection(((FirstPlayerEvent) object).getPlayers());
 
         else if(object instanceof AvailableTilesEvent) eventsCommunication.availableTiles(((AvailableTilesEvent) object).getTiles(), ((AvailableTilesEvent) object).getActionType());
 

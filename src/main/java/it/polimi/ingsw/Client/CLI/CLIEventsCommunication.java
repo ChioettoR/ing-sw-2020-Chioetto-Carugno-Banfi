@@ -141,7 +141,6 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void fullDeck(ArrayList<CardSimplified> cards) {
-        CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
         for(int i = 0; i<cards.size(); i++) {
             cliCardBuilder.addDescription(cards.get(i).getName(), cards.get(i).getDescription());
             System.out.print(cards.get(i).getName() + "  ");
@@ -149,5 +148,11 @@ public class CLIEventsCommunication implements EventsCommunication {
                 System.out.println("");
         }
         System.out.println("");
+    }
+
+    @Override
+    public void firstPlayerSelection(ArrayList<String> names) {
+        messagesReader.read(116);
+        cliActionPrinter.printAction(names);
     }
 }

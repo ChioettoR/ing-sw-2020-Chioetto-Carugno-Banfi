@@ -10,13 +10,15 @@ public class Communication implements CommunicationInterface {
     DrawCardManager drawCardManager;
     PositioningManager positioningManager;
     SelectionWorkerManager selectionWorkerManager;
+    FirstPlayerManager firstPlayerManager;
     ActionManager actionManager;
 
-    public Communication(DrawCardManager drawCardManager, PositioningManager positioningManager, SelectionWorkerManager selectionWorkerManager, ActionManager actionManager) {
+    public Communication(DrawCardManager drawCardManager, PositioningManager positioningManager, SelectionWorkerManager selectionWorkerManager, ActionManager actionManager, FirstPlayerManager firstPlayerManager) {
         this.drawCardManager = drawCardManager;
         this.positioningManager = positioningManager;
         this.selectionWorkerManager = selectionWorkerManager;
         this.actionManager = actionManager;
+        this.firstPlayerManager = firstPlayerManager;
     }
 
 
@@ -33,6 +35,11 @@ public class Communication implements CommunicationInterface {
     @Override
     public void positioning(int playerID, int x, int y) throws IOException {
         positioningManager.positioning(playerID, x, y);
+    }
+
+    @Override
+    public void firstPlayerChoose(int playerID, String name) throws IOException {
+        firstPlayerManager.firstPlayerChosen(playerID, name);
     }
 
     @Override
