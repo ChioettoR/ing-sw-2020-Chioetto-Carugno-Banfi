@@ -23,10 +23,11 @@ public class ColorPoolManager extends ColorObservable {
         colorsAvailable.add(PlayerColor.P1_COLOR);
         colorsAvailable.add(PlayerColor.P2_COLOR);
         if(playersManager.getPlayersNumber()==3) colorsAvailable.add(PlayerColor.P3_COLOR);
-        notify(new ColorSelectingEvent(colorsAvailable, playersManager.getCurrentPlayer().getID()));
         for(Player p : playersManager.getNextPlayers()) {
             notifyMessage(new MessageEvent(118, p.getID()));
         }
+        notifyMessage(new MessageEvent(119, playersManager.getCurrentPlayer().getID()));
+        notify(new ColorSelectingEvent(colorsAvailable, playersManager.getCurrentPlayer().getID()));
     }
 
     public void colorSelection(int playerID, PlayerColor playerColor) throws IOException {
@@ -50,6 +51,7 @@ public class ColorPoolManager extends ColorObservable {
             }
             else {
                 notifyMessage(new MessageEvent(118, playerID));
+                notifyMessage(new MessageEvent(119, playersManager.getCurrentPlayer().getID()));
                 notify(new ColorSelectingEvent(colorsAvailableCopy, playersManager.getCurrentPlayer().getID()));
             }
         }

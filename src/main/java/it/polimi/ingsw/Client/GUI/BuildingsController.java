@@ -110,6 +110,45 @@ public class BuildingsController {
     @FXML
     private Text errorText;
 
+    @FXML
+    private StackPane threeWorkersPane;
+
+    @FXML
+    private ImageView workerImage3p3;
+
+    @FXML
+    private Button buttonWorker3p3;
+
+    @FXML
+    private ImageView workerImage3p2;
+
+    @FXML
+    private Button buttonWorker3p2;
+
+    @FXML
+    private ImageView workerImage3p1;
+
+    @FXML
+    private Button buttonWorker3p1;
+
+    @FXML
+    private StackPane twoWorkersPane;
+
+    @FXML
+    private ImageView workerImage2p2;
+
+    @FXML
+    private Button buttonWorker2p2;
+
+    @FXML
+    private ImageView workerImage2p1;
+
+    @FXML
+    private Button buttonWorker2p1;
+
+    @FXML
+    private StackPane infoStackPaneOpen;
+
 
     public StackPane getStackPane() {
         return stackPane;
@@ -241,5 +280,57 @@ public class BuildingsController {
 
     public Text getErrorText() {
         return errorText;
+    }
+
+    public StackPane getTwoWorkersPane() {
+        return twoWorkersPane;
+    }
+
+    public StackPane getThreeWorkersPane() {
+        return threeWorkersPane;
+    }
+
+    public ImageView getWorkerImage3p3() {
+        return workerImage3p3;
+    }
+
+    public Button getButtonWorker3p3() {
+        return buttonWorker3p3;
+    }
+
+    public ImageView getWorkerImage3p2() {
+        return workerImage3p2;
+    }
+
+    public Button getButtonWorker3p2() {
+        return buttonWorker3p2;
+    }
+
+    public ImageView getWorkerImage3p1() {
+        return workerImage3p1;
+    }
+
+    public Button getButtonWorker3p1() {
+        return buttonWorker3p1;
+    }
+
+    public ImageView getWorkerImage2p2() {
+        return workerImage2p2;
+    }
+
+    public Button getButtonWorker2p2() {
+        return buttonWorker2p2;
+    }
+
+    public ImageView getWorkerImage2p1() {
+        return workerImage2p1;
+    }
+
+    public Button getButtonWorker2p1() {
+        return buttonWorker2p1;
+    }
+
+    public StackPane getInfoStackPaneOpen() {
+        return infoStackPaneOpen;
     }
 }

@@ -16,9 +16,9 @@ public class GUIColorDecoder {
         colorNames.put(PlayerColor.P1_COLOR, "Silver");
         colorNames.put(PlayerColor.P2_COLOR, "Light-brown");
         colorNames.put(PlayerColor.P3_COLOR, "Dark-brown");
-        colorNamesReverse.put("Magenta", PlayerColor.P1_COLOR);
-        colorNamesReverse.put("Yellow", PlayerColor.P2_COLOR);
-        colorNamesReverse.put("Cyan", PlayerColor.P3_COLOR);
+        colorNamesReverse.put("Silver", PlayerColor.P1_COLOR);
+        colorNamesReverse.put("Light-brown", PlayerColor.P2_COLOR);
+        colorNamesReverse.put("Dark-brown", PlayerColor.P3_COLOR);
         colorANSI.put(PlayerColor.P1_COLOR, javafx.scene.paint.Color.web("8a9f9f"));
         colorANSI.put(PlayerColor.P2_COLOR, javafx.scene.paint.Color.web("cfb39c"));
         colorANSI.put(PlayerColor.P3_COLOR, javafx.scene.paint.Color.web("7c5536"));

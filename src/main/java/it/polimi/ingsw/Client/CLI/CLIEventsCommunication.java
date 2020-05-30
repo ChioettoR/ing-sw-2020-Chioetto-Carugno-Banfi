@@ -154,7 +154,7 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     @Override
     public void colorsAvailable(ArrayList<PlayerColor> colors) {
-        messagesReader.read(119);
+        //messagesReader.read(119);
         ArrayList<String> colorsName = new ArrayList<>();
         for(PlayerColor playerColor : colors) {
             System.out.print(cliColorDecoder.getColor(playerColor).escape() + cliColorDecoder.getColorName(playerColor) + Color.RESET);

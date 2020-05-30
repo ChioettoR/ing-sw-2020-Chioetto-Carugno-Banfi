@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Events.Server.FirstPlayerEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Events.Server.ServerEvent;
-import it.polimi.ingsw.Observer.Server.FirstPlayerObservable;
 import it.polimi.ingsw.Observer.Server.ServerObserver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +21,10 @@ class FirstPlayerManagerTest implements ServerObserver {
     Player player1 = new Player("Marcello");
     Player player2 = new Player("Franco");
     StateManager stateManager = new StateManager();
-    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager);
+    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
     int updateCounter;
-    int playerid;
-
+    int playerID;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -43,13 +42,10 @@ class FirstPlayerManagerTest implements ServerObserver {
     void firstPlayerTest() throws IOException {
         firstPlayerManager.transition();
         firstPlayerManager.firstPlayerChosen(player.getID(), player.getName());
-        playerid = this.player.getID();
-        firstPlayerManager.firstPlayerSelected();
-        assertFalse(playersManager.getCurrentPlayer() == player);
-        assertTrue(stateManager.getGameState() == GameState.POSITIONING);
+        playerID = player.getID();
+        assertEquals(playersManager.getCurrentPlayer(), player);
+        assertEquals(stateManager.getGameState(), GameState.COLORSELECTING);
     }
-
-
 
     @AfterEach
     void tearDown() {
@@ -60,15 +56,14 @@ class FirstPlayerManagerTest implements ServerObserver {
 
     @Override
     public void update(ServerEvent serverEvent) throws IOException {
-        if(serverEvent instanceof MessageEvent)
+        if (serverEvent instanceof MessageEvent)
             return;
 
         if (updateCounter == 0) {
             assertTrue(serverEvent instanceof FirstPlayerEvent);
-            assertTrue(stateManager.getGameState() == GameState.FIRSTPLAYERSELECTION);
-            assertEquals(playerid, player.getID());
+            assertEquals(stateManager.getGameState(), GameState.FIRSTPLAYERSELECTION);
+            assertEquals(playerID, player.getID());
             updateCounter++;
         }
-
-        }
     }
+}

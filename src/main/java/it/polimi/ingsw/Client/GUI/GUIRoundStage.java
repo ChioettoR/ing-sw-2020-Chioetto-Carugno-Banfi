@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Client.GUI;
 
-import it.polimi.ingsw.Events.Client.ActionSelectEvent;
-import it.polimi.ingsw.Events.Client.BuildDecisionEvent;
-import it.polimi.ingsw.Events.Client.MoveDecisionEvent;
-import it.polimi.ingsw.Events.Client.PositioningEvent;
+import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Model.ActionType;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -15,6 +12,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -43,6 +41,7 @@ public class GUIRoundStage {
     final DoubleProperty rotationVelocity = new SimpleDoubleProperty();
     final DoubleProperty zoomVelocity = new SimpleDoubleProperty();
     final LongProperty lastUpdateTime = new SimpleLongProperty();
+    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
     BuildingsController buildingsController;
     ActionType selectedActionType;
     GUIStagesManager stagesManager;
@@ -78,8 +77,8 @@ public class GUIRoundStage {
 
     public void start(Stage stage) {
 
-        stage.setMinWidth(700);
-        stage.setMinHeight(700);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(800);
         stage.setResizable(true);
 
         stage.setScene(scene);
@@ -123,7 +122,6 @@ public class GUIRoundStage {
         buildingsController.getMessageText().setVisible(true);
         buildingsController.getMessageText().setText(message);
         buildingsController.getErrorText().setVisible(false);
-        //timerToCancel();
     }
 
     public void readError(String error) {
@@ -159,7 +157,7 @@ public class GUIRoundStage {
         StackPane stackPane = buildingsController.getStackPane();
         stackPane.toFront();
 
-        playersCardShow();
+        //playersCardShow();
 
         baseBlock.setOnDragDetected(event -> {
             Dragboard db = baseBlock.startDragAndDrop(TransferMode.ANY);
@@ -368,14 +366,23 @@ public class GUIRoundStage {
             player1 = guiPlayersManager.getPlayer(playerNames.get(0));
             buildingsController.getImageRound1().setImage(guiCards.getFullImage(player1.getCardName()));
             buildingsController.getNameText1().setText(player1.getName());
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Light-brown")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameLightBrown.png")));
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Silver")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameSilver.png")));
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Dark-brown")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrown.png")));
             buildingsController.getButtonInfo1().setOnAction(event -> setInfo(player1.getCardName()));
             player2 = guiPlayersManager.getPlayer(playerNames.get(1));
             buildingsController.getImageRound2().setImage(guiCards.getFullImage(player2.getCardName()));
             buildingsController.getNameText2().setText(player2.getName());
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Light-brown")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameLightBrown.png")));
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Silver")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameSilver.png")));
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Dark-brown")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrown.png")));
             buildingsController.getButtonInfo2().setOnAction(event -> setInfo(player2.getCardName()));
             player3 = guiPlayersManager.getPlayer(playerNames.get(2));
             buildingsController.getImageRound3().setImage(guiCards.getFullImage(player3.getCardName()));
             buildingsController.getNameText3().setText(player3.getName());
+            if(player3.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Light-brown")))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameLightBrown.png")));
+            if(player3.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Silver")))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameSilver.png")));
+            if(player3.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Dark-brown")))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrown.png")));
             buildingsController.getButtonInfo3().setOnAction(event -> setInfo(player3.getCardName()));
         }
         else {
@@ -402,6 +409,7 @@ public class GUIRoundStage {
     }
 
     private void setVisibleTwo() {
+        buildingsController.getRightPane().setVisible(true);
         buildingsController.getBorderPaneCards().setVisible(true);
         buildingsController.getBorderPaneCards().setPickOnBounds(false);
 
@@ -422,6 +430,7 @@ public class GUIRoundStage {
         buildingsController.getRightPane().setVisible(false);
         buildingsController.getRightPane().setDisable(true);
         buildingsController.getInfoStackPane().setVisible(true);
+        buildingsController.getInfoStackPaneOpen().setVisible(true);
         buildingsController.getInfoGodImage().setImage(guiCards.getSmallImage(cardName));
         buildingsController.getInfoGodName().setText(cardName);
         buildingsController.getInfoDescription().setText(guiCards.getDescription(cardName));
@@ -464,6 +473,67 @@ public class GUIRoundStage {
     }
 
     private void CountDown() {
+    }
+
+    public void showColors(ArrayList<String> colorsName) {
+        buildingsController.getBorderPaneCards().setPickOnBounds(true);
+        if(colorsName.size() == 3){
+            buildingsController.getThreeWorkersPane().setVisible(true);
+            buildingsController.getWorkerImage3p1().setVisible(true);
+            buildingsController.getButtonWorker3p1().setOnAction(event -> sendToStagesManager("Light-brown"));
+            buildingsController.getWorkerImage3p2().setVisible(true);
+            buildingsController.getButtonWorker3p2().setOnAction(event -> sendToStagesManager("Silver"));
+            buildingsController.getWorkerImage3p3().setVisible(true);
+            buildingsController.getButtonWorker3p3().setOnAction(event -> sendToStagesManager("Dark-brown"));
+        }
+        else if(colorsName.size() == 2) {
+            buildingsController.getTwoWorkersPane().setVisible(true);
+            if(colorsName.get(0).equalsIgnoreCase("Light-brown")) {
+                buildingsController.getWorkerImage2p1().setVisible(true);
+                buildingsController.getWorkerImage2p1().setImage(new Image(getClass().getResourceAsStream("/lightBrownWorker.png")));
+                buildingsController.getButtonWorker2p1().setOnAction(event -> sendToStagesManager(colorsName.get(0)));
+            }
+            else if(colorsName.get(0).equalsIgnoreCase("Silver")) {
+                buildingsController.getWorkerImage2p1().setVisible(true);
+                buildingsController.getWorkerImage2p1().setImage(new Image(getClass().getResourceAsStream("/silverWorker.png")));
+                buildingsController.getButtonWorker2p1().setOnAction(event -> sendToStagesManager(colorsName.get(0)));
+            }
+            else if(colorsName.get(0).equalsIgnoreCase("Dark-brown")) {
+                buildingsController.getWorkerImage2p1().setVisible(true);
+                buildingsController.getWorkerImage2p1().setImage(new Image(getClass().getResourceAsStream("/darkBrownWorker.png")));
+                buildingsController.getButtonWorker2p1().setOnAction(event -> sendToStagesManager(colorsName.get(0)));
+            }
+            if(colorsName.get(1).equalsIgnoreCase("Light-brown")) {
+                buildingsController.getWorkerImage2p2().setVisible(true);
+                buildingsController.getWorkerImage2p2().setImage(new Image(getClass().getResourceAsStream("/lightBrownWorker.png")));
+                buildingsController.getButtonWorker2p2().setOnAction(event -> sendToStagesManager(colorsName.get(1)));
+            }
+            else if(colorsName.get(1).equalsIgnoreCase("Silver")) {
+                buildingsController.getWorkerImage2p2().setVisible(true);
+                buildingsController.getWorkerImage2p2().setImage(new Image(getClass().getResourceAsStream("/silverWorker.png")));
+                buildingsController.getButtonWorker2p2().setOnAction(event -> sendToStagesManager(colorsName.get(1)));
+            }
+            else if(colorsName.get(1).equalsIgnoreCase("Dark-brown")) {
+                buildingsController.getWorkerImage2p2().setVisible(true);
+                buildingsController.getWorkerImage2p2().setImage(new Image(getClass().getResourceAsStream("/darkBrownWorker.png")));
+                buildingsController.getButtonWorker2p2().setOnAction(event -> sendToStagesManager(colorsName.get(1)));
+            }
+
+        }
+    }
+
+    public void sendToStagesManager(String colorName) {
+        stagesManager.send(new PickColorEvent(guiColorDecoder.getPlayerColor(colorName)));
+        buildingsController.getThreeWorkersPane().setVisible(false);
+        buildingsController.getTwoWorkersPane().setVisible(false);
+    }
+
+    public void setBounds() {
+        buildingsController.getTwoWorkersPane().setPickOnBounds(false);
+        buildingsController.getThreeWorkersPane().setPickOnBounds(false);
+        buildingsController.getInfoStackPane().setPickOnBounds(false);
+        buildingsController.getBorderPaneCards().setPickOnBounds(false);
+        playersCardShow();
     }
 
 }

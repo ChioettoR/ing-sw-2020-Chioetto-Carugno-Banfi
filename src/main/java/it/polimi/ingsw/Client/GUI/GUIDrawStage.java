@@ -361,6 +361,10 @@ public class GUIDrawStage{
             event.consume();
         });
 
+        AnchorPane downPane = guiDrawPhaseController.getDownPane();
+        downPane.setOnDragDropped(e -> {});
+
+
         dragStartingPlayer.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;

@@ -13,6 +13,6 @@ public class ClientApp {
 
         if(args.length!=0) try { new Client("127.0.0.1", 1267).runCLI(); }
         catch (IOException e) { System.err.println("Server unavailable"); }
-        else new Client("127.0.0.1", 1267).runCLI();
+        else GUIStagesManager.launch(ip, port);
     }
 }

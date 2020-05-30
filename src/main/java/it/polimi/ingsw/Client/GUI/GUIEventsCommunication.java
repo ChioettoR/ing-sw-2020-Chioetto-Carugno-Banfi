@@ -169,11 +169,12 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void colorsAvailable(ArrayList<PlayerColor> colors) {
-        messagesReader.read(119);
+        //messagesReader.read(119);
         ArrayList<String> colorsName = new ArrayList<>();
         for(PlayerColor playerColor : colors) {
             colorsName.add(guiColorDecoder.getColorName(playerColor));
         }
+        Platform.runLater(() -> stagesManager.showColors(colorsName));
         //TODO : show colors
     }
 
