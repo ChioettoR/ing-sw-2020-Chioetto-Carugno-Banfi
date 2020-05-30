@@ -2,8 +2,6 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Events.Client.ClientEvent;
-import it.polimi.ingsw.Model.Player;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -11,6 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -23,14 +22,16 @@ public class GUIStagesManager extends Application {
     private static String ip;
     private static int port;
     Stage stage;
+    GUIWinController winController = new GUIWinController();
     GUILoginStage guiLoginStage = new GUILoginStage();
     GUIDrawStage guiDrawStage = new GUIDrawStage();
     GUIRoundStage guiRoundStage = new GUIRoundStage();
     GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
     boolean serverUp = false;
     GUIPhase guiPhase = GUIPhase.LOGIN;
-    int timer = 5;
+    int timer = 6;
     int seconds = timer;
+    Font looney;
 
     public GUIDrawStage getGuiDrawStage() {
         return guiDrawStage;
@@ -140,15 +141,36 @@ public class GUIStagesManager extends Application {
 
     public void roundTransition() {
         guiPhase = GUIPhase.ROUND;
+        Platform.runLater(() -> guiRoundStage.setUp(stage, this));
         Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
-        animation.setCycleCount(timer+1);
-        animation.setOnFinished(event -> Platform.runLater(() -> guiRoundStage.start(stage, this)));
+        animation.setCycleCount(timer);
+        animation.setOnFinished(event -> Platform.runLater(() -> guiRoundStage.start(stage)));
         animation.play();
     }
 
     private void CountDown() {
         Platform.runLater(() -> guiDrawStage.roundTransition(seconds));
         seconds--;
+    }
+
+    public void selectFirstPlayer(ArrayList<String> names) {
+        guiDrawStage.selectFirstPlayer(names);
+    }
+
+    public void win(String winnerName){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Win/win.fxml"));
+            Parent root = loader.load();
+            winController = loader.getController();
+            //winController.getTitle().setFont(Font.loadFont("Win/looney.ttf", 200));
+            winController.getTitle().setText("The winner is: " + winnerName + "!");
+            stage.setScene(new Scene(root, 600, 600));
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

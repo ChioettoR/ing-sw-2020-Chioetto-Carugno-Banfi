@@ -6,6 +6,9 @@ import it.polimi.ingsw.Events.Client.MoveDecisionEvent;
 import it.polimi.ingsw.Events.Client.PositioningEvent;
 import it.polimi.ingsw.Model.ActionType;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -23,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +51,7 @@ public class GUIRoundStage {
     HashMap<ActionType, String> buttonsStyle = new HashMap<>();
     boolean buttonTranslated = false;
     Scene scene;
+    int timer = 3;
 
     private final int maxFOV = 40;
     private final int minFOV = 25;
@@ -71,28 +76,14 @@ public class GUIRoundStage {
         return selectedActionType;
     }
 
-    public void start(Stage stage, GUIStagesManager stagesManager) {
+    public void start(Stage stage) {
 
-        this.stagesManager = stagesManager;
-
-        SmartGroup group = new SmartGroup();
-        guiGridManager = new GUIGridManager(group, this);
-
-        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
-        stage.sizeToScene();
-        stage.setMinWidth(400);
-        stage.setMinHeight(400);
-        PerspectiveCamera camera = createCamera();
-        subScene.setCamera(camera);
+        stage.setMinWidth(700);
+        stage.setMinHeight(700);
         stage.setResizable(true);
 
-        guiGridManager.createGrid();
-        gridAnimations(group, camera);
-
-        eventHandler(stage);
-        guiCards = stagesManager.getGuiDrawStage().getGuiCards();
-        try { buildingsImages(stage, subScene); }
-        catch (IOException e) { e.printStackTrace(); }
+        stage.setScene(scene);
+        stage.setResizable(true);
         stage.show();
     }
 
@@ -129,11 +120,17 @@ public class GUIRoundStage {
     }
 
     public void readMessage(String message) {
-        System.out.println(message);
+        buildingsController.getMessageText().setVisible(true);
+        buildingsController.getMessageText().setText(message);
+        buildingsController.getErrorText().setVisible(false);
+        //timerToCancel();
     }
 
     public void readError(String error) {
-        System.out.println(error);
+        buildingsController.getErrorText().setVisible(true);
+        buildingsController.getErrorText().setText(error);
+        buildingsController.getMessageText().setVisible(false);
+        timerToCancel();
     }
 
     private void buildingsImages(Stage stage, SubScene subScene) throws IOException {
@@ -208,8 +205,6 @@ public class GUIRoundStage {
             event.consume();
         });
         scene = new Scene(root, WIDTH, HEIGHT);
-        stage.setScene(scene);
-        stage.setResizable(true);
     }
 
     private PerspectiveCamera createCamera() {
@@ -296,6 +291,8 @@ public class GUIRoundStage {
     }
 
     public void showActions(ArrayList<String> actions) {
+//        buildingsController.getMessageText().setText("");
+//        buildingsController.getErrorText().setText("");
         ArrayList<ActionType> actionTypes = new ArrayList<>();
         for(String action : actions) actionTypes.add(ActionType.valueOf(action));
         if(actionTypes.size()==1) activeButtonCenter(actionTypes.get(0), true);
@@ -435,4 +432,38 @@ public class GUIRoundStage {
         buildingsController.getRightPane().setDisable(false);
         buildingsController.getInfoStackPane().setVisible(false);
     }
+
+    public void setUp(Stage stage, GUIStagesManager stagesManager) {
+        this.stagesManager = stagesManager;
+
+        SmartGroup group = new SmartGroup();
+        guiGridManager = new GUIGridManager(group, this);
+
+        SubScene subScene = new SubScene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+        stage.sizeToScene();
+        PerspectiveCamera camera = createCamera();
+        subScene.setCamera(camera);
+
+        guiGridManager.createGrid();
+        gridAnimations(group, camera);
+
+        eventHandler(stage);
+        guiCards = stagesManager.getGuiDrawStage().getGuiCards();
+        try { buildingsImages(stage, subScene); }
+        catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public void timerToCancel() {
+        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
+        animation.setCycleCount(timer+1);
+        animation.setOnFinished(event -> {
+            Platform.runLater(() -> buildingsController.getErrorText().setText(""));
+            Platform.runLater(() -> buildingsController.getMessageText().setVisible(true));
+        });
+        animation.play();
+    }
+
+    private void CountDown() {
+    }
+
 }

@@ -166,7 +166,8 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void firstPlayerSelection(ArrayList<String> names) {
-
+        Platform.runLater(() -> messagesReader.read(116));
+        Platform.runLater(() -> stagesManager.selectFirstPlayer(names));
     }
 
     public void disconnection() {

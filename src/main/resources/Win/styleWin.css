@@ -1,0 +1,14 @@
+.winPane{
+    -fx-background-image: url('thatsAllFolks.png');
+    -fx-background-size: 100% 100%;
+}
+
+@font-face {
+    font-family: 'looney';
+    src: url('Win/looney.ttf');
+}
+
+
+.title {
+    -fx-font-family: 'looney';
+}
