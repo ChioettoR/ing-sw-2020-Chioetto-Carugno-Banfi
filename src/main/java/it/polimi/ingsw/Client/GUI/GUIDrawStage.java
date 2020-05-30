@@ -205,6 +205,7 @@ public class GUIDrawStage{
             boolean success = false;
             if (db.hasString()) {
                 guiDrawPhaseController.sendToStagesManager(db.getString());
+                guiDrawPhaseController.getUpPane().setVisible(false);
                 success = true;
             }
             event.setDropCompleted(success);
@@ -240,10 +241,6 @@ public class GUIDrawStage{
         guiDrawPhaseController.getErrorPane().setVisible(false);
         guiDrawPhaseController.getMessagePane().setVisible(true);
         guiDrawPhaseController.getMessageText().setText("Round starts in: " + seconds);
-    }
-
-    public void sendCard() {
-        guiDrawPhaseController.getUpPane().setVisible(false);
     }
 
     public void sendFullDeck(ArrayList<CardSimplified> cards) {

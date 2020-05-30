@@ -29,11 +29,13 @@ public class EventsReader {
 
         else if(object instanceof DeckEvent) eventsCommunication.deck(((DeckEvent) object).getDeck().getMiniDeck());
 
-        else if(object instanceof CardEvent) eventsCommunication.card(((CardEvent) object).getCard());
+        else if(object instanceof PlayerChosenColorEvent) eventsCommunication.playerChosenColor(((PlayerChosenColorEvent) object).getName(), ((PlayerChosenColorEvent) object).getPlayerColor());
 
         else if(object instanceof ActionEvent) eventsCommunication.action(((ActionEvent) object).getActions());
 
         else if(object instanceof FirstPlayerEvent) eventsCommunication.firstPlayerSelection(((FirstPlayerEvent) object).getPlayers());
+
+        else if(object instanceof ColorSelectingEvent) eventsCommunication.colorsAvailable(((ColorSelectingEvent) object).getColorsAvailable());
 
         else if(object instanceof AvailableTilesEvent) eventsCommunication.availableTiles(((AvailableTilesEvent) object).getTiles(), ((AvailableTilesEvent) object).getActionType());
 

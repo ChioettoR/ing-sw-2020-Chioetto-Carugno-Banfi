@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Model.ActionType;
 import it.polimi.ingsw.Model.CardSimplified;
+import it.polimi.ingsw.Model.PlayerColor;
 import it.polimi.ingsw.Model.TileSimplified;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ public interface EventsCommunication {
     void endLogin(ArrayList<String> names);
     void message(int messageID);
     void deck(ArrayList<CardSimplified> cards);
-    void card(CardSimplified card);
     void playerChosenCard(String playerName, String cardName);
     void action(ArrayList<String> actions);
     void availableTiles(ArrayList<TileSimplified> tiles, ActionType actionType);
@@ -23,4 +23,6 @@ public interface EventsCommunication {
     void infoEffect(String cardName);
     void fullDeck(ArrayList<CardSimplified> cards);
     void firstPlayerSelection(ArrayList<String> names);
+    void colorsAvailable(ArrayList<PlayerColor> colors);
+    void playerChosenColor(String name, PlayerColor color);
 }

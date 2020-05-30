@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Observer.Server;
 
-import it.polimi.ingsw.Events.Server.CardEvent;
 import it.polimi.ingsw.Events.Server.DeckEvent;
 import it.polimi.ingsw.Events.Server.FullDeckEvent;
 import it.polimi.ingsw.Events.Server.PlayerChosenCardEvent;
@@ -29,18 +28,6 @@ public class CardObservable extends MessageObservable {
         }
     }
 
-    /**
-     *This is a notify for the client of cardEvent
-     * @param cardEvent card event notified
-     * @throws IOException when socket closes
-     */
-    public void notifyCard(CardEvent cardEvent) throws IOException {
-        synchronized (observers) {
-            for (ServerObserver observer : observers) {
-                observer.update(cardEvent);
-            }
-        }
-    }
     /**
      *This is a notify for the client when a player choose a card
      * @param playerChosenCardEvent player chosen card event notified

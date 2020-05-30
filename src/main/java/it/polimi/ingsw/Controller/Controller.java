@@ -27,6 +27,9 @@ public class Controller {
         else if(event instanceof FirstPlayerChosenEvent)
             communication.firstPlayerChoose(event.getPlayerID(), ((FirstPlayerChosenEvent) event).getName());
 
+        else if(event instanceof PickColorEvent)
+            communication.pickColor(event.getPlayerID(), ((PickColorEvent) event).getPlayerColor());
+
         else if (event instanceof SelectionEvent)
             communication.selection(event.getPlayerID(), ((SelectionEvent) event).getWorkerID(), ((SelectionEvent) event).getPlayerName());
 

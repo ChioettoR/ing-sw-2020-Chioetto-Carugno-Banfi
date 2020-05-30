@@ -2,6 +2,7 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Communication.Communication;
 import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
 import it.polimi.ingsw.Events.Server.EndLoginEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.*;
@@ -115,12 +116,13 @@ public class Server {
 
         new Builder().build();
         StateManager stateManager = new StateManager();
-        FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager);
-        DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
         PositioningManager positioningManager = new PositioningManager(stateManager);
+        ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+        FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
+        DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
         ActionManager actionManager = new ActionManager(stateManager);
         SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
-        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager, firstPlayerManager);
+        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager, firstPlayerManager, colorPoolManager);
         Controller controller = new Controller(communication);
 
         for(int i=0; i<lobbySize; i++) {
@@ -134,6 +136,7 @@ public class Server {
             firstPlayerManager.addObserver(remoteView);
             drawCardManager.addObserver(remoteView);
             positioningManager.addObserver(remoteView);
+            colorPoolManager.addObserver(remoteView);
             selectionWorkerManager.addObserver(remoteView);
             actionManager.addObserver(remoteView);
             stateManager.addObserver(remoteView);

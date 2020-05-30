@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.Client;
+import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.ActionType;
+import it.polimi.ingsw.Model.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ public class CLIStdinReader {
     boolean waiting = false;
     ActionType selectedActionType;
     boolean spectator = false;
+    CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
 
     public void setSpectator(boolean spectator) {
         this.spectator = spectator;
@@ -146,6 +149,9 @@ public class CLIStdinReader {
         else if(compareString(firstString, Input.INFO))
             client.getEventsCommunication().infoEffect(secondString);
 
+        else if(compareString(firstString, Input.SELECT) && compareStringWithColors(secondString))
+            client.update(new PickColorEvent(cliColorDecoder.getPlayerColor(secondString)));
+
         else if(compareString(firstString + " " + secondString, Input.END_ROUND))
             client.update(new ActionSelectEvent(ActionType.ENDROUND.toString()));
 
@@ -248,6 +254,10 @@ public class CLIStdinReader {
                 return false;
         }
         return true;
+    }
+
+    private boolean compareStringWithColors(String userInput) {
+        return cliColorDecoder.getPlayerColor(userInput) != null;
     }
 }
 

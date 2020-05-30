@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 public class FirstPlayerManager extends FirstPlayerObservable {
 
     PlayersManager playersManager = PlayersManager.getPlayersManager();
+    ColorPoolManager colorPoolManager;
     StateManager stateManager;
     ArrayList<String> names;
 
-    public FirstPlayerManager(StateManager stateManager) {
+    public FirstPlayerManager(StateManager stateManager, ColorPoolManager colorPoolManager) {
         this.stateManager = stateManager;
+        this.colorPoolManager = colorPoolManager;
     }
 
     public void transition() throws IOException {
@@ -48,9 +50,6 @@ public class FirstPlayerManager extends FirstPlayerObservable {
     }
 
     public void firstPlayerSelected() throws IOException {
-        playersManager.nextPlayer();
-        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
-        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(114, p.getID()));
-        stateManager.setGameState(GameState.POSITIONING);
+        colorPoolManager.transition();
     }
 }

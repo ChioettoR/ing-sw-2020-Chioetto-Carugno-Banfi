@@ -19,7 +19,8 @@ public class DrawCardManagerTest implements ServerObserver {
     Player player1 = new Player("Marcello");
     Player player2 = new Player("Franco");
     StateManager stateManager = new StateManager();
-    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager);
+    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
     DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
     int updateCounter;
     String cardName1;
@@ -104,13 +105,6 @@ public class DrawCardManagerTest implements ServerObserver {
         }
 
         else if(updateCounter==3) {
-            updateCounter++;
-            assertTrue(serverEvent instanceof CardEvent);
-            assertEquals(player1.getID(), serverEvent.getPlayerID());
-            assertEquals(cardName1, ((CardEvent) serverEvent).getCard().getName());
-        }
-
-        else if(updateCounter==4) {
             assertTrue(serverEvent instanceof  DeckEvent);
             assertEquals(2, ((DeckEvent) serverEvent).getDeck().getMiniDeck().size());
             assertEquals(0, serverEvent.getPlayerID());
@@ -126,7 +120,7 @@ public class DrawCardManagerTest implements ServerObserver {
             updateCounter++;
         }
 
-        else if(updateCounter==5) {
+        else if(updateCounter==4) {
             assertTrue(serverEvent instanceof  DeckEvent);
             assertEquals(2, ((DeckEvent) serverEvent).getDeck().getMiniDeck().size());
             assertEquals(2, serverEvent.getPlayerID());
@@ -141,36 +135,22 @@ public class DrawCardManagerTest implements ServerObserver {
             assertTrue(cardsExpected.containsAll(cardReceived));
         }
 
-        else if(updateCounter==6) {
+        else if(updateCounter==5) {
             updateCounter++;
             drawCardManager.pick(2, cardName2);
         }
 
-        else if(updateCounter==7) {
+        else if(updateCounter==6) {
             assertTrue(serverEvent instanceof  PlayerChosenCardEvent);
             assertEquals(player2.getName(), ((PlayerChosenCardEvent) serverEvent).getPlayerName());
             assertEquals(cardName2, ((PlayerChosenCardEvent) serverEvent).getCardName());
             updateCounter++;
         }
 
-        else if(updateCounter==8) {
-            assertTrue(serverEvent instanceof CardEvent);
-            assertEquals(player2.getID(), serverEvent.getPlayerID());
-            assertEquals(cardName2, ((CardEvent) serverEvent).getCard().getName());
-            updateCounter++;
-        }
-
-        else if(updateCounter==9) {
+        else if(updateCounter==7) {
             assertTrue(serverEvent instanceof PlayerChosenCardEvent);
             assertEquals(player.getName(), ((PlayerChosenCardEvent) serverEvent).getPlayerName());
             assertEquals(cardName3, ((PlayerChosenCardEvent) serverEvent).getCardName());
-            updateCounter++;
-        }
-
-        else if(updateCounter==10) {
-            assertTrue(serverEvent instanceof CardEvent);
-            assertEquals(player.getID(), serverEvent.getPlayerID());
-            assertEquals(cardName3, ((CardEvent) serverEvent).getCard().getName());
             updateCounter++;
         }
     }

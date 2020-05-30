@@ -143,7 +143,8 @@ public class CLIGridPrinter {
     }
 
     private void printName(String name, Color color) {
-        System.out.print("  " + color.escape() + "───" + Color.RESET);
+        if(color==null) System.out.print("  "  + "───");
+        else System.out.print("  " + color.escape() + "───" + Color.RESET);
         System.out.print(" " + name);
     }
     private synchronized void clearScreen(){

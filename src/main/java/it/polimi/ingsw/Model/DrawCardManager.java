@@ -157,7 +157,6 @@ public class DrawCardManager extends CardObservable {
         pickedCards.add(cardSimplified);
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));
         notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), cardSimplified.getName()));
-        notifyCard(new CardEvent(cardSimplified, playersManager.getCurrentPlayer().getID()));
     }
 
     /**
@@ -169,7 +168,6 @@ public class DrawCardManager extends CardObservable {
         playersManager.nextPlayer();
         playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));
         notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), remainingCards.get(0).getName()));
-        notifyCard(new CardEvent(remainingCards.get(0), playersManager.getCurrentPlayer().getID()));
         stateManager.setGameState(GameState.FIRSTPLAYERSELECTION);
         firstPlayerManager.transition();
     }

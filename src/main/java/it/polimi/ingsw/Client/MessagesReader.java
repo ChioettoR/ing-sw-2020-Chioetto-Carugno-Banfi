@@ -84,6 +84,14 @@ public class MessagesReader {
                         message = "Wait until the Challenger chooses the first player";
                         break;
                     }
+                    case (118) : {
+                        message = "Wait until other players select their color";
+                        break;
+                    }
+                    case (119) : {
+                        message = "Select a color for your workers";
+                        break;
+                    }
                 }
                 messagesHandler.sendRequest(message);
                 break;
@@ -120,7 +128,7 @@ public class MessagesReader {
                         message = "Waiting...";
                         break;
                     }
-                    case (308): {
+                    case (308) : {
                         message = "YOU LOSE!";
                         break;
                     }
@@ -227,6 +235,10 @@ public class MessagesReader {
                     }
                     case (425) : {
                         message = "Invalid player selection";
+                        break;
+                    }
+                    case (426) : {
+                        message = "Invalid color selected";
                         break;
                     }
                 }

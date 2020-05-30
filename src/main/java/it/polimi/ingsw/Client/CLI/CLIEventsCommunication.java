@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Client.EventsCommunication;
 import it.polimi.ingsw.Client.MessagesReader;
-import it.polimi.ingsw.Model.ActionType;
-import it.polimi.ingsw.Model.CardSimplified;
-import it.polimi.ingsw.Model.TileSimplified;
+import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CLIEventsCommunication implements EventsCommunication {
 
@@ -17,6 +17,7 @@ public class CLIEventsCommunication implements EventsCommunication {
     CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
     CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
     CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
+    CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
     int maxEffectLength = 85;
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
@@ -56,11 +57,6 @@ public class CLIEventsCommunication implements EventsCommunication {
 
         ArrayList<StringBuilder> stringBuilders = cliCardBuilder.createCards(names, effects, descriptions);
         cliDeck.createDeck(stringBuilders);
-    }
-
-    @Override
-    public void card(CardSimplified card) {
-        cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
     }
 
     @Override
@@ -154,5 +150,22 @@ public class CLIEventsCommunication implements EventsCommunication {
     public void firstPlayerSelection(ArrayList<String> names) {
         messagesReader.read(116);
         cliActionPrinter.printAction(names);
+    }
+
+    @Override
+    public void colorsAvailable(ArrayList<PlayerColor> colors) {
+        messagesReader.read(119);
+        ArrayList<String> colorsName = new ArrayList<>();
+        for(PlayerColor playerColor : colors) {
+            System.out.print(cliColorDecoder.getColor(playerColor).escape() + cliColorDecoder.getColorName(playerColor) + Color.RESET);
+            if(colors.indexOf(playerColor)!=colors.size()-1) System.out.print("  ");
+        }
+        System.out.println("");
+    }
+
+    @Override
+    public void playerChosenColor(String name, PlayerColor color) {
+        cliPlayersManager.getPlayer(name).setColor(cliColorDecoder.getColor(color));
+        cliGridManager.printGrid(cliPlayersManager.getDisplayStrings(), cliPlayersManager.getColors());
     }
 }

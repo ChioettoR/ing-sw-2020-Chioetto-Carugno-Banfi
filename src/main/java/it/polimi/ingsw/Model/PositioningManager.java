@@ -11,6 +11,7 @@ public class PositioningManager extends ChangeObservable {
     private final StateManager stateManager;
     final int totalWorkersNumber = 2;
     int currentWorkersNumber;
+    PlayerColor playerColor;
 
     public PositioningManager(StateManager stateManager) {
         this.stateManager = stateManager;

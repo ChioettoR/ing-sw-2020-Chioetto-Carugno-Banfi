@@ -7,8 +7,11 @@ public class GUIPlayer {
     javafx.scene.paint.Color color;
     String cardName;
 
-    public GUIPlayer(String name, javafx.scene.paint.Color color) {
+    public GUIPlayer(String name) {
         this.name = name;
+    }
+
+    public void setColor(Color color) {
         this.color = color;
     }
 

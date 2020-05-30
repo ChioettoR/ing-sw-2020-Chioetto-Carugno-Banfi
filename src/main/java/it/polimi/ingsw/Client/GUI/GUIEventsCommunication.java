@@ -16,6 +16,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     GUILoginStage guiLoginStage;
     GUIDrawStage guiDrawStage;
     private MessagesReader messagesReader;
+    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
 
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
@@ -59,11 +60,6 @@ public class GUIEventsCommunication implements EventsCommunication {
     @Override
     public void deck(ArrayList<CardSimplified> cards) {
         Platform.runLater(() -> guiDrawStage.sendDeck(cards));
-    }
-
-    @Override
-    public void card(CardSimplified card) {
-        Platform.runLater(() -> guiDrawStage.sendCard());
     }
 
     @Override
@@ -171,6 +167,21 @@ public class GUIEventsCommunication implements EventsCommunication {
         Platform.runLater(() -> stagesManager.selectFirstPlayer(names));
     }
 
+    @Override
+    public void colorsAvailable(ArrayList<PlayerColor> colors) {
+        messagesReader.read(119);
+        ArrayList<String> colorsName = new ArrayList<>();
+        for(PlayerColor playerColor : colors) {
+            colorsName.add(guiColorDecoder.getColorName(playerColor));
+        }
+        //TODO : show colors
+    }
+
+    @Override
+    public void playerChosenColor(String name, PlayerColor color) {
+        stagesManager.getGuiPlayersManager().getPlayer(name).setColor(guiColorDecoder.getColor(color));
+    }
+
     public void disconnection() {
         Platform.runLater(() -> {
             try { stagesManager.setDisconnectedScene(); }
@@ -178,4 +189,3 @@ public class GUIEventsCommunication implements EventsCommunication {
         });
     }
 }
-

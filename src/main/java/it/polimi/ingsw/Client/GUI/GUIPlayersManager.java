@@ -5,39 +5,9 @@ import java.util.ArrayList;
 public class GUIPlayersManager {
 
     ArrayList<GUIPlayer> guiPlayers = new ArrayList<>();
-    ArrayList<GUIColorPool> guiColorPool;
-
-    public GUIPlayersManager() {
-        guiColorPool = new ArrayList<>();
-        guiColorPool.add(GUIColorPool.SILVER);
-        guiColorPool.add(GUIColorPool.DARKBROWN);
-        guiColorPool.add(GUIColorPool.LIGHTBROWN);
-    }
 
     public void addPlayer(String name) {
-
-        GUIColorPool colorEnum = guiColorPool.get(guiPlayers.size());
-        javafx.scene.paint.Color color;
-
-        switch (colorEnum) {
-            case SILVER: {
-                color = javafx.scene.paint.Color.web("8a9f9f");
-                break;
-            }
-            case DARKBROWN: {
-                color = javafx.scene.paint.Color.web("cfb39c");
-                break;
-            }
-            case LIGHTBROWN: {
-                color = javafx.scene.paint.Color.web("7c5536");
-                break;
-            }
-            default: {
-                color = javafx.scene.paint.Color.BLACK;
-                break;
-            }
-        }
-        guiPlayers.add(new GUIPlayer(name, color));
+        guiPlayers.add(new GUIPlayer(name));
     }
 
     public ArrayList<String> getNames() {
