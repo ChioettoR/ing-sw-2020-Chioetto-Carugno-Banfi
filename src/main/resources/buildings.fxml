@@ -100,7 +100,7 @@
            </ImageView>
       </children>
    </VBox>
-   <BorderPane fx:id="borderPaneCards" focusTraversable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <BorderPane fx:id="borderPaneCards" focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <right>
          <StackPane fx:id="rightPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false" BorderPane.alignment="CENTER">
             <children>
@@ -318,21 +318,21 @@
          <StackPane focusTraversable="true" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
       </left>
       <top>
-         <StackPane pickOnBounds="false" prefHeight="88.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <StackPane minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="88.0" prefWidth="0.0" BorderPane.alignment="CENTER">
             <children>
-               <ImageView fitHeight="88.0" fitWidth="466.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="75.0" fitWidth="349.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                      <Image url="@messageBar.png" />
                   </image>
                </ImageView>
-               <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="466.0">
+               <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="310.0">
                   <font>
-                     <Font name="Candara" size="14.0" />
+                     <Font size="15.0" />
                   </font>
                </Text>
-               <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="466.0">
+               <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="310.0">
                   <font>
-                     <Font name="Candara" size="14.0" />
+                     <Font size="15.0" />
                   </font>
                </Text>
             </children>

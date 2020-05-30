@@ -77,10 +77,11 @@ public class GUIRoundStage {
 
     public void start(Stage stage) {
 
-        stage.setMinWidth(1000);
-        stage.setMinHeight(800);
+        stage.setWidth(675);
+        stage.setHeight(675);
+        stage.setMinWidth(675);
+        stage.setMinHeight(675);
         stage.setResizable(true);
-
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
@@ -391,10 +392,16 @@ public class GUIRoundStage {
             player1 = guiPlayersManager.getPlayer(playerNames.get(0));
             buildingsController.getImageRound1().setImage(guiCards.getFullImage(player1.getCardName()));
             buildingsController.getNameText1().setText(player1.getName());
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Light-brown")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameLightBrown.png")));
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Silver")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameSilver.png")));
+            if(player1.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Dark-brown")))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrown.png")));
             buildingsController.getButtonInfo1().setOnAction(event -> setInfo(player1.getCardName()));
             player2 = guiPlayersManager.getPlayer(playerNames.get(1));
             buildingsController.getImageRound2().setImage(guiCards.getFullImage(player2.getCardName()));
             buildingsController.getNameText2().setText(player2.getName());
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Light-brown")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameLightBrown.png")));
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Silver")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameSilver.png")));
+            if(player2.getColor().equals(guiColorDecoder.getColor(guiColorDecoder.getPlayerColor("Dark-brown")))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrown.png")));
             buildingsController.getButtonInfo2().setOnAction(event -> setInfo(player2.getCardName()));
         }
     }

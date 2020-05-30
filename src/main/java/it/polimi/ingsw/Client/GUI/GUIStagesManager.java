@@ -113,6 +113,8 @@ public class GUIStagesManager extends Application {
         loader.setLocation(getClass().getResource("/Disconnection/disconnection.fxml"));
         Parent disconnection = loader.load();
         stage.setScene(new Scene(disconnection, 600, 600));
+        stage.setWidth(600);
+        stage.setHeight(600);
         stage.setResizable(false);
         stage.show();
     }
@@ -166,6 +168,8 @@ public class GUIStagesManager extends Application {
             Parent root = loader.load();
             winController = loader.getController();
             stage.setScene(new Scene(root, 600, 600));
+            stage.setHeight(600);
+            stage.setWidth(600);
             stage.setResizable(false);
             final Font looney = Font.loadFont(getClass().getResourceAsStream("/Win/looney.ttf"), 40);
             winController.getTitle().setFont(looney);
