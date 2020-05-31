@@ -101,7 +101,8 @@ public class PlayersManager extends MessageObservable {
 
         else {
             players.remove(player);
-            nextPlayerIndex = increaseIndex(currentPlayerIndex - 1);
+            if(player.getID()<=currentPlayerIndex) nextPlayerIndex = increaseIndex(currentPlayerIndex - 1);
+            else nextPlayerIndex = increaseIndex(currentPlayerIndex);
             currentPlayerIndex = -1;
             if(getPlayersNumber() == 1){
                 winPlayer(getPlayers().get(0));
