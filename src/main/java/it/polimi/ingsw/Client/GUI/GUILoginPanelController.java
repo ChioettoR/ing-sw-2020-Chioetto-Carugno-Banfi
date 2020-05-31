@@ -223,6 +223,7 @@ public class GUILoginPanelController {
     }
 
     public void lobbyFull() {
+        stagesManager.setUseDisconnectionScene(false);
         backGround.setVisible(true);
         backGround.setDisable(false);
         lobbyFound.setVisible(true);

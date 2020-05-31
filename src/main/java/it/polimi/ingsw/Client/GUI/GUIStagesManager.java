@@ -31,7 +31,13 @@ public class GUIStagesManager extends Application {
     GUIPhase guiPhase = GUIPhase.LOGIN;
     int timer = 6;
     int seconds = timer;
+    private boolean useDisconnectionScene = true;
     Font looney;
+
+
+    public void setUseDisconnectionScene(boolean useDisconnectionScene) {
+        this.useDisconnectionScene = useDisconnectionScene;
+    }
 
     public GUIDrawStage getGuiDrawStage() {
         return guiDrawStage;
@@ -109,6 +115,7 @@ public class GUIStagesManager extends Application {
     }
 
     public void setDisconnectedScene() throws IOException{
+        if(useDisconnectionScene ==false) return;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Disconnection/disconnection.fxml"));
         Parent disconnection = loader.load();
@@ -163,6 +170,7 @@ public class GUIStagesManager extends Application {
 
     public void win(String winnerName){
         try {
+            guiRoundStage.getStagesManager().setUseDisconnectionScene(false);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Win/win.fxml"));
             Parent root = loader.load();

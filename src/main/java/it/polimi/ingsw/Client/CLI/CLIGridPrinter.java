@@ -27,7 +27,7 @@ public class CLIGridPrinter {
         ArrayList<StringWrapper> fourthLine = new ArrayList<>();
         ArrayList<StringWrapper> fifthLine = new ArrayList<>();
 
-        clearScreen();
+        //clearScreen();
         createZeroLine(zeroLine);
         for(StringWrapper s : zeroLine)
             System.out.print(s.getString());
