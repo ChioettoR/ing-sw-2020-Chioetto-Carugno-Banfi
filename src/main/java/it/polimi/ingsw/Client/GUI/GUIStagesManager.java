@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -32,7 +33,7 @@ public class GUIStagesManager extends Application {
     int timer = 6;
     int seconds = timer;
     private boolean useDisconnectionScene = true;
-    Font looney;
+    Timeline animation;
 
 
     public void setUseDisconnectionScene(boolean useDisconnectionScene) {
@@ -115,7 +116,8 @@ public class GUIStagesManager extends Application {
     }
 
     public void setDisconnectedScene() throws IOException{
-        if(useDisconnectionScene ==false) return;
+        if(animation != null) animation.stop();
+        if(!useDisconnectionScene) return;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Disconnection/disconnection.fxml"));
         Parent disconnection = loader.load();
@@ -136,6 +138,7 @@ public class GUIStagesManager extends Application {
         else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.threeCardsShow());
         else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.twoCardsShow());
         else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showAgain());
+        else if(messageID == 411 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showCards());
         else if(messageID == 306 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.resetButtons());
         else if(messageID == 108 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
         else if(messageID == 114 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
@@ -153,7 +156,7 @@ public class GUIStagesManager extends Application {
     public void roundTransition() {
         guiPhase = GUIPhase.ROUND;
         Platform.runLater(() -> guiRoundStage.setUp(stage, this));
-        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
+        animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
         animation.setCycleCount(timer);
         animation.setOnFinished(event -> Platform.runLater(() -> guiRoundStage.start(stage)));
         animation.play();
@@ -181,7 +184,9 @@ public class GUIStagesManager extends Application {
             stage.setResizable(false);
             final Font looney = Font.loadFont(getClass().getResourceAsStream("/Win/looney.ttf"), 40);
             winController.getTitle().setFont(looney);
-            winController.getTitle().setText("     " + winnerName + " WON");
+            winnerName = winnerName.toLowerCase();
+            winController.getTitle().setText(winnerName + " won");
+            winController.getTitle().setTextAlignment(TextAlignment.CENTER);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

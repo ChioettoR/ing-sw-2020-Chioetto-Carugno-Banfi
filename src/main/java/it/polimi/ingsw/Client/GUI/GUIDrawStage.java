@@ -26,6 +26,8 @@ public class GUIDrawStage{
     GUIPlayersManager guiPlayersManager;
     GUICards guiCards = new GUICards();
 
+    ArrayList<CardSimplified> deck = new ArrayList<>();
+
 
     public void start(Stage stage, GUIStagesManager stagesManager, GUIPlayersManager guiPlayersManager){
         FXMLLoader loader = new FXMLLoader();
@@ -245,6 +247,8 @@ public class GUIDrawStage{
 
     public void sendFullDeck(ArrayList<CardSimplified> cards) {
 
+        deck = new ArrayList<>(cards);
+
         int godIndex;
 
         for (CardSimplified card : cards) guiCards.addDescription(card);
@@ -451,5 +455,31 @@ public class GUIDrawStage{
             });
         }
     }
+
+    public void showCards() {
+        if(guiPlayersManager.getNames().size() == 3) {
+            if(guiPlayersManager.getPlayer(guiPlayersManager.getNames().get(1)).getCardName() != null) {
+                showTwoCardsToSelect();
+            }
+            else {
+                showThreeCardsToSelect();
+            }
+        }else if(guiPlayersManager.getNames().size() == 2) {
+            showTwoCardsToSelect();
+        }
+    }
+
+    public void showTwoCardsToSelect() {
+        guiDrawPhaseController.getUpPane().setVisible(true);
+        guiDrawPhaseController.getUpTwoCardsPane().setVisible(true);
+        guiDrawPhaseController.getUpTwoCardsPane().setDisable(false);
+    }
+
+    public void showThreeCardsToSelect() {
+        guiDrawPhaseController.getUpPane().setVisible(true);
+        guiDrawPhaseController.getUpThreeCardsPane().setVisible(true);
+        guiDrawPhaseController.getUpThreeCardsPane().setDisable(false);
+    }
+
 }
 

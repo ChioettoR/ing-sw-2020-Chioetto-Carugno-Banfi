@@ -107,13 +107,14 @@ public class CLIEventsCommunication implements EventsCommunication {
         cliStdinReader.getClient().closeConnection();
     }
 
+    //TODO JAVADOC
     @Override
     public void lose(String loserName, boolean youLose) {
         if(youLose) {
             cliStdinReader.setSpectator(true);
             messagesReader.read(308);
         }
-        //TODO :
+        cliPlayersManager.deleteName(loserName);
     }
 
     /**

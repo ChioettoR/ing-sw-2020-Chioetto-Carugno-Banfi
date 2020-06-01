@@ -543,4 +543,30 @@ public class GUIRoundStage {
         playersCardShow();
     }
 
+    public void setNewFrame(String loserName) {
+        if(buildingsController.getNameText1().getText().equals(loserName)) {
+            //silver
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("8a9f9f"))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameSilverWithX.png")));
+            //light-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("cfb39c"))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameLightBrownWithX.png")));
+            //dark-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("7c5536"))) buildingsController.getFrame1().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrownWithX.png")));
+        }
+        else if(buildingsController.getNameText2().getText().equals(loserName)) {
+            //silver
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("8a9f9f"))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameSilverWithX.png")));
+            //light-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("cfb39c"))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameLightBrownWithX.png")));
+            //dark-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("7c5536"))) buildingsController.getFrame2().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrownWithX.png")));        }
+        else if(buildingsController.getNameText3().getText().equals(loserName)) {
+            //silver
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("8a9f9f"))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameSilverWithX.png")));
+            //light-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("cfb39c"))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameLightBrownWithX.png")));
+            //dark-brown
+            if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("7c5536"))) buildingsController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrownWithX.png")));
+        }
+    }
+
 }

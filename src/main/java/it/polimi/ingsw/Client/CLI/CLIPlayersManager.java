@@ -58,4 +58,9 @@ public class CLIPlayersManager {
             if(cliPlayer.getName().equals(name)) return cliPlayer.getColor();
         return null;
     }
+
+    //TODO JAVADOC
+    public void deleteName(String name) {
+        cliPlayers.removeIf(p -> p.getName().equals(name));
+    }
 }
