@@ -43,6 +43,14 @@ public class GUIGridManager {
         this.grid = grid;
     }
 
+    public ArrayList<GUIWorker> getWorkers(String playerName) {
+        ArrayList<GUIWorker> playerWorkers = new ArrayList<>();
+        for(GUIWorker w : workers) {
+            if(w.getPlayerName().equalsIgnoreCase(playerName)) playerWorkers.add(w);
+        }
+        return playerWorkers;
+    }
+
     public GUIWorker createWorker(String playerName, int workerID, int x, int y, Color color) {
         GUITile tile = grid.getTile(x, y);
         GUIWorker guiWorker = new GUIWorker(playerName, workerID, color, guiRoundStage);
@@ -69,6 +77,7 @@ public class GUIGridManager {
     public void deleteWorker(GUIWorker g) {
         g.getGuiTile().setGUIWorker(null);
         group.getChildren().remove(g.getWorkerMesh());
+        workers.remove(g);
     }
 
     public void setWorkerNull(int x, int y) {

@@ -361,8 +361,10 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private boolean checkLose() throws IOException {
         ArrayList<Worker> workers = playersManager.getCurrentPlayer().getWorkers();
         if(workers.stream().noneMatch(Worker::isAvailable)) {
-            notifyLose(new LoseEvent(playersManager.getCurrentPlayer().getID()));
+            for(Player player : playersManager.getPlayers()) notifyLose(new LoseEvent(playersManager.getCurrentPlayer().getID()==player.getID(), playersManager.getCurrentPlayer().getName(), player.getID()));
+            ArrayList<Tile> oldGrid = saveOldGrid();
             playersManager.deleteCurrentPlayer();
+            sendChange(oldGrid);
             playersManager.nextPlayerAndStartRound();
             return true;
         }
@@ -573,7 +575,11 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
                 notifyMessage(new MessageEvent(104, playersManager.getCurrentPlayer().getID()));
                 stateManager.setGameState(GameState.SELECTING);
             }
-            else checkWin();
+            else {
+                if(!checkWin()) {
+                    notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
+                }
+            }
         }
         else {
             availableActions.addAvailableAction((UserAction) currentAction);

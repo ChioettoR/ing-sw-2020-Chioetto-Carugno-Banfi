@@ -151,8 +151,9 @@ public class GUIEventsCommunication implements EventsCommunication {
     }
 
     @Override
-    public void lose() {
-        Platform.runLater(() -> messagesReader.read(308));
+    public void lose(String loserName, boolean youLose) {
+        Platform.runLater( () -> { if(youLose) Platform.runLater(() -> messagesReader.read(308)); });
+        //TODO :
     }
 
     @Override

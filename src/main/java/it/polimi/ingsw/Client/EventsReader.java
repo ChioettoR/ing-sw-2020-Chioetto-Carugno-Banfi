@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client;
-import it.polimi.ingsw.Events.Client.FirstPlayerChosenEvent;
-import it.polimi.ingsw.Events.Server.WaitingEvent;
+
 import it.polimi.ingsw.Events.Server.*;
 
 import java.io.Serializable;
@@ -43,7 +42,7 @@ public class EventsReader {
 
         else if(object instanceof  WinEvent) eventsCommunication.win(((WinEvent) object).getWinnerName());
 
-        else if(object instanceof LoseEvent) eventsCommunication.lose();
+        else if(object instanceof LoseEvent) eventsCommunication.lose(((LoseEvent) object).getLoserName(), ((LoseEvent) object).isYouLose());
 
         else if(object instanceof FullDeckEvent) eventsCommunication.fullDeck(((FullDeckEvent) object).getCards());
     }

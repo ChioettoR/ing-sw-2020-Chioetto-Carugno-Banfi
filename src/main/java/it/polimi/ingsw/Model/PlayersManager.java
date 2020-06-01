@@ -100,6 +100,9 @@ public class PlayersManager extends MessageObservable {
             System.out.println("The currentPlayer to delete is not in the list of players");
 
         else {
+            for(Worker w : player.getWorkers()) {
+                w.getPosition().setEmpty(true);
+            }
             players.remove(player);
             if(player.getID()<=currentPlayerIndex) nextPlayerIndex = increaseIndex(currentPlayerIndex - 1);
             else nextPlayerIndex = increaseIndex(currentPlayerIndex);
@@ -163,7 +166,7 @@ public class PlayersManager extends MessageObservable {
                 worker.getPosition().setEmpty(true);
                 p.deleteWorker(worker);
                 if(p.getWorkers().size() == 0) {
-                    notifyLose(new LoseEvent(p.getID()));
+                    for(Player player : players) notifyLose(new LoseEvent(p.getID()==player.getID(), p.getName(), player.getID()));
                     deletePlayer(p);
                 }
                 return;

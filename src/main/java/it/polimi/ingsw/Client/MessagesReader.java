@@ -92,6 +92,10 @@ public class MessagesReader {
                         message = "Select a color for your workers";
                         break;
                     }
+                    case (120) : {
+                        message = "Wait until the Challenger select the cards";
+                        break;
+                    }
                 }
                 messagesHandler.sendRequest(message);
                 break;

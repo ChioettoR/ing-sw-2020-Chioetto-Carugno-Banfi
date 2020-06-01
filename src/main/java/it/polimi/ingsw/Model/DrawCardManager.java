@@ -88,6 +88,9 @@ public class DrawCardManager extends CardObservable {
         if (playersManager.getPlayersNumber() == 3) messageID = 501;
         else if (playersManager.getPlayersNumber() == 2) messageID = 502;
         notifyMessage(new MessageEvent(messageID, PlayersManager.getPlayersManager().nextPlayer().getID()));
+        for(Player p : playersManager.getNextPlayers()) {
+            notifyMessage(new MessageEvent(120, p.getID()));
+        }
         notifyFullDeck(new FullDeckEvent((ArrayList<CardSimplified>) Deck.getDeck().getCardsList().stream().map(Card::simplify).collect(Collectors.toList()), PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
     }
 

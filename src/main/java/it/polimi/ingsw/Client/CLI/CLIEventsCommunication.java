@@ -107,13 +107,13 @@ public class CLIEventsCommunication implements EventsCommunication {
         cliStdinReader.getClient().closeConnection();
     }
 
-    /**
-     * Print method for the lose
-     */
     @Override
-    public void lose() {
-        cliStdinReader.setSpectator(true);
-        messagesReader.read(308);
+    public void lose(String loserName, boolean youLose) {
+        if(youLose) {
+            cliStdinReader.setSpectator(true);
+            messagesReader.read(308);
+        }
+        //TODO :
     }
 
     /**

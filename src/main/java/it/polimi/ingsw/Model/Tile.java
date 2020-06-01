@@ -78,7 +78,7 @@ public class Tile {
 
     public void setWorker(Worker worker) {
         this.worker = worker;
-        setEmpty(false);
+        setEmpty(worker == null);
     }
 
     public Tile(int x, int y) {
