@@ -4,7 +4,10 @@ import it.polimi.ingsw.Client.CLI.CLIEventsCommunication;
 import it.polimi.ingsw.Client.CLI.CLIStdinReader;
 import it.polimi.ingsw.Client.GUI.GUIEventsCommunication;
 import it.polimi.ingsw.CountdownInterface;
+import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Client.ClientEvent;
+import it.polimi.ingsw.Events.Client.PongEvent;
+import it.polimi.ingsw.Events.Server.PingEvent;
 import it.polimi.ingsw.Observer.Client.ClientObserver;
 
 import java.io.IOException;
@@ -12,18 +15,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.Timer;
 
 public class Client implements ClientObserver, CountdownInterface {
 
     private final String ip;
     private final int port;
-    Socket socket;
-    ObjectInputStream ois;
-    ObjectOutputStream oos;
-    EventsReader eventsReader;
-    EventsCommunication eventsCommunication;
-    CLIStdinReader cliStdinReader;
+    private Socket socket;
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    private EventsReader eventsReader;
+    private EventsCommunication eventsCommunication;
+    private CLIStdinReader cliStdinReader;
     public static final String ANSI_CYAN = "\u001B[36m";
+    private Timer pongTimer;
+    private CountdownTask pongTask;
+    private boolean pongCountdownStarted = false;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -36,6 +43,7 @@ public class Client implements ClientObserver, CountdownInterface {
 
     public void closeConnection() {
         try{
+            pongTimer.cancel();
             socket.close();
             oos.close();
             ois.close();
@@ -46,7 +54,21 @@ public class Client implements ClientObserver, CountdownInterface {
     }
 
     public void read(Serializable serializable) {
-        eventsReader.read(serializable);
+        if(!checkPing(serializable)) eventsReader.read(serializable);
+    }
+
+    private boolean checkPing(Serializable serializable) {
+        if(serializable instanceof PingEvent) {
+            System.out.println("PING RECEIVED");
+            int pingDelay = 7;
+            if(pongCountdownStarted) pongTimer.cancel();
+            update(new PongEvent());
+            pongTimer = new Timer();
+            pongTask = new CountdownTask(pingDelay,this);
+            pongTimer.schedule(pongTask, 1000);
+            pongCountdownStarted = true;
+        }
+        return false;
     }
 
     @Override

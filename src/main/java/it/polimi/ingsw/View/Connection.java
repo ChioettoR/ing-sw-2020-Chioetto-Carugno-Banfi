@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.CountdownInterface;
+import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
@@ -32,6 +33,8 @@ public class Connection implements Runnable, CountdownInterface {
     private String name;
     private static final Object lock = new Object();
     int maxNameLength = 16;
+    Timer pingTimer;
+    PingPongTask pingTask;
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
@@ -59,7 +62,7 @@ public class Connection implements Runnable, CountdownInterface {
         return active;
     }
 
-    public void send(Serializable serializable) throws IOException {
+    public synchronized void send(Serializable serializable) throws IOException {
         oos.writeObject(serializable);
         oos.flush();
     }
@@ -70,6 +73,7 @@ public class Connection implements Runnable, CountdownInterface {
 
     public synchronized void closeConnection() {
         try{
+            pingTimer.cancel();
             socket.close();
             oos.close();
             ois.close();
@@ -83,6 +87,7 @@ public class Connection implements Runnable, CountdownInterface {
         try {
             ois = new ObjectInputStream(socket.getInputStream());
             oos = new ObjectOutputStream(socket.getOutputStream());
+            startPing();
 
             checkLobbyCreated();
             if (fullLobby()) return;
@@ -148,11 +153,13 @@ public class Connection implements Runnable, CountdownInterface {
 
         while(!validName) {
             object = (Serializable) ois.readObject();
+            while (checkPong(object)) { object = (Serializable) ois.readObject(); }
 
             while(!(object instanceof LoginNameEvent)) {
                 send(new MessageEvent(415));
                 send(new MessageEvent(112));
                 object = (Serializable) ois.readObject();
+                while (checkPong(object)) { object = (Serializable) ois.readObject(); }
             }
 
             name = ((LoginNameEvent) object).getName();
@@ -170,11 +177,13 @@ public class Connection implements Runnable, CountdownInterface {
 
         while(!validInput) {
             object = (Serializable) ois.readObject();
+            while (checkPong(object)) { object = (Serializable) ois.readObject(); }
 
             while(!(object instanceof LobbySizeEvent)) {
                 send(new MessageEvent(417));
                 send(new MessageEvent(113));
                 object = (Serializable) ois.readObject();
+                while (checkPong(object)) { object = (Serializable) ois.readObject(); }
             }
 
             lobbySize = ((LobbySizeEvent) object).getLobbySize();
@@ -188,6 +197,7 @@ public class Connection implements Runnable, CountdownInterface {
 
         while(isActive()) {
             Serializable read = (Serializable) ois.readObject();
+            while (checkPong(read)) { read = (Serializable) ois.readObject(); }
 
             if(remoteView==null)
                 send(new MessageEvent(419));
@@ -200,9 +210,26 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
+    private boolean checkPong(Serializable serializable) {
+        if(serializable instanceof PongEvent) {
+            pingTask.cancelCountdown();
+            System.out.println("PONG RECEIVED FROM " + toString());
+            return true;
+        }
+        return false;
+    }
+
+    public void startPing() {
+        int pongDelay = 2;
+        int pingDelay = 5;
+        pingTimer = new Timer();
+        pingTask = new PingPongTask(pongDelay, this);
+        pingTimer.schedule(pingTask, 0, pingDelay * 1000);
+    }
+
     @Override
     public void countdownEnded() {
-        System.out.println("Client " + remoteView.playerID + " unreachable");
+        System.err.println("CLIENT " + name + " UNREACHABLE");
         closeConnection();
     }
 }
