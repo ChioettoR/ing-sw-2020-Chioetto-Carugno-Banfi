@@ -5,6 +5,7 @@ import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
 import it.polimi.ingsw.Events.Server.EndLoginEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
+import it.polimi.ingsw.Events.Server.WaitingEvent;
 import it.polimi.ingsw.Model.*;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-    private static final int PORT= 1267;
+    private static final int PORT= 2620;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private final ArrayList<Connection> connections = new ArrayList<>();
@@ -27,6 +28,7 @@ public class Server {
     private final Map<String, Connection> acceptedConnections = new LinkedHashMap<>();
     private final ArrayList<String> names = new ArrayList<>();
     static final Object waiting = new Object();
+    private final ArrayList<Connection> waitingConnections = new ArrayList<>();
 
     public Map<String, Connection> getAcceptedConnections() {
         return acceptedConnections;
@@ -45,7 +47,15 @@ public class Server {
     }
 
     public void awakeConnections() {
-        synchronized (waiting) { waiting.notifyAll();}
+        ArrayList<Connection> waitingConnectionsCopy = new ArrayList<>(waitingConnections);
+        for(Connection c : waitingConnectionsCopy) {
+            c.setWaiting(false);
+            waitingConnections.remove(c);
+        }
+    }
+
+    public void sleepConnection(Connection connection) {
+        waitingConnections.add(connection);
     }
 
     public int getLobbySize() {
@@ -78,12 +88,13 @@ public class Server {
             connection.send(serializable);
     }
 
-    public synchronized void deregisterConnection(Connection c) {
+    public synchronized void deregisterConnection(Connection c) throws IOException {
         System.out.println("Deregister client...");
         if(c.isFirstPlayer()) {
             if (lobbyCreated) deregisterAllConnections();
             else { if(connections.size()>1) connections.get(1).setFirstPlayer(true); }
         }
+        if(waitingConnections.contains(c)) waitingConnections.remove(c);
         names.remove(c.getName());
         connections.remove(c);
         acceptedConnections.values().remove(c);
@@ -95,6 +106,7 @@ public class Server {
         System.out.println("Deregister all clients...");
         for(Connection connection : connections) connection.closeConnection();
         connections.clear();
+        waitingConnections.clear();
         acceptedConnections.clear();
         names.clear();
         lobbyCreated = false;

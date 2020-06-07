@@ -43,7 +43,7 @@ public class Client implements ClientObserver, CountdownInterface {
 
     public void closeConnection() {
         try{
-            pongTimer.cancel();
+            if(pongTimer!=null) pongTimer.cancel();
             socket.close();
             oos.close();
             ois.close();

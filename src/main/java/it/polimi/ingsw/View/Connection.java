@@ -1,12 +1,10 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.CountdownInterface;
-import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
 import it.polimi.ingsw.Events.Client.PongEvent;
-import it.polimi.ingsw.Events.Server.EndLoginEvent;
 import it.polimi.ingsw.Events.Server.LobbyInfoEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Events.Server.WaitingEvent;
@@ -35,6 +33,11 @@ public class Connection implements Runnable, CountdownInterface {
     int maxNameLength = 16;
     Timer pingTimer;
     PingPongTask pingTask;
+    boolean waiting;
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
 
     public void setFirstPlayer(boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
@@ -91,8 +94,6 @@ public class Connection implements Runnable, CountdownInterface {
 
             checkLobbyCreated();
             if (fullLobby()) return;
-            send(new WaitingEvent(false));
-
             if (firstPlayer) send(new MessageEvent(303));
             else send(new LobbyInfoEvent(server.getLobbyName(), server.getLobbySize()));
             send(new MessageEvent(112));
@@ -119,21 +120,24 @@ public class Connection implements Runnable, CountdownInterface {
         catch(IOException | ClassNotFoundException e) {
             System.err.println("Connection interrupted");
             if(server.isFullLobby() && server.getAcceptedConnections().containsValue(this)) server.deregisterAllConnections();
-            else server.deregisterConnection(this);
+            else { try { server.deregisterConnection(this); }
+            catch (IOException ioException) { ioException.printStackTrace(); }
+            }
         }
     }
 
-    private void checkLobbyCreated() throws IOException{
+    private void checkLobbyCreated() throws IOException, ClassNotFoundException {
 
         if (!server.isLobbyCreated() && !firstPlayer) {
             send(new MessageEvent(413));
             send(new WaitingEvent(true));
-            try {
-                synchronized (Server.waiting) {
-                    while (!firstPlayer && !server.isLobbyCreated()) Server.waiting.wait();
-                }
+            waiting = true;
+            server.sleepConnection(this);
+            while(waiting) {
+                Serializable object = (Serializable) ois.readObject();
+                checkPong(object);
             }
-            catch (InterruptedException e) { System.err.println(e.getMessage()); }
+            send(new WaitingEvent(false));
         }
     }
 

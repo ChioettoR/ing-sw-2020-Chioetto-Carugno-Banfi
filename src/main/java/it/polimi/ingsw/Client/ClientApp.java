@@ -8,10 +8,10 @@ public class ClientApp {
 
     public static void main(String[] args) throws IOException {
 
-        String ip = "127.0.0.1";
-        int port = 1267;
+        String ip = "25.74.135.68";
+        int port = 2620;
 
-        if(args.length!=0) try { new Client("127.0.0.1", 1267).runCLI(); }
+        if(args.length!=0) try { new Client(ip, port).runCLI(); }
         catch (IOException e) { System.err.println("Server unavailable"); }
         else GUIStagesManager.launch(ip, port);
     }
