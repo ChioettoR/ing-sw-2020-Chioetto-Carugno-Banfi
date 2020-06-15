@@ -67,6 +67,10 @@ public class GUITile {
         return guiWorker;
     }
 
+    /**
+     * Moves the worker in the correct tile or building
+     * @param worker worker to move
+     */
     public void moveWorker(GUIWorker worker) {
 
         if(levels.size()==0) {
@@ -106,6 +110,11 @@ public class GUITile {
         return levels.get(levels.size()-1);
     }
 
+    /**
+     * Builds the mesh of the buildings
+     * @param level level of the building
+     * @return returns the block
+     */
     public MeshView build(int level) {
 
         float baseBlockHeight = 13.8f;
@@ -138,6 +147,9 @@ public class GUITile {
         return guiBlock.getBlockMesh();
     }
 
+    /**
+     * Deletes the last level
+     */
     public void deleteLastLevel() {
         levels.remove(levels.size()-1);
         if(guiWorker!=null) moveWorker(guiWorker);

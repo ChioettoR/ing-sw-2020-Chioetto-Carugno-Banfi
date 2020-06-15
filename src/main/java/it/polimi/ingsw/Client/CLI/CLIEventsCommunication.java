@@ -107,7 +107,11 @@ public class CLIEventsCommunication implements EventsCommunication {
         cliStdinReader.getClient().closeConnection();
     }
 
-    //TODO JAVADOC
+    /**
+     * Lose method, if a player loses, that player will be a spectator for the current match
+      * @param loserName name of the loser
+     * @param youLose true if that player lose, false otherwise
+     */
     @Override
     public void lose(String loserName, boolean youLose) {
         if(youLose) {
@@ -136,6 +140,10 @@ public class CLIEventsCommunication implements EventsCommunication {
         }
     }
 
+    /**
+     * Prints the whole deck
+     * @param cards  list of cards
+     */
     @Override
     public void fullDeck(ArrayList<CardSimplified> cards) {
         for(int i = 0; i<cards.size(); i++) {
@@ -147,12 +155,20 @@ public class CLIEventsCommunication implements EventsCommunication {
         System.out.println("");
     }
 
+    /**
+     * Handles the selection of the first player
+     * @param names list of names of the players
+     */
     @Override
     public void firstPlayerSelection(ArrayList<String> names) {
         messagesReader.read(116);
         cliActionPrinter.printAction(names);
     }
 
+    /**
+     * Shows the available colors
+     * @param colors list of colors
+     */
     @Override
     public void colorsAvailable(ArrayList<PlayerColor> colors) {
         //messagesReader.read(119);
@@ -164,6 +180,11 @@ public class CLIEventsCommunication implements EventsCommunication {
         System.out.println("");
     }
 
+    /**
+     * Prints the color chosen for the player
+     * @param name name of the player
+     * @param color color chosen
+     */
     @Override
     public void playerChosenColor(String name, PlayerColor color) {
         cliPlayersManager.getPlayer(name).setColor(cliColorDecoder.getColor(color));

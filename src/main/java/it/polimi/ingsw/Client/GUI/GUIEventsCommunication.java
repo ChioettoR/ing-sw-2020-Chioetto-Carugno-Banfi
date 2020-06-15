@@ -82,6 +82,10 @@ public class GUIEventsCommunication implements EventsCommunication {
         }
     }
 
+    /**
+     * Invoked when something changes in the whole grid during the match
+     * @param tiles list of tiles of the grid
+     */
     @Override
     public void change(ArrayList<TileSimplified> tiles) {
         Platform.runLater( () -> {

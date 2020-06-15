@@ -59,7 +59,10 @@ public class CLIPlayersManager {
         return null;
     }
 
-    //TODO JAVADOC
+    /**
+     * Removed the player from the match
+     * @param name name of the player
+     */
     public void deleteName(String name) {
         cliPlayers.removeIf(p -> p.getName().equals(name));
     }

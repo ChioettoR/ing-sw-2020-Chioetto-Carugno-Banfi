@@ -71,6 +71,9 @@ public class GUICards {
         }
     };
 
+    /**
+     * Creates the graphic of the God Cards
+     */
     public GUICards() {
         for(int i=0; i<names.size(); i++) { fullImageMap.put(names.get(i), fullImagePath.get(i)); }
         for(int i=0; i<names.size(); i++) { smallImageMap.put(names.get(i), smallImagePath.get(i)); }
@@ -84,6 +87,10 @@ public class GUICards {
         return new Image(getClass().getResourceAsStream(smallImageMap.get(name)));
     }
 
+    /**
+     * Adds the description in every God Card
+     * @param cardSimplified card to modify
+     */
     public void addDescription(CardSimplified cardSimplified) {
         String description = cardSimplified.getDescription();
         description = description.replace("@", " ");

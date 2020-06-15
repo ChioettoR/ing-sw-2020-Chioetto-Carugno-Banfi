@@ -12,6 +12,9 @@ public class CLIColorDecoder {
     TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     HashMap<PlayerColor, Color> colorANSI = new HashMap<>();
 
+    /**
+     * Sets the color of the players in game
+     */
     public CLIColorDecoder() {
         colorNames.put(PlayerColor.P1_COLOR, "Magenta");
         colorNames.put(PlayerColor.P2_COLOR, "Yellow");

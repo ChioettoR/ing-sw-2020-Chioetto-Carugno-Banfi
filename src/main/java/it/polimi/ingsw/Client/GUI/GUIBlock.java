@@ -23,6 +23,13 @@ public class GUIBlock {
     PhongMaterial material = new PhongMaterial();
     GUIGridManager guiGridManager;
 
+    /**
+     * Method used for the generation of all the blocks in the game
+     * Every Case of the switch is a different building in the grid
+     * @param level level of the block
+     * @param tile position of the block
+     * @param guiGridManager reference to the GridManager
+     */
     public GUIBlock(int level, GUITile tile, GUIGridManager guiGridManager) {
 
         this.guiGridManager = guiGridManager;
