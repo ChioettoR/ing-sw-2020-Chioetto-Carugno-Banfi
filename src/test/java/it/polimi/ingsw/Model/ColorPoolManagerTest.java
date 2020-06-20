@@ -29,10 +29,9 @@ public class ColorPoolManagerTest implements ServerObserver {
     PlayerColor color;
     PlayerColor color1;
     PlayerColor color2;
-    ArrayList<PlayerColor> colorsUsed = new ArrayList<>();
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         new Builder().build();
         cardsBuilder.createCards();
         card = deck.getCardByName("Apollo");

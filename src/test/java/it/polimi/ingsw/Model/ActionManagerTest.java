@@ -28,7 +28,7 @@ public class ActionManagerTest implements ServerObserver {
     int updateCounter;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         new Builder().build();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
