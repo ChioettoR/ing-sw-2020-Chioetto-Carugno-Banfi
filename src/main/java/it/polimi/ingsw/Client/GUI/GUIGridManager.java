@@ -51,6 +51,15 @@ public class GUIGridManager {
         return playerWorkers;
     }
 
+    /**
+     * Creates the worker
+     * @param playerName name of the worker's owner
+     * @param workerID id of the worker
+     * @param x param. x of the grid
+     * @param y param. x of the grid
+     * @param color color of the player's worker
+     * @return returns the worker created
+     */
     public GUIWorker createWorker(String playerName, int workerID, int x, int y, Color color) {
         GUITile tile = grid.getTile(x, y);
         GUIWorker guiWorker = new GUIWorker(playerName, workerID, color, guiRoundStage);
@@ -74,6 +83,10 @@ public class GUIGridManager {
         })).start();
     }
 
+    /**
+     * Deletes the worker from the game
+     * @param g worker
+     */
     public void deleteWorker(GUIWorker g) {
         g.getGuiTile().setGUIWorker(null);
         group.getChildren().remove(g.getWorkerMesh());
@@ -90,10 +103,18 @@ public class GUIGridManager {
         return null;
     }
 
+    /**
+     * Highlights the tile on the grid
+     * @param x param. x of the grid
+     * @param y param. y of the grid
+     */
     public void highLight(int x, int y) {
         grid.getTile(x,y).highLight();
     }
 
+    /**
+     * Decolors the tiles on the grid
+     */
     public void deColor() {
         for(GUITile t : grid.getTiles())
             t.deColor();
@@ -113,6 +134,9 @@ public class GUIGridManager {
         group.getChildren().addAll(grid.getTiles().stream().map(GUITile::getTileMeshAvailable).collect(Collectors.toList()));
     }
 
+    /**
+     * Sets up the whole lights in the game
+     */
     public void setupLight() {
         AmbientLight ambientLight = new AmbientLight();
         ambientLight.setColor(Color.web("#8a8a8a"));
@@ -124,6 +148,12 @@ public class GUIGridManager {
         group.getChildren().add(pointLight);
     }
 
+    /**
+     * Builds the constructions in the tile
+     * @param level level of the building
+     * @param x param. x of the tile
+     * @param y param. y of the tile
+     */
     public void build(int level, int x, int y) {
         GUITile tile = grid.getTile(x, y);
 

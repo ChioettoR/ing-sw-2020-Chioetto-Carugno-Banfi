@@ -130,6 +130,10 @@ public class GUILoginPanelController {
         if (two.isSelected()) three.setSelected(false);
     }
 
+    /**
+     * Checks if the name in the box is correct
+     * @param keyevent enter event
+     */
     @FXML
     void checkName(KeyEvent keyevent) {
         String string;
@@ -144,6 +148,10 @@ public class GUILoginPanelController {
         }
     }
 
+    /**
+     * Starts the new phase when the lobby is full
+     * @param event
+     */
     @FXML
     void getStarted(ActionEvent event) {
         if(two.isSelected()){ stagesManager.send(new LobbySizeEvent(2)); }
@@ -172,6 +180,9 @@ public class GUILoginPanelController {
         errorText.setVisible(true);
     }
 
+    /**
+     * Wakes up a client in waiting list
+     */
     public void wakeUpClient(){
 
         if(!isWaiting) return;

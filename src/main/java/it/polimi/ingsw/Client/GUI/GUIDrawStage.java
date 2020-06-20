@@ -28,7 +28,12 @@ public class GUIDrawStage{
 
     ArrayList<CardSimplified> deck = new ArrayList<>();
 
-
+    /**
+     * Starts the Scene of the draw phase
+     * @param stage stage of the game
+     * @param stagesManager managed for different stages
+     * @param guiPlayersManager manager for different players
+     */
     public void start(Stage stage, GUIStagesManager stagesManager, GUIPlayersManager guiPlayersManager){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/DrawPhase/drawPhase.fxml"));
@@ -99,6 +104,10 @@ public class GUIDrawStage{
         guiDrawPhaseController.getMessageText().setText(draw);
     }
 
+    /**
+     * Sends the graphic of the deck to the user
+     * @param cards list of cards
+     */
     public void sendDeck(ArrayList<CardSimplified> cards) {
 
         for (CardSimplified card : cards) guiCards.addDescription(card);
@@ -195,6 +204,9 @@ public class GUIDrawStage{
         }
     }
 
+    /**
+     * Sets the lower part of the GUI draggable for the choice of the cards
+     */
     public void setDownPaneForDrag() {
         AnchorPane downPane = guiDrawPhaseController.getDownPane();
         downPane.setOnDragOver(event -> {
@@ -215,6 +227,11 @@ public class GUIDrawStage{
         });
     }
 
+    /**
+     * Sets the images of the cards
+     * @param playerName name of the player
+     * @param cardName name of the card
+     */
     public void setCardsImages(String playerName, String cardName) {
         if(guiDrawPhaseController.getPlayerName2p1().getText().equalsIgnoreCase(playerName)){
             guiDrawPhaseController.getGodImageDown2p1().setImage(guiCards.getFullImage(cardName));
@@ -238,6 +255,10 @@ public class GUIDrawStage{
         }
     }
 
+    /**
+     * Transition for the beginning of the game
+     * @param seconds time left for the game visible in GUI
+     */
     public void roundTransition(int seconds) {
         guiDrawPhaseController.getMiddlePane().setVisible(true);
         guiDrawPhaseController.getErrorPane().setVisible(false);
@@ -245,6 +266,10 @@ public class GUIDrawStage{
         guiDrawPhaseController.getMessageText().setText("Round starts in: " + seconds);
     }
 
+    /**
+     * Sends the full deck for the initial choice
+     * @param cards list of cards
+     */
     public void sendFullDeck(ArrayList<CardSimplified> cards) {
 
         deck = new ArrayList<>(cards);
@@ -274,6 +299,9 @@ public class GUIDrawStage{
         });
     }
 
+    /**
+     * Shows three cards in GUI (3 players)
+     */
     public void threeCardsShow() {
         guiDrawPhaseController.getCardsToSelect().setVisible(true);
         guiDrawPhaseController.getCardsToSelect().setDisable(false);
@@ -284,6 +312,9 @@ public class GUIDrawStage{
         setRightPaneForDrag();
     }
 
+    /**
+     * Shows two cards in GUI (2 players)
+     */
     public void twoCardsShow() {
         guiDrawPhaseController.getCardsToSelect().setVisible(true);
         guiDrawPhaseController.getCardsToSelect().setDisable(false);
@@ -294,6 +325,9 @@ public class GUIDrawStage{
         setRightPaneForDrag();
     }
 
+    /**
+     * Sets the right pane draggable for the god cards choice
+     */
     public void setRightPaneForDrag() {
         AnchorPane rightPane = guiDrawPhaseController.getCardsToSelect();
         rightPane.setOnDragOver(event -> {
@@ -352,6 +386,10 @@ public class GUIDrawStage{
         guiDrawPhaseController.getNamesToSend().clear();
     }
 
+    /**
+     * Sets the First player in his box
+     * @param names list of names of players
+     */
     public void selectFirstPlayer(ArrayList<String> names) {
         guiDrawPhaseController.getUpPane().setVisible(true);
         guiDrawPhaseController.getUpTwoCardsPane().setVisible(false);
@@ -456,6 +494,9 @@ public class GUIDrawStage{
         }
     }
 
+    /**
+     * Shows the whole cards
+     */
     public void showCards() {
         if(guiPlayersManager.getNames().size() == 3) {
             if(guiPlayersManager.getPlayer(guiPlayersManager.getNames().get(1)).getCardName() != null) {
@@ -469,12 +510,18 @@ public class GUIDrawStage{
         }
     }
 
+    /**
+     * Shows the two selected cards
+     */
     public void showTwoCardsToSelect() {
         guiDrawPhaseController.getUpPane().setVisible(true);
         guiDrawPhaseController.getUpTwoCardsPane().setVisible(true);
         guiDrawPhaseController.getUpTwoCardsPane().setDisable(false);
     }
 
+    /**
+     * Shows the three selected cards
+     */
     public void showThreeCardsToSelect() {
         guiDrawPhaseController.getUpPane().setVisible(true);
         guiDrawPhaseController.getUpThreeCardsPane().setVisible(true);

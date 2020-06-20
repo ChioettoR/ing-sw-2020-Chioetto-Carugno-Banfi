@@ -9,6 +9,11 @@ public class GUILoginStage {
 
     GUILoginPanelController guiLoginPanelController;
 
+    /**
+     * Starts the login scene
+     * @param stage stage of the game
+     * @param stagesManager handles the different stages of the match
+     */
     public void start(Stage stage, GUIStagesManager stagesManager) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/Login/login.fxml"));

@@ -12,6 +12,9 @@ public class GUIColorDecoder {
     TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     HashMap<PlayerColor, javafx.scene.paint.Color> colorANSI = new HashMap<>();
 
+    /**
+     * Method invoked to color all the players in the match
+     */
     public GUIColorDecoder() {
         colorNames.put(PlayerColor.P1_COLOR, "Silver");
         colorNames.put(PlayerColor.P2_COLOR, "Light-brown");

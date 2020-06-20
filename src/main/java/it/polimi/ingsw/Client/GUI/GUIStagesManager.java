@@ -115,6 +115,10 @@ public class GUIStagesManager extends Application {
         Application.launch();
     }
 
+    /**
+     * Sets the scene from the disconnection of a client
+     * @throws IOException
+     */
     public void setDisconnectedScene() throws IOException{
         if(animation != null) animation.stop();
         if(!useDisconnectionScene) return;
@@ -128,6 +132,10 @@ public class GUIStagesManager extends Application {
         stage.show();
     }
 
+    /**
+     * Handles the whole communication in the stages
+     * @param messageID
+     */
     public void messagesToDirect(int messageID) {
         if(messageID == 304) Platform.runLater(() -> guiLoginStage.waitingPlayer());
         else if(messageID == 302) Platform.runLater(() -> guiLoginStage.waitingPlayers());
@@ -153,6 +161,9 @@ public class GUIStagesManager extends Application {
         for (String name : names) guiPlayersManager.addPlayer(name);
     }
 
+    /**
+     * Handle the transition between the initial phase and the match
+     */
     public void roundTransition() {
         guiPhase = GUIPhase.ROUND;
         Platform.runLater(() -> guiRoundStage.setUp(stage, this));
@@ -171,6 +182,10 @@ public class GUIStagesManager extends Application {
         guiDrawStage.selectFirstPlayer(names);
     }
 
+    /**
+     * Shows the winner changing also the stage to the winning stage
+     * @param winnerName name of the winner
+     */
     public void win(String winnerName){
         try {
             guiRoundStage.getStagesManager().setUseDisconnectionScene(false);

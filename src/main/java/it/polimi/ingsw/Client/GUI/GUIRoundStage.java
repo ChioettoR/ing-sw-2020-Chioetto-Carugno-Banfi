@@ -103,6 +103,11 @@ public class GUIRoundStage {
         stagesManager.send(new BuildDecisionEvent(x, y, buildLevel));
     }
 
+    /**
+     * Handles the selected action to the correct event for that action
+     * @param x param. x of the grid
+     * @param y param. y of the grid
+     */
     public void gridPosition(int x, int y) {
         if(selectedActionType==null) {
             stagesManager.send(new PositioningEvent(x, y));
@@ -132,6 +137,12 @@ public class GUIRoundStage {
         timerToCancel();
     }
 
+    /**
+     * Images for the buildings
+     * @param stage stage of the match
+     * @param subScene subscene of the grid
+     * @throws IOException when socket closes
+     */
     private void buildingsImages(Stage stage, SubScene subScene) throws IOException {
 
         initializeButtonsStyle();
@@ -221,6 +232,11 @@ public class GUIRoundStage {
         return camera;
     }
 
+    /**
+     * Handles the animations of the grid (Zoom, Rotations)
+     * @param group
+     * @param camera
+     */
     private void gridAnimations(Group group, PerspectiveCamera camera) {
 
         final AnimationTimer gridRotation = new AnimationTimer() {
@@ -354,6 +370,9 @@ public class GUIRoundStage {
         return buttonsStyle.get(action);
     }
 
+    /**
+     * Shows the correct card to his owner with the color chosen
+     */
     private void playersCardShow() {
         ArrayList<String> playerNames;
         GUIPlayer player1;
@@ -469,6 +488,9 @@ public class GUIRoundStage {
         catch (IOException e) { e.printStackTrace(); }
     }
 
+    /**
+     * Time to cancel the action
+     */
     public void timerToCancel() {
         Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
         animation.setCycleCount(timer+1);
@@ -482,6 +504,10 @@ public class GUIRoundStage {
     private void CountDown() {
     }
 
+    /**
+     * Shows the different colors to choose
+     * @param colorsName list of the colors
+     */
     public void showColors(ArrayList<String> colorsName) {
         buildingsController.getBorderPaneCards().setPickOnBounds(true);
         if(colorsName.size() == 3){
@@ -543,6 +569,10 @@ public class GUIRoundStage {
         playersCardShow();
     }
 
+    /**
+     * Changes the frame of the loser
+     * @param loserName name of the loser
+     */
     public void setNewFrame(String loserName) {
         if(buildingsController.getNameText1().getText().equals(loserName)) {
             //silver

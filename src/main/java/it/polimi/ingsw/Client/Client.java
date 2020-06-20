@@ -57,6 +57,10 @@ public class Client implements ClientObserver, CountdownInterface {
         if(!checkPing(serializable)) eventsReader.read(serializable);
     }
 
+    /**
+     * Checks for the ping from the server
+     * @return false if not received, true otherwise
+     */
     private boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
             System.out.println("PING RECEIVED");
@@ -81,6 +85,10 @@ public class Client implements ClientObserver, CountdownInterface {
         }
     }
 
+    /**
+     * Runs the game
+     * @throws IOException when socket closes
+     */
     public void run() throws IOException {
         connect();
         System.out.println("Connection established");
@@ -108,6 +116,10 @@ public class Client implements ClientObserver, CountdownInterface {
         messagesRead.start();
     }
 
+    /**
+     * Runs the CLI version of the game
+     * @throws IOException when socket closes
+     */
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);

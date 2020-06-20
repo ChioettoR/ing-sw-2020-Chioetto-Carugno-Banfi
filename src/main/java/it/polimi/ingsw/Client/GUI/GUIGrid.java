@@ -29,6 +29,12 @@ public class GUIGrid {
     private final int tileHeight;
     GUIGridManager guiGridManager;
 
+    /**
+     * Creates the 3D grid
+     * @param size size of the boxes
+     * @param tileHeight height of the boxes
+     * @param guiGridManager handles all the effects of the grid
+     */
     public GUIGrid (float size, int tileHeight, GUIGridManager guiGridManager) {
 
         this.guiGridManager = guiGridManager;
@@ -86,11 +92,19 @@ public class GUIGrid {
         return tiles;
     }
 
+    /**
+     * Creates the whole grid
+     */
     private void createGrid() {
         tiles = new ArrayList<>();
         for(int y = 1; y< 5 +1; y++) for(int x = 1; x< 5 +1; x++) createTile(x, y);
     }
 
+    /**
+     * Creates the tile in the grid
+     * @param x param. x of the grid
+     * @param y param. y of the grid
+     */
     private void createTile(int x, int y) {
 
         GUITile guiTile = new GUITile(x,y,size/5, tileHeight, guiGridManager);

@@ -601,6 +601,10 @@ public class GUIDrawPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Arrow to view the previous card
+     * @param event click event
+     */
     @FXML
     void goBack(ActionEvent event) {
         godIndex--;
@@ -621,6 +625,10 @@ public class GUIDrawPhaseController {
         });
     }
 
+    /**
+     * Arrow to view the previous card
+     * @param event click event
+     */
     @FXML
     void goNext(ActionEvent event) {
         godIndex++;
@@ -642,17 +650,29 @@ public class GUIDrawPhaseController {
 
     }
 
+    /**
+     * Removes the selected card in the first box (2 players)
+     * @param event click event
+     */
     @FXML
     void deselect2p1(ActionEvent event) {
         namesToSend.remove(namesToSend.get(0));
         godToSelect2p1.setImage(null);
     }
 
+    /**
+     * Removes the selected card in the second box (2 players)
+     * @param event click event
+     */
     @FXML
     void deselect2p2(ActionEvent event) {
 
     }
 
+    /**
+     * Removes the selected card in the first box (3 players)
+     * @param event click event
+     */
     @FXML
     void deselect3p1(ActionEvent event) {
         namesToSend.remove(namesToSend.get(0));
@@ -663,12 +683,20 @@ public class GUIDrawPhaseController {
         }
     }
 
+    /**
+     * Removes the selected card in the second box (3 players)
+     * @param event click event
+     */
     @FXML
     void deselect3p2(ActionEvent event) {
         namesToSend.remove(namesToSend.get(1));
         godToSelect3p2.setImage(null);
     }
 
+    /**
+     * Removes the selected card in the third box (3 players)
+     * @param event click event
+     */
     @FXML
     void deselect3p3(ActionEvent event) {
 
@@ -682,6 +710,10 @@ public class GUIDrawPhaseController {
         //stagesManager.send(new AllPlayersCardsEvent());
     }
 
+    /**
+     * Shows the info box of the card
+     * @param event click event
+     */
     @FXML
     void checkInfoToChoose(ActionEvent event) {
         setInfoPane();
@@ -689,6 +721,9 @@ public class GUIDrawPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Sets the info Pane of the card
+     */
     public void setInfoPane() {
         drawPhasePane.setDisable(true);
         drawPhasePane.setVisible(false);
