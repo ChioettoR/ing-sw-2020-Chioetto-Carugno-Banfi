@@ -61,7 +61,7 @@ public class PositioningManagerTest implements ServerObserver {
     }
 
     @Test
-    void drawCardTest() throws IOException {
+    void positioningTest() throws IOException {
         assertTrue(firstWorkerPosition.isEmpty());
         positioningManager.positioning(0, firstWorkerPosition.getX(), firstWorkerPosition.getY());
     }

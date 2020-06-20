@@ -60,7 +60,6 @@ public class DrawCardManagerTest implements ServerObserver {
         }
 
         if(updateCounter==0) {
-
             assertTrue(serverEvent instanceof FullDeckEvent);
             assertEquals(0, serverEvent.getPlayerID());
             int cardsNumber = deck.getCardsList().size();

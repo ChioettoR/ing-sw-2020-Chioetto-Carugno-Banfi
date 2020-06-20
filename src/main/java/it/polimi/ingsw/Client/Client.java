@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Timer;
 
@@ -121,7 +122,10 @@ public class Client implements ClientObserver, CountdownInterface {
     }
 
     private void connect() throws IOException {
-        socket = new Socket(this.ip, this.port);
+        InetSocketAddress s = new InetSocketAddress(ip, port);
+        int connectionTimeout = 3000;
+        socket = new Socket();
+        socket.connect(s, connectionTimeout);
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
     }

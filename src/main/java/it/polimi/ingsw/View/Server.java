@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-    private int PORT;
+    private final int port;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private final ArrayList<Connection> connections = new ArrayList<>();
@@ -167,15 +167,15 @@ public class Server {
         lobby(c, name);
     }
 
-    public Server() throws IOException {
-        this.serverSocket = new ServerSocket(PORT);
+    public Server(int port) throws IOException {
+        this.port = port;
+        this.serverSocket = new ServerSocket(port);
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public void run(int port) {
+    public void run() {
 
-        PORT = port;
-        System.out.println("Server listening on port: " + PORT);
+        System.out.println("Server listening on port: " + port);
         while(true) {
             try {
                 Socket socket = serverSocket.accept();
