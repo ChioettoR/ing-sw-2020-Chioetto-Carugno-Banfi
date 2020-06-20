@@ -136,10 +136,11 @@ public class GUILoginPanelController {
         if (keyevent.getCode() == KeyCode.ENTER) {
             errorText.setVisible(false);
             string = nameText.getText();
-            if(string.isBlank()) setError("Insert a valid string");
-            else if (isNumeric(string)) setError("Your name can't be a number. Please, insert a valid name");
-            else if(string.split("\\s+").length>1) setError("Names longer than one word are not accepted");
-            else stagesManager.send(new LoginNameEvent(string));
+            if(!string.isBlank()) {
+                if (isNumeric(string)) stagesManager.send(new LobbySizeEvent(Integer.parseInt(string)));
+                else stagesManager.send(new LoginNameEvent(string));
+            }
+            nameText.setText("");
         }
     }
 
@@ -162,13 +163,11 @@ public class GUILoginPanelController {
     }
 
     public void setRequest(String message) {
-        nameText.setText("");
         nameText.setPromptText(message);
         nameText.setMaxWidth(210);
     }
 
     public void setError(String message) {
-        nameText.setText("");
         errorText.setText(message);
         errorText.setVisible(true);
     }

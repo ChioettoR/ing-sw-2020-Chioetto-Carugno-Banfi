@@ -166,16 +166,8 @@ public class CLIStdinReader {
      * @param strings array of strings
      */
     private void loginEvents(String[] strings) {
-
-        if(strings.length==1) {
-            if(isNumeric(strings[0])) client.update(new LobbySizeEvent(Integer.parseInt(strings[0])));
-            else client.update(new LoginNameEvent(strings[0]));
-        }
-
-        else if(strings.length>=2 && !isNumeric(strings[0]))
-            client.read(new MessageEvent(421));
-
-        else unknownInput();
+        if(isNumeric(strings[0])) client.update(new LobbySizeEvent(Integer.parseInt(strings[0])));
+        else client.update(new LoginNameEvent(strings[0]));
     }
 
     private void waitingEvents() {

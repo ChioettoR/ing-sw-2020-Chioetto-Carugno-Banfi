@@ -167,7 +167,8 @@ public class Connection implements Runnable, CountdownInterface {
             }
 
             name = ((LoginNameEvent) object).getName();
-            if(name.length()>maxNameLength) send(new MessageEvent(424));
+            if(name.split("\\s+").length>1) send(new MessageEvent(421));
+            else if(name.length()>maxNameLength) send(new MessageEvent(424));
             else if(!server.addName(name)) send(new MessageEvent(416));
             else validName = true;
         }
