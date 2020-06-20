@@ -2,22 +2,23 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Communication.Communication;
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
 import it.polimi.ingsw.Events.Server.EndLoginEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
-import it.polimi.ingsw.Events.Server.WaitingEvent;
 import it.polimi.ingsw.Model.*;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-    private static final int PORT= 2620;
+    private int PORT;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private final ArrayList<Connection> connections = new ArrayList<>();
@@ -27,7 +28,6 @@ public class Server {
     private String lobbyName;
     private final Map<String, Connection> acceptedConnections = new LinkedHashMap<>();
     private final ArrayList<String> names = new ArrayList<>();
-    static final Object waiting = new Object();
     private final ArrayList<Connection> waitingConnections = new ArrayList<>();
 
     public Map<String, Connection> getAcceptedConnections() {
@@ -94,7 +94,7 @@ public class Server {
             if (lobbyCreated) deregisterAllConnections();
             else { if(connections.size()>1) connections.get(1).setFirstPlayer(true); }
         }
-        if(waitingConnections.contains(c)) waitingConnections.remove(c);
+        waitingConnections.remove(c);
         names.remove(c.getName());
         connections.remove(c);
         acceptedConnections.values().remove(c);
@@ -172,8 +172,9 @@ public class Server {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public void run() {
+    public void run(int port) {
 
+        PORT = port;
         System.out.println("Server listening on port: " + PORT);
         while(true) {
             try {

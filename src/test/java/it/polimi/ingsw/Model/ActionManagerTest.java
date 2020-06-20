@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Observer.Server.ServerObserver;
+import it.polimi.ingsw.Observer.ServerObserver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ public class ActionManagerTest implements ServerObserver {
         if(serverEvent instanceof MessageEvent)
             return;
 
-        if(updateCounter==0 || updateCounter == 21) {
+        if(updateCounter==0 || updateCounter == 26) {
             assertTrue(serverEvent instanceof ActionEvent);
             assertEquals(1, ((ActionEvent) serverEvent).getActions().size());
             assertEquals("MOVE", ((ActionEvent) serverEvent).getActions().get(0));
@@ -104,9 +104,12 @@ public class ActionManagerTest implements ServerObserver {
         }
 
         else if(updateCounter==3) {
-            //Undo received
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            actionManager.sendActions();
+            actionManager.actionSelect(0, "CONFIRM");
         }
 
         else if(updateCounter==4) {
@@ -115,7 +118,6 @@ public class ActionManagerTest implements ServerObserver {
             assertEquals("MOVE", ((ActionEvent) serverEvent).getActions().get(0));
             assertEquals("BUILD", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            //actionManager.actionSelect(0, "MOVE");
             actionManager.actionSelect(0, "BUILD");
         }
 
@@ -123,20 +125,6 @@ public class ActionManagerTest implements ServerObserver {
             assertTrue(serverEvent instanceof AvailableTilesEvent);
             ArrayList<TileSimplified> tiles = ((AvailableTilesEvent) serverEvent).getTiles();
 
-            //If I want to move
-            /*
-            assertEquals(3, tiles.size());
-            assertEquals(2, tiles.get(0).getX());
-            assertEquals(1, tiles.get(0).getY());
-            assertEquals(1, tiles.get(1).getX());
-            assertEquals(3, tiles.get(1).getY());
-            assertEquals(2, tiles.get(2).getX());
-            assertEquals(3, tiles.get(2).getY());
-            updateCounter++;
-            actionManager.move(0, 1, 2);
-            */
-
-            //If I want to build
             assertEquals(4, tiles.size());
             assertEquals(1, tiles.get(0).getX());
             assertEquals(1, tiles.get(0).getY());
@@ -147,48 +135,98 @@ public class ActionManagerTest implements ServerObserver {
             assertEquals(2, tiles.get(3).getX());
             assertEquals(3, tiles.get(3).getY());
             updateCounter++;
-            //actionManager.build(0, 2, 3, -1);
             actionManager.move(0, 2,1);
-
         }
 
         else if(updateCounter==6) {
             assertTrue(serverEvent instanceof ChangeEvent);
             ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
 
-            //If I move
             assertEquals(2, changedTiles.size());
             assertEquals(2, changedTiles.get(0).getX());
             assertEquals(1, changedTiles.get(0).getY());
             assertEquals(1, changedTiles.get(1).getX());
             assertEquals(2, changedTiles.get(1).getY());
             updateCounter++;
-
-            //If I build
-            /*
-            assertEquals(1, changedTiles.size());
-            assertEquals(2, changedTiles.get(0).getX());
-            assertEquals(3, changedTiles.get(0).getY());
-            updateCounter++;
-             */
         }
 
         else if(updateCounter==7) {
-            //Undo received
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            actionManager.sendActions();
+            actionManager.actionSelect(0, "UNDO");
         }
 
         else if(updateCounter==8) {
+            assertTrue(serverEvent instanceof ChangeEvent);
+            ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
+
+            assertEquals(2, changedTiles.size());
+            assertEquals(2, changedTiles.get(0).getX());
+            assertEquals(1, changedTiles.get(0).getY());
+            assertEquals(1, changedTiles.get(1).getX());
+            assertEquals(2, changedTiles.get(1).getY());
+            updateCounter++;
+        }
+
+        else if(updateCounter==9) {
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("MOVE", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("BUILD", ((ActionEvent) serverEvent).getActions().get(1));
+            updateCounter++;
+            actionManager.actionSelect(0, "BUILD");
+        }
+
+        else if(updateCounter==10) {
+            assertTrue(serverEvent instanceof AvailableTilesEvent);
+            ArrayList<TileSimplified> tiles = ((AvailableTilesEvent) serverEvent).getTiles();
+
+            assertEquals(4, tiles.size());
+            assertEquals(1, tiles.get(0).getX());
+            assertEquals(1, tiles.get(0).getY());
+            assertEquals(2, tiles.get(1).getX());
+            assertEquals(1, tiles.get(1).getY());
+            assertEquals(1, tiles.get(2).getX());
+            assertEquals(3, tiles.get(2).getY());
+            assertEquals(2, tiles.get(3).getX());
+            assertEquals(3, tiles.get(3).getY());
+            updateCounter++;
+            actionManager.move(0, 2,1);
+        }
+
+        else if(updateCounter==11) {
+            assertTrue(serverEvent instanceof ChangeEvent);
+            ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
+
+            assertEquals(2, changedTiles.size());
+            assertEquals(2, changedTiles.get(0).getX());
+            assertEquals(1, changedTiles.get(0).getY());
+            assertEquals(1, changedTiles.get(1).getX());
+            assertEquals(2, changedTiles.get(1).getY());
+            updateCounter++;
+        }
+
+        else if(updateCounter==12) {
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
+            updateCounter++;
+            actionManager.actionSelect(0, "CONFIRM");
+        }
+
+        else if(updateCounter==13) {
             assertTrue(serverEvent instanceof ActionEvent);
             assertEquals(1, ((ActionEvent) serverEvent).getActions().size());
             assertEquals("BUILD", ((ActionEvent) serverEvent).getActions().get(0));
             updateCounter++;
-            //actionManager.actionSelect(0, "MOVE");
             actionManager.actionSelect(0, "BUILD");
         }
 
-        else if(updateCounter==9) {
+        else if(updateCounter==14) {
             assertTrue(serverEvent instanceof AvailableTilesEvent);
             ArrayList<TileSimplified> tiles = ((AvailableTilesEvent) serverEvent).getTiles();
             assertEquals(4, tiles.size());
@@ -201,10 +239,10 @@ public class ActionManagerTest implements ServerObserver {
             assertEquals(3, tiles.get(3).getX());
             assertEquals(2, tiles.get(3).getY());
             updateCounter++;
-            actionManager.build(0, 1, 1, -1);
+            actionManager.build(0, 1, 1, 1);
         }
 
-        else if(updateCounter==10) {
+        else if(updateCounter==15) {
             assertTrue(serverEvent instanceof ChangeEvent);
             ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
 
@@ -217,13 +255,17 @@ public class ActionManagerTest implements ServerObserver {
             updateCounter++;
         }
 
-        else if(updateCounter==11) {
-            //Undo received
+        else if(updateCounter==16) {
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            actionManager.sendActions();
+            actionManager.actionSelect(1, "CONFIRM");
         }
 
-        else if(updateCounter==12) {
+        else if(updateCounter==17) {
+
             assertEquals(1, playersManager.getCurrentPlayer().getID());
             assertTrue(serverEvent instanceof ActionEvent);
             assertEquals(1, ((ActionEvent) serverEvent).getActions().size());
@@ -232,7 +274,7 @@ public class ActionManagerTest implements ServerObserver {
             actionManager.actionSelect(1, "MOVE");
         }
 
-        else if(updateCounter==13) {
+        else if(updateCounter==18) {
             assertTrue(serverEvent instanceof AvailableTilesEvent);
             ArrayList<TileSimplified> tiles = ((AvailableTilesEvent) serverEvent).getTiles();
             assertEquals(7, tiles.size());
@@ -254,7 +296,7 @@ public class ActionManagerTest implements ServerObserver {
             actionManager.move(1, 3, 2);
         }
 
-        else if(updateCounter==14) {
+        else if(updateCounter==19) {
             assertTrue(serverEvent instanceof ChangeEvent);
             ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
 
@@ -266,13 +308,16 @@ public class ActionManagerTest implements ServerObserver {
             updateCounter++;
         }
 
-        else if(updateCounter==15) {
-            //Undo received
+        else if(updateCounter==20) {
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            actionManager.sendActions();
+            actionManager.actionSelect(1, "CONFIRM");
         }
 
-        else if(updateCounter==16) {
+        else if(updateCounter==21) {
             assertTrue(serverEvent instanceof ActionEvent);
             assertEquals(1, ((ActionEvent) serverEvent).getActions().size());
             assertEquals("BUILD", ((ActionEvent) serverEvent).getActions().get(0));
@@ -280,7 +325,7 @@ public class ActionManagerTest implements ServerObserver {
             actionManager.actionSelect(1, "BUILD");
         }
 
-        else if(updateCounter==17) {
+        else if(updateCounter==22) {
             assertTrue(serverEvent instanceof AvailableTilesEvent);
             ArrayList<TileSimplified> tiles = ((AvailableTilesEvent) serverEvent).getTiles();
             assertEquals(6, tiles.size());
@@ -300,7 +345,7 @@ public class ActionManagerTest implements ServerObserver {
             actionManager.build(1, 3, 1, -1);
         }
 
-        else if(updateCounter==18) {
+        else if(updateCounter==23) {
             assertTrue(serverEvent instanceof ChangeEvent);
             ArrayList<TileSimplified> changedTiles = ((ChangeEvent) serverEvent).getTiles();
 
@@ -310,13 +355,16 @@ public class ActionManagerTest implements ServerObserver {
             updateCounter++;
         }
 
-        else if(updateCounter==19) {
-            //Undo received
+        else if(updateCounter==24) {
+            assertTrue(serverEvent instanceof ActionEvent);
+            assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
+            assertEquals("UNDO", ((ActionEvent) serverEvent).getActions().get(0));
+            assertEquals("CONFIRM", ((ActionEvent) serverEvent).getActions().get(1));
             updateCounter++;
-            actionManager.sendActions();
+            actionManager.actionSelect(1, "CONFIRM");
         }
 
-        else if(updateCounter==20) {
+        else if(updateCounter==25) {
             assertTrue(serverEvent instanceof ActionEvent);
             assertEquals(2, ((ActionEvent) serverEvent).getActions().size());
             assertEquals("BUILD", ((ActionEvent) serverEvent).getActions().get(0));

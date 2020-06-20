@@ -4,23 +4,15 @@ import java.util.ArrayList;
 
 public class Card {
     private final String name;
-    private CardsBuilder.GodPower godPower;
+    private final CardsBuilder.GodPower godPower;
     private String effectName;
     private String description;
     private boolean alreadyPicked;
     private ArrayList<Action> actionOrder = new ArrayList<Action>();
     private final boolean completeTowersObserver;
 
-    public String getEffectName() {
-        return effectName;
-    }
-
     public void setEffectName(String effectName) {
         this.effectName = effectName;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -29,10 +21,6 @@ public class Card {
 
     public CardsBuilder.GodPower getGodPower() {
         return godPower;
-    }
-
-    public void setGodPower(CardsBuilder.GodPower godPower) {
-        this.godPower = godPower;
     }
 
     public ArrayList<Action> getActionOrder() {
@@ -91,19 +79,6 @@ public class Card {
                 moveActionArrayList.add((MoveAction) action);
         }
         return moveActionArrayList;
-    }
-
-    /**
-     * Returns the build actions the player with this card does
-     * @return Every build action
-     */
-    public ArrayList<BuildAction> getBuildActions() {
-        ArrayList<BuildAction> buildActionArrayList = new ArrayList<BuildAction>();
-        for(Action action : actionOrder) {
-            if(action instanceof BuildAction)
-                buildActionArrayList.add((BuildAction) action);
-        }
-        return buildActionArrayList;
     }
 
     public CardSimplified simplify() {

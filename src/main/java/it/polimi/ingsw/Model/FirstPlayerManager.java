@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Events.Server.FirstPlayerEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
-import it.polimi.ingsw.Observer.Server.FirstPlayerObservable;
+import it.polimi.ingsw.Observer.FirstPlayerObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;

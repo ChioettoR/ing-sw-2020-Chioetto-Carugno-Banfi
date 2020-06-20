@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Events.Server.PlayerChosenColorEvent;
-import it.polimi.ingsw.Observer.Server.ColorObservable;
+import it.polimi.ingsw.Observer.ColorObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;

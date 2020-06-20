@@ -8,7 +8,7 @@ import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Client.ClientEvent;
 import it.polimi.ingsw.Events.Client.PongEvent;
 import it.polimi.ingsw.Events.Server.PingEvent;
-import it.polimi.ingsw.Observer.Client.ClientObserver;
+import it.polimi.ingsw.Observer.ClientObserver;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,7 +29,6 @@ public class Client implements ClientObserver, CountdownInterface {
     private CLIStdinReader cliStdinReader;
     public static final String ANSI_CYAN = "\u001B[36m";
     private Timer pongTimer;
-    private CountdownTask pongTask;
     private boolean pongCountdownStarted = false;
 
     public Client(String ip, int port) {
@@ -57,10 +56,6 @@ public class Client implements ClientObserver, CountdownInterface {
         if(!checkPing(serializable)) eventsReader.read(serializable);
     }
 
-    /**
-     * Checks for the ping from the server
-     * @return false if not received, true otherwise
-     */
     private boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
             System.out.println("PING RECEIVED");
@@ -68,7 +63,7 @@ public class Client implements ClientObserver, CountdownInterface {
             if(pongCountdownStarted) pongTimer.cancel();
             update(new PongEvent());
             pongTimer = new Timer();
-            pongTask = new CountdownTask(pingDelay,this);
+            CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);
             pongCountdownStarted = true;
         }
@@ -85,20 +80,16 @@ public class Client implements ClientObserver, CountdownInterface {
         }
     }
 
-    /**
-     * Runs the game
-     * @throws IOException when socket closes
-     */
     public void run() throws IOException {
         connect();
         System.out.println("Connection established");
         System.out.println(ANSI_CYAN +
-                        "███████╗ █████╗ ███╗   ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗██╗\n" +
-                        "██╔════╝██╔══██╗████╗  ██║╚══██╔══╝██╔═══██╗██╔══██╗██║████╗  ██║██║\n" +
-                        "███████╗███████║██╔██╗ ██║   ██║   ██║   ██║██████╔╝██║██╔██╗ ██║██║\n" +
-                        "╚════██║██╔══██║██║╚██╗██║   ██║   ██║   ██║██╔══██╗██║██║╚██╗██║██║\n" +
-                        "███████║██║  ██║██║ ╚████║   ██║   ╚██████╔╝██║  ██║██║██║ ╚████║██║\n" +
-                        "╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝\n " + Color.RESET);
+                "███████╗ █████╗ ███╗   ██╗████████╗ ██████╗ ██████╗ ██╗███╗   ██╗██╗\n" +
+                "██╔════╝██╔══██╗████╗  ██║╚══██╔══╝██╔═══██╗██╔══██╗██║████╗  ██║██║\n" +
+                "███████╗███████║██╔██╗ ██║   ██║   ██║   ██║██████╔╝██║██╔██╗ ██║██║\n" +
+                "╚════██║██╔══██║██║╚██╗██║   ██║   ██║   ██║██╔══██╗██║██║╚██╗██║██║\n" +
+                "███████║██║  ██║██║ ╚████║   ██║   ╚██████╔╝██║  ██║██║██║ ╚████║██║\n" +
+                "╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝\n " + Color.RESET);
 
         Thread messagesRead = new Thread(() -> {
             Serializable object;
@@ -116,10 +107,6 @@ public class Client implements ClientObserver, CountdownInterface {
         messagesRead.start();
     }
 
-    /**
-     * Runs the CLI version of the game
-     * @throws IOException when socket closes
-     */
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);

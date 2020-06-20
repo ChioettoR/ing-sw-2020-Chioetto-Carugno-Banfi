@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.CountdownInterface;
 import it.polimi.ingsw.CountdownTask;
 import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Observer.Server.ActionObservable;
+import it.polimi.ingsw.Observer.ActionObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
      */
     @Override
     public void countdownEnded() throws IOException {
-        undoTimer.cancel();
+        if(undoTimer!=null) undoTimer.cancel();
         availableActions.removeAvailableActionName(ActionType.UNDO);
         availableActions.removeAvailableActionName(ActionType.CONFIRM);
         notifyMessage(new MessageEvent(306, playersManager.getCurrentPlayer().getID()));
@@ -487,7 +487,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
      * @throws IOException when socket closes
      */
     private void classicUndo() throws IOException {
-        undoTimer.cancel();
+        if(undoTimer!=null) undoTimer.cancel();
         int moveIndex = availableActions.getMoveActionIndex();
         int buildIndex = availableActions.getBuildActionIndex();
         if(moveIndex==-1) index = buildIndex;

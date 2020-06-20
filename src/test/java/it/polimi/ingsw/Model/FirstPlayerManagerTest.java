@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Events.Server.FirstPlayerEvent;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Events.Server.ServerEvent;
-import it.polimi.ingsw.Observer.Server.ServerObserver;
+import it.polimi.ingsw.Observer.ServerObserver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

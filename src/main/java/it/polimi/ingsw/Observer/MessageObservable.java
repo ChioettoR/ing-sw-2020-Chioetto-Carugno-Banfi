@@ -1,7 +1,6 @@
-package it.polimi.ingsw.Observer.Server;
+package it.polimi.ingsw.Observer;
 
 import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Observer.Client.ClientObserver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +14,6 @@ public class MessageObservable{
         }
     }
 
-    public void removeObserver(ServerObserver observer){
-        synchronized (observers) {
-            observers.remove(observer);
-        }
-    }
     /**
      *This is a notify for the client of a messageEvent
      * @param messageEvent message event notified
@@ -32,6 +26,7 @@ public class MessageObservable{
             }
         }
     }
+
     /**
      *This is a notify for the client of winEvent
      * @param winEvent win event notified
@@ -44,6 +39,7 @@ public class MessageObservable{
             }
         }
     }
+
     /**
      *This is a notify for the client of loseEvent
      * @param loseEvent lose event notified

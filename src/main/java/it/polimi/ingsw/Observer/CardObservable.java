@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Observer.Server;
+package it.polimi.ingsw.Observer;
 
 import it.polimi.ingsw.Events.Server.DeckEvent;
 import it.polimi.ingsw.Events.Server.FullDeckEvent;
@@ -19,6 +19,8 @@ public class CardObservable extends MessageObservable {
             }
         }
     }
+
+    //TODO : javadoc
 
     public void notifyFullDeck(FullDeckEvent fullDeckEvent) throws IOException {
         synchronized (observers) {

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Events.Server.MessageEvent;
-import it.polimi.ingsw.Observer.Server.MessageObservable;
+import it.polimi.ingsw.Observer.MessageObservable;
 
 import java.io.IOException;
 

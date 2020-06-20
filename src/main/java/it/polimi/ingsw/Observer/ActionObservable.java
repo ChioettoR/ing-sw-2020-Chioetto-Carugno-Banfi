@@ -1,9 +1,8 @@
-package it.polimi.ingsw.Observer.Server;
+package it.polimi.ingsw.Observer;
 
 import it.polimi.ingsw.Events.Server.ActionEvent;
 import it.polimi.ingsw.Events.Server.AvailableTilesEvent;
 import it.polimi.ingsw.Events.Server.ChangeEvent;
-import it.polimi.ingsw.Observer.Client.ClientObserver;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Events.Server.*;
-import it.polimi.ingsw.Observer.Server.ChangeObservable;
+import it.polimi.ingsw.Observer.ChangeObservable;
 
 import java.io.IOException;
 import java.util.ArrayList;

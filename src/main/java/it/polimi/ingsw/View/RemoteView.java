@@ -3,7 +3,7 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Events.Server.ServerEvent;
 import it.polimi.ingsw.Events.Client.ClientEvent;
-import it.polimi.ingsw.Observer.Server.ServerObserver;
+import it.polimi.ingsw.Observer.ServerObserver;
 
 import java.io.IOException;
 import java.io.Serializable;
