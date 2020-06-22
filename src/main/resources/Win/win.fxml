@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="winPane" prefHeight="600.0" prefWidth="600.0" styleClass="winPane" stylesheets="@styleWin.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIWinController">
-   <children>
-      <Text fx:id="title" fill="WHITE" layoutX="150.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+<BorderPane fx:id="winPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="winPane" stylesheets="@styleWin.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIWinController">
+   <center>
+      <Text fx:id="winnerBanner" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="600.0" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Arial Italic" size="64.0" />
+            <Font name="Arial Italic" size="14.0" />
          </font>
+         <BorderPane.margin>
+            <Insets top="280.0" />
+         </BorderPane.margin>
       </Text>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

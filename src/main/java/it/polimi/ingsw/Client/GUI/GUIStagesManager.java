@@ -172,11 +172,7 @@ public class GUIStagesManager extends Application {
             stage.setHeight(600);
             stage.setWidth(600);
             stage.setResizable(false);
-            final Font looney = Font.loadFont(getClass().getResourceAsStream("/Win/looney.ttf"), 40);
-            winController.getTitle().setFont(looney);
-            winnerName = winnerName.toLowerCase();
-            winController.getTitle().setText(winnerName + " won");
-            winController.getTitle().setTextAlignment(TextAlignment.CENTER);
+            winController.setWinnerBanner(winnerName);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
