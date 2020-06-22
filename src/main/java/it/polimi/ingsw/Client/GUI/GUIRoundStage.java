@@ -134,7 +134,7 @@ public class GUIRoundStage {
 
     /**
      * Images for the buildings
-     * @param subScene subscene of the grid
+     * @param subScene sub scene of the grid
      * @throws IOException when socket closes
      */
     private void buildingsImages(SubScene subScene) throws IOException {

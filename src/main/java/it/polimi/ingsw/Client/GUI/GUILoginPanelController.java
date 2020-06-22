@@ -23,8 +23,8 @@ public class GUILoginPanelController {
     public AnchorPane startButtonPart;
     public Button buttonStart;
     public VBox messageVBox;
-    boolean isWaiting = false;
-    int buttonClickedCounter = 0;
+    private boolean isWaiting = false;
+    private int buttonClickedCounter = 0;
 
     private GUIStagesManager stagesManager;
 
@@ -106,12 +106,12 @@ public class GUILoginPanelController {
 
     /**
      * Checks if the name in the box is correct
-     * @param keyevent enter event
+     * @param keyEvent enter event
      */
     @FXML
-    void checkName(KeyEvent keyevent) {
+    void checkName(KeyEvent keyEvent) {
         String string;
-        if (keyevent.getCode() == KeyCode.ENTER) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
             errorText.setVisible(false);
             string = nameText.getText();
             if(!string.isBlank()) {

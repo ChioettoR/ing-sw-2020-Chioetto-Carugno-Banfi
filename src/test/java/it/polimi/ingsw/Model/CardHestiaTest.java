@@ -59,13 +59,13 @@ class CardHestiaTest {
         moveAction.move(worker,grid.getTiles().get(1));
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(6));
-        // Building in non-perimetric tiles
+        // Building in non-perimeter tiles
         assertEquals(1, currentTile.getLevel());
         assertEquals(1, grid.getTiles().get(6).getLevel());
 
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(5));
-        // Building in a non-perimetric tile, then trying to build in a perimetric tile
+        // Building in a non-perimeter tile, then trying to build in a perimeter tile
         assertEquals(2, currentTile.getLevel());
         assertEquals(0, grid.getTiles().get(5).getLevel());
 

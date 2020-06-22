@@ -115,7 +115,7 @@ class CLIGridChanger {
     /**
      * Method invoked to change the level on a tile
      * @param cliTile tile changed
-     * @param buildLevel newlevel
+     * @param buildLevel new level
      * @param levelOnly true if there are only buildings and no workers on it, false otherwise
      */
     private void changeLevel(CLITile cliTile, int buildLevel, boolean levelOnly) {

@@ -72,7 +72,7 @@ class CardTritonTest {
         expectedActions.add(buildAction);
         assertEquals(expectedActions, card.getActionOrder());
 
-        //Trying to move to a perimetric tile, being able to do a 2nd move in a row to another tile
+        //Trying to move to a perimeter tile, being able to do a 2nd move in a row to another tile
         moveAction.move(worker, grid.getTiles().get(6));
         assertEquals(expectedActions, card.getActionOrder());
         moveAction.move(worker, grid.getTiles().get(1));

@@ -50,7 +50,7 @@ class CardChronusTest {
 
     /**
      *Testing Chronus card
-     * @param tileWhereBuildCompleteTower : tile used to check the WinCondition of Chronos
+     * @param tileWhereBuildCompleteTower : tile used to check the WinCondition of Chronus
      */
     public void buildCompleteTower(Worker worker, Tile tileWhereBuildCompleteTower) {
         for(int i = 0; i<4; i++)

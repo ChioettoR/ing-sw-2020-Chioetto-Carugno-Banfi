@@ -102,7 +102,7 @@ public class GUIGridManager {
     }
 
     /**
-     * Decolors the tiles on the grid
+     * Discolours the tiles on the grid
      */
     public void deColor() {
         for(GUITile t : grid.getTiles())
