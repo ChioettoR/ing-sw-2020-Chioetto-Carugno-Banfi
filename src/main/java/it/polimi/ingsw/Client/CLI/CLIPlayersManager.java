@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CLIPlayersManager {
 
-    ArrayList<CLIPlayer> cliPlayers = new ArrayList<>();
+    private final ArrayList<CLIPlayer> cliPlayers = new ArrayList<>();
 
     /**
      * Adds the player and colors it

@@ -110,14 +110,14 @@ public class Client implements ClientObserver, CountdownInterface {
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);
-        eventsReader = new EventsReader(this, eventsCommunication);
+        eventsReader = new EventsReader(eventsCommunication);
         run();
         cliStdinReader.run();
     }
 
     public void setupGUI() {
         eventsCommunication = new GUIEventsCommunication();
-        eventsReader = new EventsReader(this, eventsCommunication);
+        eventsReader = new EventsReader(eventsCommunication);
     }
 
     private void connect() throws IOException {

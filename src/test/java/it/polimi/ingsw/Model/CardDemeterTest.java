@@ -60,7 +60,7 @@ class CardDemeterTest {
         moveAction.move(worker, grid.getTiles().get(1));
         buildAction.build(worker,currentTile);
         buildAction2.getAvailableTilesForAction(worker);
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         expectedTiles.add(grid.getTiles().get(2));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));

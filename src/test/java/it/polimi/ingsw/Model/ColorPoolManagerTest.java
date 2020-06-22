@@ -1,42 +1,42 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.*;
+import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
+import it.polimi.ingsw.Events.Server.MessageEvent;
+import it.polimi.ingsw.Events.Server.PlayerChosenColorEvent;
+import it.polimi.ingsw.Events.Server.ServerEvent;
 import it.polimi.ingsw.Observer.ServerObserver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ColorPoolManagerTest implements ServerObserver {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Player player2 = new Player("Fabrizio");
-    Card card;
-    Card card1;
-    Card card2;
-    CardsBuilder cardsBuilder = new CardsBuilder();
-    StateManager stateManager = new StateManager();
-    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
-    int updateCounter;
-    PlayerColor color;
-    PlayerColor color1;
-    PlayerColor color2;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Player player2 = new Player("Fabrizio");
+    private final CardsBuilder cardsBuilder = new CardsBuilder();
+    private final StateManager stateManager = new StateManager();
+    private final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    private int updateCounter;
+    private PlayerColor color;
+    private PlayerColor color1;
+    private PlayerColor color2;
 
     @BeforeEach
     void setUp() {
         new Builder().build();
         cardsBuilder.createCards();
-        card = deck.getCardByName("Apollo");
-        card1 = deck.getCardByName("Artemis");
-        card2 = deck.getCardByName("Athena");
+        Card card = deck.getCardByName("Apollo");
+        Card card1 = deck.getCardByName("Artemis");
+        Card card2 = deck.getCardByName("Athena");
         cardsBuilder.createAction(card);
         cardsBuilder.createAction(card1);
         playersManager.addPlayer(player);

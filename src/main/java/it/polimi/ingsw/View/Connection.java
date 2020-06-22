@@ -30,10 +30,9 @@ public class Connection implements Runnable, CountdownInterface {
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
     private static final Object lock = new Object();
-    int maxNameLength = 16;
-    Timer pingTimer;
-    PingPongTask pingTask;
-    boolean waiting;
+    private Timer pingTimer;
+    private PingPongTask pingTask;
+    private boolean waiting;
 
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
@@ -104,7 +103,7 @@ public class Connection implements Runnable, CountdownInterface {
                 if(fullLobby()) return;
 
                 if (firstPlayer) {
-                    send(new MessageEvent(113));;
+                    send(new MessageEvent(113));
                     int lobbySize = waitLobbySize();
                     server.lobby(this, name, lobbySize);
                     server.awakeConnections();
@@ -120,9 +119,7 @@ public class Connection implements Runnable, CountdownInterface {
         catch(IOException | ClassNotFoundException e) {
             System.err.println("Connection interrupted");
             if(server.isFullLobby() && server.getAcceptedConnections().containsValue(this)) server.deregisterAllConnections();
-            else { try { server.deregisterConnection(this); }
-            catch (IOException ioException) { ioException.printStackTrace(); }
-            }
+            else server.deregisterConnection(this);
         }
     }
 
@@ -167,8 +164,9 @@ public class Connection implements Runnable, CountdownInterface {
             }
 
             name = ((LoginNameEvent) object).getName();
+            int maxNameLength = 16;
             if(name.split("\\s+").length>1) send(new MessageEvent(421));
-            else if(name.length()>maxNameLength) send(new MessageEvent(424));
+            else if(name.length()> maxNameLength) send(new MessageEvent(424));
             else if(!server.addName(name)) send(new MessageEvent(416));
             else validName = true;
         }

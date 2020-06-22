@@ -7,8 +7,6 @@ import java.util.Collections;
 
 public class CLIGridPrinter {
 
-    int leftSpacing = 3;
-
     /**
      * Prints all the grid merging it with the methods in this class
      * @param CLIGrid grid to print
@@ -26,12 +24,10 @@ public class CLIGridPrinter {
         ArrayList<StringWrapper> thirdLine = new ArrayList<>();
         ArrayList<StringWrapper> fourthLine = new ArrayList<>();
         ArrayList<StringWrapper> fifthLine = new ArrayList<>();
-
-        //clearScreen();
         createZeroLine(zeroLine);
         for(StringWrapper s : zeroLine)
             System.out.print(s.getString());
-        System.out.println("");
+        System.out.println();
 
         for(int y=1; y<=width; y++) {
 
@@ -53,21 +49,21 @@ public class CLIGridPrinter {
 
             printLine(firstLine, y, false);
             if(printNames && namesLength>0 && y==1) printName(names.get(0), colors.get(0));
-            System.out.println("");
+            System.out.println();
             printLine(secondLine, y, false);
             if(printNames && namesLength>1 && y==1) printName(names.get(1), colors.get(1));
-            System.out.println("");
+            System.out.println();
             printLine(thirdLine, y, true);
             if(printNames && namesLength>2 && y==1) printName(names.get(2), colors.get(2));
-            System.out.println("");
+            System.out.println();
             printLine(fourthLine, y, false);
 
             if(y==5) {
                 printHorizontalBorder(CLIGrid, 5, y, false, fifthLine);
-                System.out.println("");
+                System.out.println();
                 printLine(fifthLine, y, false);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -132,6 +128,7 @@ public class CLIGridPrinter {
      * @param line line to modify
      */
     private void createZeroLine(ArrayList<StringWrapper> line) {
+        int leftSpacing = 3;
         for (int i = 0; i < leftSpacing; i++)
             line.add(new StringWrapper(" "));
 
@@ -146,9 +143,5 @@ public class CLIGridPrinter {
         if(color==null) System.out.print("  "  + "───");
         else System.out.print("  " + color.escape() + "───" + Color.RESET);
         System.out.print(" " + name);
-    }
-    private synchronized void clearScreen(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }

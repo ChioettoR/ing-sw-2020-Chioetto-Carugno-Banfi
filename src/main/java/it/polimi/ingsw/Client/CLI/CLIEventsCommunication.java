@@ -11,13 +11,12 @@ public class CLIEventsCommunication implements EventsCommunication {
 
     private final CLIStdinReader cliStdinReader;
     private final MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
-    CLIDeck cliDeck = new CLIDeck();
-    CLICardBuilder cliCardBuilder = new CLICardBuilder();
-    CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
-    CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
-    CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
-    CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
-    int maxEffectLength = 85;
+    private final CLIDeck cliDeck = new CLIDeck();
+    private final CLICardBuilder cliCardBuilder = new CLICardBuilder();
+    private final CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
+    private final CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
+    private final CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
+    private final CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -129,6 +128,7 @@ public class CLIEventsCommunication implements EventsCommunication {
         String[] effectLines;
         String effect = cliCardBuilder.getDescription(cardName);
 
+        int maxEffectLength = 85;
         if(effect==null) messagesReader.read(407);
 
         else if(effect.length() < maxEffectLength) System.out.println(effect);

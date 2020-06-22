@@ -150,6 +150,6 @@ public class Grid {
     }
 
     public GridSimplified simplify() {
-        return new GridSimplified(new ArrayList<Tile>(tiles));
+        return new GridSimplified(new ArrayList<>(tiles));
     }
 }

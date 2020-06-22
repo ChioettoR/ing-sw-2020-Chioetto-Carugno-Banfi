@@ -70,7 +70,7 @@ class CardHestiaTest {
         assertEquals(2, currentTile.getLevel());
         assertEquals(0, grid.getTiles().get(5).getLevel());
 
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         moveAction.move(worker, grid.getTiles().get(6));
         expectedTiles.add(grid.getTiles().get(7));
         expectedTiles.add(grid.getTiles().get(11));

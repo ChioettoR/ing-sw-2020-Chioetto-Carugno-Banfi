@@ -32,7 +32,7 @@ public class PositioningManagerTest implements ServerObserver {
     int updateCounter;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         new Builder().build();
         cardsBuilder.createCards();
         card = deck.getCardByName("Apollo");

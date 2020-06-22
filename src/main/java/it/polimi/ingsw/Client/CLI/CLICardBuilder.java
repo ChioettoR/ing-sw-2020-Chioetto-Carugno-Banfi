@@ -5,11 +5,8 @@ import java.util.stream.Collectors;
 
 public class CLICardBuilder {
 
-    Map<String, String> effectsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    int cardLength = 17;
-    int blankSpaceHeight = 3;
-    int maxLineSize = 15;
-    int cardsSpacing = 3;
+    private final Map<String, String> effectsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private int cardLength = 17;
 
     /**
      * This method creates all the cards invoking the other methods in this class and bringing all the variables from the CLICard class
@@ -69,6 +66,7 @@ public class CLICardBuilder {
             upperLines.add(lowerNameBorder);
 
             //Create blank spaces after name
+            int blankSpaceHeight = 3;
             for (int i = 0; i < blankSpaceHeight; i++) {
                 StringBuilder blankSpace = new StringBuilder();
                 blankSpace.append("│");
@@ -162,15 +160,14 @@ public class CLICardBuilder {
 
             //If the word i'm adding fits into the line
             int newLength = line.length() + separatedEffectWords[i].length();
-            if (newLength < maxLineSize-1)
-                line.append(separatedEffectWords[i]).append(" ");
 
-                //Adds the current line to the lines array and create a new line for the word i'm adding
-            else {
+            //Adds the current line to the lines array and create a new line for the word i'm adding
+            int maxLineSize = 15;
+            if (newLength >= maxLineSize -1) {
                 effectLines.add(line);
                 line = new StringBuilder();
-                line.append(separatedEffectWords[i]).append(" ");
             }
+            line.append(separatedEffectWords[i]).append(" ");
 
             //Adds the last word i'm adding to the lines array
             if (i == separatedEffectWords.length - 1) effectLines.add(line);
@@ -237,6 +234,7 @@ public class CLICardBuilder {
 
             for (ArrayList<StringBuilder> allCardsLine : allCardsLines) {
                 stringBuilder.append(allCardsLine.get(i));
+                int cardsSpacing = 3;
                 stringBuilder.append(" ".repeat(Math.max(0, cardsSpacing)));
             }
         }
