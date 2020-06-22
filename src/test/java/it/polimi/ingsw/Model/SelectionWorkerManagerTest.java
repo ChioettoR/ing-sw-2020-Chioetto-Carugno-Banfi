@@ -68,9 +68,9 @@ class SelectionWorkerManagerTest implements  ServerObserver {
         if(serverEvent instanceof MessageEvent)
             return;
         assertSame(stateManager.getGameState(), GameState.ACTIONSELECTING);
-        assertNotNull(stateManager.playersManager.getCurrentPlayer());
+        assertNotNull(stateManager.getPlayersManager().getCurrentPlayer());
         assertEquals(playersManager.getCurrentPlayer().getID(), playersManager.getCurrentWorker().getPlayerID());
-        assertNotNull(stateManager.playersManager.getCurrentWorker());
-        assertSame(stateManager.playersManager.getCurrentWorker(), workerA1);
+        assertNotNull(stateManager.getPlayersManager().getCurrentWorker());
+        assertSame(stateManager.getPlayersManager().getCurrentWorker(), workerA1);
     }
 }

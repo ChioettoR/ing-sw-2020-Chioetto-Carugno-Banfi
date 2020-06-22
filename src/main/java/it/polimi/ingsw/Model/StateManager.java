@@ -14,6 +14,10 @@ public class StateManager extends MessageObservable {
         gameState = GameState.START;
     }
 
+    public PlayersManager getPlayersManager() {
+        return playersManager;
+    }
+
     public GameState getGameState() {
         return gameState;
     }

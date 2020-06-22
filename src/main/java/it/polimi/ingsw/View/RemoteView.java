@@ -19,6 +19,10 @@ public class RemoteView implements ServerObserver {
         this.controller = controller;
     }
 
+    public int getPlayerID() {
+        return playerID;
+    }
+
     public void sendMessage(ClientEvent event) throws IOException {
         controller.send(event);
     }

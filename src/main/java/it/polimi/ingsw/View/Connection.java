@@ -207,7 +207,7 @@ public class Connection implements Runnable, CountdownInterface {
 
             else {
                 ClientEvent event = (ClientEvent) read;
-                event.setPlayerID(remoteView.playerID);
+                event.setPlayerID(remoteView.getPlayerID());
                 remoteView.sendMessage(event);
             }
         }
