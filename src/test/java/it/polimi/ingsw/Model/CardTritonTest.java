@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTritonTest {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final Player player = new Player("Alberto");
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    Player player = new Player("Alberto");
     Card card;
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
@@ -73,7 +73,7 @@ class CardTritonTest {
         expectedActions.add(buildAction);
         assertEquals(expectedActions, card.getActionOrder());
 
-        //Trying to move to a perimeter tile, being able to do a 2nd move in a row to another tile
+        //Trying to move to a perimetric tile, being able to do a 2nd move in a row to another tile
         moveAction.move(worker, grid.getTiles().get(6));
         assertEquals(expectedActions, card.getActionOrder());
         moveAction.move(worker, grid.getTiles().get(1));

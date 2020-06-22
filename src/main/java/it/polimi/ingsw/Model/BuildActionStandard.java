@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class BuildActionStandard extends StandardActionBehaviour implements BuildAction {
 
-    final LastActionSave lastActionSave = new LastActionSave();
+    LastActionSave lastActionSave = new LastActionSave();
 
     /**
      * Builds in the given tile the given level block if all the standard build conditions are satisfied

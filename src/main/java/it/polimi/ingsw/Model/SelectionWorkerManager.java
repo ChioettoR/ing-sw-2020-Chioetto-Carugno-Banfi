@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class SelectionWorkerManager extends MessageObservable {
 
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     private final ActionManager actionManager;
 

@@ -7,9 +7,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CardsBuilder {
@@ -148,7 +148,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if(!canMove(worker, tileWhereMove)) {
+                if(canMove(worker, tileWhereMove)) {
                     Tile currentPosition = worker.getPosition();
                     Worker enemyWorker = tileWhereMove.getWorker();
                     moveActionStandard.standardMove(worker, tileWhereMove);
@@ -163,7 +163,7 @@ public class CardsBuilder {
             public boolean canMove(Worker worker, Tile tileWhereMove) {
 
                 if(isActionLock())
-                    return true;
+                    return false;
 
                 if(tileWhereMove.isEmpty())
                     return moveActionStandard.canMove(worker, tileWhereMove);
@@ -171,8 +171,8 @@ public class CardsBuilder {
                 else {
                     Tile currentTile = worker.getPosition();
                     int enemyID = tileWhereMove.getWorker().getPlayerID();
-                    if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && moveActionStandard.isCantMoveUp()) return true;
-                    else return (tileWhereMove.getLevel() - currentTile.getLevel() > 1 || !moveActionStandard.correctTile(currentTile, tileWhereMove) || enemyID == worker.getPlayerID());
+                    if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && moveActionStandard.isCantMoveUp()) return false;
+                    else return (tileWhereMove.getLevel() - currentTile.getLevel() <= 1 && moveActionStandard.correctTile(currentTile, tileWhereMove) && enemyID != worker.getPlayerID());
                 }
             }
 
@@ -237,13 +237,13 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if(!canMove(worker, tileWhereMove))
+                if(canMove(worker, tileWhereMove))
                     moveActionStandard.standardMove(worker, tileWhereMove);
             }
 
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
-                return (moveActionStandard.canMove(worker, tileWhereMove) || tileWhereMove == firstMoveActionStandard.getLastActionSave().getSavedTile());
+                return (moveActionStandard.canMove(worker, tileWhereMove) && tileWhereMove != firstMoveActionStandard.getLastActionSave().getSavedTile());
             }
 
             @Override
@@ -354,7 +354,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if (!canMove(worker, tileWhereMove)) {
+                if (canMove(worker, tileWhereMove)) {
                     Tile currentTile = worker.getPosition();
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     roundAction.setActionLock(tileWhereMove.getLevel() - currentTile.getLevel() != 1);
@@ -643,7 +643,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if (!canMove(worker, tileWhereMove)) {
+                if (canMove(worker, tileWhereMove)) {
                     Tile currentPosition = worker.getPosition();
                     Worker enemyWorker = tileWhereMove.getWorker();
                     moveActionStandard.standardMove(worker, tileWhereMove);
@@ -658,19 +658,19 @@ public class CardsBuilder {
             @Override
             public boolean canMove(Worker worker, Tile tileWhereMove) {
                 if(isActionLock())
-                    return true;
+                    return false;
                 if(tileWhereMove.isEmpty())
                     return moveActionStandard.canMove(worker, tileWhereMove);
                 else {
                     Tile currentTile = worker.getPosition();
                     int enemyID = tileWhereMove.getWorker().getPlayerID();
                     if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && moveActionStandard.isCantMoveUp())
-                        return true;
+                        return false;
                     else if(tileWhereMove.getLevel() - currentTile.getLevel() <= 1 && moveActionStandard.correctTile(currentTile, tileWhereMove) && enemyID != worker.getPlayerID()) {
                         Tile oppositeTile = Grid.getGrid().getOppositeTile(worker.getPosition(), tileWhereMove);
-                        return oppositeTile == null || !oppositeTile.isEmpty() || oppositeTile.getLevel() == 4;
+                        return oppositeTile != null && oppositeTile.isEmpty() && oppositeTile.getLevel() != 4;
                     }
-                    return true;
+                    return false;
                 }
             }
 
@@ -733,7 +733,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if(!canMove(worker, tileWhereMove)) {
+                if(canMove(worker, tileWhereMove)) {
                     Tile currentPosition = worker.getPosition();
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(currentPosition.getLevel() - tileWhereMove.getLevel() >=2)
@@ -809,7 +809,7 @@ public class CardsBuilder {
             private boolean actionLock = false;
 
             @Override
-            public void doAction() {
+            public void doAction() throws IOException {
                 moveActionStandard.setCantMoveUp(false);
             }
 
@@ -991,7 +991,7 @@ public class CardsBuilder {
 
             @Override
             public void move(Worker worker, Tile tileWhereMove) {
-                if(!canMove(worker, tileWhereMove)) {
+                if(canMove(worker, tileWhereMove)) {
                     moveActionStandard.standardMove(worker, tileWhereMove);
                     if(Grid.getGrid().isPerimeterTile(tileWhereMove)) {
                        perimeterMove = true;

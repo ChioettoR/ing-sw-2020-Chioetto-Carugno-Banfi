@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CLIPlayersManager {
 
-    final ArrayList<CLIPlayer> cliPlayers = new ArrayList<>();
+    ArrayList<CLIPlayer> cliPlayers = new ArrayList<>();
 
     /**
      * Adds the player and colors it
@@ -14,6 +14,13 @@ public class CLIPlayersManager {
      */
     public void addPlayer(String name) {
         cliPlayers.add(new CLIPlayer(name));
+    }
+
+    public ArrayList<String> getNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for(CLIPlayer p : cliPlayers)
+            names.add(p.getName());
+        return names;
     }
 
     public ArrayList<String> getDisplayStrings() {

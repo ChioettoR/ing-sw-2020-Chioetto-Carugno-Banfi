@@ -31,312 +31,314 @@
             </StackPane>
         </bottom></BorderPane>
    <VBox prefHeight="130.0" prefWidth="63.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-      <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-         <Image url="@buildingsButton.png"/>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-         <Image url="@buildingsButton.png"/>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-         <Image url="@buildingsButton.png"/>
-      </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-         <Image url="@buildingsButton.png"/>
-      </ImageView>
+      <children>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </ImageView>
+         <ImageView fitHeight="50.0" fitWidth="50.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@buildingsButton.png" />
+            </image>
+         </ImageView>
+      </children>
    </VBox>
    <VBox prefHeight="130.0" prefWidth="63.0">
-      <ImageView fx:id="baseBlock" fitHeight="150.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true"
-                 translateX="7.0" translateY="7.0">
-         <Image url="@baseBlock.png"/>
-         <cursor>
-            <Cursor fx:constant="HAND"/>
-         </cursor>
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-      </ImageView>
-      <ImageView fx:id="mediumBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true"
-                 scaleX="0.65" scaleY="0.65" translateX="4.0">
-         <Image url="@mediumBlock.png"/>
-         <cursor>
-            <Cursor fx:constant="HAND"/>
-         </cursor>
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-      </ImageView>
-      <ImageView fx:id="highBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true"
-                 scaleX="0.65" scaleY="0.65" translateX="4.0" translateY="-10.0">
-         <Image url="@highBlock.png"/>
-         <cursor>
-            <Cursor fx:constant="HAND"/>
-         </cursor>
-         <VBox.margin>
-            <Insets bottom="10.0"/>
-         </VBox.margin>
-      </ImageView>
-      <ImageView fx:id="dome" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true"
-                 translateX="4.0" translateY="-22.0">
-         <Image url="@dome.png"/>
-         <cursor>
-            <Cursor fx:constant="HAND"/>
-         </cursor>
-      </ImageView>
+      <children>
+           <ImageView fx:id="baseBlock" fitHeight="150.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" translateX="7.0" translateY="7.0">
+               <Image url="@baseBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="mediumBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.65" translateX="4.0">
+               <Image url="@mediumBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="highBlock" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.65" scaleY="0.65" translateX="4.0" translateY="-10.0">
+               <Image url="@highBlock.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+           </ImageView>
+           <ImageView fx:id="dome" fitHeight="150.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" translateX="4.0" translateY="-22.0">
+               <Image url="@dome.png" />
+               <cursor>
+                   <Cursor fx:constant="HAND" />
+               </cursor>
+           </ImageView>
+      </children>
    </VBox>
    <BorderPane fx:id="borderPaneCards" focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <right>
-         <StackPane fx:id="rightPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false"
-                    BorderPane.alignment="CENTER">
-            <ImageView fx:id="imageRound1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="350.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="nameBar1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="465.0"/>
-               </StackPane.margin>
-               <Image url="@PickCardPhase/nameBar.png"/>
-            </ImageView>
-            <Text fx:id="nameText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Franchino" textAlignment="CENTER"
-                  visible="false" wrappingWidth="85.0">
-               <StackPane.margin>
-                  <Insets bottom="460.0"/>
-               </StackPane.margin>
-               <font>
-                  <Font name="Candara" size="9.0"/>
-               </font>
-            </Text>
-            <ImageView fx:id="frame1" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                       visible="false">
-               <StackPane.margin>
-                  <Insets bottom="350.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <Button fx:id="buttonInfo1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0"
-                    style="-fx-background-color: transparent;" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="350.0"/>
-               </StackPane.margin>
-            </Button>
-            <ImageView fx:id="imageRound2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="20.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="nameBar2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="135.0"/>
-               </StackPane.margin>
-               <Image url="@PickCardPhase/nameBar.png"/>
-            </ImageView>
-            <Text fx:id="nameText2" strokeType="OUTSIDE" strokeWidth="0.0" text="Giuseppina" textAlignment="CENTER"
-                  visible="false" wrappingWidth="85.0">
-               <font>
-                  <Font name="Candara" size="9.0"/>
-               </font>
-               <StackPane.margin>
-                  <Insets bottom="130.0"/>
-               </StackPane.margin>
-            </Text>
-            <ImageView fx:id="frame2" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                       visible="false">
-               <StackPane.margin>
-                  <Insets bottom="20.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <Button fx:id="buttonInfo2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0"
-                    style="-fx-background-color: transparent;" visible="false">
-               <StackPane.margin>
-                  <Insets bottom="20.0"/>
-               </StackPane.margin>
-            </Button>
-            <ImageView fx:id="imageRound3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets top="320.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="nameBar3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <StackPane.margin>
-                  <Insets top="206.0"/>
-               </StackPane.margin>
-               <Image url="@PickCardPhase/nameBar.png"/>
-            </ImageView>
-            <Text fx:id="nameText3" strokeType="OUTSIDE" strokeWidth="0.0" text="Carlo" textAlignment="CENTER"
-                  visible="false" wrappingWidth="85.0">
-               <font>
-                  <Font size="9.0"/>
-               </font>
-               <StackPane.margin>
-                  <Insets top="208.0"/>
-               </StackPane.margin>
-            </Text>
-            <ImageView fx:id="frame3" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                       visible="false">
-               <StackPane.margin>
-                  <Insets top="320.0"/>
-               </StackPane.margin>
-            </ImageView>
-            <Button fx:id="buttonInfo3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0"
-                    style="-fx-background-color: transparent;" visible="false">
-               <StackPane.margin>
-                  <Insets top="320.0"/>
-               </StackPane.margin>
-            </Button>
+         <StackPane fx:id="rightPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fx:id="imageRound1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar1" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="465.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@PickCardPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Franchino" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <StackPane.margin>
+                     <Insets bottom="460.0" />
+                  </StackPane.margin>
+                  <font>
+                     <Font name="Candara" size="9.0" />
+                  </font>
+               </Text>
+               <ImageView fx:id="frame1" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <Button fx:id="buttonInfo1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="350.0" />
+                  </StackPane.margin>
+               </Button>
+               <ImageView fx:id="imageRound2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar2" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="135.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@PickCardPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText2" strokeType="OUTSIDE" strokeWidth="0.0" text="Giuseppina" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <font>
+                     <Font name="Candara" size="9.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets bottom="130.0" />
+                  </StackPane.margin>
+               </Text>
+               <ImageView fx:id="frame2" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <Button fx:id="buttonInfo2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets bottom="20.0" />
+                  </StackPane.margin>
+               </Button>
+               <ImageView fx:id="imageRound3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <ImageView fx:id="nameBar3" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="206.0" />
+                  </StackPane.margin>
+                  <image>
+                     <Image url="@PickCardPhase/nameBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="nameText3" strokeType="OUTSIDE" strokeWidth="0.0" text="Carlo" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
+                  <font>
+                     <Font size="9.0" />
+                  </font>
+                  <StackPane.margin>
+                     <Insets top="208.0" />
+                  </StackPane.margin>
+               </Text>
+               <ImageView fx:id="frame3" fitHeight="147.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+               </ImageView>
+               <Button fx:id="buttonInfo3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="147.0" prefWidth="100.0" style="-fx-background-color: transparent;" visible="false">
+                  <StackPane.margin>
+                     <Insets top="320.0" />
+                  </StackPane.margin>
+               </Button>
+            </children>
          </StackPane>
       </right>
       <center>
-         <StackPane fx:id="infoStackPane" focusTraversable="true" prefHeight="150.0" prefWidth="200.0"
-                    BorderPane.alignment="CENTER">
-            <StackPane fx:id="infoStackPaneOpen" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0"
-                       visible="false">
-               <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@PickCardPhase/rectangleInfo.png"/>
-               </ImageView>
-               <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets left="165.0"/>
-                  </StackPane.margin>
-                  <Image url="@PickCardPhase/podium-characters-Zeus.png"/>
-               </ImageView>
-               <Button fx:id="closeInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                       prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton"
-                       stylesheets="@PickCardPhase/stylePickCardPhase.css" text="Button">
-                  <cursor>
-                     <Cursor fx:constant="HAND"/>
-                  </cursor>
-                  <StackPane.margin>
-                     <Insets bottom="160.0" left="270.0"/>
-                  </StackPane.margin>
-               </Button>
-               <Text fx:id="infoGodName" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeus" textAlignment="CENTER"
-                     wrappingWidth="150.0">
-                  <font>
-                     <Font name="Candara" size="18.0"/>
-                  </font>
-                  <StackPane.margin>
-                     <Insets bottom="140.0"/>
-                  </StackPane.margin>
-               </Text>
-               <Text fx:id="infoDescription" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level."
-                     wrappingWidth="155.0">
-                  <font>
-                     <Font name="Candara" size="12.0"/>
-                  </font>
-                  <StackPane.margin>
-                     <Insets right="110.0"/>
-                  </StackPane.margin>
-               </Text>
-            </StackPane>
-            <StackPane fx:id="threeWorkersPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0"
-                       visible="false">
-               <ImageView fx:id="workerImage3p3" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets left="430.0"/>
-                  </StackPane.margin>
-                  <Image url="@darkBrownWorker.png"/>
-               </ImageView>
-               <Button fx:id="buttonWorker3p3" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0"
-                       style="-fx-background-color: transparent;">
-                  <StackPane.margin>
-                     <Insets left="430.0"/>
-                  </StackPane.margin>
-               </Button>
-               <ImageView fx:id="workerImage3p2" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets left="30.0"/>
-                  </StackPane.margin>
-                  <Image url="@silverWorker.png"/>
-               </ImageView>
-               <Button fx:id="buttonWorker3p2" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0"
-                       style="-fx-background-color: transparent;">
-                  <StackPane.margin>
-                     <Insets left="30.0"/>
-                  </StackPane.margin>
-               </Button>
-               <ImageView fx:id="workerImage3p1" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets right="370.0"/>
-                  </StackPane.margin>
-                  <Image url="@lightBrownWorker.png"/>
-               </ImageView>
-               <Button fx:id="buttonWorker3p1" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0"
-                       style="-fx-background-color: transparent;">
-                  <StackPane.margin>
-                     <Insets right="370.0"/>
-                  </StackPane.margin>
-               </Button>
-            </StackPane>
-            <StackPane fx:id="twoWorkersPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0"
-                       visible="false">
-               <ImageView fx:id="workerImage2p2" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets left="180.0"/>
-                  </StackPane.margin>
-               </ImageView>
-               <Button fx:id="buttonWorker2p2" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0"
-                       style="-fx-background-color: transparent;">
-                  <StackPane.margin>
-                     <Insets left="180.0"/>
-                  </StackPane.margin>
-               </Button>
-               <ImageView fx:id="workerImage2p1" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <StackPane.margin>
-                     <Insets right="180.0"/>
-                  </StackPane.margin>
-               </ImageView>
-               <Button fx:id="buttonWorker2p1" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0"
-                       style="-fx-background-color: transparent;">
-                  <StackPane.margin>
-                     <Insets right="180.0"/>
-                  </StackPane.margin>
-               </Button>
-            </StackPane>
+         <StackPane fx:id="infoStackPane" focusTraversable="true" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <StackPane fx:id="infoStackPaneOpen" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false">
+                  <children>
+                     <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@PickCardPhase/rectangleInfo.png" />
+                        </image>
+                     </ImageView>
+                     <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@PickCardPhase/podium-characters-Zeus.png" />
+                        </image>
+                        <StackPane.margin>
+                           <Insets left="165.0" />
+                        </StackPane.margin>
+                     </ImageView>
+                     <Button fx:id="closeInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@PickCardPhase/stylePickCardPhase.css" text="Button">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <StackPane.margin>
+                           <Insets bottom="160.0" left="270.0" />
+                        </StackPane.margin>
+                     </Button>
+                     <Text fx:id="infoGodName" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeus" textAlignment="CENTER" wrappingWidth="150.0">
+                        <font>
+                           <Font name="Candara" size="18.0" />
+                        </font>
+                        <StackPane.margin>
+                           <Insets bottom="140.0" />
+                        </StackPane.margin>
+                     </Text>
+                     <Text fx:id="infoDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level." wrappingWidth="155.0">
+                        <font>
+                           <Font name="Candara" size="12.0" />
+                        </font>
+                        <StackPane.margin>
+                           <Insets right="110.0" />
+                        </StackPane.margin>
+                     </Text>
+                  </children>
+               </StackPane>
+               <StackPane fx:id="threeWorkersPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false">
+                  <children>
+                     <ImageView fx:id="workerImage3p3" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets left="430.0" />
+                        </StackPane.margin>
+                        <image>
+                           <Image url="@darkBrownWorker.png" />
+                        </image>
+                     </ImageView>
+                     <Button fx:id="buttonWorker3p3" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <StackPane.margin>
+                           <Insets left="430.0" />
+                        </StackPane.margin>
+                     </Button>
+                     <ImageView fx:id="workerImage3p2" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets left="30.0" />
+                        </StackPane.margin>
+                        <image>
+                           <Image url="@silverWorker.png" />
+                        </image>
+                     </ImageView>
+                     <Button fx:id="buttonWorker3p2" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <StackPane.margin>
+                           <Insets left="30.0" />
+                        </StackPane.margin>
+                     </Button>
+                     <ImageView fx:id="workerImage3p1" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets right="370.0" />
+                        </StackPane.margin>
+                        <image>
+                           <Image url="@lightBrownWorker.png" />
+                        </image>
+                     </ImageView>
+                     <Button fx:id="buttonWorker3p1" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <StackPane.margin>
+                           <Insets right="370.0" />
+                        </StackPane.margin>
+                     </Button>
+                  </children>
+               </StackPane>
+               <StackPane fx:id="twoWorkersPane" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" visible="false">
+                  <children>
+                     <ImageView fx:id="workerImage2p2" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets left="180.0" />
+                        </StackPane.margin>
+                     </ImageView>
+                     <Button fx:id="buttonWorker2p2" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <StackPane.margin>
+                           <Insets left="180.0" />
+                        </StackPane.margin>
+                     </Button>
+                     <ImageView fx:id="workerImage2p1" fitHeight="236.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets right="180.0" />
+                        </StackPane.margin>
+                     </ImageView>
+                     <Button fx:id="buttonWorker2p1" mnemonicParsing="false" prefHeight="236.0" prefWidth="150.0" style="-fx-background-color: transparent;">
+                        <StackPane.margin>
+                           <Insets right="180.0" />
+                        </StackPane.margin>
+                     </Button>
+                  </children>
+               </StackPane>
+            </children>
          </StackPane>
       </center>
       <left>
          <StackPane focusTraversable="true" pickOnBounds="false" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
       </left>
       <top>
-         <StackPane minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="88.0" prefWidth="0.0"
-                    BorderPane.alignment="CENTER">
+         <StackPane minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="88.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+            <children>
+               <ImageView fitHeight="75.0" fitWidth="349.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@messageBar.png" />
+                  </image>
+               </ImageView>
+               <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="310.0">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Text>
+               <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="310.0">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Text>
+            </children>
             <BorderPane.margin>
-               <Insets top="10.0"/>
+               <Insets top="10.0" />
             </BorderPane.margin>
-            <ImageView fitHeight="75.0" fitWidth="349.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@messageBar.png"/>
-            </ImageView>
-            <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER"
-                  wrappingWidth="310.0">
-               <font>
-                  <Font size="15.0"/>
-               </font>
-            </Text>
-            <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER"
-                  wrappingWidth="310.0">
-               <font>
-                  <Font size="15.0"/>
-               </font>
-            </Text>
          </StackPane>
       </top>
       <bottom>

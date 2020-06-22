@@ -6,8 +6,8 @@ public class TileSimplified implements Serializable {
 
     private final int x;
     private final int y;
-    private final int buildLevel;
-    private final WorkerSimplified workerSimplified;
+    private int buildLevel;
+    private WorkerSimplified workerSimplified;
 
     /**
      * This is a simplified version of the Tile, used to have a faster and lighter communication with client
@@ -35,7 +35,15 @@ public class TileSimplified implements Serializable {
         return buildLevel;
     }
 
+    public void setBuildLevel(int buildLevel) {
+        this.buildLevel = buildLevel;
+    }
+
     public WorkerSimplified getWorkerSimplified() {
         return workerSimplified;
+    }
+
+    public void setWorkerSimplified(WorkerSimplified workerSimplified) {
+        this.workerSimplified = workerSimplified;
     }
 }

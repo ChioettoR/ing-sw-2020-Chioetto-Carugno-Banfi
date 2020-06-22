@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FirstPlayerChosenEvent extends ClientEvent implements Serializable {
 
-    final String name;
+    String name;
 
     public FirstPlayerChosenEvent(String name) {
         this.name = name;

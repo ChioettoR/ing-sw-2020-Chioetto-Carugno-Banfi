@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class StandardActionsTest {
     Grid grid = Grid.getGrid();
     PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final MoveActionStandard moveActionStandard = new MoveActionStandard();
-    final BuildActionStandard buildActionStandard = new BuildActionStandard();
-    final Player player = new Player("Marcello");
-    final Card card = new Card("Card", null);
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    MoveActionStandard moveActionStandard = new MoveActionStandard();
+    BuildActionStandard buildActionStandard = new BuildActionStandard();
+    Player player = new Player("Marcello");
+    Card card = new Card("Card", null);
 
     @AfterEach
     void tearDown() {

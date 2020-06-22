@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class CountdownTask extends TimerTask {
 
     int time;
-    final CountdownInterface countdownInterface;
+    CountdownInterface countdownInterface;
 
     public CountdownTask(int time, CountdownInterface countdownInterface) {
         this.time = time;

@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardDemeterTest {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final Player player = new Player("Alberto");
-    final Card card = new Card("Demeter", CardsBuilder.GodPower.CanBuildTwiceDifferent);
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    Player player = new Player("Alberto");
+    Card card = new Card("Demeter", CardsBuilder.GodPower.CanBuildTwiceDifferent);
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
@@ -60,7 +60,7 @@ class CardDemeterTest {
         moveAction.move(worker, grid.getTiles().get(1));
         buildAction.build(worker,currentTile);
         buildAction2.getAvailableTilesForAction(worker);
-        ArrayList<Tile> expectedTiles = new ArrayList<>();
+        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
         expectedTiles.add(grid.getTiles().get(2));
         expectedTiles.add(grid.getTiles().get(5));
         expectedTiles.add(grid.getTiles().get(6));

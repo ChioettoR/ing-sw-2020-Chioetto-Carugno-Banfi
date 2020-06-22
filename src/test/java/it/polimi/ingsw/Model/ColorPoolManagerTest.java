@@ -1,33 +1,30 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
-import it.polimi.ingsw.Events.Server.MessageEvent;
-import it.polimi.ingsw.Events.Server.PlayerChosenColorEvent;
-import it.polimi.ingsw.Events.Server.ServerEvent;
+import it.polimi.ingsw.Events.Server.*;
 import it.polimi.ingsw.Observer.ServerObserver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ColorPoolManagerTest implements ServerObserver {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Player player = new Player("Alberto");
-    final Player player1 = new Player("Marcello");
-    final Player player2 = new Player("Fabrizio");
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Player player = new Player("Alberto");
+    Player player1 = new Player("Marcello");
+    Player player2 = new Player("Fabrizio");
     Card card;
     Card card1;
     Card card2;
-    final CardsBuilder cardsBuilder = new CardsBuilder();
-    final StateManager stateManager = new StateManager();
-    final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    CardsBuilder cardsBuilder = new CardsBuilder();
+    StateManager stateManager = new StateManager();
+    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
     int updateCounter;
     PlayerColor color;
     PlayerColor color1;

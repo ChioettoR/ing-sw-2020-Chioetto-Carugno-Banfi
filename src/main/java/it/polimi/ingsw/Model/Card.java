@@ -8,7 +8,7 @@ public class Card {
     private String effectName;
     private String description;
     private boolean alreadyPicked;
-    private ArrayList<Action> actionOrder = new ArrayList<>();
+    private ArrayList<Action> actionOrder = new ArrayList<Action>();
     private final boolean completeTowersObserver;
 
     public void setEffectName(String effectName) {
@@ -73,7 +73,7 @@ public class Card {
      * @return Every move action
      */
     public ArrayList<MoveAction> getMoveActions() {
-        ArrayList<MoveAction> moveActionArrayList = new ArrayList<>();
+        ArrayList<MoveAction> moveActionArrayList = new ArrayList<MoveAction>();
         for(Action action : actionOrder) {
             if(action instanceof MoveAction)
                 moveActionArrayList.add((MoveAction) action);

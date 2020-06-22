@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PositioningManager extends ChangeObservable {
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     final int totalWorkersNumber = 2;
     int currentWorkersNumber;
+    PlayerColor playerColor;
 
     public PositioningManager(StateManager stateManager) {
         this.stateManager = stateManager;

@@ -88,7 +88,7 @@ public class Server {
             connection.send(serializable);
     }
 
-    public synchronized void deregisterConnection(Connection c) {
+    public synchronized void deregisterConnection(Connection c) throws IOException {
         System.out.println("Deregister client...");
         if(c.isFirstPlayer()) {
             if (lobbyCreated) deregisterAllConnections();

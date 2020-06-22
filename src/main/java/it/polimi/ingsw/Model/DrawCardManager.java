@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class DrawCardManager extends CardObservable {
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     ArrayList<CardSimplified> pickedCards;
     ArrayList<CardSimplified> remainingCards;
-    final FirstPlayerManager firstPlayerManager;
+    FirstPlayerManager firstPlayerManager;
 
     public DrawCardManager(StateManager stateManager, FirstPlayerManager firstPlayerManager) {
         this.stateManager = stateManager;

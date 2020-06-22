@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardPrometheusTest {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final Player player = new Player("Alberto");
-    final Card card = new Card("Prometheus", CardsBuilder.GodPower.BuildBeforeMove);
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    Player player = new Player("Alberto");
+    Card card = new Card("Prometheus", CardsBuilder.GodPower.BuildBeforeMove);
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;

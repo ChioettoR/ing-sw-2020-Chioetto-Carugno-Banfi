@@ -3,7 +3,7 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.Color;
 
 public class CLIPlayer {
-    final String name;
+    String name;
     Color color;
     String cardName;
 

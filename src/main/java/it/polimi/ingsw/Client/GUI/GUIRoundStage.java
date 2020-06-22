@@ -41,16 +41,16 @@ public class GUIRoundStage {
     final DoubleProperty rotationVelocity = new SimpleDoubleProperty();
     final DoubleProperty zoomVelocity = new SimpleDoubleProperty();
     final LongProperty lastUpdateTime = new SimpleLongProperty();
-    final GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
+    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
     GUIRoundController guiRoundController;
     ActionType selectedActionType;
     GUIStagesManager stagesManager;
     GUIPlayersManager guiPlayersManager;
     GUICards guiCards;
-    final HashMap<ActionType, String> buttonsStyle = new HashMap<>();
+    HashMap<ActionType, String> buttonsStyle = new HashMap<>();
     boolean buttonTranslated = false;
     Scene scene;
-    final int timer = 3;
+    int timer = 3;
 
     private final int maxFOV = 40;
     private final int minFOV = 25;
@@ -69,6 +69,10 @@ public class GUIRoundStage {
 
     public GUIStagesManager getStagesManager() {
         return stagesManager;
+    }
+
+    public ActionType getSelectedActionType() {
+        return selectedActionType;
     }
 
     public void start(Stage stage) {
@@ -135,10 +139,11 @@ public class GUIRoundStage {
 
     /**
      * Images for the buildings
-     * @param subScene sub scene of the grid
+     * @param stage stage of the match
+     * @param subScene subscene of the grid
      * @throws IOException when socket closes
      */
-    private void buildingsImages(SubScene subScene) throws IOException {
+    private void buildingsImages(Stage stage, SubScene subScene) throws IOException {
 
         initializeButtonsStyle();
 
@@ -229,8 +234,8 @@ public class GUIRoundStage {
 
     /**
      * Handles the animations of the grid (Zoom, Rotations)
-     * @param group The objects group
-     * @param camera The main camera
+     * @param group
+     * @param camera
      */
     private void gridAnimations(Group group, PerspectiveCamera camera) {
 
@@ -479,7 +484,7 @@ public class GUIRoundStage {
 
         eventHandler(stage);
         guiCards = stagesManager.getGuiPickCardStage().getGuiCards();
-        try { buildingsImages(subScene); }
+        try { buildingsImages(stage, subScene); }
         catch (IOException e) { e.printStackTrace(); }
     }
 
@@ -487,13 +492,16 @@ public class GUIRoundStage {
      * Time to cancel the action
      */
     public void timerToCancel() {
-        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1)));
+        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
         animation.setCycleCount(timer+1);
         animation.setOnFinished(event -> {
             Platform.runLater(() -> guiRoundController.getErrorText().setText(""));
             Platform.runLater(() -> guiRoundController.getMessageText().setVisible(true));
         });
         animation.play();
+    }
+
+    private void CountDown() {
     }
 
     /**
@@ -590,4 +598,5 @@ public class GUIRoundStage {
             if(guiPlayersManager.getPlayer(loserName).getColor().equals(javafx.scene.paint.Color.web("7c5536"))) guiRoundController.getFrame3().setImage(new Image(getClass().getResourceAsStream("/frameDarkBrownWithX.png")));
         }
     }
+
 }

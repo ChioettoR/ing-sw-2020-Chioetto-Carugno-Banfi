@@ -5,14 +5,15 @@ import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeckTest {
 
-    final Deck deck = Deck.getDeck();
-    final Card card = new Card("Marcello", null);
-    final Card card1 = new Card("Alberto", null);
-    final Card card2 = new Card("Federico", null);
-    final ArrayList<String> names = new ArrayList<>();
+    Deck deck = Deck.getDeck();
+    Card card = new Card("Marcello", null);
+    Card card1 = new Card("Alberto", null);
+    Card card2 = new Card("Federico", null);
+    ArrayList<String> names = new ArrayList<>();
 
     @Test
     void addAndRandomPickTest() {

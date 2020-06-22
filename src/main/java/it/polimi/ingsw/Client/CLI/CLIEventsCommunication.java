@@ -3,24 +3,22 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Client.EventsCommunication;
 import it.polimi.ingsw.Client.MessagesReader;
-import it.polimi.ingsw.Model.ActionType;
-import it.polimi.ingsw.Model.CardSimplified;
-import it.polimi.ingsw.Model.PlayerColor;
-import it.polimi.ingsw.Model.TileSimplified;
+import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CLIEventsCommunication implements EventsCommunication {
 
     private final CLIStdinReader cliStdinReader;
     private final MessagesReader messagesReader = new MessagesReader(new CLIMessagesHandler());
-    final CLIDeck cliDeck = new CLIDeck();
-    final CLICardBuilder cliCardBuilder = new CLICardBuilder();
-    final CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
-    final CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
-    final CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
-    final CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
-    final int maxEffectLength = 85;
+    CLIDeck cliDeck = new CLIDeck();
+    CLICardBuilder cliCardBuilder = new CLICardBuilder();
+    CLIActionPrinter cliActionPrinter = new CLIActionPrinter();
+    CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
+    CLIGridManager cliGridManager = new CLIGridManager(cliPlayersManager);
+    CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
+    int maxEffectLength = 85;
 
     public CLIEventsCommunication(CLIStdinReader cliStdinReader) {
         this.cliStdinReader = cliStdinReader;
@@ -105,7 +103,7 @@ public class CLIEventsCommunication implements EventsCommunication {
      */
     @Override
     public void win(String winnerName) {
-        System.out.println((winnerName + " WINS!"));
+        System.out.println((winnerName + "WINS!"));
         cliStdinReader.getClient().closeConnection();
     }
 
@@ -152,9 +150,9 @@ public class CLIEventsCommunication implements EventsCommunication {
             cliCardBuilder.addDescription(cards.get(i).getName(), cards.get(i).getDescription());
             System.out.print(cards.get(i).getName() + "  ");
             if (i == cards.size()/2)
-                System.out.println();
+                System.out.println("");
         }
-        System.out.println();
+        System.out.println("");
     }
 
     /**
@@ -173,11 +171,13 @@ public class CLIEventsCommunication implements EventsCommunication {
      */
     @Override
     public void colorsAvailable(ArrayList<PlayerColor> colors) {
+        //messagesReader.read(119);
+        ArrayList<String> colorsName = new ArrayList<>();
         for(PlayerColor playerColor : colors) {
             System.out.print(cliColorDecoder.getColor(playerColor).escape() + cliColorDecoder.getColorName(playerColor) + Color.RESET);
             if(colors.indexOf(playerColor)!=colors.size()-1) System.out.print("  ");
         }
-        System.out.println();
+        System.out.println("");
     }
 
     /**

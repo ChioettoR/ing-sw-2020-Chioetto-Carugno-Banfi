@@ -12,23 +12,23 @@ class PlayersManagerTest {
     Grid grid = Grid.getGrid();
     PlayersManager playersManager = PlayersManager.getPlayersManager();
 
-    final Player player = new Player("Marcello");
-    final Card card = new Card("Carlo", null);
-    final Worker worker = new Worker();
-    final Worker worker4 = new Worker();
+    Player player = new Player("Marcello");
+    Card card = new Card("Carlo", null);
+    Worker worker = new Worker();
+    Worker worker4 = new Worker();
 
-    final Player player1 = new Player("Alberto");
-    final Card card1 = new Card("Marco", null);
-    final Worker worker1 = new Worker();
-    final Worker worker5 = new Worker();
+    Player player1 = new Player("Alberto");
+    Card card1 = new Card("Marco", null);
+    Worker worker1 = new Worker();
+    Worker worker5 = new Worker();
 
-    final Player player2 = new Player("Federico");
-    final Card card2 = new Card("Giordano", null);
-    final Worker worker2 = new Worker();
-    final Worker worker6 = new Worker();
+    Player player2 = new Player("Federico");
+    Card card2 = new Card("Giordano", null);
+    Worker worker2 = new Worker();
+    Worker worker6 = new Worker();
 
-    final Card card3 = new Card("Silvio", null);
-    final Worker worker3 = new Worker();
+    Card card3 = new Card("Silvio", null);
+    Worker worker3 = new Worker();
 
     @AfterEach
     void tearDown() {

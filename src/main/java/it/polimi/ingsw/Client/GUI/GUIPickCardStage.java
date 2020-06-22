@@ -20,7 +20,9 @@ public class GUIPickCardStage {
 
     GUIPickCardPhaseController guiPickCardPhaseController;
     GUIPlayersManager guiPlayersManager;
-    final GUICards guiCards = new GUICards();
+    GUICards guiCards = new GUICards();
+
+    ArrayList<CardSimplified> deck = new ArrayList<>();
 
     /**
      * Starts the Scene of the draw phase
@@ -265,6 +267,8 @@ public class GUIPickCardStage {
      * @param cards list of cards
      */
     public void sendFullDeck(ArrayList<CardSimplified> cards) {
+
+        deck = new ArrayList<>(cards);
 
         int godIndex;
 

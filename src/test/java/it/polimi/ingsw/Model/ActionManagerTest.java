@@ -13,18 +13,18 @@ import java.util.ArrayList;
 
 public class ActionManagerTest implements ServerObserver {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker workerA1 = new Worker();
-    final Worker workerA2 = new Worker();
-    final Worker workerM1 = new Worker();
-    final Player player = new Player("Alberto");
-    final Player player1 = new Player("Marcello");
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker workerA1 = new Worker();
+    Worker workerA2 = new Worker();
+    Worker workerM1 = new Worker();
+    Player player = new Player("Alberto");
+    Player player1 = new Player("Marcello");
     Card card;
     Card card1;
-    final StateManager stateManager = new StateManager();
-    final ActionManager actionManager = new ActionManager(stateManager);
+    StateManager stateManager = new StateManager();
+    ActionManager actionManager = new ActionManager(stateManager);
     int updateCounter;
 
     @BeforeEach

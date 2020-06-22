@@ -3,7 +3,7 @@ package it.polimi.ingsw.Client.GUI;
 import javafx.scene.paint.Color;
 
 public class GUIPlayer {
-    final String name;
+    String name;
     javafx.scene.paint.Color color;
     String cardName;
 

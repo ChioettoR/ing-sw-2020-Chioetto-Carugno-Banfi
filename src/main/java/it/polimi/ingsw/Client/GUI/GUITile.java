@@ -16,9 +16,9 @@ public class GUITile {
     private GUIWorker guiWorker;
     private final float workerHeight;
     private final ArrayList<GUIBlock> levels = new ArrayList<>();
-    final PhongMaterial transparentMaterial = new PhongMaterial();
-    final PhongMaterial invisibleMaterial = new PhongMaterial();
-    final GUIGridManager guiGridManager;
+    PhongMaterial transparentMaterial = new PhongMaterial();
+    PhongMaterial invisibleMaterial = new PhongMaterial();
+    GUIGridManager guiGridManager;
 
     public GUITile(int x, int y, float size, float height, GUIGridManager guiGridManager) {
 

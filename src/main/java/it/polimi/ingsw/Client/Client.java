@@ -66,7 +66,6 @@ public class Client implements ClientObserver, CountdownInterface {
             CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);
             pongCountdownStarted = true;
-            return true;
         }
         return false;
     }
@@ -111,14 +110,14 @@ public class Client implements ClientObserver, CountdownInterface {
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);
-        eventsReader = new EventsReader(eventsCommunication);
+        eventsReader = new EventsReader(this, eventsCommunication);
         run();
         cliStdinReader.run();
     }
 
     public void setupGUI() {
         eventsCommunication = new GUIEventsCommunication();
-        eventsReader = new EventsReader(eventsCommunication);
+        eventsReader = new EventsReader(this, eventsCommunication);
     }
 
     private void connect() throws IOException {

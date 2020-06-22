@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardArtemisTest {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final Worker worker1 = new Worker();
-    final Player player = new Player("Alberto");
-    final Player player1 = new Player("Marcello");
-    final Card card = new Card("Artemis", CardsBuilder.GodPower.CanMoveTwice);
-    final Card card1 = new Card("Carlo", null);
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    Worker worker1 = new Worker();
+    Player player = new Player("Alberto");
+    Player player1 = new Player("Marcello");
+    Card card = new Card("Artemis", CardsBuilder.GodPower.CanMoveTwice);
+    Card card1 = new Card("Carlo", null);
     Tile currentTile;
     Tile currentTile1;
     ArrayList<Action> actionOrder = new ArrayList<>();

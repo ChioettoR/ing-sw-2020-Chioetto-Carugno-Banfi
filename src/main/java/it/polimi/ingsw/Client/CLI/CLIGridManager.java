@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CLIGridManager {
 
     private final CLIGrid CLIGrid;
+    private final CLIPlayersManager cliPlayersManager = new CLIPlayersManager();
     private final CLIGridChanger CLIGridChanger;
 
     public CLIGridManager(CLIPlayersManager cliPlayersManager) {
@@ -21,6 +22,10 @@ public class CLIGridManager {
 
     public void borderColorTile(int x, int y) {
         CLIGrid.getTile(x,y).color();
+    }
+
+    public void printGrid() {
+        CLIGrid.print();
     }
 
     public void printGrid(ArrayList<String> names, ArrayList<Color> colors) {

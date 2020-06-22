@@ -30,7 +30,7 @@ public class Connection implements Runnable, CountdownInterface {
     private final ArrayList<Integer> acceptedLobbySizes = new ArrayList<>(Arrays.asList(2, 3));
     private String name;
     private static final Object lock = new Object();
-    final int maxNameLength = 16;
+    int maxNameLength = 16;
     Timer pingTimer;
     PingPongTask pingTask;
     boolean waiting;
@@ -70,6 +70,10 @@ public class Connection implements Runnable, CountdownInterface {
         oos.flush();
     }
 
+    public void sendAll(Serializable serializable) throws IOException {
+        server.sendAll(serializable);
+    }
+
     public synchronized void closeConnection() {
         try{
             pingTimer.cancel();
@@ -100,7 +104,7 @@ public class Connection implements Runnable, CountdownInterface {
                 if(fullLobby()) return;
 
                 if (firstPlayer) {
-                    send(new MessageEvent(113));
+                    send(new MessageEvent(113));;
                     int lobbySize = waitLobbySize();
                     server.lobby(this, name, lobbySize);
                     server.awakeConnections();
@@ -116,7 +120,9 @@ public class Connection implements Runnable, CountdownInterface {
         catch(IOException | ClassNotFoundException e) {
             System.err.println("Connection interrupted");
             if(server.isFullLobby() && server.getAcceptedConnections().containsValue(this)) server.deregisterAllConnections();
-            else { server.deregisterConnection(this); }
+            else { try { server.deregisterConnection(this); }
+            catch (IOException ioException) { ioException.printStackTrace(); }
+            }
         }
     }
 

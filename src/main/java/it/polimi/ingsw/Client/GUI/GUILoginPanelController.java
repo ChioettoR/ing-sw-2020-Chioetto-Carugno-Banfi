@@ -19,12 +19,6 @@ import java.util.regex.Pattern;
 
 public class GUILoginPanelController {
 
-    public VBox choosePlayerNumbers;
-    public HBox hBoxText;
-    public Text chooseText;
-    public AnchorPane startButtonPart;
-    public Button buttonStart;
-    public VBox messageVBox;
     boolean isWaiting = false;
     int buttonClickedCounter = 0;
 
@@ -108,12 +102,12 @@ public class GUILoginPanelController {
 
     /**
      * Checks if the name in the box is correct
-     * @param keyEvent enter event
+     * @param keyevent enter event
      */
     @FXML
-    void checkName(KeyEvent keyEvent) {
+    void checkName(KeyEvent keyevent) {
         String string;
-        if (keyEvent.getCode() == KeyCode.ENTER) {
+        if (keyevent.getCode() == KeyCode.ENTER) {
             errorText.setVisible(false);
             string = nameText.getText();
             if(!string.isBlank()) {
@@ -126,9 +120,10 @@ public class GUILoginPanelController {
 
     /**
      * Starts the new phase when the lobby is full
+     * @param event
      */
     @FXML
-    void getStarted() {
+    void getStarted(ActionEvent event) {
         if(two.isSelected()){ stagesManager.send(new LobbySizeEvent(2)); }
         else if(three.isSelected()){ stagesManager.send(new LobbySizeEvent(3)); }
     }

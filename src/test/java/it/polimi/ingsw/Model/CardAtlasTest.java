@@ -10,15 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CardAtlasTest {
 
-    final Grid grid = Grid.getGrid();
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
-    final Deck deck = Deck.getDeck();
-    final Worker worker = new Worker();
-    final Player player = new Player("Alberto");
-    final Card card = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
+    Grid grid = Grid.getGrid();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    Deck deck = Deck.getDeck();
+    Worker worker = new Worker();
+    Player player = new Player("Alberto");
+    Card card = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
     Tile currentTile;
     Tile buildTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
+    MoveAction moveAction;
     BuildAction buildAction;
 
     @BeforeEach
@@ -36,6 +37,7 @@ public class CardAtlasTest {
         actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
+        moveAction = (MoveAction) action;
         action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;

@@ -11,7 +11,7 @@ public class StringUtils {
      * @param s string received
      * @param size size of the whole string to size
      * @param pad character used to center
-     * @return String centered
+     * @return
      */
     public static String center(String s, int size, char pad) {
         if (s == null || size <= s.length()) return s;

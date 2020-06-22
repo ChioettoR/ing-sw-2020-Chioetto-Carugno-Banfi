@@ -8,7 +8,7 @@ import java.io.IOException;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class StateManager extends MessageObservable {
     private GameState gameState;
-    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    PlayersManager playersManager = PlayersManager.getPlayersManager();
 
     public StateManager() {
         gameState = GameState.START;
