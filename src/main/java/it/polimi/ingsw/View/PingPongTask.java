@@ -21,16 +21,20 @@ public class PingPongTask extends java.util.TimerTask {
     @Override
     public void run() {
         try {
-            System.out.println("PING SENT TO " + connection.toString());
-            connection.send(new PingEvent());
-            TimerTask countdownTask = new CountdownTask(time, connection);
-            pongCountdownTimer = new Timer();
-            pongCountdownTimer.schedule(countdownTask, 0, 1000);
+            synchronized (this) {
+                System.out.println("PING SENT TO " + connection.toString());
+                connection.send(new PingEvent());
+                TimerTask countdownTask = new CountdownTask(time, connection);
+                pongCountdownTimer = new Timer();
+                pongCountdownTimer.schedule(countdownTask, 0, 1000);
+            }
         }
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
-    public void cancelCountdown() {
+    public synchronized void cancelCountdown() {
+        System.out.println("Cancelling pong countdown...");
         pongCountdownTimer.cancel();
+        System.out.println("Cancelled pong countdown");
     }
 }

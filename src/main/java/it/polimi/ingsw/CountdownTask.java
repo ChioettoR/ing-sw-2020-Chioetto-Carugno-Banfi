@@ -15,13 +15,17 @@ public class CountdownTask extends TimerTask {
 
     @Override
     public void run() {
-        if (time > 0) time--;
+        System.out.println(time);
+        if (time > 0) {
+            time--;
+        }
         else {
             try {
+                System.out.println("Countdown ended");
                 countdownInterface.countdownEnded();
                 cancel();
             }
-            catch (IOException e) { e.printStackTrace(); }
+            catch (IOException e) { System.out.println("Client Unreachable");}
         }
     }
 }

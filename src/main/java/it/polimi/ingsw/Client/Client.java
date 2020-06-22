@@ -53,15 +53,17 @@ public class Client implements ClientObserver, CountdownInterface {
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
-    public void read(Serializable serializable) {
+    public synchronized void read(Serializable serializable) {
         if(!checkPing(serializable)) eventsReader.read(serializable);
     }
 
-    private boolean checkPing(Serializable serializable) {
+    private synchronized boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
-            int pingDelay = 7;
+            System.out.println("Ping received");
+            int pingDelay = 10;
             if(pongCountdownStarted) pongTimer.cancel();
             update(new PongEvent());
+            System.out.println("PONG SENT");
             pongTimer = new Timer();
             CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);

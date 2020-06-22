@@ -219,7 +219,7 @@ public class Connection implements Runnable, CountdownInterface {
     }
 
     public void startPing() {
-        int pongDelay = 2;
+        int pongDelay = 4;
         int pingDelay = 5;
         pingTimer = new Timer();
         pingTask = new PingPongTask(pongDelay, this);
