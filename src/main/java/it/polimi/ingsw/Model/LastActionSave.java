@@ -13,10 +13,6 @@ public class LastActionSave {
     private ArrayList<Tile> tiles;
     private Tile savedTile;
 
-    public ActionType getLastActionType() {
-        return lastActionType;
-    }
-
     /**
      * Saves the tile in which the worker will build
      * @param savedTile The tile in which the worker will build

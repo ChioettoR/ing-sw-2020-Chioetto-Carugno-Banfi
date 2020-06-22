@@ -67,19 +67,6 @@ public class CLIDeck {
         stringBuilder.append('┘');
     }
 
-    private ArrayList<StringBuilder> createBorder(int length, int height) {
-
-        ArrayList<StringBuilder> borders = new ArrayList<>();
-        for(int i=0; i<height; i++) {
-            StringBuilder line = new StringBuilder();
-            line.append("│");
-            createBlankSpace(line, length);
-            line.append("│");
-            borders.add(line);
-        }
-        return borders;
-    }
-
     /**
      * Creates the line containing the name of the card
      * @param stringBuilder contains information about the string

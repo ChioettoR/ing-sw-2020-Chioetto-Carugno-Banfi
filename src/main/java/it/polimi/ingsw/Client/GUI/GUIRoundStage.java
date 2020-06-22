@@ -226,8 +226,8 @@ public class GUIRoundStage {
 
     /**
      * Handles the animations of the grid (Zoom, Rotations)
-     * @param group
-     * @param camera
+     * @param group Main group
+     * @param camera Main camera
      */
     private void gridAnimations(Group group, PerspectiveCamera camera) {
 

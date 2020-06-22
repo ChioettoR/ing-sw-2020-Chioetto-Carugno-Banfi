@@ -69,10 +69,6 @@ public class Connection implements Runnable, CountdownInterface {
         oos.flush();
     }
 
-    public void sendAll(Serializable serializable) throws IOException {
-        server.sendAll(serializable);
-    }
-
     public synchronized void closeConnection() {
         try{
             pingTimer.cancel();

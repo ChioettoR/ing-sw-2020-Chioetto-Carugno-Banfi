@@ -12,7 +12,6 @@ class WorkerTest {
     private Tile tile;
     private Tile tile1;
     private final Tile tile2 = new Tile(5,8);
-    private final Tile nullTile = null;
 
     @BeforeEach
     void setUp() {
@@ -37,7 +36,7 @@ class WorkerTest {
         getTilesFromGrid();
         System.out.println("TEST: I'm setting workers position");
         Worker worker = new Worker();
-        worker.setPosition(nullTile);
+        worker.setPosition(null);
 
         worker.setPosition(tile);
         assertEquals(tile, worker.getPosition());

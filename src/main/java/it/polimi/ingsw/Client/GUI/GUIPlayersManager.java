@@ -16,12 +16,6 @@ public class GUIPlayersManager {
         return names;
     }
 
-//    public ArrayList<javafx.scene.paint.Color> getColors() {
-//        ArrayList<javafx.scene.paint.Color> colors = new ArrayList<>();
-//        for(GUIPlayer p : guiPlayers) colors.add(p.getColor());
-//        return colors;
-//    }
-
     public GUIPlayer getPlayer(String name) {
         for(GUIPlayer p : guiPlayers) if(p.getName().equals(name)) return p;
         return null;

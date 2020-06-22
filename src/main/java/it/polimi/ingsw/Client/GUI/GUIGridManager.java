@@ -40,14 +40,6 @@ public class GUIGridManager {
         this.grid = grid;
     }
 
-//    public ArrayList<GUIWorker> getWorkers(String playerName) {
-//        ArrayList<GUIWorker> playerWorkers = new ArrayList<>();
-//        for(GUIWorker w : workers) {
-//            if(w.getPlayerName().equalsIgnoreCase(playerName)) playerWorkers.add(w);
-//        }
-//        return playerWorkers;
-//    }
-
     /**
      * Creates the worker
      * @param playerName name of the worker's owner
