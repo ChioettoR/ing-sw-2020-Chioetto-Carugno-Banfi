@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Deck {
     private final ArrayList<Card> cardsList = new ArrayList<>();
     private static Deck deck;
-    Card completeTowersObserver;
-    CardsBuilder cardsBuilder = new CardsBuilder();
+    private Card completeTowersObserver;
+    private final CardsBuilder cardsBuilder = new CardsBuilder();
 
     private Deck() {
         deck = this;

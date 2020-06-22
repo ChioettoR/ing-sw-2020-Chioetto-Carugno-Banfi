@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DrawCardManagerTest implements ServerObserver {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Player player2 = new Player("Franco");
-    StateManager stateManager = new StateManager();
-    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
-    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
-    DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
-    int updateCounter;
-    String cardName1;
-    String cardName2;
-    String cardName3;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Player player2 = new Player("Franco");
+    private final StateManager stateManager = new StateManager();
+    private final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    private final FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
+    private final DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
+    private int updateCounter;
+    private String cardName1;
+    private String cardName2;
+    private String cardName3;
 
     @BeforeEach
     void setUp() throws IOException {

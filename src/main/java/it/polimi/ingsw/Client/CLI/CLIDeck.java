@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class CLIDeck {
 
-    ArrayList<StringBuilder> lines = new ArrayList<>();
-    String name = "Deck";
-    int verticalBorder = 3;
+    private final int verticalBorder = 3;
 
     /**
      * Creates the deck that contains all the cards, invoking the methods in this class
@@ -89,6 +87,7 @@ public class CLIDeck {
      */
     private void createNameLine(StringBuilder stringBuilder, int length) {
         stringBuilder.append("│");
+        String name = "Deck";
         stringBuilder.append(StringUtils.center(name, length));
         stringBuilder.append("│");
     }

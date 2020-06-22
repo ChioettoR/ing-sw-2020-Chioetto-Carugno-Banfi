@@ -10,21 +10,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardArtemisTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Card card = new Card("Artemis", CardsBuilder.GodPower.CanMoveTwice);
-    Card card1 = new Card("Carlo", null);
-    Tile currentTile;
-    Tile currentTile1;
-    ArrayList<Action> actionOrder = new ArrayList<>();
-    MoveAction moveAction;
-    MoveAction moveAction2;
-    BuildAction buildAction;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final Worker worker1 = new Worker();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Card card = new Card("Artemis", CardsBuilder.GodPower.CanMoveTwice);
+    private final Card card1 = new Card("Carlo", null);
+    private Tile currentTile;
+    private MoveAction moveAction;
+    private MoveAction moveAction2;
+    private BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
@@ -36,13 +34,13 @@ class CardArtemisTest {
         player.setCard(card);
         player1.setCard(card1);
         currentTile = grid.getTiles().get(0);
-        currentTile1 = grid.getTiles().get(6);
+        Tile currentTile1 = grid.getTiles().get(6);
         worker.setPosition(currentTile);
         worker1.setPosition(currentTile1);
         currentTile.setWorker(worker);
         currentTile1.setWorker(worker1);
         new CardsBuilder().createAction(card);
-        actionOrder = card.getActionOrder();
+        ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;

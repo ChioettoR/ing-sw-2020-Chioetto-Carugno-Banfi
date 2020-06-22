@@ -7,9 +7,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 public class CardsBuilder {
@@ -809,7 +809,7 @@ public class CardsBuilder {
             private boolean actionLock = false;
 
             @Override
-            public void doAction() throws IOException {
+            public void doAction() {
                 moveActionStandard.setCantMoveUp(false);
             }
 

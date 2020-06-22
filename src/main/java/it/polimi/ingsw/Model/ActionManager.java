@@ -12,7 +12,7 @@ import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class ActionManager extends ActionObservable implements CountdownInterface {
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     private AvailableActions availableActions;
     private int index;
@@ -20,9 +20,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private final ArrayList<Worker> savedWorkers = new ArrayList<>();
     private final ArrayList<Tile> savedTiles = new ArrayList<>();
     private final ArrayList<ArrayList<Integer>> savedLevels = new ArrayList<>();
-    Timer undoTimer;
-    TimerTask undoTask;
-
+    private Timer undoTimer;
 
     /**
      *
@@ -447,7 +445,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         availableActions.addAvailableActionName(ActionType.CONFIRM);
         notify(new ActionEvent((ArrayList<String>)availableActions.getAvailableActionsNames().stream().map(Enum::toString).collect(Collectors.toList()), playersManager.getCurrentPlayer().getID()));
         undoTimer = new Timer();
-        undoTask = new CountdownTask(5, this);
+        TimerTask undoTask = new CountdownTask(5, this);
         undoTimer.schedule(undoTask, 0, 1000);
     }
 

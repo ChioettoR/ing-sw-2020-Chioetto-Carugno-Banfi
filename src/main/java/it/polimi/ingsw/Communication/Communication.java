@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class Communication implements CommunicationInterface {
 
-    DrawCardManager drawCardManager;
-    PositioningManager positioningManager;
-    SelectionWorkerManager selectionWorkerManager;
-    FirstPlayerManager firstPlayerManager;
-    ActionManager actionManager;
-    ColorPoolManager colorPoolManager;
+    private final DrawCardManager drawCardManager;
+    private final PositioningManager positioningManager;
+    private final SelectionWorkerManager selectionWorkerManager;
+    private final FirstPlayerManager firstPlayerManager;
+    private final ActionManager actionManager;
+    private final ColorPoolManager colorPoolManager;
 
     public Communication(DrawCardManager drawCardManager, PositioningManager positioningManager, SelectionWorkerManager selectionWorkerManager, ActionManager actionManager, FirstPlayerManager firstPlayerManager, ColorPoolManager colorPoolManager) {
         this.drawCardManager = drawCardManager;

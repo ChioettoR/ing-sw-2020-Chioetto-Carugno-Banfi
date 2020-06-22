@@ -3,9 +3,9 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.Color;
 
 public class CLIPlayer {
-    String name;
-    Color color;
-    String cardName;
+    private final String name;
+    private Color color;
+    private String cardName;
 
     public CLIPlayer(String name) {
         this.name = name;

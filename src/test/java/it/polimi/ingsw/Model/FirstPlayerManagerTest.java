@@ -55,7 +55,7 @@ class FirstPlayerManagerTest implements ServerObserver {
     }
 
     @Override
-    public void update(ServerEvent serverEvent) throws IOException {
+    public void update(ServerEvent serverEvent) {
         if (serverEvent instanceof MessageEvent)
             return;
 

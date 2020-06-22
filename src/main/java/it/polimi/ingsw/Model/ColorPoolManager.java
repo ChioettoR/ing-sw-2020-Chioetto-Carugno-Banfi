@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ColorPoolManager extends ColorObservable {
-    StateManager stateManager;
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    ArrayList<PlayerColor> colorsAvailable = new ArrayList<>();
+    private final StateManager stateManager;
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final ArrayList<PlayerColor> colorsAvailable = new ArrayList<>();
 
     public ColorPoolManager(StateManager stateManager) {
         this.stateManager = stateManager;

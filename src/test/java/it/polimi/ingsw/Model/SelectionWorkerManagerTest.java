@@ -49,8 +49,8 @@ class SelectionWorkerManagerTest implements  ServerObserver {
         grid.getTile(3,3).setWorker(workerM1);
         playersManager.nextPlayerAndStartRound();
         playersManager.setCurrentWorker(workerA1);
-        actionManager.addObserver((ServerObserver) this);
-        stateManager.addObserver((ServerObserver) this);
+        actionManager.addObserver(this);
+        stateManager.addObserver(this);
         stateManager.setGameState(GameState.SELECTING);
         selectionTest();
     }
@@ -69,13 +69,13 @@ class SelectionWorkerManagerTest implements  ServerObserver {
 
 
     @Override
-    public void update(ServerEvent serverEvent) throws IOException {
+    public void update(ServerEvent serverEvent) {
         if(serverEvent instanceof MessageEvent)
             return;
-        assertTrue(stateManager.getGameState() == GameState.ACTIONSELECTING);
-        assertTrue(stateManager.playersManager.getCurrentPlayer()!= null);
-        assertTrue(playersManager.getCurrentPlayer().getID() == playersManager.getCurrentWorker().getPlayerID());
-        assertFalse(stateManager.playersManager.getCurrentWorker()== null);
-        assertTrue(stateManager.playersManager.getCurrentWorker() == workerA1);
+        assertSame(stateManager.getGameState(), GameState.ACTIONSELECTING);
+        assertNotNull(stateManager.playersManager.getCurrentPlayer());
+        assertEquals(playersManager.getCurrentPlayer().getID(), playersManager.getCurrentWorker().getPlayerID());
+        assertNotNull(stateManager.playersManager.getCurrentWorker());
+        assertSame(stateManager.playersManager.getCurrentWorker(), workerA1);
     }
 }

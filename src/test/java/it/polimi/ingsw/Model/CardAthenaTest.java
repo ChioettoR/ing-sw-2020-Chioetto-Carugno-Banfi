@@ -10,24 +10,20 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardAthenaTest {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Card card = new Card("Athena", CardsBuilder.GodPower.CantMoveUp);
-    Card card1 = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
-    Tile currentTile;
-    Tile currentTile1;
-    ArrayList<Action> actionOrder = new ArrayList<>();
-    MoveAction moveAction;
-    BuildAction buildAction;
-    RoundAction roundAction;
-    ArrayList<Action> actionOrder1 = new ArrayList<>();
-    MoveAction moveAction1;
-    BuildAction buildAction1;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final Worker worker1 = new Worker();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Card card = new Card("Athena", CardsBuilder.GodPower.CantMoveUp);
+    private final Card card1 = new Card("Atlas", CardsBuilder.GodPower.CanBuildDome);
+    private MoveAction moveAction;
+    private BuildAction buildAction;
+    private RoundAction roundAction;
+    private MoveAction moveAction1;
+    private BuildAction buildAction1;
 
     @BeforeEach
     void setUp() {
@@ -40,14 +36,14 @@ class CardAthenaTest {
         player1.setWorker(worker1);
         player.setCard(card);
         player1.setCard(card1);
-        currentTile = grid.getTiles().get(0);
-        currentTile1 = grid.getTiles().get(6);
+        Tile currentTile = grid.getTiles().get(0);
+        Tile currentTile1 = grid.getTiles().get(6);
         worker.setPosition(currentTile);
         worker1.setPosition(currentTile1);
         currentTile.setWorker(worker);
         currentTile1.setWorker(worker1);
         new CardsBuilder().createAction(card);
-        actionOrder = card.getActionOrder();
+        ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(1);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
@@ -58,7 +54,7 @@ class CardAthenaTest {
         assertTrue(action instanceof RoundAction);
         roundAction = (RoundAction) action;
         new CardsBuilder().createAction(card1);
-        actionOrder1 = card1.getActionOrder();
+        ArrayList<Action> actionOrder1 = card1.getActionOrder();
         Action action1 = actionOrder1.get(0);
         assertTrue(action1 instanceof MoveAction);
         moveAction1 = (MoveAction) action1;

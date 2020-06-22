@@ -36,8 +36,7 @@ public class FirstPlayerManager extends FirstPlayerObservable {
         if (!stateManager.checkState(GameState.FIRSTPLAYERSELECTION))
             return;
 
-        if(!names.contains(firstPlayerName)) notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
-        else {
+        if(names.contains(firstPlayerName)) {
             for(int i=0; i<playersManager.getPlayersNumber(); i++) {
                 if(playersManager.getPlayers().get(i).getName().equalsIgnoreCase(firstPlayerName)) {
                     playersManager.setNextPlayerIndex(i);
@@ -45,8 +44,8 @@ public class FirstPlayerManager extends FirstPlayerObservable {
                     return;
                 }
             }
-            notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
         }
+        notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
     }
 
     public void firstPlayerSelected() throws IOException {

@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.Client;
-import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Events.Client.*;
 import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.ActionType;
-import it.polimi.ingsw.Model.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,13 +14,13 @@ import java.util.stream.Collectors;
 
 public class CLIStdinReader {
 
-    Client client;
-    Scanner stdin;
-    boolean isLogin = true;
-    boolean waiting = false;
-    ActionType selectedActionType;
-    boolean spectator = false;
-    CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
+    private final Client client;
+    private final Scanner stdin;
+    private boolean isLogin = true;
+    private boolean waiting = false;
+    private ActionType selectedActionType;
+    private boolean spectator = false;
+    private final CLIColorDecoder cliColorDecoder = new CLIColorDecoder();
 
     public void setSpectator(boolean spectator) {
         this.spectator = spectator;

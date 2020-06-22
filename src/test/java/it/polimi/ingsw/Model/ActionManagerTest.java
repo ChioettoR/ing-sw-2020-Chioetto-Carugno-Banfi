@@ -13,19 +13,17 @@ import java.util.ArrayList;
 
 public class ActionManagerTest implements ServerObserver {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker workerA1 = new Worker();
-    Worker workerA2 = new Worker();
-    Worker workerM1 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Card card;
-    Card card1;
-    StateManager stateManager = new StateManager();
-    ActionManager actionManager = new ActionManager(stateManager);
-    int updateCounter;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker workerA1 = new Worker();
+    private final Worker workerA2 = new Worker();
+    private final Worker workerM1 = new Worker();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final StateManager stateManager = new StateManager();
+    private final ActionManager actionManager = new ActionManager(stateManager);
+    private int updateCounter;
 
     @BeforeEach
     void setUp() {
@@ -35,8 +33,8 @@ public class ActionManagerTest implements ServerObserver {
         player.setWorker(workerA1);
         player.setWorker(workerA2);
         player1.setWorker(workerM1);
-        card = deck.getCardByName("Artemis");
-        card1 = deck.getCardByName("Demeter");
+        Card card = deck.getCardByName("Artemis");
+        Card card1 = deck.getCardByName("Demeter");
         new CardsBuilder().createAction(card);
         new CardsBuilder().createAction(card1);
         player.setCard(card);
