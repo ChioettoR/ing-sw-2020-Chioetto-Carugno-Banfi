@@ -1,0 +1,18 @@
+.backGround{
+    -fx-background-image:url('sfondoIp.png');
+    -fx-background-size: 100% 100%;
+}
+
+.doneButton{
+    -fx-background-image:url('doneButton.png');
+    -fx-background-size: 100% 100%;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.doneButton:pressed{
+    -fx-background-image:url('doneButtonPressed.png');
+    -fx-background-size: 100% 100%;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}

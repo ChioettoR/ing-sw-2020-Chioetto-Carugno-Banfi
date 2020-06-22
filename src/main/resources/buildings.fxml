@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.BuildingsController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIRoundController">
     <BorderPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <bottom>
             <StackPane fx:id="stackPane" prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -114,7 +114,7 @@
                      <Insets bottom="465.0" />
                   </StackPane.margin>
                   <image>
-                     <Image url="@DrawPhase/nameBar.png" />
+                     <Image url="@PickCardPhase/nameBar.png" />
                   </image>
                </ImageView>
                <Text fx:id="nameText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Franchino" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
@@ -145,7 +145,7 @@
                      <Insets bottom="135.0" />
                   </StackPane.margin>
                   <image>
-                     <Image url="@DrawPhase/nameBar.png" />
+                     <Image url="@PickCardPhase/nameBar.png" />
                   </image>
                </ImageView>
                <Text fx:id="nameText2" strokeType="OUTSIDE" strokeWidth="0.0" text="Giuseppina" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
@@ -176,7 +176,7 @@
                      <Insets top="206.0" />
                   </StackPane.margin>
                   <image>
-                     <Image url="@DrawPhase/nameBar.png" />
+                     <Image url="@PickCardPhase/nameBar.png" />
                   </image>
                </ImageView>
                <Text fx:id="nameText3" strokeType="OUTSIDE" strokeWidth="0.0" text="Carlo" textAlignment="CENTER" visible="false" wrappingWidth="85.0">
@@ -207,18 +207,18 @@
                   <children>
                      <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@DrawPhase/rectangleInfo.png" />
+                           <Image url="@PickCardPhase/rectangleInfo.png" />
                         </image>
                      </ImageView>
                      <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@DrawPhase/podium-characters-Zeus.png" />
+                           <Image url="@PickCardPhase/podium-characters-Zeus.png" />
                         </image>
                         <StackPane.margin>
                            <Insets left="165.0" />
                         </StackPane.margin>
                      </ImageView>
-                     <Button fx:id="closeInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@DrawPhase/styleDrawPhase.css" text="Button">
+                     <Button fx:id="closeInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@PickCardPhase/stylePickCardPhase.css" text="Button">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>

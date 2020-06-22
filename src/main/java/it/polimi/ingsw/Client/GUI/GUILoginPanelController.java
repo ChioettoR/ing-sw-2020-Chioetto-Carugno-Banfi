@@ -24,18 +24,6 @@ public class GUILoginPanelController {
 
     GUIStagesManager stagesManager;
 
-    public TextField getNameText() {
-        return nameText;
-    }
-
-    public Text getErrorText() {
-        return errorText;
-    }
-
-    public Text getSuccessText() {
-        return successText;
-    }
-
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
     }
@@ -59,34 +47,16 @@ public class GUILoginPanelController {
     private VBox nameTextVBox;
 
     @FXML
-    private HBox hBoxText;
-
-    @FXML
     private TextField nameText;
 
     @FXML
     private VBox lobbyPartVBox;
 
     @FXML
-    private VBox choosePlayerNumbers;
-
-    @FXML
-    private Text chooseText;
-
-    @FXML
     private CheckBox two;
 
     @FXML
     private CheckBox three;
-
-    @FXML
-    private AnchorPane startButtonPart;
-
-    @FXML
-    private Button buttonStart;
-
-    @FXML
-    private VBox messageVBOX;
 
     @FXML
     private Text successText;

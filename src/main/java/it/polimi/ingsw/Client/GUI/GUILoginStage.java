@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.GUI;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GUILoginStage {
@@ -69,4 +70,6 @@ public class GUILoginStage {
     public void serverUnavailable(){
         guiLoginPanelController.serverUnavailable();
     }
+
+
 }

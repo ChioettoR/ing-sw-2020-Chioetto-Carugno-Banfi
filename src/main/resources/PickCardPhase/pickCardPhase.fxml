@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="backGround" prefHeight="600.0" prefWidth="600.0" styleClass="backGround" stylesheets="@styleDrawPhase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIDrawPhaseController">
+<AnchorPane fx:id="backGround" prefHeight="600.0" prefWidth="600.0" styleClass="backGround" stylesheets="@stylePickCardPhase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIPickCardPhaseController">
    <children>
       <AnchorPane fx:id="drawPhasePane" prefHeight="600.0" prefWidth="600.0">
          <children>
@@ -34,7 +34,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css">
+                              <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
@@ -58,7 +58,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css">
+                              <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
@@ -86,7 +86,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
@@ -107,7 +107,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="409.5" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
@@ -128,7 +128,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -153,11 +153,11 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonToChoose" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoToChoose" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonToChoose" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoToChoose" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
-                        <Button fx:id="backButton" layoutX="159.0" layoutY="120.0" mnemonicParsing="false" onAction="#goBack" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goBackButton" stylesheets="@styleDrawPhase.css" />
-                        <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false" onAction="#goNext" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goNextButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="backButton" layoutX="159.0" layoutY="120.0" mnemonicParsing="false" onAction="#goBack" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goBackButton" stylesheets="@stylePickCardPhase.css" />
+                        <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false" onAction="#goNext" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goNextButton" stylesheets="@stylePickCardPhase.css" />
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="startPlayerPane" prefHeight="270.0" prefWidth="600.0" visible="false">
@@ -190,7 +190,7 @@
                                     <Image url="@frame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="startPlayerButtonInfo" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="startPlayerButtonInfo" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -251,7 +251,7 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown2p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown2p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="346.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
@@ -272,12 +272,12 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown2p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown2p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="downThreeCardsPane" prefHeight="270.0" prefWidth="600.0">
+                  <AnchorPane fx:id="downThreeCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
                      <children>
                         <AnchorPane layoutX="28.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
                            <children>
@@ -297,7 +297,7 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="219.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
@@ -318,7 +318,7 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="409.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
@@ -339,7 +339,7 @@
                                     <Image url="@yellowFrame.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@styleDrawPhase.css" />
+                              <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -359,7 +359,7 @@
                            <image>
                               <Image url="@frame.png" />
                            </image></ImageView>
-                        <Button fx:id="buttonToDeselect3p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="buttonToDeselect3p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
                      </children></AnchorPane>
                   <AnchorPane layoutX="47.5" layoutY="124.5" prefHeight="81.0" prefWidth="55.0">
                      <children>
@@ -368,7 +368,7 @@
                            <image>
                               <Image url="@frame.png" />
                            </image></ImageView>
-                        <Button fx:id="buttonToDeselect3p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="buttonToDeselect3p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
                      </children></AnchorPane>
                   <AnchorPane layoutX="47.5" layoutY="227.25" prefHeight="81.0" prefWidth="55.0">
                      <children>
@@ -377,7 +377,7 @@
                            <image>
                               <Image url="@frame.png" />
                            </image></ImageView>
-                        <Button fx:id="buttonToDeselect3p3" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p3" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="buttonToDeselect3p3" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p3" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>
@@ -391,7 +391,7 @@
                               <Image url="@frame.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="buttonToDeselect2p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="buttonToDeselect2p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutX="47.5" layoutY="193.0" prefHeight="81.0" prefWidth="55.0">
@@ -402,7 +402,7 @@
                               <Image url="@frame.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="buttonToDeselect2p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@styleDrawPhase.css" />
+                        <Button fx:id="buttonToDeselect2p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
                      </children>
                   </AnchorPane>
                </children>
@@ -423,7 +423,7 @@
                         <Image url="@podium-characters-Zeus.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="closeInfoButton" layoutX="270.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToDraw" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@styleDrawPhase.css" text="Button">
+                  <Button fx:id="closeInfoButton" layoutX="270.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToDraw" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@stylePickCardPhase.css" text="Button">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

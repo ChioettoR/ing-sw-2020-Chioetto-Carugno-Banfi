@@ -14,7 +14,8 @@ public class GUIEventsCommunication implements EventsCommunication {
     GUIStagesManager stagesManager;
     GUIRoundStage guiRoundStage;
     GUILoginStage guiLoginStage;
-    GUIDrawStage guiDrawStage;
+    GUIPickCardStage guiPickCardStage;
+    GUIIpStage guiIpStage;
     private MessagesReader messagesReader;
     GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
 
@@ -27,12 +28,16 @@ public class GUIEventsCommunication implements EventsCommunication {
         this.guiLoginStage = guiLoginStage;
     }
 
-    public void setGuiDrawStage(GUIDrawStage guiDrawStage) {
-        this.guiDrawStage = guiDrawStage;
+    public void setGuiPickCardStage(GUIPickCardStage guiPickCardStage) {
+        this.guiPickCardStage = guiPickCardStage;
     }
 
     public void setGuiRoundStage(GUIRoundStage guiRoundStage) {
         this.guiRoundStage = guiRoundStage;
+    }
+
+    public void setGuiIpStage(GUIIpStage guiIpStage) {
+        this.guiIpStage = guiIpStage;
     }
 
     @Override
@@ -59,7 +64,7 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     @Override
     public void deck(ArrayList<CardSimplified> cards) {
-        Platform.runLater(() -> guiDrawStage.sendDeck(cards));
+        Platform.runLater(() -> guiPickCardStage.sendDeck(cards));
     }
 
     @Override
@@ -164,7 +169,7 @@ public class GUIEventsCommunication implements EventsCommunication {
     public void infoEffect(String cardName) { }
 
     @Override
-    public void fullDeck(ArrayList<CardSimplified> cards) { Platform.runLater(() -> guiDrawStage.sendFullDeck(cards)); }
+    public void fullDeck(ArrayList<CardSimplified> cards) { Platform.runLater(() -> guiPickCardStage.sendFullDeck(cards)); }
 
     @Override
     public void firstPlayerSelection(ArrayList<String> names) {

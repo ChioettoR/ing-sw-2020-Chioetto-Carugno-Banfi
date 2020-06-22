@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-public class BuildingsController {
+public class GUIRoundController {
 
     @FXML
     private BorderPane pane;

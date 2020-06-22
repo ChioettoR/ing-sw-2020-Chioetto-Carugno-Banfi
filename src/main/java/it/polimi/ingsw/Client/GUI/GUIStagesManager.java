@@ -24,8 +24,9 @@ public class GUIStagesManager extends Application {
     private static int port;
     Stage stage;
     GUIWinController winController = new GUIWinController();
+    GUIIpStage guiIpStage = new GUIIpStage();
     GUILoginStage guiLoginStage = new GUILoginStage();
-    GUIDrawStage guiDrawStage = new GUIDrawStage();
+    GUIPickCardStage guiPickCardStage = new GUIPickCardStage();
     GUIRoundStage guiRoundStage = new GUIRoundStage();
     GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
     boolean serverUp = false;
@@ -40,8 +41,8 @@ public class GUIStagesManager extends Application {
         this.useDisconnectionScene = useDisconnectionScene;
     }
 
-    public GUIDrawStage getGuiDrawStage() {
-        return guiDrawStage;
+    public GUIPickCardStage getGuiPickCardStage() {
+        return guiPickCardStage;
     }
 
     public GUIPlayersManager getGuiPlayersManager() {
@@ -50,18 +51,8 @@ public class GUIStagesManager extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //TODO : ip, port request
         this.stage = stage;
-        client = new Client(ip, port);
-        client.setupGUI();
-        GUIEventsCommunication eventsCommunication = (GUIEventsCommunication) client.getEventsCommunication();
-        eventsCommunication.setStagesManager(this);
-        eventsCommunication.setGuiLoginStage(guiLoginStage);
-        eventsCommunication.setGuiDrawStage(guiDrawStage);
-        eventsCommunication.setGuiRoundStage(guiRoundStage);
-        guiLoginStage.start(stage, this);
-        try { client.run(); serverUp = true; }
-        catch(Exception e) { guiLoginStage.serverUnavailable(); }
+        guiIpStage.start(stage, this);
     }
 
     public void send(ClientEvent event) {
@@ -70,29 +61,29 @@ public class GUIStagesManager extends Application {
 
     public void setDrawStage(Stage stage, GUIPlayersManager guiPlayersManager) {
         guiPhase = GUIPhase.DRAW;
-        Platform.runLater(() -> guiDrawStage.start(stage,this, guiPlayersManager));
+        Platform.runLater(() -> guiPickCardStage.start(stage,this, guiPlayersManager));
     }
 
     public void readMessage(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readMessage(message));
-        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readMessage(message));
+        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.readMessage(message));
         else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readMessage(message));
     }
 
     public void readRequest(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readRequest(message));
-        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readRequest(message));
+        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.readRequest(message));
         else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readMessage(message));
     }
 
     public void readError(String message) {
         if(guiPhase == GUIPhase.LOGIN) Platform.runLater(() -> guiLoginStage.readError(message));
-        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.readError(message));
+        else if(guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.readError(message));
         else if(guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.readError(message));
     }
 
     public void readDrawMessage(String draw) {
-        Platform.runLater(() -> guiDrawStage.draw(draw));
+        Platform.runLater(() -> guiPickCardStage.draw(draw));
     }
 
     @Override
@@ -134,17 +125,17 @@ public class GUIStagesManager extends Application {
         else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
         else if(messageID == 119 && guiPhase == GUIPhase.DRAW) roundTransition();
         else if(messageID == 118 && guiPhase == GUIPhase.DRAW) roundTransition();
-        else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.threeCardsShow());
-        else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.twoCardsShow());
-        else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showAgain());
-        else if(messageID == 411 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiDrawStage.showCards());
+        else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.threeCardsShow());
+        else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.twoCardsShow());
+        else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.showAgain());
+        else if(messageID == 411 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.showCards());
         else if(messageID == 306 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.resetButtons());
         else if(messageID == 108 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
         else if(messageID == 114 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
     }
 
     public void playerChosenCard(String playerName, String cardName) {
-        Platform.runLater(() -> guiDrawStage.setCardsImages(playerName, cardName));
+        Platform.runLater(() -> guiPickCardStage.setCardsImages(playerName, cardName));
         guiPlayersManager.getPlayer(playerName).setCardName(cardName);
     }
 
@@ -162,12 +153,12 @@ public class GUIStagesManager extends Application {
     }
 
     private void CountDown() {
-        Platform.runLater(() -> guiDrawStage.roundTransition(seconds));
+        Platform.runLater(() -> guiPickCardStage.roundTransition(seconds));
         seconds--;
     }
 
     public void selectFirstPlayer(ArrayList<String> names) {
-        guiDrawStage.selectFirstPlayer(names);
+        guiPickCardStage.selectFirstPlayer(names);
     }
 
     public void win(String winnerName){
@@ -194,5 +185,23 @@ public class GUIStagesManager extends Application {
 
     public void showColors(ArrayList<String> colorsName) {
         guiRoundStage.showColors(colorsName);
+    }
+
+    public void startLoginStage(String ip, int port) throws Exception {
+        client = new Client(ip, port);
+        client.setupGUI();
+        GUIEventsCommunication eventsCommunication = (GUIEventsCommunication) client.getEventsCommunication();
+        eventsCommunication.setStagesManager(this);
+        eventsCommunication.setGuiIpStage(guiIpStage);
+        eventsCommunication.setGuiLoginStage(guiLoginStage);
+        eventsCommunication.setGuiPickCardStage(guiPickCardStage);
+        eventsCommunication.setGuiRoundStage(guiRoundStage);
+        guiLoginStage.start(stage, this);
+        try {
+            client.run();
+            serverUp = true;
+        } catch (Exception e) {
+            guiLoginStage.serverUnavailable();
+        }
     }
 }

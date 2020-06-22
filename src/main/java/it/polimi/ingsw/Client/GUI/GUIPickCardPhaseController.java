@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class GUIDrawPhaseController {
+public class GUIPickCardPhaseController {
 
     GUICards guiCards;
     GUIStagesManager stagesManager;
