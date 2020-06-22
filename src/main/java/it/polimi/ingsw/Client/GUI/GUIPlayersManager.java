@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GUIPlayersManager {
 
-    ArrayList<GUIPlayer> guiPlayers = new ArrayList<>();
+    private final ArrayList<GUIPlayer> guiPlayers = new ArrayList<>();
 
     public void addPlayer(String name) {
         guiPlayers.add(new GUIPlayer(name));
@@ -16,11 +16,11 @@ public class GUIPlayersManager {
         return names;
     }
 
-    public ArrayList<javafx.scene.paint.Color> getColors() {
-        ArrayList<javafx.scene.paint.Color> colors = new ArrayList<>();
-        for(GUIPlayer p : guiPlayers) colors.add(p.getColor());
-        return colors;
-    }
+//    public ArrayList<javafx.scene.paint.Color> getColors() {
+//        ArrayList<javafx.scene.paint.Color> colors = new ArrayList<>();
+//        for(GUIPlayer p : guiPlayers) colors.add(p.getColor());
+//        return colors;
+//    }
 
     public GUIPlayer getPlayer(String name) {
         for(GUIPlayer p : guiPlayers) if(p.getName().equals(name)) return p;

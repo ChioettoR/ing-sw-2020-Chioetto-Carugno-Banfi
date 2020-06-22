@@ -29,11 +29,11 @@ public class GUIPickCardPhaseController {
     public Button buttonToDeselect2p1;
     public Button buttonToDeselect2p2;
     public Button closeInfoButton;
-    GUICards guiCards;
-    GUIStagesManager stagesManager;
+    private GUICards guiCards;
+    private GUIStagesManager stagesManager;
 
-    ArrayList<String> cardNames = new ArrayList<>();
-    ArrayList<String> namesToSend = new ArrayList<>();
+    private final ArrayList<String> cardNames = new ArrayList<>();
+    private final ArrayList<String> namesToSend = new ArrayList<>();
     int godIndex = 0;
 
     public void setStagesManager(GUIStagesManager stagesManager) {

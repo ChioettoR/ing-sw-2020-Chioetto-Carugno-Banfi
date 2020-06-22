@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Client.GUI;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -16,18 +14,13 @@ import java.util.ArrayList;
 
 public class GUIGrid {
 
-    ObjModelImporter objModelImporter = new ObjModelImporter();
-    PhongMaterial invisibleMaterial = new PhongMaterial();
-    PhongMaterial seaMaterial = new PhongMaterial();
-    PhongMaterial baseMaterial = new PhongMaterial();
-    PhongMaterial bordersMaterial = new PhongMaterial();
     private final Box sea;
     private final Box gridInvisible;
     private final MeshView gridBase;
     private ArrayList<GUITile> tiles;
     private final float size;
     private final int tileHeight;
-    GUIGridManager guiGridManager;
+    private final GUIGridManager guiGridManager;
 
     /**
      * Creates the 3D grid
@@ -39,6 +32,7 @@ public class GUIGrid {
 
         this.guiGridManager = guiGridManager;
 
+        PhongMaterial seaMaterial = new PhongMaterial();
         seaMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/sea.jpg")));
         sea = new Box(3500, 3500, 1);
         sea.setRotationAxis(Rotate.X_AXIS);
@@ -47,12 +41,16 @@ public class GUIGrid {
 
         int scaleSize = 137;
 
+        PhongMaterial bordersMaterial = new PhongMaterial();
         bordersMaterial.setDiffuseColor(Color.GREEN);
+        PhongMaterial invisibleMaterial = new PhongMaterial();
         invisibleMaterial.setDiffuseColor(Color.TRANSPARENT);
 
         MeshView[] m;
 
+        PhongMaterial baseMaterial = new PhongMaterial();
         baseMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/isle.png")));
+        ObjModelImporter objModelImporter = new ObjModelImporter();
         objModelImporter.read(getClass().getResource("/isle.obj"));
         m = objModelImporter.getImport();
         gridBase = m[0];

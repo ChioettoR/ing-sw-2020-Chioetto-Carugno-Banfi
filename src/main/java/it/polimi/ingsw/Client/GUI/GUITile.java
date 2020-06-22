@@ -16,9 +16,8 @@ public class GUITile {
     private GUIWorker guiWorker;
     private final float workerHeight;
     private final ArrayList<GUIBlock> levels = new ArrayList<>();
-    PhongMaterial transparentMaterial = new PhongMaterial();
-    PhongMaterial invisibleMaterial = new PhongMaterial();
-    GUIGridManager guiGridManager;
+    private final PhongMaterial transparentMaterial = new PhongMaterial();
+    private final GUIGridManager guiGridManager;
 
     public GUITile(int x, int y, float size, float height, GUIGridManager guiGridManager) {
 
@@ -29,6 +28,7 @@ public class GUITile {
         this.y = y;
 
         tileMesh = new Box(size, size, height);
+        PhongMaterial invisibleMaterial = new PhongMaterial();
         invisibleMaterial.setDiffuseColor(Color.TRANSPARENT);
         tileMesh.setMaterial(invisibleMaterial);
         tileMeshAvailable = new Box(size-10, size-10, height + 1);

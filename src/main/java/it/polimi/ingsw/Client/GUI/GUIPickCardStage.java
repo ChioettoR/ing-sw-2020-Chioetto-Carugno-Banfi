@@ -18,11 +18,9 @@ import java.util.ArrayList;
 
 public class GUIPickCardStage {
 
-    GUIPickCardPhaseController guiPickCardPhaseController;
-    GUIPlayersManager guiPlayersManager;
-    GUICards guiCards = new GUICards();
-
-    ArrayList<CardSimplified> deck = new ArrayList<>();
+    private GUIPickCardPhaseController guiPickCardPhaseController;
+    private GUIPlayersManager guiPlayersManager;
+    private final GUICards guiCards = new GUICards();
 
     /**
      * Starts the Scene of the draw phase
@@ -267,8 +265,6 @@ public class GUIPickCardStage {
      * @param cards list of cards
      */
     public void sendFullDeck(ArrayList<CardSimplified> cards) {
-
-        deck = new ArrayList<>(cards);
 
         int godIndex;
 

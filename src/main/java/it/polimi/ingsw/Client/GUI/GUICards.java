@@ -3,18 +3,17 @@ package it.polimi.ingsw.Client.GUI;
 import it.polimi.ingsw.Model.CardSimplified;
 import javafx.scene.image.Image;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class GUICards {
 
-    Map<String, String> fullImageMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    Map<String, String> smallImageMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    Map<String, String> descriptionMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final Map<String, String> fullImageMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final Map<String, String> smallImageMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final Map<String, String> descriptionMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-    ArrayList<String> names = new ArrayList<>() {
+    final ArrayList<String> names = new ArrayList<>() {
         {
             add("Apollo");
             add("Artemis");
@@ -33,7 +32,7 @@ public class GUICards {
         }
     };
 
-    ArrayList<String> fullImagePath = new ArrayList<>() {
+    final ArrayList<String> fullImagePath = new ArrayList<>() {
         {
             add("/fullApollo.png");
             add("/fullArtemis.png");
@@ -52,7 +51,7 @@ public class GUICards {
         }
     };
 
-    ArrayList<String> smallImagePath = new ArrayList<>() {
+    final ArrayList<String> smallImagePath = new ArrayList<>() {
         {
             add("/smallApollo.png");
             add("/smallArtemis.png");

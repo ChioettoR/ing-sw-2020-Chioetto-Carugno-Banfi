@@ -32,32 +32,31 @@ import java.util.HashMap;
 
 public class GUIRoundStage {
 
-    final double rotationSpeed = 100;
-    final double zoomSpeed = 10;
+    private final double rotationSpeed = 100;
+    private final double zoomSpeed = 10;
     private boolean wPressed = false;
     private boolean aPressed = false;
     private boolean sPressed = false;
     private boolean dPressed = false;
-    final DoubleProperty rotationVelocity = new SimpleDoubleProperty();
-    final DoubleProperty zoomVelocity = new SimpleDoubleProperty();
-    final LongProperty lastUpdateTime = new SimpleLongProperty();
-    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
-    GUIRoundController guiRoundController;
-    ActionType selectedActionType;
-    GUIStagesManager stagesManager;
-    GUIPlayersManager guiPlayersManager;
-    GUICards guiCards;
-    HashMap<ActionType, String> buttonsStyle = new HashMap<>();
-    boolean buttonTranslated = false;
-    Scene scene;
-    int timer = 3;
+    private final DoubleProperty rotationVelocity = new SimpleDoubleProperty();
+    private final DoubleProperty zoomVelocity = new SimpleDoubleProperty();
+    private final LongProperty lastUpdateTime = new SimpleLongProperty();
+    private final GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
+    private GUIRoundController guiRoundController;
+    private ActionType selectedActionType;
+    private GUIStagesManager stagesManager;
+    private GUIPlayersManager guiPlayersManager;
+    private GUICards guiCards;
+    private final HashMap<ActionType, String> buttonsStyle = new HashMap<>();
+    private boolean buttonTranslated = false;
+    private Scene scene;
 
     private final int maxFOV = 40;
     private final int minFOV = 25;
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
 
-    GUIGridManager guiGridManager;
+    private GUIGridManager guiGridManager;
 
     public void setSelectedActionType(ActionType selectedActionType) {
         this.selectedActionType = selectedActionType;
@@ -69,10 +68,6 @@ public class GUIRoundStage {
 
     public GUIStagesManager getStagesManager() {
         return stagesManager;
-    }
-
-    public ActionType getSelectedActionType() {
-        return selectedActionType;
     }
 
     public void start(Stage stage) {
@@ -139,11 +134,10 @@ public class GUIRoundStage {
 
     /**
      * Images for the buildings
-     * @param stage stage of the match
      * @param subScene subscene of the grid
      * @throws IOException when socket closes
      */
-    private void buildingsImages(Stage stage, SubScene subScene) throws IOException {
+    private void buildingsImages(SubScene subScene) throws IOException {
 
         initializeButtonsStyle();
 
@@ -168,8 +162,6 @@ public class GUIRoundStage {
 
         StackPane stackPane = guiRoundController.getStackPane();
         stackPane.toFront();
-
-        //playersCardShow();
 
         baseBlock.setOnDragDetected(event -> {
             Dragboard db = baseBlock.startDragAndDrop(TransferMode.ANY);
@@ -484,7 +476,7 @@ public class GUIRoundStage {
 
         eventHandler(stage);
         guiCards = stagesManager.getGuiPickCardStage().getGuiCards();
-        try { buildingsImages(stage, subScene); }
+        try { buildingsImages(subScene); }
         catch (IOException e) { e.printStackTrace(); }
     }
 
@@ -493,7 +485,8 @@ public class GUIRoundStage {
      */
     public void timerToCancel() {
         Timeline animation = new Timeline(new KeyFrame(Duration.seconds(1), e -> CountDown()));
-        animation.setCycleCount(timer+1);
+        int timer = 3;
+        animation.setCycleCount(timer +1);
         animation.setOnFinished(event -> {
             Platform.runLater(() -> guiRoundController.getErrorText().setText(""));
             Platform.runLater(() -> guiRoundController.getMessageText().setVisible(true));

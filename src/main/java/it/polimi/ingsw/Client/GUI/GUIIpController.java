@@ -16,7 +16,7 @@ public class GUIIpController {
 
     public Button doneButton;
     public AnchorPane backGround;
-    GUIStagesManager stagesManager;
+    private GUIStagesManager stagesManager;
     boolean okPort = false;
 
     @FXML
@@ -39,7 +39,7 @@ public class GUIIpController {
     }
 
     @FXML
-    void checkPort(KeyEvent event) {
+    void checkPort() {
 
         if(!isNumeric(serverPortTextField.getText())){
             xPort.setVisible(true);
@@ -52,7 +52,7 @@ public class GUIIpController {
     }
 
     @FXML
-    void startLoginStage(ActionEvent event) throws Exception {
+    void startLoginStage() throws Exception {
         String ip = serverIPTextField.getText();
         int port;
         if(okPort) {

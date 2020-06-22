@@ -26,7 +26,7 @@ public class GUILoginPanelController {
     boolean isWaiting = false;
     int buttonClickedCounter = 0;
 
-    GUIStagesManager stagesManager;
+    private GUIStagesManager stagesManager;
 
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;

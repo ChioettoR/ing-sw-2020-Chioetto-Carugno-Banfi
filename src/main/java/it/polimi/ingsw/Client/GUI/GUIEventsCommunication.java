@@ -11,13 +11,12 @@ import java.util.stream.Collectors;
 
 public class GUIEventsCommunication implements EventsCommunication {
 
-    GUIStagesManager stagesManager;
-    GUIRoundStage guiRoundStage;
-    GUILoginStage guiLoginStage;
-    GUIPickCardStage guiPickCardStage;
-    GUIIpStage guiIpStage;
+    private GUIStagesManager stagesManager;
+    private GUIRoundStage guiRoundStage;
+    private GUILoginStage guiLoginStage;
+    private GUIPickCardStage guiPickCardStage;
     private MessagesReader messagesReader;
-    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
+    private final GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
 
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
@@ -36,9 +35,6 @@ public class GUIEventsCommunication implements EventsCommunication {
         this.guiRoundStage = guiRoundStage;
     }
 
-    public void setGuiIpStage(GUIIpStage guiIpStage) {
-        this.guiIpStage = guiIpStage;
-    }
 
     @Override
     public void lobbyInfo(String lobbyName, int lobbySize) {
@@ -108,7 +104,7 @@ public class GUIEventsCommunication implements EventsCommunication {
 
             ArrayList<TileSimplified> tilesWithWorkerNull = (ArrayList<TileSimplified>) tiles.stream().filter(tileSimplified -> tileSimplified.getWorkerSimplified() == null).collect(Collectors.toList());
             for (TileSimplified t : tilesWithWorkerNull) {
-                GUITile tile = guiRoundStage.guiGridManager.getGrid().getTile(t.getX(), t.getY());
+                GUITile tile = guiRoundStage.getGuiGridManager().getGrid().getTile(t.getX(), t.getY());
                 if (tile.getGUIWorker() != null) {
                     workersMaybeDeleted.add(tile.getGUIWorker());
                     tileWithWorkerMaybeDeleted.add(t);
