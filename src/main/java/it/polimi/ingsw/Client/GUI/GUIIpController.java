@@ -2,9 +2,11 @@ package it.polimi.ingsw.Client.GUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -12,6 +14,8 @@ import java.util.regex.Pattern;
 
 public class GUIIpController {
 
+    public Button doneButton;
+    public AnchorPane backGround;
     GUIStagesManager stagesManager;
     boolean okPort = false;
 

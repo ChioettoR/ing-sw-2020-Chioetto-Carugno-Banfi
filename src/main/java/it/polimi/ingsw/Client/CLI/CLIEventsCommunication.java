@@ -6,7 +6,6 @@ import it.polimi.ingsw.Client.MessagesReader;
 import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class CLIEventsCommunication implements EventsCommunication {
 
@@ -103,7 +102,7 @@ public class CLIEventsCommunication implements EventsCommunication {
      */
     @Override
     public void win(String winnerName) {
-        System.out.println((winnerName + "WINS!"));
+        System.out.println((winnerName + " WON!"));
         cliStdinReader.getClient().closeConnection();
     }
 
@@ -150,9 +149,9 @@ public class CLIEventsCommunication implements EventsCommunication {
             cliCardBuilder.addDescription(cards.get(i).getName(), cards.get(i).getDescription());
             System.out.print(cards.get(i).getName() + "  ");
             if (i == cards.size()/2)
-                System.out.println("");
+                System.out.println();
         }
-        System.out.println("");
+        System.out.println();
     }
 
     /**
@@ -172,12 +171,11 @@ public class CLIEventsCommunication implements EventsCommunication {
     @Override
     public void colorsAvailable(ArrayList<PlayerColor> colors) {
         //messagesReader.read(119);
-        ArrayList<String> colorsName = new ArrayList<>();
         for(PlayerColor playerColor : colors) {
             System.out.print(cliColorDecoder.getColor(playerColor).escape() + cliColorDecoder.getColorName(playerColor) + Color.RESET);
             if(colors.indexOf(playerColor)!=colors.size()-1) System.out.print("  ");
         }
-        System.out.println("");
+        System.out.println();
     }
 
     /**

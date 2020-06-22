@@ -2,14 +2,12 @@ package it.polimi.ingsw.Client.GUI;
 
 import it.polimi.ingsw.Events.Client.LobbySizeEvent;
 import it.polimi.ingsw.Events.Client.LoginNameEvent;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,6 +17,12 @@ import java.util.regex.Pattern;
 
 public class GUILoginPanelController {
 
+    public HBox hBoxText;
+    public VBox choosePlayerNumbers;
+    public Text chooseText;
+    public AnchorPane startButtonPart;
+    public Button buttonStart;
+    public VBox messageVBox;
     boolean isWaiting = false;
     int buttonClickedCounter = 0;
 
@@ -77,7 +81,7 @@ public class GUILoginPanelController {
     private AnchorPane waitingPlayer;
 
     @FXML
-    void changeScreen(ActionEvent event) {
+    void changeScreen() {
         buttonClickedCounter++;
         backGround.setVisible(true);
         playButton.setVisible(false);
@@ -91,12 +95,12 @@ public class GUILoginPanelController {
     }
 
     @FXML
-    void handleThreeBox(MouseEvent event) {
+    void handleThreeBox() {
         if (three.isSelected()) two.setSelected(false);
     }
 
     @FXML
-    void handleTwoBox(MouseEvent event) {
+    void handleTwoBox() {
         if (two.isSelected()) three.setSelected(false);
     }
 
@@ -120,10 +124,9 @@ public class GUILoginPanelController {
 
     /**
      * Starts the new phase when the lobby is full
-     * @param event
      */
     @FXML
-    void getStarted(ActionEvent event) {
+    void getStarted() {
         if(two.isSelected()){ stagesManager.send(new LobbySizeEvent(2)); }
         else if(three.isSelected()){ stagesManager.send(new LobbySizeEvent(3)); }
     }
