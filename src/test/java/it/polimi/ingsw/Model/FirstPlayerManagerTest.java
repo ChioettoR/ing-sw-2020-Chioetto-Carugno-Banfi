@@ -14,17 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FirstPlayerManagerTest implements ServerObserver {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Player player2 = new Player("Franco");
-    StateManager stateManager = new StateManager();
-    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
-    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
-    int updateCounter;
-    int playerID;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Player player2 = new Player("Franco");
+    private final StateManager stateManager = new StateManager();
+    private final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    private final FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
+    private int updateCounter;
+    private int playerID;
 
     @BeforeEach
     void setUp() throws IOException {

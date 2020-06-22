@@ -21,7 +21,7 @@ public class CLICardBuilder {
 
         for(int j=0; j<names.size(); j++) {
 
-            CLICard cliCard = new CLICard(names.get(j), effects.get(j), descriptions.get(j));
+            CLICard cliCard = new CLICard(names.get(j));
             effectsMap.put(names.get(j), descriptions.get(j));
             cards.add(cliCard);
             String name = names.get(j);

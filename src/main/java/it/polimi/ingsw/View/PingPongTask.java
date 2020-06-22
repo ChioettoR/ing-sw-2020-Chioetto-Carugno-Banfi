@@ -9,10 +9,9 @@ import java.util.TimerTask;
 
 public class PingPongTask extends java.util.TimerTask {
 
-    Connection connection;
-    TimerTask countdownTask;
-    Timer pongCountdownTimer;
-    int time;
+    private final Connection connection;
+    private Timer pongCountdownTimer;
+    private final int time;
 
     public PingPongTask(int time, Connection connection) {
         this.connection = connection;
@@ -24,7 +23,7 @@ public class PingPongTask extends java.util.TimerTask {
         try {
             System.out.println("PING SENT TO " + connection.toString());
             connection.send(new PingEvent());
-            countdownTask = new CountdownTask(time, connection);
+            TimerTask countdownTask = new CountdownTask(time, connection);
             pongCountdownTimer = new Timer();
             pongCountdownTimer.schedule(countdownTask, 0, 1000);
         }

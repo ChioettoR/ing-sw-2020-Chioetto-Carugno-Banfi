@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StandardActionsTest {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    MoveActionStandard moveActionStandard = new MoveActionStandard();
-    BuildActionStandard buildActionStandard = new BuildActionStandard();
-    Player player = new Player("Marcello");
-    Card card = new Card("Card", null);
+    private Grid grid = Grid.getGrid();
+    private PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final MoveActionStandard moveActionStandard = new MoveActionStandard();
+    private final BuildActionStandard buildActionStandard = new BuildActionStandard();
+    private final Player player = new Player("Marcello");
+    private final Card card = new Card("Card", null);
 
     @AfterEach
     void tearDown() {

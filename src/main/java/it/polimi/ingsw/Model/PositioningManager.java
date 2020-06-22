@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PositioningManager extends ChangeObservable {
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
-    final int totalWorkersNumber = 2;
-    int currentWorkersNumber;
-    PlayerColor playerColor;
+    private int currentWorkersNumber;
 
     public PositioningManager(StateManager stateManager) {
         this.stateManager = stateManager;
@@ -32,7 +30,8 @@ public class PositioningManager extends ChangeObservable {
         if(!stateManager.checkState(GameState.POSITIONING))
             return;
 
-        if(currentWorkersNumber < playersManager.getPlayersNumber()*totalWorkersNumber) {
+        int totalWorkersNumber = 2;
+        if(currentWorkersNumber < playersManager.getPlayersNumber()* totalWorkersNumber) {
 
             boolean wrongTile = checkWrongTile(x,y);
             if(wrongTile) return;
@@ -40,10 +39,10 @@ public class PositioningManager extends ChangeObservable {
             positionWorker(x,y);
 
             //If all players have finished positioning
-            if(currentWorkersNumber == playersManager.getPlayersNumber()*totalWorkersNumber) phaseFinishedForAllPlayers();
+            if(currentWorkersNumber == playersManager.getPlayersNumber()* totalWorkersNumber) phaseFinishedForAllPlayers();
 
                 //If you have finished positioning
-            else if(currentWorkersNumber % totalWorkersNumber==0) phaseFinished();
+            else if(currentWorkersNumber % totalWorkersNumber ==0) phaseFinished();
 
                 //If you have positioned the first worker only
             else notifyMessage(new MessageEvent(109, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));

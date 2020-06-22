@@ -6,8 +6,6 @@ public class CLICard {
 
     private int cardLength;
     private final String name;
-    private final String effectName;
-    private final String description;
     private ArrayList<StringBuilder> upperLines;
     private ArrayList<StringBuilder> effectLines;
     private ArrayList<StringBuilder> lowerLines;
@@ -15,25 +13,13 @@ public class CLICard {
     /**
      * Contains all the variables that belong to the card
      * @param name name of the card
-     * @param effectName type of the effect
-     * @param description description of the effect
      */
-    public CLICard(String name, String effectName, String description) {
+    public CLICard(String name) {
         this.name = name;
-        this.effectName = effectName;
-        this.description = description;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getEffectName() {
-        return effectName;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public int getCardLength() {

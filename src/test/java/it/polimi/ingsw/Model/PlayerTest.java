@@ -5,17 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
-    Player player;
-    String name;
-    int ID;
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Worker worker2 = new Worker();
+    private Player player;
+    private int ID;
+    private final Worker worker = new Worker();
+    private final Worker worker1 = new Worker();
+    private final Worker worker2 = new Worker();
 
     @BeforeEach
     void setUp() {
         ID = 5;
-        name = "Marcello";
+        String name = "Marcello";
         player = new Player(name);
         player.setID(ID);
     }

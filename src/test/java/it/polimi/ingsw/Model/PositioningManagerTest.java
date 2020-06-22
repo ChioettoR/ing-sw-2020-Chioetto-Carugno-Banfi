@@ -15,28 +15,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PositioningManagerTest implements ServerObserver {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
-    Card card;
-    Card card1;
-    Tile firstWorkerPosition;
-    Tile secondWorkerPosition;
-    Tile thirdWorkerPosition;
-    Tile fourthWorkerPosition;
-    Player player1 = new Player("Franco");
-    CardsBuilder cardsBuilder = new CardsBuilder();
-    StateManager stateManager = new StateManager();
-    PositioningManager positioningManager = new PositioningManager(stateManager);
-    int updateCounter;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Player player = new Player("Alberto");
+    private Tile firstWorkerPosition;
+    private Tile secondWorkerPosition;
+    private Tile thirdWorkerPosition;
+    private Tile fourthWorkerPosition;
+    private final Player player1 = new Player("Franco");
+    private final CardsBuilder cardsBuilder = new CardsBuilder();
+    private final StateManager stateManager = new StateManager();
+    private final PositioningManager positioningManager = new PositioningManager(stateManager);
+    private int updateCounter;
 
     @BeforeEach
     void setUp() {
         new Builder().build();
         cardsBuilder.createCards();
-        card = deck.getCardByName("Apollo");
-        card1 = deck.getCardByName("Artemis");
+        Card card = deck.getCardByName("Apollo");
+        Card card1 = deck.getCardByName("Artemis");
         cardsBuilder.createAction(card);
         cardsBuilder.createAction(card1);
         playersManager.addPlayer(player);

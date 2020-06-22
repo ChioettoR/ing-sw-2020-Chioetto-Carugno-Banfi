@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class FirstPlayerManager extends FirstPlayerObservable {
 
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    ColorPoolManager colorPoolManager;
-    StateManager stateManager;
-    ArrayList<String> names;
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final ColorPoolManager colorPoolManager;
+    private final StateManager stateManager;
+    private ArrayList<String> names;
 
     public FirstPlayerManager(StateManager stateManager, ColorPoolManager colorPoolManager) {
         this.stateManager = stateManager;

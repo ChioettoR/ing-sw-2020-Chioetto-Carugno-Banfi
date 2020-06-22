@@ -9,26 +9,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersManagerTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private Grid grid = Grid.getGrid();
+    private PlayersManager playersManager = PlayersManager.getPlayersManager();
 
-    Player player = new Player("Marcello");
-    Card card = new Card("Carlo", null);
-    Worker worker = new Worker();
-    Worker worker4 = new Worker();
+    private final Player player = new Player("Marcello");
+    private final Card card = new Card("Carlo", null);
+    private final Worker worker = new Worker();
+    private final Worker worker4 = new Worker();
 
-    Player player1 = new Player("Alberto");
-    Card card1 = new Card("Marco", null);
-    Worker worker1 = new Worker();
-    Worker worker5 = new Worker();
+    private final Player player1 = new Player("Alberto");
+    private final Card card1 = new Card("Marco", null);
+    private final Worker worker1 = new Worker();
+    private final Worker worker5 = new Worker();
 
-    Player player2 = new Player("Federico");
-    Card card2 = new Card("Giordano", null);
-    Worker worker2 = new Worker();
-    Worker worker6 = new Worker();
+    private final Player player2 = new Player("Federico");
+    private final Card card2 = new Card("Giordano", null);
+    private final Worker worker2 = new Worker();
+    private final Worker worker6 = new Worker();
 
-    Card card3 = new Card("Silvio", null);
-    Worker worker3 = new Worker();
+    private final Card card3 = new Card("Silvio", null);
+    private final Worker worker3 = new Worker();
 
     @AfterEach
     void tearDown() {

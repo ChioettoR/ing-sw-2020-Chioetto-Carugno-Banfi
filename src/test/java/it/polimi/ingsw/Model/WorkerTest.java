@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WorkerTest {
 
-    Grid grid = Grid.getGrid();
-    Tile tile;
-    Tile tile1;
-    Tile tile2 = new Tile(5,8);
-    Tile nullTile = null;
+    private final Grid grid = Grid.getGrid();
+    private Tile tile;
+    private Tile tile1;
+    private final Tile tile2 = new Tile(5,8);
+    private final Tile nullTile = null;
 
     @BeforeEach
     void setUp() {
