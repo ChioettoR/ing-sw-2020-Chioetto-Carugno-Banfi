@@ -10,17 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardChronusTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Player player = new Player("Alberto");
-    Card card = new Card("Chronus", CardsBuilder.GodPower.CompleteTowersObserver, true);
-    Tile currentTile;
-    ArrayList<Action> actionOrder = new ArrayList<>();
-    MoveAction moveAction;
-    BuildAction buildAction;
-    int completeTowersNumber;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final Player player = new Player("Alberto");
+    private final Card card = new Card("Chronus", CardsBuilder.GodPower.CompleteTowersObserver, true);
+    private Tile currentTile;
+    private MoveAction moveAction;
+    private BuildAction buildAction;
+    private int completeTowersNumber;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +32,7 @@ class CardChronusTest {
         worker.setPosition(currentTile);
         currentTile.setWorker(worker);
         new CardsBuilder().createAction(card);
-        actionOrder = card.getActionOrder();
+        ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;

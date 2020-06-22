@@ -34,7 +34,6 @@ public class CardAtlasTest {
         ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
-        MoveAction moveAction = (MoveAction) action;
         action = actionOrder.get(1);
         assertTrue(action instanceof BuildAction);
         buildAction = (BuildAction) action;

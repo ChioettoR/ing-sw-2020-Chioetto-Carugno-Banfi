@@ -11,22 +11,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardMedusaTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker workerA = new Worker();
-    Worker workerA1 = new Worker();
-    Worker workerF = new Worker();
-    Worker workerF1 = new Worker();
-    Worker workerM = new Worker();
-    Player playerA = new Player("Alberto");
-    Player playerF = new Player("Filippo");
-    Player playerM = new Player("Marcello");
-    Card card = new Card("Medusa", CardsBuilder.GodPower.PetrifyOpponents);
-    ArrayList<Action> actionOrder = new ArrayList<>();
-    MoveAction moveAction;
-    BuildAction buildAction;
-    RoundAction roundAction;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker workerA = new Worker();
+    private final Worker workerA1 = new Worker();
+    private final Worker workerF = new Worker();
+    private final Worker workerF1 = new Worker();
+    private final Worker workerM = new Worker();
+    private final Player playerA = new Player("Alberto");
+    private final Player playerF = new Player("Filippo");
+    private final Player playerM = new Player("Marcello");
+    private final Card card = new Card("Medusa", CardsBuilder.GodPower.PetrifyOpponents);
+    private MoveAction moveAction;
+    private BuildAction buildAction;
+    private RoundAction roundAction;
 
     @BeforeEach
     void setUp() {
@@ -47,7 +46,7 @@ class CardMedusaTest {
         workerF1.setPosition(grid.getTiles().get(11));
         workerM.setPosition(grid.getTiles().get(2));
         new CardsBuilder().createAction(card);
-        actionOrder = card.getActionOrder();
+        ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;

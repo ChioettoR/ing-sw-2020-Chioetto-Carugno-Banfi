@@ -10,19 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardMinotaurTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Worker worker2 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Card card = new Card("Minotaur", CardsBuilder.GodPower.CanPush);
-    Card card1 = new Card("Philip", null);
-    Tile currentTile;
-    Tile currentTile1;
-    Tile currentTile2;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final Worker worker1 = new Worker();
+    private final Worker worker2 = new Worker();
+    private final Player player = new Player("Alberto");
+    private final Player player1 = new Player("Marcello");
+    private final Card card = new Card("Minotaur", CardsBuilder.GodPower.CanPush);
+    private final Card card1 = new Card("Philip", null);
+    private Tile currentTile;
+    private Tile currentTile2;
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;
@@ -40,7 +39,7 @@ class CardMinotaurTest {
         player.setCard(card);
         player1.setCard(card1);
         currentTile = grid.getTiles().get(0);
-        currentTile1 = grid.getTiles().get(6);
+        Tile currentTile1 = grid.getTiles().get(6);
         currentTile2 = grid.getTiles().get(5);
         worker.setPosition(currentTile);
         worker1.setPosition(currentTile1);

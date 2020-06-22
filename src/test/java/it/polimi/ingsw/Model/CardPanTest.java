@@ -10,17 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardPanTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Player player = new Player("Marcello");
-    Card card = new Card("Pan", CardsBuilder.GodPower.MoveDownToWin);
-    Tile currentTile;
-    Tile buildTile;
-    ArrayList<Action> actionOrder = new ArrayList<>();
-    MoveAction moveAction;
-    BuildAction buildAction;
+    private final Grid grid = Grid.getGrid();
+    private final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    private final Deck deck = Deck.getDeck();
+    private final Worker worker = new Worker();
+    private final Player player = new Player("Marcello");
+    private final Card card = new Card("Pan", CardsBuilder.GodPower.MoveDownToWin);
+    private MoveAction moveAction;
+    private BuildAction buildAction;
 
     @BeforeEach
     void setUp() {
@@ -29,12 +26,11 @@ class CardPanTest {
         playersManager.addPlayer(player);
         player.setWorker(worker);
         player.setCard(card);
-        currentTile = grid.getTiles().get(0);
-        buildTile = grid.getTiles().get(1);
+        Tile currentTile = grid.getTiles().get(0);
         currentTile.setWorker(worker);
         worker.setPosition(currentTile);
         new CardsBuilder().createAction(card);
-        actionOrder = card.getActionOrder();
+        ArrayList<Action> actionOrder = card.getActionOrder();
         Action action = actionOrder.get(0);
         assertTrue(action instanceof MoveAction);
         moveAction = (MoveAction) action;
