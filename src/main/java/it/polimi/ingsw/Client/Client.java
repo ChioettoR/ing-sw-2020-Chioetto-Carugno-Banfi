@@ -66,6 +66,7 @@ public class Client implements ClientObserver, CountdownInterface {
             CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);
             pongCountdownStarted = true;
+            return true;
         }
         return false;
     }
