@@ -19,9 +19,8 @@ public class GUIBlock {
     private final float nextBlockXTranslation;
     private final float domeScale;
     private final float nextBlockZTranslation;
-    ObjModelImporter objModelImporter = new ObjModelImporter();
-    PhongMaterial material = new PhongMaterial();
-    GUIGridManager guiGridManager;
+    final ObjModelImporter objModelImporter = new ObjModelImporter();
+    final PhongMaterial material = new PhongMaterial();
 
     /**
      * Method used for the generation of all the blocks in the game
@@ -31,8 +30,6 @@ public class GUIBlock {
      * @param guiGridManager reference to the GridManager
      */
     public GUIBlock(int level, GUITile tile, GUIGridManager guiGridManager) {
-
-        this.guiGridManager = guiGridManager;
 
         material.setDiffuseColor(Color.web("f0f0f0"));
         int scaleSize = 6;

@@ -5,20 +5,16 @@ import it.polimi.ingsw.Events.Client.SelectionEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
-import javafx.scene.transform.Rotate;
 
 public class GUIWorker {
 
-    ObjModelImporter importer = new ObjModelImporter();
+    final ObjModelImporter importer = new ObjModelImporter();
     private final MeshView workerMesh;
     private GUITile guiTile;
     private final String playerName;
     private final int workerID;
-    GUIRoundStage guiRoundStage;
 
     public GUIWorker(String playerName, int workerID, Color color, GUIRoundStage guiRoundStage) {
-
-        this.guiRoundStage = guiRoundStage;
 
         PhongMaterial material = new PhongMaterial();
         material.setDiffuseColor(color);

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ColorSelectingEvent extends ServerEvent implements Serializable {
-    ArrayList<PlayerColor> colorsAvailable;
+    final ArrayList<PlayerColor> colorsAvailable;
 
     public ArrayList<PlayerColor> getColorsAvailable() {
         return colorsAvailable;

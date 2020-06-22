@@ -32,10 +32,6 @@ public class Grid {
         return completeTowersCount;
     }
 
-    public void resetTiles(ArrayList<Tile> newTiles) {
-        tiles = newTiles;
-    }
-
     /**
      * Increases the counter of complete towers. If there is a complete towers observer and the complete
      * towers are 5, he's the winner.
@@ -147,9 +143,5 @@ public class Grid {
         ArrayList<Tile> perimeterTiles = new ArrayList<>(tiles);
         perimeterTiles.removeIf(tile -> tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());
         return !perimeterTiles.contains(tileWhereBuild);
-    }
-
-    public GridSimplified simplify() {
-        return new GridSimplified(new ArrayList<Tile>(tiles));
     }
 }

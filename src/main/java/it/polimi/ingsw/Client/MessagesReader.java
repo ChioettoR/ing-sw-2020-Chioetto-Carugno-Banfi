@@ -2,7 +2,7 @@ package it.polimi.ingsw.Client;
 
 public class MessagesReader {
 
-    MessagesHandler messagesHandler;
+    final MessagesHandler messagesHandler;
 
     public MessagesReader(MessagesHandler messagesHandler) {
         this.messagesHandler = messagesHandler;

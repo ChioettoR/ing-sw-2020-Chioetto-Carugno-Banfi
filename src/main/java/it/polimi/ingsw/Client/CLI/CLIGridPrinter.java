@@ -7,16 +7,15 @@ import java.util.Collections;
 
 public class CLIGridPrinter {
 
-    int leftSpacing = 3;
+    final int leftSpacing = 3;
 
     /**
      * Prints all the grid merging it with the methods in this class
      * @param CLIGrid grid to print
-     * @param printNames true if need to print player name, false otherwise
      * @param names list of names
      * @param colors list of colors
      */
-    void print(CLIGrid CLIGrid, boolean printNames, ArrayList<String> names, ArrayList<Color> colors) {
+    void print(CLIGrid CLIGrid, ArrayList<String> names, ArrayList<Color> colors) {
         int namesLength = names.size();
         int length = CLIGrid.getLength();
         int width = CLIGrid.getWidth();
@@ -27,11 +26,10 @@ public class CLIGridPrinter {
         ArrayList<StringWrapper> fourthLine = new ArrayList<>();
         ArrayList<StringWrapper> fifthLine = new ArrayList<>();
 
-        //clearScreen();
         createZeroLine(zeroLine);
         for(StringWrapper s : zeroLine)
             System.out.print(s.getString());
-        System.out.println("");
+        System.out.println();
 
         for(int y=1; y<=width; y++) {
 
@@ -52,22 +50,22 @@ public class CLIGridPrinter {
             printBlankLine(CLIGrid, length, y, 3, fourthLine);
 
             printLine(firstLine, y, false);
-            if(printNames && namesLength>0 && y==1) printName(names.get(0), colors.get(0));
-            System.out.println("");
+            if(namesLength>0 && y==1) printName(names.get(0), colors.get(0));
+            System.out.println();
             printLine(secondLine, y, false);
-            if(printNames && namesLength>1 && y==1) printName(names.get(1), colors.get(1));
-            System.out.println("");
+            if(namesLength>1 && y==1) printName(names.get(1), colors.get(1));
+            System.out.println();
             printLine(thirdLine, y, true);
-            if(printNames && namesLength>2 && y==1) printName(names.get(2), colors.get(2));
-            System.out.println("");
+            if(namesLength>2 && y==1) printName(names.get(2), colors.get(2));
+            System.out.println();
             printLine(fourthLine, y, false);
 
             if(y==5) {
                 printHorizontalBorder(CLIGrid, 5, y, false, fifthLine);
-                System.out.println("");
+                System.out.println();
                 printLine(fifthLine, y, false);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -146,9 +144,5 @@ public class CLIGridPrinter {
         if(color==null) System.out.print("  "  + "───");
         else System.out.print("  " + color.escape() + "───" + Color.RESET);
         System.out.print(" " + name);
-    }
-    private synchronized void clearScreen(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }

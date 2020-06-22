@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.PlayerColor;
 import java.io.Serializable;
 
 public class PickColorEvent extends ClientEvent implements Serializable {
-    PlayerColor playerColor;
+    final PlayerColor playerColor;
 
     public PickColorEvent(PlayerColor playerColor) {
         this.playerColor = playerColor;

@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Client.GUI;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -16,18 +14,18 @@ import java.util.ArrayList;
 
 public class GUIGrid {
 
-    ObjModelImporter objModelImporter = new ObjModelImporter();
-    PhongMaterial invisibleMaterial = new PhongMaterial();
-    PhongMaterial seaMaterial = new PhongMaterial();
-    PhongMaterial baseMaterial = new PhongMaterial();
-    PhongMaterial bordersMaterial = new PhongMaterial();
+    final ObjModelImporter objModelImporter = new ObjModelImporter();
+    final PhongMaterial invisibleMaterial = new PhongMaterial();
+    final PhongMaterial seaMaterial = new PhongMaterial();
+    final PhongMaterial baseMaterial = new PhongMaterial();
+    final PhongMaterial bordersMaterial = new PhongMaterial();
     private final Box sea;
     private final Box gridInvisible;
     private final MeshView gridBase;
     private ArrayList<GUITile> tiles;
     private final float size;
     private final int tileHeight;
-    GUIGridManager guiGridManager;
+    final GUIGridManager guiGridManager;
 
     /**
      * Creates the 3D grid

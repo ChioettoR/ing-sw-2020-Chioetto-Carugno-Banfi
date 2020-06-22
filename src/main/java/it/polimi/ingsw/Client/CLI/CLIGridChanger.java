@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 class CLIGridChanger {
 
-    CLIPlayersManager cliPlayersManager;
+    final CLIPlayersManager cliPlayersManager;
 
     public CLIGridChanger(CLIPlayersManager cliPlayersManager) {
         this.cliPlayersManager = cliPlayersManager;
@@ -50,7 +50,7 @@ class CLIGridChanger {
 
                         //New worker and old build level
                     else if (Integer.toString(buildLevel).equals(cliTile.getWords()[1].getString())) {
-                        shiftPosition(cliTile, 2);
+                        shiftPosition(cliTile);
                         changeWorker(cliTile, workerSimplified, false);
                     }
 
@@ -115,7 +115,7 @@ class CLIGridChanger {
     /**
      * Method invoked to change the level on a tile
      * @param cliTile tile changed
-     * @param buildLevel newlevel
+     * @param buildLevel new level
      * @param levelOnly true if there are only buildings and no workers on it, false otherwise
      */
     private void changeLevel(CLITile cliTile, int buildLevel, boolean levelOnly) {
@@ -156,12 +156,12 @@ class CLIGridChanger {
     /**
      * Invoked when a worker is moved on a tile with a building, this method writes correctly the letters inside that tile
      * @param cliTile tiles to modify
-     * @param newPosition position of the letters on the string
+     *
      */
-    private void shiftPosition(CLITile cliTile, int newPosition) {
+    private void shiftPosition(CLITile cliTile) {
         StringWrapper oldPosition = cliTile.getWords()[1];
         cliTile.getWords()[1] = new StringWrapper("/");
-        cliTile.getWords()[newPosition] = oldPosition;
+        cliTile.getWords()[2] = oldPosition;
     }
 
     /**

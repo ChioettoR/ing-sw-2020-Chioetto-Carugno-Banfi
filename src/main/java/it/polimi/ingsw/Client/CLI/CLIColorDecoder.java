@@ -8,9 +8,9 @@ import java.util.TreeMap;
 
 public class CLIColorDecoder {
 
-    HashMap<PlayerColor, String> colorNames = new HashMap<>();
-    TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    HashMap<PlayerColor, Color> colorANSI = new HashMap<>();
+    final HashMap<PlayerColor, String> colorNames = new HashMap<>();
+    final TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    final HashMap<PlayerColor, Color> colorANSI = new HashMap<>();
 
     /**
      * Sets the color of the players in game

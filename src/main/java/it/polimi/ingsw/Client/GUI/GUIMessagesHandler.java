@@ -4,7 +4,7 @@ import it.polimi.ingsw.Client.MessagesHandler;
 
 public class GUIMessagesHandler implements MessagesHandler {
 
-    GUIStagesManager stagesManager;
+    final GUIStagesManager stagesManager;
 
     public GUIMessagesHandler(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;

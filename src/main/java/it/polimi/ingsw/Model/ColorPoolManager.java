@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ColorPoolManager extends ColorObservable {
-    StateManager stateManager;
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    ArrayList<PlayerColor> colorsAvailable = new ArrayList<>();
+    final StateManager stateManager;
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final ArrayList<PlayerColor> colorsAvailable = new ArrayList<>();
 
     public ColorPoolManager(StateManager stateManager) {
         this.stateManager = stateManager;
@@ -40,12 +40,10 @@ public class ColorPoolManager extends ColorObservable {
         if(!colorsAvailable.contains(playerColor)) notifyMessage(new MessageEvent(426, playersManager.getCurrentPlayer().getID()));
         else {
             colorsAvailable.remove(playerColor);
-            playersManager.getCurrentPlayer().setColor(playerColor);
             notify(new PlayerChosenColorEvent(playerColor, playersManager.getCurrentPlayer().getName(), -1));
             playersManager.nextPlayer();
             ArrayList<PlayerColor> colorsAvailableCopy = new ArrayList<>(colorsAvailable);
             if(colorsAvailable.size()==1) {
-                playersManager.getCurrentPlayer().setColor(colorsAvailable.get(0));
                 notify(new PlayerChosenColorEvent(colorsAvailable.get(0), playersManager.getCurrentPlayer().getName(), -1));
                 allColorsSelected();
             }

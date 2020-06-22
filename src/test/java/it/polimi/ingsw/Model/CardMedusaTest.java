@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardMedusaTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker workerA = new Worker();
-    Worker workerA1 = new Worker();
-    Worker workerF = new Worker();
-    Worker workerF1 = new Worker();
-    Worker workerM = new Worker();
-    Player playerA = new Player("Alberto");
-    Player playerF = new Player("Filippo");
-    Player playerM = new Player("Marcello");
-    Card card = new Card("Medusa", CardsBuilder.GodPower.PetrifyOpponents);
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Worker workerA = new Worker();
+    final Worker workerA1 = new Worker();
+    final Worker workerF = new Worker();
+    final Worker workerF1 = new Worker();
+    final Worker workerM = new Worker();
+    final Player playerA = new Player("Alberto");
+    final Player playerF = new Player("Filippo");
+    final Player playerM = new Player("Marcello");
+    final Card card = new Card("Medusa", CardsBuilder.GodPower.PetrifyOpponents);
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
     BuildAction buildAction;

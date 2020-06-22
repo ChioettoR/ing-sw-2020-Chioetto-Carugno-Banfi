@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class RemoteView implements ServerObserver {
-    int playerID;
-    Connection connection;
-    Controller controller;
+    final int playerID;
+    final Connection connection;
+    final Controller controller;
 
     public RemoteView(int playerID, Connection connection, Controller controller){
         this.playerID = playerID;

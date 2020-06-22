@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DrawCardManagerTest implements ServerObserver {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
-    Player player2 = new Player("Franco");
-    StateManager stateManager = new StateManager();
-    ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
-    FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
-    DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Player player = new Player("Alberto");
+    final Player player1 = new Player("Marcello");
+    final Player player2 = new Player("Franco");
+    final StateManager stateManager = new StateManager();
+    final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
+    final FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
+    final DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
     int updateCounter;
     String cardName1;
     String cardName2;

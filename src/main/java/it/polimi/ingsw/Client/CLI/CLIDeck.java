@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class CLIDeck {
 
-    ArrayList<StringBuilder> lines = new ArrayList<>();
-    String name = "Deck";
-    int verticalBorder = 3;
+    final String name = "Deck";
+    final int verticalBorder = 3;
 
     /**
      * Creates the deck that contains all the cards, invoking the methods in this class
@@ -39,15 +38,6 @@ public class CLIDeck {
     }
 
     /**
-     * Creates the blank spaces of the deck
-     * @param stringBuilder contains information about the string
-     * @param length length of the deck
-     */
-    private void createBlankSpace(StringBuilder stringBuilder, int length) {
-        stringBuilder.append(" ".repeat(Math.max(0, length)));
-    }
-
-    /**
      * Creates the upper part of the deck
      * @param stringBuilder contains information about the string
      * @param length length of the deck
@@ -67,19 +57,6 @@ public class CLIDeck {
         stringBuilder.append('└');
         stringBuilder.append("─".repeat(Math.max(0, length)));
         stringBuilder.append('┘');
-    }
-
-    private ArrayList<StringBuilder> createBorder(int length, int height) {
-
-        ArrayList<StringBuilder> borders = new ArrayList<>();
-        for(int i=0; i<height; i++) {
-            StringBuilder line = new StringBuilder();
-            line.append("│");
-            createBlankSpace(line, length);
-            line.append("│");
-            borders.add(line);
-        }
-        return borders;
     }
 
     /**

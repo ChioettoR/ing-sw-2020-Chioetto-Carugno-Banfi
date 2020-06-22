@@ -3,12 +3,9 @@ package it.polimi.ingsw.Client.GUI;
 import javafx.application.Platform;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
-import javafx.scene.LightBase;
 import javafx.scene.PointLight;
-import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MeshView;
-import javafx.scene.shape.Sphere;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -18,7 +15,7 @@ public class GUIGridManager {
     private GUIGrid grid;
     private final Group group;
     private final ArrayList<GUIWorker> workers = new ArrayList<>();
-    GUIRoundStage guiRoundStage;
+    final GUIRoundStage guiRoundStage;
 
     public GUIGridManager(Group group, GUIRoundStage guiRoundStage) {
         this.group = group;
@@ -37,18 +34,6 @@ public class GUIGridManager {
 
     public GUIGrid getGrid() {
         return grid;
-    }
-
-    public void setGrid(GUIGrid grid) {
-        this.grid = grid;
-    }
-
-    public ArrayList<GUIWorker> getWorkers(String playerName) {
-        ArrayList<GUIWorker> playerWorkers = new ArrayList<>();
-        for(GUIWorker w : workers) {
-            if(w.getPlayerName().equalsIgnoreCase(playerName)) playerWorkers.add(w);
-        }
-        return playerWorkers;
     }
 
     /**
@@ -113,7 +98,7 @@ public class GUIGridManager {
     }
 
     /**
-     * Decolors the tiles on the grid
+     * Discolour the tiles on the grid
      */
     public void deColor() {
         for(GUITile t : grid.getTiles())

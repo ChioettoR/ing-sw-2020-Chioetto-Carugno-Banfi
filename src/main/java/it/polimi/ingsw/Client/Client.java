@@ -59,7 +59,6 @@ public class Client implements ClientObserver, CountdownInterface {
 
     private boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
-            System.out.println("PING RECEIVED");
             int pingDelay = 7;
             if(pongCountdownStarted) pongTimer.cancel();
             update(new PongEvent());
@@ -67,6 +66,7 @@ public class Client implements ClientObserver, CountdownInterface {
             CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);
             pongCountdownStarted = true;
+            return true;
         }
         return false;
     }
@@ -111,14 +111,14 @@ public class Client implements ClientObserver, CountdownInterface {
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);
-        eventsReader = new EventsReader(this, eventsCommunication);
+        eventsReader = new EventsReader(eventsCommunication);
         run();
         cliStdinReader.run();
     }
 
     public void setupGUI() {
         eventsCommunication = new GUIEventsCommunication();
-        eventsReader = new EventsReader(this, eventsCommunication);
+        eventsReader = new EventsReader(eventsCommunication);
     }
 
     private void connect() throws IOException {

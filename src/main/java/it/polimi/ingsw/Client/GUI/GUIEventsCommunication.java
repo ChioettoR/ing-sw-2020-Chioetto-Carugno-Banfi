@@ -15,9 +15,8 @@ public class GUIEventsCommunication implements EventsCommunication {
     GUIRoundStage guiRoundStage;
     GUILoginStage guiLoginStage;
     GUIPickCardStage guiPickCardStage;
-    GUIIpStage guiIpStage;
     private MessagesReader messagesReader;
-    GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
+    final GUIColorDecoder guiColorDecoder = new GUIColorDecoder();
 
     public void setStagesManager(GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
@@ -34,10 +33,6 @@ public class GUIEventsCommunication implements EventsCommunication {
 
     public void setGuiRoundStage(GUIRoundStage guiRoundStage) {
         this.guiRoundStage = guiRoundStage;
-    }
-
-    public void setGuiIpStage(GUIIpStage guiIpStage) {
-        this.guiIpStage = guiIpStage;
     }
 
     @Override

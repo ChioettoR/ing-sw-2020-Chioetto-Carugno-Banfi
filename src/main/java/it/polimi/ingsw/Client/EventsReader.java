@@ -6,11 +6,9 @@ import java.io.Serializable;
 
 public class EventsReader {
 
-    Client client;
-    EventsCommunication eventsCommunication;
+    final EventsCommunication eventsCommunication;
 
-    public EventsReader(Client client, EventsCommunication eventsCommunication) {
-        this.client = client;
+    public EventsReader(EventsCommunication eventsCommunication) {
         this.eventsCommunication = eventsCommunication;
     }
 

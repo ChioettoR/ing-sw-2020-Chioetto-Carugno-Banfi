@@ -8,11 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WorkerTest {
 
-    Grid grid = Grid.getGrid();
+    final Grid grid = Grid.getGrid();
     Tile tile;
     Tile tile1;
-    Tile tile2 = new Tile(5,8);
-    Tile nullTile = null;
+    final Tile tile2 = new Tile(5,8);
 
     @BeforeEach
     void setUp() {
@@ -37,7 +36,7 @@ class WorkerTest {
         getTilesFromGrid();
         System.out.println("TEST: I'm setting workers position");
         Worker worker = new Worker();
-        worker.setPosition(nullTile);
+        worker.setPosition(null);
 
         worker.setPosition(tile);
         assertEquals(tile, worker.getPosition());

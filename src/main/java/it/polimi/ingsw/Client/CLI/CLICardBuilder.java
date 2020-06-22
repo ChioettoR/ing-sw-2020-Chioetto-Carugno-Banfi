@@ -5,11 +5,10 @@ import java.util.stream.Collectors;
 
 public class CLICardBuilder {
 
-    Map<String, String> effectsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    final Map<String, String> effectsMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     int cardLength = 17;
-    int blankSpaceHeight = 3;
-    int maxLineSize = 15;
-    int cardsSpacing = 3;
+    final int blankSpaceHeight = 3;
+    final int cardsSpacing = 3;
 
     /**
      * This method creates all the cards invoking the other methods in this class and bringing all the variables from the CLICard class
@@ -24,7 +23,7 @@ public class CLICardBuilder {
 
         for(int j=0; j<names.size(); j++) {
 
-            CLICard cliCard = new CLICard(names.get(j), effects.get(j), descriptions.get(j));
+            CLICard cliCard = new CLICard();
             effectsMap.put(names.get(j), descriptions.get(j));
             cards.add(cliCard);
             String name = names.get(j);
@@ -161,16 +160,12 @@ public class CLICardBuilder {
         for (int i = 0; i < separatedEffectWords.length; i++) {
 
             //If the word i'm adding fits into the line
-            int newLength = line.length() + separatedEffectWords[i].length();
-            if (newLength < maxLineSize-1)
-                line.append(separatedEffectWords[i]).append(" ");
+            line.append(separatedEffectWords[i]).append(" ");
 
-                //Adds the current line to the lines array and create a new line for the word i'm adding
-            else {
-                effectLines.add(line);
-                line = new StringBuilder();
-                line.append(separatedEffectWords[i]).append(" ");
-            }
+            //Adds the current line to the lines array and create a new line for the word i'm adding
+            effectLines.add(line);
+            line = new StringBuilder();
+            line.append(separatedEffectWords[i]).append(" ");
 
             //Adds the last word i'm adding to the lines array
             if (i == separatedEffectWords.length - 1) effectLines.add(line);

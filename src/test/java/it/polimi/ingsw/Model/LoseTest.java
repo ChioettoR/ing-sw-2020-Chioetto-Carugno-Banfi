@@ -13,23 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoseTest implements ServerObserver {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker workerA1 = new Worker();
-    Worker workerA2 = new Worker();
-    Worker workerM1 = new Worker();
-    Worker workerM2 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Worker workerA1 = new Worker();
+    final Worker workerA2 = new Worker();
+    final Worker workerM1 = new Worker();
+    final Worker workerM2 = new Worker();
+    final Player player = new Player("Alberto");
+    final Player player1 = new Player("Marcello");
     Card card;
     Card card1;
-    StateManager stateManager = new StateManager();
-    ActionManager actionManager = new ActionManager(stateManager);
+    final StateManager stateManager = new StateManager();
+    final ActionManager actionManager = new ActionManager(stateManager);
     int updateCounter;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         new Builder().build();
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);

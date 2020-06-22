@@ -15,24 +15,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PositioningManagerTest implements ServerObserver {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Player player = new Player("Alberto");
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Player player = new Player("Alberto");
     Card card;
     Card card1;
     Tile firstWorkerPosition;
     Tile secondWorkerPosition;
     Tile thirdWorkerPosition;
     Tile fourthWorkerPosition;
-    Player player1 = new Player("Franco");
-    CardsBuilder cardsBuilder = new CardsBuilder();
-    StateManager stateManager = new StateManager();
-    PositioningManager positioningManager = new PositioningManager(stateManager);
+    final Player player1 = new Player("Franco");
+    final CardsBuilder cardsBuilder = new CardsBuilder();
+    final StateManager stateManager = new StateManager();
+    final PositioningManager positioningManager = new PositioningManager(stateManager);
     int updateCounter;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         new Builder().build();
         cardsBuilder.createCards();
         card = deck.getCardByName("Apollo");

@@ -12,19 +12,19 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SelectionWorkerManagerTest implements  ServerObserver {
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker workerA1 = new Worker();
-    Worker workerA2 = new Worker();
-    Worker workerM1 = new Worker();
-    Player player = new Player("Alberto");
-    Player player1 = new Player("Marcello");
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Worker workerA1 = new Worker();
+    final Worker workerA2 = new Worker();
+    final Worker workerM1 = new Worker();
+    final Player player = new Player("Alberto");
+    final Player player1 = new Player("Marcello");
     Card card;
     Card card1;
-    StateManager stateManager = new StateManager();
-    ActionManager actionManager = new ActionManager(stateManager);
-    SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
+    final StateManager stateManager = new StateManager();
+    final ActionManager actionManager = new ActionManager(stateManager);
+    final SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
 
 
     @BeforeEach
@@ -49,8 +49,8 @@ class SelectionWorkerManagerTest implements  ServerObserver {
         grid.getTile(3,3).setWorker(workerM1);
         playersManager.nextPlayerAndStartRound();
         playersManager.setCurrentWorker(workerA1);
-        actionManager.addObserver((ServerObserver) this);
-        stateManager.addObserver((ServerObserver) this);
+        actionManager.addObserver(this);
+        stateManager.addObserver(this);
         stateManager.setGameState(GameState.SELECTING);
         selectionTest();
     }
@@ -69,13 +69,13 @@ class SelectionWorkerManagerTest implements  ServerObserver {
 
 
     @Override
-    public void update(ServerEvent serverEvent) throws IOException {
+    public void update(ServerEvent serverEvent) {
         if(serverEvent instanceof MessageEvent)
             return;
-        assertTrue(stateManager.getGameState() == GameState.ACTIONSELECTING);
-        assertTrue(stateManager.playersManager.getCurrentPlayer()!= null);
-        assertTrue(playersManager.getCurrentPlayer().getID() == playersManager.getCurrentWorker().getPlayerID());
-        assertFalse(stateManager.playersManager.getCurrentWorker()== null);
-        assertTrue(stateManager.playersManager.getCurrentWorker() == workerA1);
+        assertSame(stateManager.getGameState(), GameState.ACTIONSELECTING);
+        assertNotNull(stateManager.playersManager.getCurrentPlayer());
+        assertEquals(playersManager.getCurrentPlayer().getID(), playersManager.getCurrentWorker().getPlayerID());
+        assertNotNull(stateManager.playersManager.getCurrentWorker());
+        assertSame(stateManager.playersManager.getCurrentWorker(), workerA1);
     }
 }

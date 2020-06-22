@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardHestiaTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Player player = new Player("Alberto");
-    Card card = new Card("Hestia", CardsBuilder.GodPower.BuildTwiceNoPerimeter);
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Worker worker = new Worker();
+    final Player player = new Player("Alberto");
+    final Card card = new Card("Hestia", CardsBuilder.GodPower.BuildTwiceNoPerimeter);
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
@@ -60,17 +60,17 @@ class CardHestiaTest {
         moveAction.move(worker,grid.getTiles().get(1));
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(6));
-        // Building in non-perimetric tiles
+        // Building in non-perimeter tiles
         assertEquals(1, currentTile.getLevel());
         assertEquals(1, grid.getTiles().get(6).getLevel());
 
         buildAction.build(worker, currentTile);
         buildAction2.build(worker, grid.getTiles().get(5));
-        // Building in a non-perimetric tile, then trying to build in a perimetric tile
+        // Building in a non-perimeter tile, then trying to build in a perimeter tile
         assertEquals(2, currentTile.getLevel());
         assertEquals(0, grid.getTiles().get(5).getLevel());
 
-        ArrayList<Tile> expectedTiles = new ArrayList<Tile>();
+        ArrayList<Tile> expectedTiles = new ArrayList<>();
         moveAction.move(worker, grid.getTiles().get(6));
         expectedTiles.add(grid.getTiles().get(7));
         expectedTiles.add(grid.getTiles().get(11));

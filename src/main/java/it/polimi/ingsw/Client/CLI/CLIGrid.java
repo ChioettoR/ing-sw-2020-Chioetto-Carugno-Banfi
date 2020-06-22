@@ -26,11 +26,5 @@ public class CLIGrid {
         CLITiles.add(CLITile);
     }
 
-    public ArrayList<CLITile> getCLITiles() {
-        return CLITiles;
-    }
-
-    void print() { CLIGridPrinter.print(this, false, new ArrayList<>(), new ArrayList<>()); }
-
-    void print(ArrayList<String> names, ArrayList<Color> colors) { CLIGridPrinter.print(this, true, names, colors); }
+    void print(ArrayList<String> names, ArrayList<Color> colors) { CLIGridPrinter.print(this, names, colors); }
 }

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
 
-    Grid grid = Grid.getGrid();
+    final Grid grid = Grid.getGrid();
     int length;
     int width;
 

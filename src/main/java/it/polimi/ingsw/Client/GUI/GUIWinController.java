@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Client.GUI;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public class GUIWinController {
 

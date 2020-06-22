@@ -12,7 +12,7 @@ import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 public class ActionManager extends ActionObservable implements CountdownInterface {
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     private AvailableActions availableActions;
     private int index;
@@ -138,7 +138,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         Worker worker = playersManager.getCurrentWorker();
         Tile tile = Grid.getGrid().getTile(x, y);
 
-        if(!moveAction.canMove(worker, tile))   notifyMessage(new MessageEvent(403, playersManager.getCurrentPlayer().getID()));
+        if(moveAction.canMove(worker, tile))   notifyMessage(new MessageEvent(403, playersManager.getCurrentPlayer().getID()));
         else moveMethod(moveAction, worker, tile);
     }
 

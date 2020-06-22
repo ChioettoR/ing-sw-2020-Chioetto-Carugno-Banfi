@@ -21,7 +21,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
      */
     @Override
     public void move(Worker worker, Tile tileWhereMove) {
-        if(canMove(worker, tileWhereMove)) {
+        if(!canMove(worker, tileWhereMove)) {
             standardMove(worker, tileWhereMove);
         }
     }
@@ -55,14 +55,14 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     @Override
     public boolean canMove(Worker worker, Tile tileWhereMove) {
         if(isActionLock())
-            return false;
+            return true;
         Tile currentTile = worker.getPosition();
         if (correctTile(currentTile, tileWhereMove) && tileWhereMove.isEmpty() && !isActionLock()) {
             if ((tileWhereMove.getLevel() - currentTile.getLevel() == 1) && cantMoveUp)
-                return false;
-            else return tileWhereMove.getLevel() - currentTile.getLevel() <= 1;
+                return true;
+            else return tileWhereMove.getLevel() - currentTile.getLevel() > 1;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -73,7 +73,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     @Override
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
-        neighboursTiles.removeIf(tile -> (!canMove(worker,tile)));
+        neighboursTiles.removeIf(tile -> (canMove(worker, tile)));
         return neighboursTiles;
     }
 
@@ -90,7 +90,7 @@ public class MoveActionStandard extends StandardActionBehaviour implements MoveA
     public ArrayList<Tile> getAvailableTilesForAction(Worker worker, Action classWhereCheckMove) {
         ArrayList<Tile> neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());
         if(classWhereCheckMove instanceof MoveAction)
-            neighboursTiles.removeIf(tile -> (!((MoveAction)classWhereCheckMove).canMove(worker,tile)));
+            neighboursTiles.removeIf(tile -> (((MoveAction) classWhereCheckMove).canMove(worker, tile)));
         else {
             System.out.println("Wrong action passed to MoveActionStandard");
             return null;

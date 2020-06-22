@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardChronusTest {
 
-    Grid grid = Grid.getGrid();
-    PlayersManager playersManager = PlayersManager.getPlayersManager();
-    Deck deck = Deck.getDeck();
-    Worker worker = new Worker();
-    Player player = new Player("Alberto");
-    Card card = new Card("Chronus", CardsBuilder.GodPower.CompleteTowersObserver, true);
+    final Grid grid = Grid.getGrid();
+    final PlayersManager playersManager = PlayersManager.getPlayersManager();
+    final Deck deck = Deck.getDeck();
+    final Worker worker = new Worker();
+    final Player player = new Player("Alberto");
+    final Card card = new Card("Chronus", CardsBuilder.GodPower.CompleteTowersObserver, true);
     Tile currentTile;
     ArrayList<Action> actionOrder = new ArrayList<>();
     MoveAction moveAction;
@@ -51,7 +51,7 @@ class CardChronusTest {
 
     /**
      *Testing Chronus card
-     * @param tileWhereBuildCompleteTower : tile used to check the WinCondition of Chronos
+     * @param tileWhereBuildCompleteTower : tile used to check the WinCondition of Chronus
      */
     public void buildCompleteTower(Worker worker, Tile tileWhereBuildCompleteTower) {
         for(int i = 0; i<4; i++)

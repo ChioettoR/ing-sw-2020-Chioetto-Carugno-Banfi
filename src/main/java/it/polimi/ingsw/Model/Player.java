@@ -7,7 +7,6 @@ public class Player {
     private final String name;
     private Card card;
     private final ArrayList<Worker> workers;
-    PlayerColor color;
 
     public Player(String name) {
         workers = new ArrayList<>();
@@ -30,14 +29,6 @@ public class Player {
 
     public void setCard(Card card) {
         this.card = card;
-    }
-
-    public PlayerColor getColor() {
-        return color;
-    }
-
-    public void setColor(PlayerColor color) {
-        this.color = color;
     }
 
     /**

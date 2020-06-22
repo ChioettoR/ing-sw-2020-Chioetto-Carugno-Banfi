@@ -8,9 +8,9 @@ class PlayerTest {
     Player player;
     String name;
     int ID;
-    Worker worker = new Worker();
-    Worker worker1 = new Worker();
-    Worker worker2 = new Worker();
+    final Worker worker = new Worker();
+    final Worker worker1 = new Worker();
+    final Worker worker2 = new Worker();
 
     @BeforeEach
     void setUp() {

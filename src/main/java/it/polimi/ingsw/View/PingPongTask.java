@@ -9,10 +9,10 @@ import java.util.TimerTask;
 
 public class PingPongTask extends java.util.TimerTask {
 
-    Connection connection;
+    final Connection connection;
     TimerTask countdownTask;
     Timer pongCountdownTimer;
-    int time;
+    final int time;
 
     public PingPongTask(int time, Connection connection) {
         this.connection = connection;

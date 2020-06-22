@@ -2,9 +2,9 @@ package it.polimi.ingsw.Client.CLI;
 
 public class CLIGridBuilder {
 
-    static int horizontalBorderSize = 11;
-    static int verticalBorderSize = 5;
-    static int wordsSize = 3;
+    static final int horizontalBorderSize = 11;
+    static final int verticalBorderSize = 5;
+    static final int wordsSize = 3;
 
     /**
      * Created the whole grid invoking the creation methods in this class

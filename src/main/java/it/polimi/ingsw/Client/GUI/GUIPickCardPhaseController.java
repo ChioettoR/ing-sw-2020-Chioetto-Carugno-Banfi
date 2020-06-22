@@ -19,11 +19,22 @@ import java.util.ArrayList;
 
 public class GUIPickCardPhaseController {
 
+    public AnchorPane backGround;
+    public AnchorPane choosePane;
+    public Button backButton;
+    public Button nextButton;
+    public Button startPlayerButtonInfo;
+    public Button buttonToDeselect3p1;
+    public Button buttonToDeselect3p2;
+    public Button buttonToDeselect3p3;
+    public Button buttonToDeselect2p1;
+    public Button buttonToDeselect2p2;
+    public Button closeInfoButton;
     GUICards guiCards;
     GUIStagesManager stagesManager;
 
-    ArrayList<String> cardNames = new ArrayList<>();
-    ArrayList<String> namesToSend = new ArrayList<>();
+    final ArrayList<String> cardNames = new ArrayList<>();
+    final ArrayList<String> namesToSend = new ArrayList<>();
     int godIndex = 0;
 
     public void setStagesManager(GUIStagesManager stagesManager) {
@@ -43,9 +54,6 @@ public class GUIPickCardPhaseController {
     }
 
     @FXML
-    private AnchorPane backGround;
-
-    @FXML
     private AnchorPane drawPhasePane;
 
     //upPane
@@ -61,9 +69,6 @@ public class GUIPickCardPhaseController {
 
     @FXML
     private AnchorPane draw;
-
-    @FXML
-    private Button drawCards;
 
     @FXML
     private Button infoButtonUp2p1;
@@ -120,12 +125,6 @@ public class GUIPickCardPhaseController {
     private Button infoButtonToChoose;
 
     @FXML
-    private Button backButton;
-
-    @FXML
-    private Button nextButton;
-
-    @FXML
     private AnchorPane threeCardsPane;
 
     @FXML
@@ -139,9 +138,6 @@ public class GUIPickCardPhaseController {
 
     @FXML
     private Text startPlayerName;
-
-    @FXML
-    private Button startPlayerButtonInfo;
 
     @FXML
     private AnchorPane dragStartingPlayer;
@@ -234,9 +230,6 @@ public class GUIPickCardPhaseController {
     private Text infoDescription;
 
     @FXML
-    private Button closeInfoButton;
-
-    @FXML
     private ImageView infoGodImage;
 
     @FXML
@@ -276,10 +269,6 @@ public class GUIPickCardPhaseController {
 
     public AnchorPane getDraw() {
         return draw;
-    }
-
-    public Button getDrawCards() {
-        return drawCards;
     }
 
     public Button getInfoButtonUp2p1() {
@@ -454,32 +443,8 @@ public class GUIPickCardPhaseController {
         return playerName3p3;
     }
 
-    public AnchorPane getInfoPane() {
-        return infoPane;
-    }
-
-    public Text getInfoGodName() {
-        return infoGodName;
-    }
-
-    public Text getInfoDescription() {
-        return infoDescription;
-    }
-
-    public Button getCloseInfoButton() {
-        return closeInfoButton;
-    }
-
-    public ImageView getInfoGodImage() {
-        return infoGodImage;
-    }
-
     public AnchorPane getCardsToSelect() {
         return cardsToSelect;
-    }
-
-    public GUICards getGuiCards() {
-        return guiCards;
     }
 
     public ImageView getGodToSelect3p1() {
@@ -514,16 +479,12 @@ public class GUIPickCardPhaseController {
         return startPlayerName;
     }
 
-    public Button getStartPlayerButtonInfo() {
-        return startPlayerButtonInfo;
-    }
-
     public AnchorPane getDragStartingPlayer() {
         return dragStartingPlayer;
     }
 
     @FXML
-    void returnToDraw(ActionEvent event) {
+    void returnToDraw() {
         infoPane.setDisable(true);
         infoPane.setVisible(false);
         drawPhasePane.setDisable(false);
@@ -532,70 +493,70 @@ public class GUIPickCardPhaseController {
 
 
     @FXML
-    void checkInfoDown2p1(ActionEvent event) {
+    void checkInfoDown2p1() {
         setInfoPane();
         String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName2p1.getText()).getCardName();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoDown2p2(ActionEvent event) {
+    void checkInfoDown2p2() {
         setInfoPane();
         String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName2p2.getText()).getCardName();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoDown3p1(ActionEvent event) {
+    void checkInfoDown3p1() {
         setInfoPane();
         String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p1.getText()).getCardName();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoDown3p2(ActionEvent event) {
+    void checkInfoDown3p2() {
         setInfoPane();
         String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p2.getText()).getCardName();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoDown3p3(ActionEvent event) {
+    void checkInfoDown3p3() {
         setInfoPane();
         String godName = stagesManager.getGuiPlayersManager().getPlayer(playerName3p3.getText()).getCardName();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoUp2p1(ActionEvent event) {
+    void checkInfoUp2p1() {
         setInfoPane();
         String godName = godName2p1.getText();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoUp2p2(ActionEvent event) {
+    void checkInfoUp2p2() {
         setInfoPane();
         String godName = godName2p2.getText();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoUp3p1(ActionEvent event) {
+    void checkInfoUp3p1() {
         setInfoPane();
         String godName = godName3p1.getText();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoUp3p2(ActionEvent event) {
+    void checkInfoUp3p2() {
         setInfoPane();
         String godName = godName3p2.getText();
         setInfo(godName);
     }
 
     @FXML
-    void checkInfoUp3p3(ActionEvent event) {
+    void checkInfoUp3p3() {
         setInfoPane();
         String godName = godName3p3.getText();
         setInfo(godName);
@@ -603,13 +564,11 @@ public class GUIPickCardPhaseController {
 
     /**
      * Arrow to view the previous card
-     * @param event click event
      */
     @FXML
-    void goBack(ActionEvent event) {
+    void goBack() {
         godIndex--;
-        if(godIndex < 0)
-            godIndex = cardNames.size() - 1;
+        if(godIndex < 0) godIndex = cardNames.size() - 1;
         String godName = cardNames.get(godIndex);
         godImageToChoose.setImage(guiCards.getFullImage(godName));
         godNameToChoose.setText(godName);
@@ -627,13 +586,11 @@ public class GUIPickCardPhaseController {
 
     /**
      * Arrow to view the previous card
-     * @param event click event
      */
     @FXML
-    void goNext(ActionEvent event) {
+    void goNext() {
         godIndex++;
-        if(godIndex == cardNames.size())
-            godIndex = 0;
+        if(godIndex == cardNames.size()) godIndex = 0;
         String godName = cardNames.get(godIndex);
         godImageToChoose.setImage(guiCards.getFullImage(godName));
         godNameToChoose.setText(godName);
@@ -661,20 +618,10 @@ public class GUIPickCardPhaseController {
     }
 
     /**
-     * Removes the selected card in the second box (2 players)
-     * @param event click event
-     */
-    @FXML
-    void deselect2p2(ActionEvent event) {
-
-    }
-
-    /**
      * Removes the selected card in the first box (3 players)
-     * @param event click event
      */
     @FXML
-    void deselect3p1(ActionEvent event) {
+    void deselect3p1() {
         namesToSend.remove(namesToSend.get(0));
         godToSelect3p1.setImage(null);
         if(godToSelect3p2.getImage() != null) {
@@ -685,37 +632,18 @@ public class GUIPickCardPhaseController {
 
     /**
      * Removes the selected card in the second box (3 players)
-     * @param event click event
      */
     @FXML
-    void deselect3p2(ActionEvent event) {
+    void deselect3p2() {
         namesToSend.remove(namesToSend.get(1));
         godToSelect3p2.setImage(null);
     }
 
     /**
-     * Removes the selected card in the third box (3 players)
-     * @param event click event
-     */
-    @FXML
-    void deselect3p3(ActionEvent event) {
-
-    }
-
-    @FXML
-    void drawCards(ActionEvent event) {
-        draw.setDisable(true);
-        draw.setVisible(false);
-        //TODO:
-        //stagesManager.send(new AllPlayersCardsEvent());
-    }
-
-    /**
      * Shows the info box of the card
-     * @param event click event
      */
     @FXML
-    void checkInfoToChoose(ActionEvent event) {
+    void checkInfoToChoose() {
         setInfoPane();
         String godName = godNameToChoose.getText();
         setInfo(godName);

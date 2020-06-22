@@ -8,9 +8,9 @@ import java.util.TreeMap;
 
 public class GUIColorDecoder {
 
-    HashMap<PlayerColor, String> colorNames = new HashMap<>();
-    TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-    HashMap<PlayerColor, javafx.scene.paint.Color> colorANSI = new HashMap<>();
+    final HashMap<PlayerColor, String> colorNames = new HashMap<>();
+    final TreeMap<String, PlayerColor> colorNamesReverse = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    final HashMap<PlayerColor, javafx.scene.paint.Color> colorANSI = new HashMap<>();
 
     /**
      * Method invoked to color all the players in the match

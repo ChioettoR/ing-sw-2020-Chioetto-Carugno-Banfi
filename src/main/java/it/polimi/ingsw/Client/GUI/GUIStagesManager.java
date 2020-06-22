@@ -9,8 +9,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -20,18 +18,16 @@ import java.util.ArrayList;
 public class GUIStagesManager extends Application {
 
     private static Client client;
-    private static String ip;
-    private static int port;
     Stage stage;
     GUIWinController winController = new GUIWinController();
-    GUIIpStage guiIpStage = new GUIIpStage();
-    GUILoginStage guiLoginStage = new GUILoginStage();
-    GUIPickCardStage guiPickCardStage = new GUIPickCardStage();
-    GUIRoundStage guiRoundStage = new GUIRoundStage();
-    GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
+    final GUIIpStage guiIpStage = new GUIIpStage();
+    final GUILoginStage guiLoginStage = new GUILoginStage();
+    final GUIPickCardStage guiPickCardStage = new GUIPickCardStage();
+    final GUIRoundStage guiRoundStage = new GUIRoundStage();
+    final GUIPlayersManager guiPlayersManager = new GUIPlayersManager();
     boolean serverUp = false;
     GUIPhase guiPhase = GUIPhase.LOGIN;
-    int timer = 6;
+    final int timer = 6;
     int seconds = timer;
     private boolean useDisconnectionScene = true;
     Timeline animation;
@@ -119,19 +115,19 @@ public class GUIStagesManager extends Application {
     }
 
     public void messagesToDirect(int messageID) {
-        if(messageID == 304) Platform.runLater(() -> guiLoginStage.waitingPlayer());
-        else if(messageID == 302) Platform.runLater(() -> guiLoginStage.waitingPlayers());
-        else if(messageID == 113) Platform.runLater(() -> guiLoginStage.insertNumber());
-        else if(messageID == 414) Platform.runLater(() -> guiLoginStage.lobbyFull());
+        if(messageID == 304) Platform.runLater(guiLoginStage::waitingPlayer);
+        else if(messageID == 302) Platform.runLater(guiLoginStage::waitingPlayers);
+        else if(messageID == 113) Platform.runLater(guiLoginStage::insertNumber);
+        else if(messageID == 414) Platform.runLater(guiLoginStage::lobbyFull);
         else if(messageID == 119 && guiPhase == GUIPhase.DRAW) roundTransition();
         else if(messageID == 118 && guiPhase == GUIPhase.DRAW) roundTransition();
-        else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.threeCardsShow());
-        else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.twoCardsShow());
-        else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.showAgain());
-        else if(messageID == 411 && guiPhase == GUIPhase.DRAW) Platform.runLater(() -> guiPickCardStage.showCards());
-        else if(messageID == 306 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.resetButtons());
-        else if(messageID == 108 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
-        else if(messageID == 114 && guiPhase == GUIPhase.ROUND) Platform.runLater(() -> guiRoundStage.setBounds());
+        else if(messageID == 501 && guiPhase == GUIPhase.DRAW) Platform.runLater(guiPickCardStage::threeCardsShow);
+        else if(messageID == 502 && guiPhase == GUIPhase.DRAW) Platform.runLater(guiPickCardStage::twoCardsShow);
+        else if(messageID == 407 && guiPhase == GUIPhase.DRAW) Platform.runLater(guiPickCardStage::showAgain);
+        else if(messageID == 411 && guiPhase == GUIPhase.DRAW) Platform.runLater(guiPickCardStage::showCards);
+        else if(messageID == 306 && guiPhase == GUIPhase.ROUND) Platform.runLater(guiRoundStage::resetButtons);
+        else if(messageID == 108 && guiPhase == GUIPhase.ROUND) Platform.runLater(guiRoundStage::setBounds);
+        else if(messageID == 114 && guiPhase == GUIPhase.ROUND) Platform.runLater(guiRoundStage::setBounds);
     }
 
     public void playerChosenCard(String playerName, String cardName) {
@@ -188,7 +184,6 @@ public class GUIStagesManager extends Application {
         client.setupGUI();
         GUIEventsCommunication eventsCommunication = (GUIEventsCommunication) client.getEventsCommunication();
         eventsCommunication.setStagesManager(this);
-        eventsCommunication.setGuiIpStage(guiIpStage);
         eventsCommunication.setGuiLoginStage(guiLoginStage);
         eventsCommunication.setGuiPickCardStage(guiPickCardStage);
         eventsCommunication.setGuiRoundStage(guiRoundStage);
