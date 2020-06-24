@@ -43,7 +43,10 @@ public class SelectionWorkerManager extends MessageObservable {
             return;
         }
 
-        if(!worker.isAvailable()) notifyMessage(new MessageEvent(410, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+        if(!worker.isAvailable()) {
+            notifyMessage(new MessageEvent(410, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+            return;
+        }
 
         playersManager.setCurrentWorker(playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID));
         actionManager.transition();
