@@ -45,6 +45,7 @@ public class SelectionWorkerManager extends MessageObservable {
 
         if(!worker.isAvailable()) {
             notifyMessage(new MessageEvent(410, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));
+            actionManager.checkWinLose();
             return;
         }
 

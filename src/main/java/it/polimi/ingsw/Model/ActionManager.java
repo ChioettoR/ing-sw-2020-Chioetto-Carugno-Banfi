@@ -17,9 +17,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private AvailableActions availableActions;
     private int index;
     private ActionType lastAction;
-    private final ArrayList<Worker> savedWorkers = new ArrayList<>();
-    private final ArrayList<Tile> savedTiles = new ArrayList<>();
-    private final ArrayList<ArrayList<Integer>> savedLevels = new ArrayList<>();
+    private ArrayList<Tile> savedTiles = new ArrayList<>();
     private Timer undoTimer;
 
     /**
@@ -34,8 +32,6 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         notifyMessage(new MessageEvent(306, playersManager.getCurrentPlayer().getID()));
         sendActions();
     }
-
-
 
     private class AvailableActions {
         MoveAction moveAction;
@@ -279,40 +275,27 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
      * Saves the grid in the initial phase of the turn, used in case of multiple actions to delete
      */
     private void saveGrid() {
-
-        savedWorkers.clear();
-        savedTiles.clear();
-        savedLevels.clear();
-
-        for(Player p : playersManager.getPlayers())
-            for (Worker w : p.getWorkers()) {
-                savedWorkers.add(w);
-                savedTiles.add(w.getPosition());
-            }
-
-        for(Tile tile : Grid.getGrid().getTiles())
-            savedLevels.add(tile.getLevels());
+        savedTiles = new ArrayList<>(saveOldGrid());
     }
 
     /**
-     * Clears all the grid
+     * Reset the grid to the original state
      */
     private void resetGrid() {
 
-        for(int i=0; i<savedWorkers.size(); i++) {
-
-            Worker worker = savedWorkers.get(i);
-            Tile tile = savedTiles.get(i);
-
-            if(worker!=null)
-                worker.setPosition(tile);
-
-            if(tile!=null)
-                tile.setWorker(worker);
+        for(Tile t : Grid.getGrid().getTiles()) {
+            for(Tile newT : savedTiles) {
+                if(t.getX() == newT.getX() && t.getY() == newT.getY()) {
+                    t.setLevels(newT.getLevels());
+                    if(newT.getWorker()!=null) {
+                        Worker worker = playersManager.getWorkerWithID(newT.getWorker().getPlayerID(), newT.getWorker().getLocalID());
+                        t.setWorker(worker);
+                        worker.setPosition(t);
+                    }
+                    else t.setWorker(null);
+                }
+            }
         }
-
-        for(int i=0; i<savedLevels.size(); i++)
-            Grid.getGrid().getTiles().get(i).setLevels(savedLevels.get(i));
     }
 
     /**
@@ -352,7 +335,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     }
 
     /**
-     *  Used to check the loser
+     * Used to check the loser
      * @return true when a loser is selected, otherwise false
      * @throws IOException when socket closes
      */
@@ -569,15 +552,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
             resetGrid();
             sendChange(oldGrid);
             notifyMessage(new MessageEvent(301, playersManager.getCurrentPlayer().getID()));
-            if(!checkLose()) {
-                notifyMessage(new MessageEvent(104, playersManager.getCurrentPlayer().getID()));
-                stateManager.setGameState(GameState.SELECTING);
-            }
-            else {
-                if(!checkWin()) {
-                    notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
-                }
-            }
+            checkWinLose();
         }
         else {
             availableActions.addAvailableAction((UserAction) currentAction);
@@ -587,9 +562,20 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
         }
     }
 
-    private void checkSizeAndAddAction(ArrayList<Tile> availableTiles, Action currentAction){
-        if(availableTiles.size()!=0)
-            availableActions.addAvailableAction((UserAction) currentAction);
+    /**
+     * Checks if the player has lost and if there is a winner
+     * @throws IOException when socket closes
+     */
+    public void checkWinLose() throws IOException {
+        if(!checkLose()) {
+            notifyMessage(new MessageEvent(104, playersManager.getCurrentPlayer().getID()));
+            stateManager.setGameState(GameState.SELECTING);
+        }
+        else {
+            if(!checkWin()) {
+                notifyMessage(new MessageEvent(103, playersManager.getCurrentPlayer().getID()));
+            }
+        }
     }
 
     /**
@@ -611,7 +597,13 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private void userActionOptional(Action currentAction, ArrayList<Action> actionList) throws IOException {
         ArrayList<Tile> availableTiles = ((UserAction) currentAction).getAvailableTilesForAction(playersManager.getCurrentWorker());
 
-        checkSizeAndAddAction(availableTiles, currentAction);
+        if(availableTiles.size()!=0)
+            availableActions.addAvailableAction((UserAction) currentAction);
+        else {
+            index++;
+            sendActions();
+            return;
+        }
 
         index++;
 
