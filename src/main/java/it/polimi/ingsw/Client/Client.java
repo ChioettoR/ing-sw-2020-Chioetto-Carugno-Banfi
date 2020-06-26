@@ -59,11 +59,9 @@ public class Client implements ClientObserver, CountdownInterface {
 
     private synchronized boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
-            System.out.println("Ping received");
             int pingDelay = 10;
             if(pongCountdownStarted) pongTimer.cancel();
             update(new PongEvent());
-            System.out.println("PONG SENT");
             pongTimer = new Timer();
             CountdownTask pongTask = new CountdownTask(pingDelay, this);
             pongTimer.schedule(pongTask, 0, 1000);

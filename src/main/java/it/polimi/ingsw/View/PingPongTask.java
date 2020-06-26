@@ -22,7 +22,6 @@ public class PingPongTask extends java.util.TimerTask {
     public void run() {
         try {
             synchronized (this) {
-                System.out.println("PING SENT TO " + connection.toString());
                 connection.send(new PingEvent());
                 TimerTask countdownTask = new CountdownTask(time, connection);
                 pongCountdownTimer = new Timer();
@@ -33,8 +32,6 @@ public class PingPongTask extends java.util.TimerTask {
     }
 
     public synchronized void cancelCountdown() {
-        System.out.println("Cancelling pong countdown...");
         pongCountdownTimer.cancel();
-        System.out.println("Cancelled pong countdown");
     }
 }

@@ -15,7 +15,6 @@ public class CountdownTask extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println(time);
         if (time > 0) {
             time--;
         }

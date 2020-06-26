@@ -38,7 +38,6 @@ public class GUIPickCardStage {
             guiPickCardPhaseController.setStagesManager(stagesManager);
             guiPickCardPhaseController.setGuiCards(guiCards);
             this.guiPlayersManager = guiPlayersManager;
-            setDownPaneForDrag();
             setTextNames(guiPlayersManager.getNames());
             stage.setScene(new Scene(root, 600, 600));
             stage.setResizable(false);
@@ -103,6 +102,8 @@ public class GUIPickCardStage {
      * @param cards list of cards
      */
     public void sendDeck(ArrayList<CardSimplified> cards) {
+
+        setDownPaneForDrag();
 
         for (CardSimplified card : cards) guiCards.addDescription(card);
 
