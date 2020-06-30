@@ -114,11 +114,11 @@ public class CLIStdinReader {
         else if(isGridPosition(string))
             actionEvents(string);
 
+        else if(compareString(string, Input.INFO))
+            client.read(new MessageEvent(309));
+
         else if(string.length()==1 && !isNumeric(string) && isLetter(string.charAt(0)))
             client.update(new SelectionEvent(convertLetter(string.charAt(0))));
-
-        else if(string.length()==1 && compareString(string, Input.INFO))
-            client.read(new MessageEvent(309));
 
         else if(compareString(string, Input.PICK))
             client.update(new PickCardEvent(""));

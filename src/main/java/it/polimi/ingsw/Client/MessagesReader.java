@@ -141,11 +141,16 @@ public class MessagesReader {
                         break;
                     }
                     case (309) : {
-                        message = "If you want to select a card, write: pick 'CardYouWantToPick' " +
-                                "If you want to know the description of a card, write: info 'CardName'" +
-                                "If you want to pick the first player, write: 'NameOfThePlayer'" +
-                                "If you want to pick a color, write: select 'NameOfTheColor'" +
+                        message = "If you want to choose multiple cards, write: 'CardName, CardName, CardName'\n" +
+                                "If you want to select a card, write: pick 'CardYouWantToPick'\n" +
+                                "If you want to know the description of a card, write: info 'CardName'\n" +
+                                "If you want to pick the first player, write: 'NameOfThePlayer'\n" +
+                                "If you want to pick a color, write: select 'NameOfTheColor'\n" +
                                 "If you want position/build/move in a desired tile, write: 'XxY'";
+                        break;
+                    }
+                    case (310) : {
+                        message = "Write 'INFO' to know the available inputs";
                     }
                 }
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.Color;
 import it.polimi.ingsw.Client.EventsCommunication;
 import it.polimi.ingsw.Client.MessagesReader;
+import it.polimi.ingsw.Events.Server.MessageEvent;
 import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class CLIEventsCommunication implements EventsCommunication {
      */
     @Override
     public void endLogin(ArrayList<String> names) {
+        messagesReader.read(310);
         cliStdinReader.setLogin(false);
         for(String name : names) cliPlayersManager.addPlayer(name);
     }
