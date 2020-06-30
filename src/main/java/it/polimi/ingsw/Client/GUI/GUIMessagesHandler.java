@@ -31,5 +31,5 @@ public class GUIMessagesHandler implements MessagesHandler {
     }
 
     @Override
-    public void sendChooseMessage(String draw) { stagesManager.readDrawMessage(draw); }
+    public void sendChooseMessage(String draw) { stagesManager.readChooseCardMessage(draw); }
 }

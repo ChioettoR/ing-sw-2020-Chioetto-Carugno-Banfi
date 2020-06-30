@@ -389,7 +389,7 @@
             <Image url="@podium-characters-Zeus.png"/>
          </ImageView>
          <Button fx:id="closeInfoButton" layoutX="270.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity"
-                 mnemonicParsing="false" onAction="#returnToDraw" prefHeight="20.0" prefWidth="20.0"
+                 mnemonicParsing="false" onAction="#returnToPick" prefHeight="20.0" prefWidth="20.0"
                  styleClass="closeInfoButton" stylesheets="@stylePickCardPhase.css" text="Button">
             <cursor>
                <Cursor fx:constant="HAND"/>

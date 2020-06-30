@@ -87,6 +87,10 @@ public class Tile {
         levels.add(0);
     }
 
+    /**
+     * Simplifies the tile
+     * @return the tile simplified
+     */
     public TileSimplified simplify() {
         WorkerSimplified workerSimplified;
         if(worker==null)

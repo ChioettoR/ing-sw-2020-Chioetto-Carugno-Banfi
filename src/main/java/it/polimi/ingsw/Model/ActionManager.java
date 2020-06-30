@@ -21,7 +21,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     private Timer undoTimer;
 
     /**
-     *
+     * Invoked when countdown ends
      * @throws IOException when socket closes
      */
     @Override

@@ -17,6 +17,10 @@ public class ColorPoolManager extends ColorObservable {
         this.stateManager = stateManager;
     }
 
+    /**
+     * Invoked when the color phase begin
+     * @throws IOException when socket closes
+     */
     public void transition() throws IOException {
         playersManager.nextPlayer();
         stateManager.setGameState(GameState.COLORSELECTING);
@@ -30,6 +34,12 @@ public class ColorPoolManager extends ColorObservable {
         notify(new ColorSelectingEvent(colorsAvailable, playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * Invoked when someone selects the color
+     * @param playerID id of the player
+     * @param playerColor color of the player
+     * @throws IOException when socket closes
+     */
     public void colorSelection(int playerID, PlayerColor playerColor) throws IOException {
         if(!stateManager.checkPlayerID(playerID))
             return;
@@ -57,6 +67,10 @@ public class ColorPoolManager extends ColorObservable {
         }
     }
 
+    /**
+     * Invoked when everybody choose their color
+     * @throws IOException when socket closes
+     */
     public void allColorsSelected() throws IOException {
         playersManager.nextPlayer();
         notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));

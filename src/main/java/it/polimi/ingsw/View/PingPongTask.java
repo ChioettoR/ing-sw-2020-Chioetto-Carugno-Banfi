@@ -18,6 +18,9 @@ public class PingPongTask extends java.util.TimerTask {
         this.time = time;
     }
 
+    /**
+     * Sends the ping to the client
+     */
     @Override
     public void run() {
         try {
@@ -32,6 +35,9 @@ public class PingPongTask extends java.util.TimerTask {
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
+    /**
+     * Resets the countdown every time a pong is received
+     */
     public synchronized void cancelCountdown() {
         pongCountdownTimer.cancel();
     }

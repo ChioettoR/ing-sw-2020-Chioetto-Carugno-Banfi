@@ -139,6 +139,11 @@ public class CLIGridPrinter {
         }
     }
 
+    /**
+     * Prints the names of the players
+     * @param name string with name
+     * @param color color of that player
+     */
     private void printName(String name, Color color) {
         if(color==null) System.out.print("  "  + "───");
         else System.out.print("  " + color.escape() + "───" + Color.RESET);

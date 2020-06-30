@@ -22,15 +22,32 @@ public class CLIEventsCommunication implements EventsCommunication {
         this.cliStdinReader = cliStdinReader;
     }
 
+    /**
+     * Communicates the info about the lobby
+     * @param lobbyName name of the lobby
+     * @param lobbySize size of the current lobby
+     */
     @Override
     public void lobbyInfo(String lobbyName, int lobbySize) { messagesReader.lobbyInfo(lobbyName, lobbySize); }
 
+    /**
+     * Puts a player in a wait position before creating the game
+     * @param isWaiting boolean parameter for the wait
+     */
     @Override
     public void waiting(boolean isWaiting) { cliStdinReader.setWaiting(isWaiting); }
 
+    /**
+     * Sends the message to the reader
+     * @param messageID id of the current message
+     */
     @Override
     public void message(int messageID) { messagesReader.read(messageID); }
 
+    /**
+     * Communicates the end of the login phase
+     * @param names list of the players' names
+     */
     @Override
     public void endLogin(ArrayList<String> names) {
         cliStdinReader.setLogin(false);
@@ -57,6 +74,11 @@ public class CLIEventsCommunication implements EventsCommunication {
         cliDeck.createDeck(stringBuilders);
     }
 
+    /**
+     * Communicates the chosen card of the correct player
+     * @param playerName name of the player
+     * @param cardName name of the card
+     */
     @Override
     public void playerChosenCard(String playerName, String cardName) {
         cliPlayersManager.getPlayer(playerName).setCardName(cardName);

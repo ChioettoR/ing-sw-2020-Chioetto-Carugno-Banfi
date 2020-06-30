@@ -20,6 +20,10 @@ public class FirstPlayerManager extends FirstPlayerObservable {
         this.colorPoolManager = colorPoolManager;
     }
 
+    /**
+     * Sends to the challenger the choice of the 1st player to begin the game
+     * @throws IOException when socket closes
+     */
     public void transition() throws IOException {
         names = (ArrayList<String>) playersManager.getPlayers().stream().map(Player::getName).collect(Collectors.toList());
         notify(new FirstPlayerEvent(names, playersManager.getCurrentPlayer().getID()));
@@ -28,6 +32,12 @@ public class FirstPlayerManager extends FirstPlayerObservable {
         }
     }
 
+    /**
+     * Sets the first player
+     * @param playerID ID of the player
+     * @param firstPlayerName name of the first player
+     * @throws IOException when socket closes
+     */
     public void firstPlayerChosen(int playerID, String firstPlayerName) throws IOException {
 
         if (!stateManager.checkPlayerID(playerID))
@@ -48,6 +58,10 @@ public class FirstPlayerManager extends FirstPlayerObservable {
         notifyMessage(new MessageEvent(425, playersManager.getCurrentPlayer().getID()));
     }
 
+    /**
+     * Transition to the color choice phase
+     * @throws IOException
+     */
     public void firstPlayerSelected() throws IOException {
         colorPoolManager.transition();
     }

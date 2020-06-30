@@ -133,6 +133,11 @@ public class GUILoginPanelController {
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /**
+     * Checks if the string is a number
+     * @param strNum string to check
+     * @return true if is a number
+     */
     public boolean isNumeric(String strNum) {
         if (strNum == null) return false;
         return pattern.matcher(strNum).matches();

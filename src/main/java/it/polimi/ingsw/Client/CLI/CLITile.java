@@ -15,10 +15,16 @@ public class CLITile {
         this.y = y;
     }
 
+    /**
+     * Colors the tile
+     */
     void color() {
         setBorderColor(true);
     }
 
+    /**
+     * Resets the color of the tile
+     */
     void deColor() {
         setBorderColor(false);
     }

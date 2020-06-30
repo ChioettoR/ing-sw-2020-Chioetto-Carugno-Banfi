@@ -38,6 +38,11 @@ public class Server {
         return names;
     }
 
+    /**
+     * Adds the name to the list
+     * @param name name to add
+     * @return return true if the name wasn't in the list before, false otherwise
+     */
     public boolean addName(String name) {
         if(!names.contains(name)) {
             names.add(name);
@@ -46,6 +51,9 @@ public class Server {
         return false;
     }
 
+    /**
+     * Awakes the waiting connections
+     */
     public void awakeConnections() {
         ArrayList<Connection> waitingConnectionsCopy = new ArrayList<>(waitingConnections);
         for(Connection c : waitingConnectionsCopy) {
@@ -54,6 +62,10 @@ public class Server {
         }
     }
 
+    /**
+     * Puts a connection in wait
+     * @param connection wait connection
+     */
     public void sleepConnection(Connection connection) {
         waitingConnections.add(connection);
     }
@@ -78,16 +90,29 @@ public class Server {
         return lobbySize - acceptedConnections.size();
     }
 
+    /**
+     * Adds a new connection to the server
+     * @param c connection
+     */
     private synchronized void registerConnection(Connection c) {
         connections.add(c);
         System.out.println("New connection registered");
     }
 
+    /**
+     * Sends to all the connections an event
+     * @param serializable event
+     * @throws IOException when socket closes
+     */
     public synchronized void sendAll(Serializable serializable) throws IOException {
         for(Connection connection : acceptedConnections.values())
             connection.send(serializable);
     }
 
+    /**
+     * Deregisters the connection with a client
+     * @param c connection
+     */
     public synchronized void deregisterConnection(Connection c) {
         System.out.println("Deregister client...");
         if(c.isFirstPlayer()) {
@@ -102,6 +127,9 @@ public class Server {
         awakeConnections();
     }
 
+    /**
+     * Deregisters the connections with all the clients
+     */
     public synchronized  void deregisterAllConnections() {
         System.out.println("Deregister all clients...");
         for(Connection connection : connections) connection.closeConnection();
@@ -122,6 +150,10 @@ public class Server {
         }
     }
 
+    /**
+     * Sets up the whole game
+     * @throws IOException when socket closes
+     */
     private void setup() throws IOException {
 
         List<String> keys = new ArrayList<>(acceptedConnections.keySet());
@@ -131,10 +163,10 @@ public class Server {
         PositioningManager positioningManager = new PositioningManager(stateManager);
         ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
         FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
-        DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
+        PickCardManager pickCardManager = new PickCardManager(stateManager, firstPlayerManager);
         ActionManager actionManager = new ActionManager(stateManager);
         SelectionWorkerManager selectionWorkerManager = new SelectionWorkerManager(stateManager, actionManager);
-        Communication communication = new Communication(drawCardManager, positioningManager, selectionWorkerManager, actionManager, firstPlayerManager, colorPoolManager);
+        Communication communication = new Communication(pickCardManager, positioningManager, selectionWorkerManager, actionManager, firstPlayerManager, colorPoolManager);
         Controller controller = new Controller(communication);
 
         for(int i=0; i<lobbySize; i++) {
@@ -146,7 +178,7 @@ public class Server {
 
             PlayersManager.getPlayersManager().addObserver(remoteView);
             firstPlayerManager.addObserver(remoteView);
-            drawCardManager.addObserver(remoteView);
+            pickCardManager.addObserver(remoteView);
             positioningManager.addObserver(remoteView);
             colorPoolManager.addObserver(remoteView);
             selectionWorkerManager.addObserver(remoteView);
@@ -157,9 +189,16 @@ public class Server {
         sendAll(new MessageEvent(305));
         sendAll(new EndLoginEvent(getNames()));
         stateManager.setGameState(GameState.CHOOSING);
-        drawCardManager.transition();
+        pickCardManager.transition();
     }
 
+    /**
+     * Creates the lobby
+     * @param c connection
+     * @param name name of the creator
+     * @param lobbySize size of the lobby
+     * @throws IOException when socket closes
+     */
     public void lobby(Connection c, String name, int lobbySize) throws IOException {
         this.lobbySize = lobbySize;
         lobbyName = name;
@@ -172,6 +211,9 @@ public class Server {
         this.serverSocket = new ServerSocket(port);
     }
 
+    /**
+     * Runs the server
+     */
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
 

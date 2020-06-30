@@ -7,14 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class DrawCardManager extends CardObservable {
+public class PickCardManager extends CardObservable {
     private final PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final StateManager stateManager;
     private ArrayList<CardSimplified> pickedCards;
     private ArrayList<CardSimplified> remainingCards;
     private final FirstPlayerManager firstPlayerManager;
 
-    public DrawCardManager(StateManager stateManager, FirstPlayerManager firstPlayerManager) {
+    public PickCardManager(StateManager stateManager, FirstPlayerManager firstPlayerManager) {
         this.stateManager = stateManager;
         this.firstPlayerManager = firstPlayerManager;
     }
@@ -137,6 +137,11 @@ public class DrawCardManager extends CardObservable {
         return false;
     }
 
+    /**
+     * Checks if someone chooses the wrong cards
+     * @param cardName name of the player
+     * @throws IOException when socket closes
+     */
     private void checkWrongCard(String cardName) throws IOException {
         for (CardSimplified cardSimplified : pickedCards) {
             if (cardSimplified.getName().equalsIgnoreCase(cardName)) {

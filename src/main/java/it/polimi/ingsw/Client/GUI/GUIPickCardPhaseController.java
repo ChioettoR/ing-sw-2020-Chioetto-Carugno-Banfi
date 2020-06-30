@@ -482,15 +482,20 @@ public class GUIPickCardPhaseController {
         return dragStartingPlayer;
     }
 
+    /**
+     * Invoked when the info box is closed, returns the pick pane
+     */
     @FXML
-    void returnToDraw() {
+    void returnToPick() {
         infoPane.setDisable(true);
         infoPane.setVisible(false);
         drawPhasePane.setDisable(false);
         drawPhasePane.setVisible(true);
     }
 
-
+    /**
+     * Invoked to enable the infobox of the 1st card (2 players)
+     */
     @FXML
     void checkInfoDown2p1() {
         setInfoPane();
@@ -498,6 +503,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 2nd card (2 players)
+     */
     @FXML
     void checkInfoDown2p2() {
         setInfoPane();
@@ -505,6 +513,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 1st card (3 players)
+     */
     @FXML
     void checkInfoDown3p1() {
         setInfoPane();
@@ -512,6 +523,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 2nd card (3 players)
+     */
     @FXML
     void checkInfoDown3p2() {
         setInfoPane();
@@ -519,6 +533,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 3rd card (3 players)
+     */
     @FXML
     void checkInfoDown3p3() {
         setInfoPane();
@@ -526,6 +543,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 1st card (2 players)
+     */
     @FXML
     void checkInfoUp2p1() {
         setInfoPane();
@@ -533,6 +553,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 2nd card (2 players)
+     */
     @FXML
     void checkInfoUp2p2() {
         setInfoPane();
@@ -540,6 +563,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 1st card (3 players)
+     */
     @FXML
     void checkInfoUp3p1() {
         setInfoPane();
@@ -547,6 +573,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 2nd card (3 players)
+     */
     @FXML
     void checkInfoUp3p2() {
         setInfoPane();
@@ -554,6 +583,9 @@ public class GUIPickCardPhaseController {
         setInfo(godName);
     }
 
+    /**
+     * Invoked to enable the infobox of 3rd card (3 players)
+     */
     @FXML
     void checkInfoUp3p3() {
         setInfoPane();
@@ -585,7 +617,7 @@ public class GUIPickCardPhaseController {
     }
 
     /**
-     * Arrow to view the previous card
+     * Arrow to view the next card
      */
     @FXML
     void goNext() {
@@ -659,12 +691,20 @@ public class GUIPickCardPhaseController {
         infoPane.setVisible(true);
     }
 
+    /**
+     * Sets the information, the name, the image of the God into the infobox
+     * @param godName name of the god
+     */
     public void setInfo(String godName) {
         infoGodName.setText(godName);
         infoGodImage.setImage(guiCards.getSmallImage(godName));
         infoDescription.setText(guiCards.getDescription(godName));
     }
 
+    /**
+     * Sends the pick card event to the server
+     * @param cardName name of the card
+     */
     public void sendToStagesManager(String cardName) {
         stagesManager.send(new PickCardEvent(cardName));
     }
@@ -673,6 +713,9 @@ public class GUIPickCardPhaseController {
         for(CardSimplified c : cards) cardNames.add(c.getName());
     }
 
+    /**
+     * Sends the allplayers card event to the server
+     */
     public void sendToServer() {
         draw.setDisable(true);
         draw.setVisible(false);
@@ -682,6 +725,10 @@ public class GUIPickCardPhaseController {
         stagesManager.send(new AllPlayersCardsEvent(cardsToSend));
     }
 
+    /**
+     * Sends the firstplayerchosen event to the server
+     * @param playerName
+     */
     public void sendToStageTheFirstPlayer(String playerName) {
         stagesManager.send(new FirstPlayerChosenEvent(playerName));
     }

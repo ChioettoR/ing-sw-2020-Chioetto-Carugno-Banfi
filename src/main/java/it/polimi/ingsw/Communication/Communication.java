@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class Communication implements CommunicationInterface {
 
-    private final DrawCardManager drawCardManager;
+    private final PickCardManager pickCardManager;
     private final PositioningManager positioningManager;
     private final SelectionWorkerManager selectionWorkerManager;
     private final FirstPlayerManager firstPlayerManager;
     private final ActionManager actionManager;
     private final ColorPoolManager colorPoolManager;
 
-    public Communication(DrawCardManager drawCardManager, PositioningManager positioningManager, SelectionWorkerManager selectionWorkerManager, ActionManager actionManager, FirstPlayerManager firstPlayerManager, ColorPoolManager colorPoolManager) {
-        this.drawCardManager = drawCardManager;
+    public Communication(PickCardManager pickCardManager, PositioningManager positioningManager, SelectionWorkerManager selectionWorkerManager, ActionManager actionManager, FirstPlayerManager firstPlayerManager, ColorPoolManager colorPoolManager) {
+        this.pickCardManager = pickCardManager;
         this.positioningManager = positioningManager;
         this.selectionWorkerManager = selectionWorkerManager;
         this.actionManager = actionManager;
@@ -26,12 +26,12 @@ public class Communication implements CommunicationInterface {
 
     @Override
     public void allPlayersCards(int playerID, ArrayList<String> cards) throws IOException {
-        drawCardManager.allCardsChosen(playerID, cards);
+        pickCardManager.allCardsChosen(playerID, cards);
     }
 
     @Override
     public void pick(int playerID, String cardName) throws IOException {
-        drawCardManager.pick(playerID, cardName);
+        pickCardManager.pick(playerID, cardName);
     }
 
     @Override

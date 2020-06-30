@@ -57,6 +57,10 @@ public class Worker {
         return position;
     }
 
+    /**
+     * Simplifies the worker
+     * @return the worker simplified
+     */
     public WorkerSimplified simplify() {
         return new WorkerSimplified(PlayersManager.getPlayersManager().getPlayerWithID(playerID).getName(), localID);
     }

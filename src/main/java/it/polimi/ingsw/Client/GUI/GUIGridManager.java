@@ -22,6 +22,11 @@ public class GUIGridManager {
         this.guiRoundStage = guiRoundStage;
     }
 
+    /**
+     * Called when someone selects a tile
+     * @param x x coord. of the tile
+     * @param y x coord. of the tile
+     */
     public void gridPosition(int x, int y) {
         guiRoundStage.gridPosition(x, y);
     }
@@ -30,6 +35,12 @@ public class GUIGridManager {
         return guiRoundStage;
     }
 
+    /**
+     * Called when somebody tries to build into a tile with a certain level
+     * @param x x coord. of the tile
+     * @param y y coord. of the tile
+     * @param buildLevel level of the building
+     */
     public void gridBuild(int x, int y, int buildLevel) { guiRoundStage.gridBuild(x, y, buildLevel); }
 
     public GUIGrid getGrid() {
@@ -59,6 +70,13 @@ public class GUIGridManager {
         return guiWorker;
     }
 
+    /**
+     * Positions a worker into the selected tiles; if the worker doesn't exist, creates a new worker and positions that worker there
+     * @param playerName name of the player
+     * @param workerID id of the worker
+     * @param x x coord. of the tile
+     * @param y y coord. of the tile
+     */
     public void setWorker(String playerName, int workerID, int x, int y) {
         new Thread( () -> Platform.runLater( () -> {
             GUITile tile = grid.getTile(x, y);
@@ -82,6 +100,11 @@ public class GUIGridManager {
         workers.remove(g);
     }
 
+    /**
+     * Removes the worker from that position, if that worker exists
+     * @param x x coord. of the tile
+     * @param y y coord. of the tile
+     */
     public void setWorkerNull(int x, int y) {
         GUITile tile = grid.getTile(x, y);
         tile.setGUIWorker(null);
@@ -109,6 +132,9 @@ public class GUIGridManager {
             t.deColor();
     }
 
+    /**
+     * Creates the grid
+     */
     public void createGrid() {
         float gridSize = 280;
         int tileHeight = 10;

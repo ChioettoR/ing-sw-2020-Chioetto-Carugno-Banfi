@@ -90,6 +90,10 @@ public class CLIStdinReader {
         else unknownInput();
     }
 
+    /**
+     * Reads the cards needed for the match
+     * @param cards array containing the name of the chosen cards
+     */
     public void allCardsEvent(String[] cards) {
         ArrayList<String> allCardsList = new ArrayList<> (Arrays.asList(cards));
         allCardsList = (ArrayList<String>) allCardsList.stream().map(String::trim).collect(Collectors.toList());
@@ -112,6 +116,9 @@ public class CLIStdinReader {
 
         else if(string.length()==1 && !isNumeric(string) && isLetter(string.charAt(0)))
             client.update(new SelectionEvent(convertLetter(string.charAt(0))));
+
+        else if(string.length()==1 && compareString(string, Input.INFO))
+            client.read(new MessageEvent(309));
 
         else if(compareString(string, Input.PICK))
             client.update(new PickCardEvent(""));
@@ -168,6 +175,9 @@ public class CLIStdinReader {
         else client.update(new LoginNameEvent(strings[0]));
     }
 
+    /**
+     * When a player tries to write something but is waiting for other players to connect and can't do anything
+     */
     private void waitingEvents() {
         client.read(new MessageEvent(307));
     }
@@ -192,37 +202,70 @@ public class CLIStdinReader {
         }
     }
 
+    /**
+     * Reads the coordinates and the level for the build event
+     * @param gridString coordinates of the tile
+     * @param buildLevel level of the building
+     */
     private void buildEventWithLevel(String gridString, int buildLevel) {
         int[] coordinates = readGridString(gridString);
         client.update(new BuildDecisionEvent(coordinates[0], coordinates[1], buildLevel));
     }
 
+    /**
+     * Read the tile in a string and returns that tile in int numbers (x, y)
+     * @param gridString string that contains coordinates of the tile
+     * @return returns the coordinates of that tile in int numbers
+     */
     private int[] readGridString(String gridString) {
         int x = Integer.parseInt(String.valueOf(gridString.charAt(0)));
         int y = Integer.parseInt(String.valueOf(gridString.charAt(2)));
         return new int[] {x,y};
     }
 
+    /**
+     * When someone writes something that's not in the available inputs
+     */
     private void unknownInput() {
         client.read(new MessageEvent(412));
     }
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /**
+     * Checks if the string is a number or not
+     * @param strNum string to check
+     * @return returns true if is a number, false otherwise
+     */
     public boolean isNumeric(String strNum) {
         if (strNum == null)
             return false;
         return pattern.matcher(strNum).matches();
     }
 
+    /**
+     * Checks if the string contains the coordinates of a tile (x, y)
+     * @param string string to validate
+     * @return returns true if contained, false otherwise
+     */
     private boolean isGridPosition(String string) {
         return (string.length() == 3 && Character.isDigit(string.charAt(0)) && string.charAt(1) == 'x' && Character.isDigit(string.charAt(2)));
     }
 
+    /**
+     * Converts a letter (char) into an int number
+     * @param c char to convert
+     * @return returns the int number
+     */
     private int convertLetter(char c) {
         return Character.toUpperCase(c) - 64;
     }
 
+    /**
+     * Checks if the char is a letter from the alphabet or not
+     * @param c character to check
+     * @return returns true if the character belongs to the alphabet, false otherwise
+     */
     private boolean isLetter(char c) {
         return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';
     }
@@ -246,6 +289,11 @@ public class CLIStdinReader {
         return true;
     }
 
+    /**
+     * Checks if the input is an available color or not
+     * @param userInput string to check
+     * @return returns true if the color written is available, false otherwise
+     */
     private boolean compareStringWithColors(String userInput) {
         return cliColorDecoder.getPlayerColor(userInput) != null;
     }

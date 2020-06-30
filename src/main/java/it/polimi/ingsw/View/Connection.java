@@ -50,6 +50,7 @@ public class Connection implements Runnable, CountdownInterface {
         return name;
     }
 
+
     public Connection(Socket socket, Server server, boolean firstPlayer){
         this.socket = socket;
         this.server = server;
@@ -64,11 +65,19 @@ public class Connection implements Runnable, CountdownInterface {
         return active;
     }
 
+    /**
+     *
+     * @param serializable
+     * @throws IOException when socket closes
+     */
     public synchronized void send(Serializable serializable) throws IOException {
         oos.writeObject(serializable);
         oos.flush();
     }
 
+    /**
+     * Closes the connection
+     */
     public synchronized void closeConnection() {
         try{
             pingTimer.cancel();
@@ -80,6 +89,9 @@ public class Connection implements Runnable, CountdownInterface {
         active = false;
     }
 
+    /**
+     * Starts the connection
+     */
     @Override
     public void run() {
         try {
@@ -119,6 +131,11 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
+    /**
+     * Checks if the lobby is already being created
+     * @throws IOException when socket closes
+     * @throws ClassNotFoundException
+     */
     private void checkLobbyCreated() throws IOException, ClassNotFoundException {
 
         if (!server.isLobbyCreated() && !firstPlayer) {
@@ -134,6 +151,11 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
+    /**
+     * Checks if the lobby is full
+     * @return true if full, false otherwise
+     * @throws IOException when socket closes
+     */
     public boolean fullLobby() throws IOException {
         if (server.isFullLobby()) {
             send(new MessageEvent(414));
@@ -143,6 +165,11 @@ public class Connection implements Runnable, CountdownInterface {
         return false;
     }
 
+    /**
+     * Waits for the player's name
+     * @throws IOException when socket closes
+     * @throws ClassNotFoundException
+     */
     private void waitName() throws IOException, ClassNotFoundException {
 
         boolean validName = false;
@@ -168,6 +195,12 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
+    /**
+     * Waits that the player chooses the size of the lobby
+     * @return lobbySize
+     * @throws IOException when socket closes
+     * @throws ClassNotFoundException
+     */
     private int waitLobbySize() throws IOException, ClassNotFoundException {
 
         int lobbySize = 0;
@@ -192,6 +225,11 @@ public class Connection implements Runnable, CountdownInterface {
         return lobbySize;
     }
 
+    /**
+     * Waits for the input from the client
+     * @throws IOException when socket closes
+     * @throws ClassNotFoundException
+     */
     private void waitInput() throws IOException, ClassNotFoundException {
 
         while(isActive()) {
@@ -209,6 +247,11 @@ public class Connection implements Runnable, CountdownInterface {
         }
     }
 
+    /**
+     * Receives and checks the pong from the client, checking if the connection in still active or not
+     * @param serializable incoming event
+     * @return true if the connection is active, false otherwise
+     */
     private boolean checkPong(Serializable serializable) {
         if(serializable instanceof PongEvent) {
             pingTask.cancelCountdown();
@@ -218,6 +261,9 @@ public class Connection implements Runnable, CountdownInterface {
         return false;
     }
 
+    /**
+     * Starts the ping to the clients
+     */
     public void startPing() {
         int pongDelay = 4;
         int pingDelay = 5;
@@ -226,6 +272,9 @@ public class Connection implements Runnable, CountdownInterface {
         pingTimer.schedule(pingTask, 0, pingDelay * 1000);
     }
 
+    /**
+     * Invoked when the countdown between the ping and the pong expires
+     */
     @Override
     public void countdownEnded() {
         System.err.println("CLIENT " + name + " UNREACHABLE");

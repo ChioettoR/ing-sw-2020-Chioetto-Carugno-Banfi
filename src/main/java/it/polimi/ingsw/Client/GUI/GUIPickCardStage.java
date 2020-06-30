@@ -50,6 +50,10 @@ public class GUIPickCardStage {
         return guiCards;
     }
 
+    /**
+     * Sets the message into the message box
+     * @param message string
+     */
     public void readMessage(String message) {
         guiPickCardPhaseController.getMiddlePane().setVisible(true);
         guiPickCardPhaseController.getErrorPane().setVisible(false);
@@ -57,6 +61,10 @@ public class GUIPickCardStage {
         guiPickCardPhaseController.getMessageText().setText(message);
     }
 
+    /**
+     * Sets the request into the message box
+     * @param request string
+     */
     public void readRequest(String request) {
         guiPickCardPhaseController.getMiddlePane().setVisible(true);
         guiPickCardPhaseController.getErrorPane().setVisible(false);
@@ -64,6 +72,10 @@ public class GUIPickCardStage {
         guiPickCardPhaseController.getMessageText().setText(request);
     }
 
+    /**
+     * Sets the error into the message box
+     * @param error string
+     */
     public void readError(String error) {
         guiPickCardPhaseController.getMiddlePane().setVisible(true);
         guiPickCardPhaseController.getErrorPane().setVisible(true);
@@ -90,11 +102,15 @@ public class GUIPickCardStage {
         }
     }
 
-    public void draw(String draw) {
+    /**
+     * Shows the god cards pane to the first player
+     * @param choose message with the number of cards to choose
+     */
+    public void showFullDeck(String choose) {
         guiPickCardPhaseController.getUpPane().setVisible(true);
         guiPickCardPhaseController.getDraw().setVisible(true);
         guiPickCardPhaseController.getMiddlePane().setVisible(true);
-        guiPickCardPhaseController.getMessageText().setText(draw);
+        guiPickCardPhaseController.getMessageText().setText(choose);
     }
 
     /**
@@ -366,6 +382,9 @@ public class GUIPickCardStage {
         });
     }
 
+    /**
+     * Invoked when the first player sends the wrong cards to the others
+     */
     public void showAgain() {
         guiPickCardPhaseController.getDraw().setDisable(false);
         guiPickCardPhaseController.getDraw().setVisible(true);

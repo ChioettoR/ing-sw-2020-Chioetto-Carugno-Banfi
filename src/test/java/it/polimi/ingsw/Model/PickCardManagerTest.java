@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DrawCardManagerTest implements ServerObserver {
+public class PickCardManagerTest implements ServerObserver {
     private final Grid grid = Grid.getGrid();
     private final PlayersManager playersManager = PlayersManager.getPlayersManager();
     private final Deck deck = Deck.getDeck();
@@ -21,7 +21,7 @@ public class DrawCardManagerTest implements ServerObserver {
     private final StateManager stateManager = new StateManager();
     private final ColorPoolManager colorPoolManager = new ColorPoolManager(stateManager);
     private final FirstPlayerManager firstPlayerManager = new FirstPlayerManager(stateManager, colorPoolManager);
-    private final DrawCardManager drawCardManager = new DrawCardManager(stateManager, firstPlayerManager);
+    private final PickCardManager pickCardManager = new PickCardManager(stateManager, firstPlayerManager);
     private int updateCounter;
     private String cardName1;
     private String cardName2;
@@ -33,7 +33,7 @@ public class DrawCardManagerTest implements ServerObserver {
         playersManager.addPlayer(player);
         playersManager.addPlayer(player1);
         playersManager.addPlayer(player2);
-        drawCardManager.addObserver(this);
+        pickCardManager.addObserver(this);
         stateManager.addObserver(this);
         stateManager.setGameState(GameState.CHOOSING);
         drawCardTest();
@@ -41,7 +41,7 @@ public class DrawCardManagerTest implements ServerObserver {
 
     @Test
     void drawCardTest() throws IOException {
-        drawCardManager.transition();
+        pickCardManager.transition();
     }
 
     @AfterEach
@@ -75,7 +75,7 @@ public class DrawCardManagerTest implements ServerObserver {
             cardsNames.add(cardName2);
             cardsNames.add(cardName3);
             updateCounter++;
-            drawCardManager.allCardsChosen(0, cardsNames);
+            pickCardManager.allCardsChosen(0, cardsNames);
         }
 
         else if(updateCounter==1) {
@@ -93,7 +93,7 @@ public class DrawCardManagerTest implements ServerObserver {
             assertEquals(cardsExpected.size(), cardReceived.size());
             assertTrue(cardsExpected.containsAll(cardReceived));
             updateCounter++;
-            drawCardManager.pick(1, cardName1);
+            pickCardManager.pick(1, cardName1);
         }
 
         else if(updateCounter==2) {
@@ -136,7 +136,7 @@ public class DrawCardManagerTest implements ServerObserver {
 
         else if(updateCounter==5) {
             updateCounter++;
-            drawCardManager.pick(2, cardName2);
+            pickCardManager.pick(2, cardName2);
         }
 
         else if(updateCounter==6) {

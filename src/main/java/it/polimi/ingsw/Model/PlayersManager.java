@@ -27,6 +27,9 @@ public class PlayersManager extends MessageObservable {
         return  playersManager;
     }
 
+    /**
+     * Resets the players
+     */
     public void reset() {
         idManager = new IDManager();
         players.clear();
@@ -49,6 +52,10 @@ public class PlayersManager extends MessageObservable {
         this.playerWinnerID = playerWinnerID;
     }
 
+    /**
+     * Adds a player to the players
+     * @param player player to add
+     */
     public void addPlayer(Player player) {
         if(getPlayersNumber()==0) {
             currentPlayerIndex = 0;
@@ -113,6 +120,9 @@ public class PlayersManager extends MessageObservable {
         }
     }
 
+    /**
+     * Deletes the current player
+     */
     public void deleteCurrentPlayer() {
         deletePlayer(getCurrentPlayer());
     }
@@ -129,6 +139,10 @@ public class PlayersManager extends MessageObservable {
         return players.get(currentPlayerIndex);
     }
 
+    /**
+     * Changes the player to the next one
+     * @return returns the current player after that
+     */
     public Player nextPlayer() {
         if(getPlayersNumber()==0) {
             System.out.println("There are no players left in the game");
@@ -228,10 +242,17 @@ public class PlayersManager extends MessageObservable {
         return null;
     }
 
+    /**
+     * Sets the current player as a winner
+     */
     public void winCurrentPlayer() {
         winPlayer(getCurrentPlayer());
     }
 
+    /**
+     * Sets the player as a winner
+     * @param player winner
+     */
     public void winPlayer(Player player) {
         playerWinnerID = player.getID();
     }

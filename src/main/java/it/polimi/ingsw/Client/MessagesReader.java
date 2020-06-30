@@ -8,6 +8,10 @@ public class MessagesReader {
         this.messagesHandler = messagesHandler;
     }
 
+    /**
+     * Reads the message
+     * @param messageID ID of the message
+     */
     public void read(int messageID) {
         int firstDigit = firstDigit(messageID);
         String message = "";
@@ -135,6 +139,13 @@ public class MessagesReader {
                     case (308) : {
                         message = "YOU LOSE!";
                         break;
+                    }
+                    case (309) : {
+                        message = "If you want to select a card, write: pick 'CardYouWantToPick' " +
+                                "If you want to know the description of a card, write: info 'CardName'" +
+                                "If you want to pick the first player, write: 'NameOfThePlayer'" +
+                                "If you want to pick a color, write: select 'NameOfTheColor'" +
+                                "If you want position/build/move in a desired tile, write: 'XxY'";
                     }
                 }
 
@@ -267,8 +278,18 @@ public class MessagesReader {
         }
     }
 
+    /**
+     * Handles the info of the lobby
+     * @param lobbyName name of the lobby
+     * @param lobbySize size of the lobby
+     */
     public void lobbyInfo(String lobbyName, int lobbySize) { messagesHandler.sendLobbyInfo(lobbyName, lobbySize); }
 
+    /**
+     * Returns the first digit of the number
+     * @param n number to analyze
+     * @return returns the first digit
+     */
     private int firstDigit(int n) {
         while (n >= 10) n /= 10;
         return n;

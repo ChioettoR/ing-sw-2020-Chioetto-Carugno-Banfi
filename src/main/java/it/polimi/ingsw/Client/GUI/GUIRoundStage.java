@@ -70,6 +70,10 @@ public class GUIRoundStage {
         return stagesManager;
     }
 
+    /**
+     * Sets the borders of the windows and shows the scene
+     * @param stage stage
+     */
     public void start(Stage stage) {
 
         stage.setWidth(675);
@@ -82,18 +86,33 @@ public class GUIRoundStage {
         stage.show();
     }
 
+    /**
+     * Changes the grid cursor if you go over a tile
+     */
     public void changeGridCursor() {
         scene.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Changes the grid cursor if you go over a worker
+     */
     public void changeWorkerCursor() {
         scene.setCursor(Cursor.CROSSHAIR);
     }
 
+    /**
+     * Resets the cursor
+     */
     public void resetCursor() {
         scene.setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Sends to the server the buildDecision event
+     * @param x x coord. of the tile
+     * @param y y coord. of the tile
+     * @param buildLevel level of the building
+     */
     public void gridBuild(int x, int y, int buildLevel) {
         stagesManager.send(new BuildDecisionEvent(x, y, buildLevel));
     }
@@ -119,12 +138,20 @@ public class GUIRoundStage {
         }
     }
 
+    /**
+     * Sets the message into the message box
+     * @param message string
+     */
     public void readMessage(String message) {
         guiRoundController.getMessageText().setVisible(true);
         guiRoundController.getMessageText().setText(message);
         guiRoundController.getErrorText().setVisible(false);
     }
 
+    /**
+     * Sets the error into the message box
+     * @param error string
+     */
     public void readError(String error) {
         guiRoundController.getErrorText().setVisible(true);
         guiRoundController.getErrorText().setText(error);
@@ -209,6 +236,10 @@ public class GUIRoundStage {
         scene = new Scene(root, WIDTH, HEIGHT);
     }
 
+    /**
+     * Creates the camera of view
+     * @return the camera of view
+     */
     private PerspectiveCamera createCamera() {
         int cameraHeight = -500;
         int cameraDepth = -700;
@@ -254,6 +285,10 @@ public class GUIRoundStage {
         gridRotation.start();
     }
 
+    /**
+     * Handles the rotation and zoom of the grid
+     * @param stage stage
+     */
     private void eventHandler(Stage stage) {
 
         stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
@@ -274,6 +309,9 @@ public class GUIRoundStage {
         });
     }
 
+    /**
+     *Makes the actions buttons invisible
+     */
     public void resetButtons() {
         guiRoundController.getLeftButton().setDisable(true);
         guiRoundController.getLeftButton().setVisible(false);
@@ -283,6 +321,11 @@ public class GUIRoundStage {
         guiRoundController.getCenterButton().setVisible(false);
     }
 
+    /**
+     * Activates the center button
+     * @param actionType name of the action to display on the button
+     * @param onlyCenter true if you want to show only the center button
+     */
     private void activeButtonCenter(ActionType actionType, boolean onlyCenter) {
         if(onlyCenter) {
             guiRoundController.getLeftButton().setDisable(true);
@@ -294,12 +337,14 @@ public class GUIRoundStage {
         guiRoundController.getCenterButton().setVisible(true);
         guiRoundController.getCenterButton().getStylesheets().clear();
         guiRoundController.getCenterButton().getStylesheets().add(getStyle(actionType));
-        guiRoundController.getCenterButton().setOnAction(event -> sendActionToClient(actionType.toString()));
+        guiRoundController.getCenterButton().setOnAction(event -> sendActionToServer(actionType.toString()));
     }
 
+    /**
+     * Shows the available actions
+     * @param actions list of actions available
+     */
     public void showActions(ArrayList<String> actions) {
-//        buildingsController.getMessageText().setText("");
-//        buildingsController.getErrorText().setText("");
         ArrayList<ActionType> actionTypes = new ArrayList<>();
         for(String action : actions) actionTypes.add(ActionType.valueOf(action));
         if(actionTypes.size()==1) activeButtonCenter(actionTypes.get(0), true);
@@ -310,6 +355,12 @@ public class GUIRoundStage {
         }
     }
 
+    /**
+     * Activates the border buttons
+     * @param actionTypeLeft name of the action to display on the left
+     * @param actionTypeRight name of the action to display on the right
+     * @param onlyBorders true if you want to show only the border buttons
+     */
     private void activeBorderButtons(ActionType actionTypeLeft, ActionType actionTypeRight, boolean onlyBorders) {
         int buttonTranslation = 50;
         guiRoundController.getLeftButton().setDisable(false);
@@ -318,10 +369,10 @@ public class GUIRoundStage {
         guiRoundController.getRightButton().setVisible(true);
         guiRoundController.getRightButton().getStylesheets().clear();
         guiRoundController.getRightButton().getStylesheets().add(getStyle(actionTypeRight));
-        guiRoundController.getRightButton().setOnAction(event -> sendActionToClient(actionTypeRight.toString()));
+        guiRoundController.getRightButton().setOnAction(event -> sendActionToServer(actionTypeRight.toString()));
         guiRoundController.getLeftButton().getStylesheets().clear();
         guiRoundController.getLeftButton().getStylesheets().add(getStyle(actionTypeLeft));
-        guiRoundController.getLeftButton().setOnAction(event -> sendActionToClient(actionTypeLeft.toString()));
+        guiRoundController.getLeftButton().setOnAction(event -> sendActionToServer(actionTypeLeft.toString()));
         if(onlyBorders) {
             guiRoundController.getCenterButton().setDisable(true);
             guiRoundController.getCenterButton().setVisible(false);
@@ -340,7 +391,11 @@ public class GUIRoundStage {
         }
     }
 
-    public void sendActionToClient(String action) {
+    /**
+     * Sends the actionSelectionEvent to the server
+     * @param action action to send
+     */
+    public void sendActionToServer(String action) {
         guiRoundController.getCenterButton().setDisable(true);
         guiRoundController.getCenterButton().setVisible(false);
         guiRoundController.getLeftButton().setDisable(true);
@@ -350,6 +405,9 @@ public class GUIRoundStage {
         stagesManager.send(new ActionSelectEvent(action));
     }
 
+    /**
+     * Adds the css files to the button
+     */
     private void initializeButtonsStyle() {
         buttonsStyle.put(ActionType.MOVE,"styleButtonMove.css");
         buttonsStyle.put(ActionType.BUILD,"styleButtonBuild.css");
@@ -417,6 +475,9 @@ public class GUIRoundStage {
         }
     }
 
+    /**
+     * Makes all the three cards from the round stage visible
+     */
     private void setVisibleAll() {
         setVisibleTwo();
         guiRoundController.getImageRound3().setVisible(true);
@@ -426,6 +487,9 @@ public class GUIRoundStage {
         guiRoundController.getButtonInfo3().setVisible(true);
     }
 
+    /**
+     * Makes only two cards from the round stage visible
+     */
     private void setVisibleTwo() {
         guiRoundController.getRightPane().setVisible(true);
         guiRoundController.getBorderPaneCards().setVisible(true);
@@ -444,6 +508,10 @@ public class GUIRoundStage {
         guiRoundController.getButtonInfo2().setVisible(true);
     }
 
+    /**
+     * Sets the infobox for the card with the current cardName
+     * @param cardName name of the card
+     */
     private void setInfo(String cardName) {
         guiRoundController.getRightPane().setVisible(false);
         guiRoundController.getRightPane().setDisable(true);
@@ -454,12 +522,20 @@ public class GUIRoundStage {
         guiRoundController.getInfoDescription().setText(guiCards.getDescription(cardName));
     }
 
+    /**
+     * Invoked when somebody clicks "X" to close the infobox
+     */
     private void closeInfo() {
         guiRoundController.getRightPane().setVisible(true);
         guiRoundController.getRightPane().setDisable(false);
         guiRoundController.getInfoStackPane().setVisible(false);
     }
 
+    /**
+     * Method to set the scene for the stage
+     * @param stage round stage
+     * @param stagesManager gui stagemanager
+     */
     public void setUp(Stage stage, GUIStagesManager stagesManager) {
         this.stagesManager = stagesManager;
 
@@ -548,12 +624,19 @@ public class GUIRoundStage {
         }
     }
 
+    /**
+     * Sends the pickColorEvent to the server
+     * @param colorName name of the color
+     */
     public void sendToStagesManager(String colorName) {
         stagesManager.send(new PickColorEvent(guiColorDecoder.getPlayerColor(colorName)));
         guiRoundController.getThreeWorkersPane().setVisible(false);
         guiRoundController.getTwoWorkersPane().setVisible(false);
     }
 
+    /**
+     * Makes the panes click-through
+     */
     public void setBounds() {
         guiRoundController.getTwoWorkersPane().setPickOnBounds(false);
         guiRoundController.getThreeWorkersPane().setPickOnBounds(false);

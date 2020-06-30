@@ -35,6 +35,9 @@ public class GUIIpController {
         this.stagesManager = stagesManager;
     }
 
+    /**
+     * Checks if the written port is a number
+     */
     @FXML
     void checkPort() {
 
@@ -48,6 +51,9 @@ public class GUIIpController {
         }
     }
 
+    /**
+     * Starts the login stage
+     */
     @FXML
     void startLoginStage() throws Exception {
         String ip = serverIPTextField.getText();
@@ -58,6 +64,9 @@ public class GUIIpController {
         }
     }
 
+    /**
+     * Initializes the stage setting the FONT
+     */
     public void initialize() {
         final Font minecraft = Font.loadFont(getClass().getResourceAsStream("/Login/Minecraft.ttf"), 20);
         serverIPText.setFont(minecraft);
@@ -68,6 +77,11 @@ public class GUIIpController {
 
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    /**
+     * Checks if the string is numeric
+     * @param strNum string to check
+     * @return true if is a number
+     */
     public boolean isNumeric(String strNum) {
         if (strNum == null)
             return false;

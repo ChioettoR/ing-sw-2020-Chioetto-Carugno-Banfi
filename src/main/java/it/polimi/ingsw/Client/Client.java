@@ -41,6 +41,9 @@ public class Client implements ClientObserver, CountdownInterface {
         return eventsCommunication;
     }
 
+    /**
+     * Closes the connection
+     */
     public void closeConnection() {
         try{
             if(pongTimer!=null) pongTimer.cancel();
@@ -53,10 +56,19 @@ public class Client implements ClientObserver, CountdownInterface {
         catch (IOException e) { System.err.println(e.getMessage()); }
     }
 
+    /**
+     * Reads an event from the server
+     * @param serializable event from the server
+     */
     public synchronized void read(Serializable serializable) {
         if(!checkPing(serializable)) eventsReader.read(serializable);
     }
 
+    /**
+     * Checks if the event received is a ping
+     * @param serializable event from the server
+     * @return return true if is a ping
+     */
     private synchronized boolean checkPing(Serializable serializable) {
         if(serializable instanceof PingEvent) {
             int pingDelay = 10;
@@ -71,6 +83,10 @@ public class Client implements ClientObserver, CountdownInterface {
         return false;
     }
 
+    /**
+     * Sends the events to the server
+     * @param event event to send to the server
+     */
     @Override
     public void update(ClientEvent event) {
 
@@ -81,6 +97,10 @@ public class Client implements ClientObserver, CountdownInterface {
         }
     }
 
+    /**
+     * Starts the Client
+     * @throws IOException when server is unavailable
+     */
     public void run() throws IOException {
         connect();
         System.out.println("Connection established");
@@ -108,6 +128,10 @@ public class Client implements ClientObserver, CountdownInterface {
         messagesRead.start();
     }
 
+    /**
+     * Runs the CLI
+     * @throws IOException when socket closes
+     */
     public void runCLI() throws IOException {
         cliStdinReader = new CLIStdinReader(this);
         eventsCommunication = new CLIEventsCommunication(cliStdinReader);
@@ -116,11 +140,18 @@ public class Client implements ClientObserver, CountdownInterface {
         cliStdinReader.run();
     }
 
+    /**
+     * Setups the GUI
+     */
     public void setupGUI() {
         eventsCommunication = new GUIEventsCommunication();
         eventsReader = new EventsReader(eventsCommunication);
     }
 
+    /**
+     * Connects to the server
+     * @throws IOException when server unavailable
+     */
     private void connect() throws IOException {
         InetSocketAddress s = new InetSocketAddress(ip, port);
         int connectionTimeout = 3000;
@@ -130,6 +161,9 @@ public class Client implements ClientObserver, CountdownInterface {
         ois = new ObjectInputStream(socket.getInputStream());
     }
 
+    /**
+     * Called when the Ping-timer ends
+     */
     @Override
     public void countdownEnded() {
         System.err.println("Server is unreachable");

@@ -45,11 +45,17 @@ public class GUITile {
         return tileMeshAvailable;
     }
 
+    /**
+     * Colors the tile
+     */
     public void highLight() {
         transparentMaterial.setDiffuseColor(Color.web("#20d63299"));
         tileMeshAvailable.setMaterial(transparentMaterial);
     }
 
+    /**
+     * Resets the color of the tile
+     */
     public void deColor() {
         transparentMaterial.setDiffuseColor(Color.TRANSPARENT);
         tileMeshAvailable.setMaterial(transparentMaterial);

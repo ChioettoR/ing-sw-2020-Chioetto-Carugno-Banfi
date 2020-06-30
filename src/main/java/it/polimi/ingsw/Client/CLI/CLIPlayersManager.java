@@ -23,6 +23,10 @@ public class CLIPlayersManager {
         return names;
     }
 
+    /**
+     * Gets the strings to display in the CLI (Name of the player + Name of the card)
+     * @return return the strings to display
+     */
     public ArrayList<String> getDisplayStrings() {
         ArrayList<String> displayStrings = new ArrayList<>();
         for(CLIPlayer p : cliPlayers) {
@@ -36,6 +40,10 @@ public class CLIPlayersManager {
         return displayStrings;
     }
 
+    /**
+     * Gets the list of the available colors to use
+     * @return returns the available list
+     */
     public ArrayList<Color> getColors() {
         ArrayList<Color> colors = new ArrayList<>();
         for(CLIPlayer p : cliPlayers) colors.add(p.getColor());
