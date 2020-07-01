@@ -20,8 +20,11 @@ public class CardObservable extends MessageObservable {
         }
     }
 
-    //TODO : javadoc
-
+    /**
+     * This is a notify for the client of the fullDeck event
+     * @param fullDeckEvent event notified
+     * @throws IOException when socket closes
+     */
     public void notifyFullDeck(FullDeckEvent fullDeckEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {

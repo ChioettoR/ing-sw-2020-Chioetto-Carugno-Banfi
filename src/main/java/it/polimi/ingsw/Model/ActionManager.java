@@ -256,7 +256,7 @@ public class ActionManager extends ActionObservable implements CountdownInterfac
     }
 
     /**
-     * Saves the all grid in an ArrayList<Tile> before doing an action and returns it
+     * Saves the all grid in an ArrayList of tiles before doing an action and returns it
      * @return the grid saved
      */
     private ArrayList<Tile> saveOldGrid() {

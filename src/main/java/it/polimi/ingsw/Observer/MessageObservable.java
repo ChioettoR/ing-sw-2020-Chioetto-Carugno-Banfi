@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class MessageObservable{
     protected final ArrayList<ServerObserver> observers = new ArrayList<>();
 
+    /**
+     * Adds the observer
+     * @param observer new observer
+     */
     public void addObserver(ServerObserver observer){
         synchronized (observers) {
             observers.add(observer);

@@ -7,8 +7,11 @@ import java.io.IOException;
 
 public class ColorObservable extends MessageObservable {
 
-    //TODO : javadoc
-
+    /**
+     * Notifies when selecting a color
+     * @param colorSelectingEvent event to notify
+     * @throws IOException when socket closes
+     */
     public void notify(ColorSelectingEvent colorSelectingEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
@@ -17,8 +20,11 @@ public class ColorObservable extends MessageObservable {
         }
     }
 
-    //TODO : javadoc
-
+    /**
+     * Notifies when choosing a color
+     * @param playerChosenColorEvent event to notify
+     * @throws IOException when socket closes
+     */
     public void notify(PlayerChosenColorEvent playerChosenColorEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {

@@ -6,8 +6,11 @@ import java.io.IOException;
 
 public class FirstPlayerObservable extends MessageObservable {
 
-    //TODO: javadoc
-
+    /**
+     * Notifies the firstPlayer event
+     * @param firstPlayerEvent event to notify
+     * @throws IOException when socket closes
+     */
     public void notify(FirstPlayerEvent firstPlayerEvent) throws IOException {
         synchronized (observers) {
             for (ServerObserver observer : observers) {
