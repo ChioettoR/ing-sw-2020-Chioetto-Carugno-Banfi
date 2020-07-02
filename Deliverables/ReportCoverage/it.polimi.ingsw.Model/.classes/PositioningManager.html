@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PositioningManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PositioningManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PositioningManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89,1%
+  </span>
+  <span class="absValue">
+    (41/ 46)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Events.Server.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.Observer.ChangeObservable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class PositioningManager extends ChangeObservable {
+<b class="fc"><i>10</i>&nbsp;    private final PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<i>11</i>&nbsp;    private final StateManager stateManager;
+<i>12</i>&nbsp;    private int currentWorkersNumber;
+<i>13</i>&nbsp;
+<b class="fc"><i>14</i>&nbsp;    public PositioningManager(StateManager stateManager) {</b>
+<b class="fc"><i>15</i>&nbsp;        this.stateManager = stateManager;</b>
+<b class="fc"><i>16</i>&nbsp;    }</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * This method allows the player to position his workers
+<i>20</i>&nbsp;     * @param playerID id of the player
+<i>21</i>&nbsp;     * @param x X axis of the grid
+<i>22</i>&nbsp;     * @param y Y axis of the grid
+<i>23</i>&nbsp;     * @throws IOException when socket closes
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    public void positioning(int playerID, int x, int y) throws IOException {
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;        if(!stateManager.checkPlayerID(playerID))</b>
+<b class="nc"><i>28</i>&nbsp;            return;</b>
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;        if(!stateManager.checkState(GameState.POSITIONING))</b>
+<b class="nc"><i>31</i>&nbsp;            return;</b>
+<i>32</i>&nbsp;
+<b class="fc"><i>33</i>&nbsp;        int totalWorkersNumber = 2;</b>
+<b class="fc"><i>34</i>&nbsp;        if(currentWorkersNumber &lt; playersManager.getPlayersNumber()* totalWorkersNumber) {</b>
+<i>35</i>&nbsp;
+<b class="fc"><i>36</i>&nbsp;            boolean wrongTile = checkWrongTile(x,y);</b>
+<b class="fc"><i>37</i>&nbsp;            if(wrongTile) return;</b>
+<i>38</i>&nbsp;
+<b class="fc"><i>39</i>&nbsp;            positionWorker(x,y);</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;            //If all players have finished positioning
+<b class="fc"><i>42</i>&nbsp;            if(currentWorkersNumber == playersManager.getPlayersNumber()* totalWorkersNumber) phaseFinishedForAllPlayers();</b>
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;                //If you have finished positioning
+<b class="fc"><i>45</i>&nbsp;            else if(currentWorkersNumber % totalWorkersNumber ==0) phaseFinished();</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;                //If you have positioned the first worker only
+<b class="fc"><i>48</i>&nbsp;            else notifyMessage(new MessageEvent(109, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<i>49</i>&nbsp;        }
+<b class="fc"><i>50</i>&nbsp;    }</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    /**
+<i>53</i>&nbsp;     * Invoked when Position Phase ends, prepares the grid and the players to the game
+<i>54</i>&nbsp;     * @throws IOException when socket closes
+<i>55</i>&nbsp;     */
+<i>56</i>&nbsp;    private void phaseFinishedForAllPlayers() throws IOException {
+<b class="fc"><i>57</i>&nbsp;        stateManager.setGameState(GameState.SELECTING);</b>
+<b class="fc"><i>58</i>&nbsp;        playersManager.nextPlayerAndStartRound();</b>
+<b class="fc"><i>59</i>&nbsp;        for(Player p : playersManager.getNextPlayers())</b>
+<b class="fc"><i>60</i>&nbsp;            notifyMessage(new MessageEvent(115, p.getID()));</b>
+<b class="fc"><i>61</i>&nbsp;        notifyMessage(new MessageEvent(103, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>62</i>&nbsp;    }</b>
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * Invoked when only a player finished positioning
+<i>66</i>&nbsp;     * @throws IOException when socket closes
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    private void phaseFinished() throws IOException {
+<b class="fc"><i>69</i>&nbsp;        playersManager.nextPlayer();</b>
+<b class="fc"><i>70</i>&nbsp;        for(Player p : playersManager.getNextPlayers())</b>
+<b class="fc"><i>71</i>&nbsp;            notifyMessage(new MessageEvent(114, p.getID()));</b>
+<b class="fc"><i>72</i>&nbsp;        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    /**
+<i>76</i>&nbsp;     * Checks if the tile is null or full
+<i>77</i>&nbsp;     * @return true if wrong, false otherwise
+<i>78</i>&nbsp;     * @throws IOException when socket closes
+<i>79</i>&nbsp;     */
+<i>80</i>&nbsp;    private boolean checkWrongTile(int x, int y) throws IOException {
+<b class="fc"><i>81</i>&nbsp;        Tile tile = Grid.getGrid().getTile(x,y);</b>
+<b class="fc"><i>82</i>&nbsp;        if(tile == null || !tile.isEmpty()) {</b>
+<b class="nc"><i>83</i>&nbsp;            notifyMessage(new MessageEvent(408, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>84</i>&nbsp;            notifyMessage(new MessageEvent(110, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>85</i>&nbsp;            return true;</b>
+<i>86</i>&nbsp;        }
+<b class="fc"><i>87</i>&nbsp;        return false;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    /**
+<i>91</i>&nbsp;     * This method creates and positions a new worker on the grid
+<i>92</i>&nbsp;     * @throws IOException when socket closes
+<i>93</i>&nbsp;     */
+<i>94</i>&nbsp;    private void positionWorker(int x, int y) throws IOException {
+<b class="fc"><i>95</i>&nbsp;        Tile tile = Grid.getGrid().getTile(x,y);</b>
+<b class="fc"><i>96</i>&nbsp;        Worker worker = new Worker();</b>
+<b class="fc"><i>97</i>&nbsp;        worker.setPosition(tile);</b>
+<b class="fc"><i>98</i>&nbsp;        tile.setWorker(worker);</b>
+<b class="fc"><i>99</i>&nbsp;        playersManager.getCurrentPlayer().setWorker(worker);</b>
+<b class="fc"><i>100</i>&nbsp;        int workerID = worker.getLocalID();</b>
+<b class="fc"><i>101</i>&nbsp;        TileSimplified tileSimplified = new TileSimplified(x, y, 0, new WorkerSimplified(playersManager.getCurrentPlayer().getName(), workerID));</b>
+<b class="fc"><i>102</i>&nbsp;        ArrayList&lt;TileSimplified&gt; arrayList = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>103</i>&nbsp;        arrayList.add(tileSimplified);</b>
+<b class="fc"><i>104</i>&nbsp;        notify(new ChangeEvent(arrayList));</b>
+<b class="fc"><i>105</i>&nbsp;        currentWorkersNumber++;</b>
+<b class="fc"><i>106</i>&nbsp;    }</b>
+<i>107</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

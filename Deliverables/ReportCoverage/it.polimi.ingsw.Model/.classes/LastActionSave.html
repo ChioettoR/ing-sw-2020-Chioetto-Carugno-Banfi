@@ -1,0 +1,204 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LastActionSave</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LastActionSave (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LastActionSave</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,8%
+  </span>
+  <span class="absValue">
+    (30/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LastActionSave$ActionType</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97%
+  </span>
+  <span class="absValue">
+    (32/ 33)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;public class LastActionSave {</b>
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;    public enum ActionType {</b>
+<b class="fc"><i>8</i>&nbsp;        MOVE, BUILD</b>
+<i>9</i>&nbsp;    }
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private ActionType lastActionType;
+<i>12</i>&nbsp;    private ArrayList&lt;Worker&gt; workers;
+<i>13</i>&nbsp;    private ArrayList&lt;Tile&gt; tiles;
+<i>14</i>&nbsp;    private Tile savedTile;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Saves the tile in which the worker will build
+<i>18</i>&nbsp;     * @param savedTile The tile in which the worker will build
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    public void saveBeforeBuild(Tile savedTile) {
+<b class="fc"><i>21</i>&nbsp;        lastActionType = ActionType.BUILD;</b>
+<b class="fc"><i>22</i>&nbsp;        this.savedTile = savedTile;</b>
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * Saves the tile in which the worker will move and the current worker
+<i>27</i>&nbsp;     * @param currentWorker The worker that is moving
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    public void saveBeforeMove(Worker currentWorker) {
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;        lastActionType = ActionType.MOVE;</b>
+<b class="fc"><i>32</i>&nbsp;        savedTile = currentWorker.getPosition();</b>
+<b class="fc"><i>33</i>&nbsp;        workers = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;        tiles = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>35</i>&nbsp;        workers.add(currentWorker);</b>
+<b class="fc"><i>36</i>&nbsp;        tiles.add(savedTile);</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Saves additional worker positions
+<i>41</i>&nbsp;     * @param worker The worker you want to save the position
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public void saveAdditionalWorker(Worker worker) {
+<b class="fc"><i>44</i>&nbsp;        workers.add(worker);</b>
+<b class="fc"><i>45</i>&nbsp;        tiles.add((worker.getPosition()));</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * Returns the saved tile. The tile in which the worker built or the tile in which the worker moved depending on the last action did
+<i>50</i>&nbsp;     * @return The saved tile
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    public Tile getSavedTile() {
+<b class="fc"><i>53</i>&nbsp;        return savedTile;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * Undoes the last action
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;    public void undo() {
+<b class="fc"><i>60</i>&nbsp;        if(lastActionType.equals(ActionType.MOVE))</b>
+<b class="fc"><i>61</i>&nbsp;            undoMovement();</b>
+<b class="fc"><i>62</i>&nbsp;        else if(lastActionType.equals(ActionType.BUILD))</b>
+<b class="fc"><i>63</i>&nbsp;            undoBuild();</b>
+<i>64</i>&nbsp;        else
+<b class="nc"><i>65</i>&nbsp;            System.out.println(&quot;Unknown action type&quot;);</b>
+<b class="fc"><i>66</i>&nbsp;    }</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Resets the position of all the workers that need a reset
+<i>70</i>&nbsp;     */
+<i>71</i>&nbsp;    private void undoMovement() {
+<b class="fc"><i>72</i>&nbsp;        for (int i = 0; i &lt; workers.size(); i++) {</b>
+<b class="fc"><i>73</i>&nbsp;            undoPosition(workers.get(i), tiles.get(i));</b>
+<i>74</i>&nbsp;        }
+<b class="fc"><i>75</i>&nbsp;    }</b>
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * Resets the position of the given worker
+<i>79</i>&nbsp;     * @param worker The worker you want to reset the position
+<i>80</i>&nbsp;     * @param position The previous position of the worker
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    private void undoPosition(Worker worker, Tile position) {
+<b class="fc"><i>83</i>&nbsp;        if(worker.getPosition().getWorker() == worker)</b>
+<b class="fc"><i>84</i>&nbsp;            worker.getPosition().setEmpty(true);</b>
+<b class="fc"><i>85</i>&nbsp;        worker.setPosition(position);</b>
+<b class="fc"><i>86</i>&nbsp;        position.setWorker(worker);</b>
+<b class="fc"><i>87</i>&nbsp;    }</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * Deletes the last level of the tile in which the worker built
+<i>91</i>&nbsp;     */
+<i>92</i>&nbsp;    private void undoBuild() {
+<b class="fc"><i>93</i>&nbsp;        savedTile.removeLastLevel();</b>
+<b class="fc"><i>94</i>&nbsp;    }</b>
+<i>95</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

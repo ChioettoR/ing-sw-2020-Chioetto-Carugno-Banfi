@@ -32,6 +32,7 @@ public class PlayersManager extends MessageObservable {
      */
     public void reset() {
         idManager = new IDManager();
+        clearObservers();
         players.clear();
         playerWinnerID = -1;
         currentPlayerIndex = 0;

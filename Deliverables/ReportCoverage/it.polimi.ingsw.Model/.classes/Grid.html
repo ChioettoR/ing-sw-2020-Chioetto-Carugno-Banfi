@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Grid</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Grid (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Grid</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,3%
+  </span>
+  <span class="absValue">
+    (14/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91,1%
+  </span>
+  <span class="absValue">
+    (51/ 56)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class Grid {
+<i>6</i>&nbsp;    private static Grid grid;
+<i>7</i>&nbsp;    private int length;
+<i>8</i>&nbsp;    private int width;
+<i>9</i>&nbsp;    private int completeTowersCount;
+<b class="fc"><i>10</i>&nbsp;    private ArrayList&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</b>
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;    private Grid() {</b>
+<b class="fc"><i>13</i>&nbsp;        grid = this;</b>
+<b class="fc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public static Grid getGrid() {
+<b class="fc"><i>17</i>&nbsp;        if(grid==null)</b>
+<b class="fc"><i>18</i>&nbsp;            grid = new Grid();</b>
+<i>19</i>&nbsp;
+<b class="fc"><i>20</i>&nbsp;        return grid;</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Resets the grid
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    public void reset() {
+<b class="fc"><i>27</i>&nbsp;        completeTowersCount = 0;</b>
+<b class="fc"><i>28</i>&nbsp;        tiles.clear();</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public int getCompleteTowersCount() {
+<b class="fc"><i>32</i>&nbsp;        return completeTowersCount;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Increases the counter of complete towers. If there is a complete towers observer and the complete
+<i>37</i>&nbsp;     * towers are 5, he&#39;s the winner.
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    public void increaseCompleteTowersCount() {
+<b class="fc"><i>40</i>&nbsp;        completeTowersCount++;</b>
+<b class="fc"><i>41</i>&nbsp;        if(completeTowersCount==5) {</b>
+<b class="fc"><i>42</i>&nbsp;            Card card = Deck.getDeck().getCompleteTowersObserver();</b>
+<b class="fc"><i>43</i>&nbsp;            PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<b class="fc"><i>44</i>&nbsp;            Player player = playersManager.getPlayerWithCard(card);</b>
+<b class="fc"><i>45</i>&nbsp;            if(player!=null)</b>
+<b class="fc"><i>46</i>&nbsp;                playersManager.winPlayer(player);</b>
+<i>47</i>&nbsp;        }
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void setCompleteTowersCount(int completeTowersCount) {
+<b class="nc"><i>51</i>&nbsp;        this.completeTowersCount = completeTowersCount;</b>
+<b class="nc"><i>52</i>&nbsp;    }</b>
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public int getLength() {
+<b class="fc"><i>55</i>&nbsp;        return length;</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public int getWidth() {
+<b class="fc"><i>59</i>&nbsp;        return width;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * Creation of a grid with its tiles
+<i>64</i>&nbsp;     */
+<i>65</i>&nbsp;    public void createGrid(int length, int width) {
+<b class="fc"><i>66</i>&nbsp;        this.length = length;</b>
+<b class="fc"><i>67</i>&nbsp;        this.width = width;</b>
+<b class="fc"><i>68</i>&nbsp;        tiles = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>69</i>&nbsp;        for(int i=1; i&lt;=length; i++){</b>
+<b class="fc"><i>70</i>&nbsp;            for (int j=1; j&lt;=width; j++) {</b>
+<b class="fc"><i>71</i>&nbsp;                tiles.add(new Tile(j,i));</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;        }
+<b class="fc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public ArrayList&lt;Tile&gt; getTiles() {
+<b class="fc"><i>77</i>&nbsp;        return tiles;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * Returns the adjacent tiles to the given one
+<i>82</i>&nbsp;     * @param tile Get adjacent tiles to this one
+<i>83</i>&nbsp;     * @return Adjacent tiles to the given one
+<i>84</i>&nbsp;     */
+<i>85</i>&nbsp;    public ArrayList&lt;Tile&gt; getNeighbours (Tile tile) {
+<b class="fc"><i>86</i>&nbsp;        if(!getTiles().contains(tile)) {</b>
+<b class="nc"><i>87</i>&nbsp;            System.out.println(&quot;The grid doesn&#39;t contain this tile&quot;);</b>
+<b class="nc"><i>88</i>&nbsp;            return null;</b>
+<i>89</i>&nbsp;        }
+<b class="fc"><i>90</i>&nbsp;        ArrayList&lt;Tile&gt; tilesNeighbour = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>91</i>&nbsp;        for(Tile t : tiles) {</b>
+<b class="fc"><i>92</i>&nbsp;            if(Math.abs(tile.getX() - t.getX()) &lt;= 1 &amp;&amp; Math.abs(tile.getY() - t.getY()) &lt;= 1 &amp;&amp; tile!=t)</b>
+<b class="fc"><i>93</i>&nbsp;                tilesNeighbour.add(t);</b>
+<b class="fc"><i>94</i>&nbsp;        }</b>
+<b class="fc"><i>95</i>&nbsp;        return tilesNeighbour;</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    /**
+<i>99</i>&nbsp;     * Returns the opposite tile to yours compared to another one
+<i>100</i>&nbsp;     * @param currentTile The tile you want the opposite one
+<i>101</i>&nbsp;     * @param nextTile The middle tile
+<i>102</i>&nbsp;     * @return The opposite tile
+<i>103</i>&nbsp;     */
+<i>104</i>&nbsp;    public Tile getOppositeTile(Tile currentTile, Tile nextTile) {
+<i>105</i>&nbsp;        int oppositeTileX;
+<i>106</i>&nbsp;        int oppositeTileY;
+<b class="fc"><i>107</i>&nbsp;        oppositeTileX = nextTile.getX() + (nextTile.getX() - currentTile.getX());</b>
+<b class="fc"><i>108</i>&nbsp;        oppositeTileY = nextTile.getY() + (nextTile.getY() - currentTile.getY());</b>
+<b class="fc"><i>109</i>&nbsp;        return getTile(oppositeTileX, oppositeTileY);</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    /**
+<i>113</i>&nbsp;     * Returns the tile with the given x and y
+<i>114</i>&nbsp;     */
+<i>115</i>&nbsp;    public Tile getTile(int x, int y) {
+<b class="fc"><i>116</i>&nbsp;        for(Tile tile : tiles) {</b>
+<b class="fc"><i>117</i>&nbsp;            if(tile.getX()==x &amp;&amp; tile.getY()==y)</b>
+<b class="fc"><i>118</i>&nbsp;                return tile;</b>
+<b class="fc"><i>119</i>&nbsp;        }</b>
+<b class="fc"><i>120</i>&nbsp;        System.out.println(&quot;There are no tiles with that x and y&quot;);</b>
+<b class="fc"><i>121</i>&nbsp;        return null;</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    /**
+<i>125</i>&nbsp;     * Returns true if the 2 given tiles are adjacent
+<i>126</i>&nbsp;     * @param currentTile The first tile
+<i>127</i>&nbsp;     * @param nextTile The second tile
+<i>128</i>&nbsp;     * @return True if the first and second tiles are adjacent
+<i>129</i>&nbsp;     */
+<i>130</i>&nbsp;    public boolean isNeighbour (Tile currentTile, Tile nextTile){
+<b class="fc"><i>131</i>&nbsp;        ArrayList&lt;Tile&gt; neighbours = getNeighbours(currentTile);</b>
+<b class="fc"><i>132</i>&nbsp;        if(neighbours == null)</b>
+<b class="nc"><i>133</i>&nbsp;            return false;</b>
+<b class="fc"><i>134</i>&nbsp;        return neighbours.contains(nextTile);</b>
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    /**
+<i>138</i>&nbsp;     * Checks if the tile is Perimeter or not
+<i>139</i>&nbsp;     * @param tileWhereBuild tile checked
+<i>140</i>&nbsp;     * @return true if is perimeter, false otherwise
+<i>141</i>&nbsp;     */
+<i>142</i>&nbsp;    public boolean isPerimeterTile(Tile tileWhereBuild){
+<b class="fc"><i>143</i>&nbsp;        ArrayList&lt;Tile&gt; perimeterTiles = new ArrayList&lt;&gt;(tiles);</b>
+<b class="fc"><i>144</i>&nbsp;        perimeterTiles.removeIf(tile -&gt; tile.getX() == 1 || tile.getX() == getLength() || tile.getY() == 1 || tile.getY() == getWidth());</b>
+<b class="fc"><i>145</i>&nbsp;        return !perimeterTiles.contains(tileWhereBuild);</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

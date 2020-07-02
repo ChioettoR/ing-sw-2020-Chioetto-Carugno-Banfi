@@ -1,0 +1,138 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SelectionWorkerManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SelectionWorkerManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SelectionWorkerManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62,5%
+  </span>
+  <span class="absValue">
+    (15/ 24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Events.Server.MessageEvent;
+<i>4</i>&nbsp;import it.polimi.ingsw.Observer.MessageObservable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class SelectionWorkerManager extends MessageObservable {
+<i>9</i>&nbsp;
+<b class="fc"><i>10</i>&nbsp;    private final PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<i>11</i>&nbsp;    private final StateManager stateManager;
+<i>12</i>&nbsp;    private final ActionManager actionManager;
+<i>13</i>&nbsp;
+<b class="fc"><i>14</i>&nbsp;    public SelectionWorkerManager(StateManager stateManager, ActionManager actionManager) {</b>
+<b class="fc"><i>15</i>&nbsp;        this.stateManager = stateManager;</b>
+<b class="fc"><i>16</i>&nbsp;        this.actionManager = actionManager;</b>
+<b class="fc"><i>17</i>&nbsp;    }</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * This method selects the worker from the list of workers
+<i>21</i>&nbsp;     * @param playerID id of the player
+<i>22</i>&nbsp;     * @param workerID id of the worker selected
+<i>23</i>&nbsp;     * @throws IOException when socket closes
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    public void selection(int playerID, int workerID, String playerName) throws IOException {
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;        if(!stateManager.checkPlayerID(playerID))</b>
+<b class="nc"><i>28</i>&nbsp;            return;</b>
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;        if(!stateManager.checkState(GameState.SELECTING))</b>
+<b class="fc"><i>31</i>&nbsp;            return;</b>
+<i>32</i>&nbsp;
+<b class="fc"><i>33</i>&nbsp;        if(playerName!=null &amp;&amp; !playerName.equals(playersManager.getCurrentPlayer().getName())) {</b>
+<b class="nc"><i>34</i>&nbsp;            notifyMessage(new MessageEvent(409, playersManager.getCurrentPlayer().getID()));</b>
+<b class="nc"><i>35</i>&nbsp;            return;</b>
+<i>36</i>&nbsp;        }
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;        Worker worker = playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID);</b>
+<i>39</i>&nbsp;
+<b class="fc"><i>40</i>&nbsp;        if(worker==null) {</b>
+<b class="nc"><i>41</i>&nbsp;            notifyMessage(new MessageEvent(409, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>42</i>&nbsp;            notifyMessage(new MessageEvent(104, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>43</i>&nbsp;            return;</b>
+<i>44</i>&nbsp;        }
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        if(!worker.isAvailable()) {</b>
+<b class="nc"><i>47</i>&nbsp;            notifyMessage(new MessageEvent(410, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>48</i>&nbsp;            actionManager.checkWinLose();</b>
+<b class="nc"><i>49</i>&nbsp;            return;</b>
+<i>50</i>&nbsp;        }
+<i>51</i>&nbsp;
+<b class="fc"><i>52</i>&nbsp;        playersManager.setCurrentWorker(playersManager.getWorkerWithID(playersManager.getCurrentPlayer().getID(), workerID));</b>
+<b class="fc"><i>53</i>&nbsp;        actionManager.transition();</b>
+<b class="fc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

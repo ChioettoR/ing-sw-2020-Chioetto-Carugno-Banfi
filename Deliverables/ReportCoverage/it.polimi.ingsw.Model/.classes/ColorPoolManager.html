@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ColorPoolManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ColorPoolManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ColorPoolManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,9%
+  </span>
+  <span class="absValue">
+    (37/ 39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Events.Server.ColorSelectingEvent;
+<i>4</i>&nbsp;import it.polimi.ingsw.Events.Server.MessageEvent;
+<i>5</i>&nbsp;import it.polimi.ingsw.Events.Server.PlayerChosenColorEvent;
+<i>6</i>&nbsp;import it.polimi.ingsw.Observer.ColorObservable;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;import java.util.ArrayList;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public class ColorPoolManager extends ColorObservable {
+<i>12</i>&nbsp;    private final StateManager stateManager;
+<b class="fc"><i>13</i>&nbsp;    private final PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<b class="fc"><i>14</i>&nbsp;    private final ArrayList&lt;PlayerColor&gt; colorsAvailable = new ArrayList&lt;&gt;();</b>
+<i>15</i>&nbsp;
+<b class="fc"><i>16</i>&nbsp;    public ColorPoolManager(StateManager stateManager) {</b>
+<b class="fc"><i>17</i>&nbsp;        this.stateManager = stateManager;</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Invoked when the color phase begin
+<i>22</i>&nbsp;     * @throws IOException when socket closes
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    public void transition() throws IOException {
+<b class="fc"><i>25</i>&nbsp;        playersManager.nextPlayer();</b>
+<b class="fc"><i>26</i>&nbsp;        stateManager.setGameState(GameState.COLORSELECTING);</b>
+<b class="fc"><i>27</i>&nbsp;        colorsAvailable.add(PlayerColor.P1_COLOR);</b>
+<b class="fc"><i>28</i>&nbsp;        colorsAvailable.add(PlayerColor.P2_COLOR);</b>
+<b class="fc"><i>29</i>&nbsp;        if(playersManager.getPlayersNumber()==3) colorsAvailable.add(PlayerColor.P3_COLOR);</b>
+<b class="fc"><i>30</i>&nbsp;        for(Player p : playersManager.getNextPlayers()) {</b>
+<b class="fc"><i>31</i>&nbsp;            notifyMessage(new MessageEvent(118, p.getID()));</b>
+<b class="fc"><i>32</i>&nbsp;        }</b>
+<b class="fc"><i>33</i>&nbsp;        notifyMessage(new MessageEvent(119, playersManager.getCurrentPlayer().getID()));</b>
+<b class="fc"><i>34</i>&nbsp;        notify(new ColorSelectingEvent(colorsAvailable, playersManager.getCurrentPlayer().getID()));</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Invoked when someone selects the color
+<i>39</i>&nbsp;     * @param playerID id of the player
+<i>40</i>&nbsp;     * @param playerColor color of the player
+<i>41</i>&nbsp;     * @throws IOException when socket closes
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public void colorSelection(int playerID, PlayerColor playerColor) throws IOException {
+<b class="fc"><i>44</i>&nbsp;        if(!stateManager.checkPlayerID(playerID))</b>
+<b class="nc"><i>45</i>&nbsp;            return;</b>
+<i>46</i>&nbsp;
+<b class="fc"><i>47</i>&nbsp;        if(!stateManager.checkState(GameState.COLORSELECTING))</b>
+<b class="nc"><i>48</i>&nbsp;            return;</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;        if(!colorsAvailable.contains(playerColor)) notifyMessage(new MessageEvent(426, playersManager.getCurrentPlayer().getID()));</b>
+<i>51</i>&nbsp;        else {
+<b class="fc"><i>52</i>&nbsp;            colorsAvailable.remove(playerColor);</b>
+<b class="fc"><i>53</i>&nbsp;            playersManager.getCurrentPlayer().setColor(playerColor);</b>
+<b class="fc"><i>54</i>&nbsp;            notify(new PlayerChosenColorEvent(playerColor, playersManager.getCurrentPlayer().getName(), -1));</b>
+<b class="fc"><i>55</i>&nbsp;            playersManager.nextPlayer();</b>
+<b class="fc"><i>56</i>&nbsp;            ArrayList&lt;PlayerColor&gt; colorsAvailableCopy = new ArrayList&lt;&gt;(colorsAvailable);</b>
+<b class="fc"><i>57</i>&nbsp;            if(colorsAvailable.size()==1) {</b>
+<b class="fc"><i>58</i>&nbsp;                playersManager.getCurrentPlayer().setColor(colorsAvailable.get(0));</b>
+<b class="fc"><i>59</i>&nbsp;                notify(new PlayerChosenColorEvent(colorsAvailable.get(0), playersManager.getCurrentPlayer().getName(), -1));</b>
+<b class="fc"><i>60</i>&nbsp;                allColorsSelected();</b>
+<i>61</i>&nbsp;            }
+<i>62</i>&nbsp;            else {
+<b class="fc"><i>63</i>&nbsp;                notifyMessage(new MessageEvent(118, playerID));</b>
+<b class="fc"><i>64</i>&nbsp;                notifyMessage(new MessageEvent(119, playersManager.getCurrentPlayer().getID()));</b>
+<b class="fc"><i>65</i>&nbsp;                notify(new ColorSelectingEvent(colorsAvailableCopy, playersManager.getCurrentPlayer().getID()));</b>
+<i>66</i>&nbsp;            }
+<i>67</i>&nbsp;        }
+<b class="fc"><i>68</i>&nbsp;    }</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    /**
+<i>71</i>&nbsp;     * Invoked when everybody choose their color
+<i>72</i>&nbsp;     * @throws IOException when socket closes
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    public void allColorsSelected() throws IOException {
+<b class="fc"><i>75</i>&nbsp;        playersManager.nextPlayer();</b>
+<b class="fc"><i>76</i>&nbsp;        notifyMessage(new MessageEvent(108, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>77</i>&nbsp;        for(Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(114, p.getID()));</b>
+<b class="fc"><i>78</i>&nbsp;        stateManager.setGameState(GameState.POSITIONING);</b>
+<b class="fc"><i>79</i>&nbsp;    }</b>
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

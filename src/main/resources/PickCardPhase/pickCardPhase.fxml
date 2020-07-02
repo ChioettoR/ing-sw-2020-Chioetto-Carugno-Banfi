@@ -8,210 +8,159 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="backGround" prefHeight="600.0" prefWidth="600.0" styleClass="backGround"
-            stylesheets="@stylePickCardPhase.css" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIPickCardPhaseController">
+<AnchorPane fx:id="backGround" prefHeight="600.0" prefWidth="600.0" styleClass="backGround" stylesheets="@stylePickCardPhase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.GUIPickCardPhaseController">
    <AnchorPane fx:id="drawPhasePane" prefHeight="600.0" prefWidth="600.0">
       <AnchorPane fx:id="upPane" prefHeight="270.0" prefWidth="600.0">
          <AnchorPane fx:id="upTwoCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
             <AnchorPane layoutX="92.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageUp2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageUp2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godName2p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="godName2p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoUp2p1" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
+               <Button fx:id="infoButtonUp2p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
                   <cursor>
-                     <Cursor fx:constant="HAND"/>
+                     <Cursor fx:constant="HAND" />
                   </cursor>
                </Button>
             </AnchorPane>
             <AnchorPane layoutX="346.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageUp2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" focusTraversable="true" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageUp2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" focusTraversable="true" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godName2p2" focusTraversable="true" layoutX="6.0" layoutY="35.0"
-                     strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER"
-                     wrappingWidth="150.0">
+               <Text fx:id="godName2p2" focusTraversable="true" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView focusTraversable="true" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoUp2p2" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
+               <Button fx:id="infoButtonUp2p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css">
                   <cursor>
-                     <Cursor fx:constant="HAND"/>
+                     <Cursor fx:constant="HAND" />
                   </cursor>
                </Button>
             </AnchorPane>
          </AnchorPane>
          <AnchorPane fx:id="upThreeCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
             <AnchorPane layoutX="28.5" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageUp3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageUp3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godName3p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="godName3p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoUp3p1" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonUp3p1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
             <AnchorPane layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageUp3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageUp3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godName3p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="godName3p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoUp3p2" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonUp3p2" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
             <AnchorPane layoutX="409.5" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageUp3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageUp3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godName3p3" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="godName3p3" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoUp3p3" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonUp3p3" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoUp3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
          </AnchorPane>
          <AnchorPane fx:id="draw" prefHeight="270.0" prefWidth="600.0" visible="false">
-            <AnchorPane fx:id="choosePane" layoutX="219.0" layoutY="20.0" prefHeight="238.0"
-                        prefWidth="162.0">
-               <ImageView fx:id="godImageToChoose" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+            <AnchorPane fx:id="choosePane" layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
+               <ImageView fx:id="godImageToChoose" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="godNameToChoose" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="godNameToChoose" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="infoButtonToChoose" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoToChoose" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonToChoose" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoToChoose" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
-            <Button fx:id="backButton" layoutX="159.0" layoutY="120.0" mnemonicParsing="false"
-                    onAction="#goBack" prefHeight="30.0" prefWidth="40.0"
-                    style="-fx-border-color: transparent; -fx-background-color: transparent;"
-                    styleClass="goBackButton" stylesheets="@stylePickCardPhase.css"/>
-            <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false"
-                    onAction="#goNext" prefHeight="30.0" prefWidth="40.0"
-                    style="-fx-border-color: transparent; -fx-background-color: transparent;"
-                    styleClass="goNextButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="backButton" layoutX="159.0" layoutY="120.0" mnemonicParsing="false" onAction="#goBack" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goBackButton" stylesheets="@stylePickCardPhase.css" />
+            <Button fx:id="nextButton" layoutX="401.0" layoutY="120.0" mnemonicParsing="false" onAction="#goNext" prefHeight="30.0" prefWidth="40.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="goNextButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
          <AnchorPane fx:id="startPlayerPane" prefHeight="270.0" prefWidth="600.0" visible="false">
-            <AnchorPane fx:id="dragStartingPlayer" layoutX="219.0" layoutY="20.0" prefHeight="238.0"
-                        prefWidth="162.0">
-               <ImageView fx:id="startPlayerGod" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+            <AnchorPane fx:id="dragStartingPlayer" layoutX="219.0" layoutY="20.0" prefHeight="238.0" prefWidth="162.0">
+               <ImageView fx:id="startPlayerGod" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="startPlayerName" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Drag the player here" textAlignment="CENTER"
-                     wrappingWidth="150.0">
+               <Text fx:id="startPlayerName" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drag the player here" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="190.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text layoutX="6.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                     text="Start Player" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text layoutX="6.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Player" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@frame.png"/>
+                  <Image url="@frame.png" />
                </ImageView>
-               <Button fx:id="startPlayerButtonInfo" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton"
-                       stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="startPlayerButtonInfo" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
          </AnchorPane>
       </AnchorPane>
       <AnchorPane fx:id="middlePane" layoutY="270.0" prefHeight="60.0" prefWidth="600.0">
          <AnchorPane fx:id="messagePane" prefHeight="60.0" prefWidth="600.0">
             <ImageView fitHeight="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@messageBar.png"/>
+               <Image url="@messageBar.png" />
             </ImageView>
-            <Text fx:id="messageText" layoutX="155.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                  textAlignment="CENTER" wrappingWidth="290.0">
+            <Text fx:id="messageText" layoutX="155.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="290.0">
                <font>
-                  <Font name="Candara" size="14.0"/>
+                  <Font name="Candara" size="14.0" />
                </font>
             </Text>
          </AnchorPane>
          <AnchorPane fx:id="errorPane" prefHeight="60.0" prefWidth="600.0" visible="false">
             <ImageView fitHeight="60.0" layoutX="141.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@messageBar.png"/>
+               <Image url="@messageBar.png" />
             </ImageView>
-            <Text fx:id="errorText" fill="RED" layoutX="155.0" layoutY="32.0" strokeType="OUTSIDE"
-                  strokeWidth="0.0" text="Error" textAlignment="CENTER" wrappingWidth="290.0">
+            <Text fx:id="errorText" fill="RED" layoutX="155.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error" textAlignment="CENTER" wrappingWidth="290.0">
                <font>
-                  <Font name="Candara" size="14.0"/>
+                  <Font name="Candara" size="14.0" />
                </font>
             </Text>
          </AnchorPane>
@@ -219,106 +168,81 @@
       <AnchorPane fx:id="downPane" layoutY="330.0" prefHeight="270.0" prefWidth="600.0">
          <AnchorPane fx:id="downTwoCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
             <AnchorPane layoutX="92.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageDown2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageDown2p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="playerName2p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="playerName2p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@yellowFrame.png"/>
+                  <Image url="@yellowFrame.png" />
                </ImageView>
-               <Button fx:id="infoButtonDown2p1" disable="true" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoDown2p1" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonDown2p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
             <AnchorPane layoutX="346.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageDown2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageDown2p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="playerName2p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="playerName2p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@yellowFrame.png"/>
+                  <Image url="@yellowFrame.png" />
                </ImageView>
-               <Button fx:id="infoButtonDown2p2" disable="true" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoDown2p2" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonDown2p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown2p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
          </AnchorPane>
          <AnchorPane fx:id="downThreeCardsPane" prefHeight="270.0" prefWidth="600.0" visible="false">
             <AnchorPane layoutX="28.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageDown3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageDown3p1" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="playerName3p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="playerName3p1" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@yellowFrame.png"/>
+                  <Image url="@yellowFrame.png" />
                </ImageView>
-               <Button fx:id="infoButtonDown3p1" disable="true" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoDown3p1" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonDown3p1" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p1" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
             <AnchorPane layoutX="219.0" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageDown3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageDown3p2" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="playerName3p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="playerName3p2" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@yellowFrame.png"/>
+                  <Image url="@yellowFrame.png" />
                </ImageView>
-               <Button fx:id="infoButtonDown3p2" disable="true" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoDown3p2" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonDown3p2" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p2" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
             <AnchorPane layoutX="409.5" layoutY="18.0" prefHeight="238.0" prefWidth="162.0">
-               <ImageView fx:id="godImageDown3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0"
-                          pickOnBounds="true" preserveRatio="true"/>
-               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true"
-                          preserveRatio="true">
-                  <Image url="@nameBar.png"/>
+               <ImageView fx:id="godImageDown3p3" fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               <ImageView fitWidth="140.0" layoutX="11.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@nameBar.png" />
                </ImageView>
-               <Text fx:id="playerName3p3" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE"
-                     strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
+               <Text fx:id="playerName3p3" layoutX="6.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.0">
                   <font>
-                     <Font name="Candara" size="12.0"/>
+                     <Font name="Candara" size="12.0" />
                   </font>
                </Text>
                <ImageView pickOnBounds="true" preserveRatio="true">
-                  <Image url="@yellowFrame.png"/>
+                  <Image url="@yellowFrame.png" />
                </ImageView>
-               <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity"
-                       mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0"
-                       prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css"/>
+               <Button fx:id="infoButtonDown3p3" disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#checkInfoDown3p3" prefHeight="238.0" prefWidth="162.0" styleClass="infoButton" stylesheets="@stylePickCardPhase.css" />
             </AnchorPane>
          </AnchorPane>
       </AnchorPane>
@@ -326,86 +250,65 @@
    <AnchorPane fx:id="cardsToSelect" layoutX="450.0" prefHeight="330.0" prefWidth="150.0" visible="false">
       <AnchorPane fx:id="threeCardsPane" prefHeight="330.0" prefWidth="150.0" visible="false">
          <AnchorPane layoutX="47.5" layoutY="21.75" prefHeight="81.0" prefWidth="55.0">
-            <ImageView fx:id="godToSelect3p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0"
-                       pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="godToSelect3p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@frame.png"/>
+               <Image url="@frame.png" />
             </ImageView>
-            <Button fx:id="buttonToDeselect3p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p1" prefHeight="15.0"
-                    prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="buttonToDeselect3p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
          <AnchorPane layoutX="47.5" layoutY="124.5" prefHeight="81.0" prefWidth="55.0">
-            <ImageView fx:id="godToSelect3p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0"
-                       pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="godToSelect3p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@frame.png"/>
+               <Image url="@frame.png" />
             </ImageView>
-            <Button fx:id="buttonToDeselect3p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p2" prefHeight="15.0"
-                    prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="buttonToDeselect3p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect3p2" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
          <AnchorPane layoutX="47.5" layoutY="227.25" prefHeight="81.0" prefWidth="55.0">
-            <ImageView fx:id="godToSelect3p3" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0"
-                       pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="godToSelect3p3" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@frame.png"/>
+               <Image url="@frame.png" />
             </ImageView>
-            <Button fx:id="buttonToDeselect3p3" layoutX="35.0" layoutY="5.0" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" prefHeight="15.0" prefWidth="15.0"
-                    styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="buttonToDeselect3p3" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
       </AnchorPane>
       <AnchorPane fx:id="twoCardsPane" prefHeight="330.0" prefWidth="150.0" visible="false">
          <AnchorPane layoutX="47.5" layoutY="56.0" prefHeight="81.0" prefWidth="55.0">
-            <ImageView fx:id="godToSelect2p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0"
-                       pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="godToSelect2p1" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@frame.png"/>
+               <Image url="@frame.png" />
             </ImageView>
-            <Button fx:id="buttonToDeselect2p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p1" prefHeight="15.0"
-                    prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="buttonToDeselect2p1" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deselect2p1" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
          <AnchorPane layoutX="47.5" layoutY="193.0" prefHeight="81.0" prefWidth="55.0">
-            <ImageView fx:id="godToSelect2p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0"
-                       pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="godToSelect2p2" fitHeight="81.0" fitWidth="48.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="81.0" fitWidth="55.0" pickOnBounds="true">
-               <Image url="@frame.png"/>
+               <Image url="@frame.png" />
             </ImageView>
-            <Button fx:id="buttonToDeselect2p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity"
-                    minWidth="-Infinity" mnemonicParsing="false" prefHeight="15.0" prefWidth="15.0"
-                    styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css"/>
+            <Button fx:id="buttonToDeselect2p2" layoutX="35.0" layoutY="5.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="15.0" prefWidth="15.0" styleClass="closeRedButton" stylesheets="@stylePickCardPhase.css" />
          </AnchorPane>
       </AnchorPane>
    </AnchorPane>
    <AnchorPane fx:id="infoPane" prefHeight="600.0" prefWidth="600.0" visible="false">
       <AnchorPane layoutX="150.0" layoutY="200.0" prefHeight="193.5" prefWidth="300.0">
          <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@rectangleInfo.png"/>
+            <Image url="@rectangleInfo.png" />
          </ImageView>
-         <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" layoutX="192.0" layoutY="45.0"
-                    pickOnBounds="true" preserveRatio="true">
-            <Image url="@podium-characters-Zeus.png"/>
+         <ImageView fx:id="infoGodImage" fitHeight="100.0" fitWidth="100.0" layoutX="192.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@podium-characters-Zeus.png" />
          </ImageView>
-         <Button fx:id="closeInfoButton" layoutX="270.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity"
-                 mnemonicParsing="false" onAction="#returnToPick" prefHeight="20.0" prefWidth="20.0"
-                 styleClass="closeInfoButton" stylesheets="@stylePickCardPhase.css" text="Button">
+         <Button fx:id="closeInfoButton" layoutX="270.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToPick" prefHeight="20.0" prefWidth="20.0" styleClass="closeInfoButton" stylesheets="@stylePickCardPhase.css" text="Button">
             <cursor>
-               <Cursor fx:constant="HAND"/>
+               <Cursor fx:constant="HAND" />
             </cursor>
          </Button>
-         <Text fx:id="infoGodName" layoutX="75.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0"
-               text="Zeus" textAlignment="CENTER" wrappingWidth="150.0">
+         <Text fx:id="infoGodName" layoutX="75.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeus" textAlignment="CENTER" wrappingWidth="150.0">
             <font>
-               <Font name="Candara" size="18.0"/>
+               <Font name="Candara" size="18.0" />
             </font>
          </Text>
-         <Text fx:id="infoDescription" layoutX="20.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0"
-               text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level."
-               wrappingWidth="155.0">
+         <Text fx:id="infoDescription" layoutX="20.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level." wrappingWidth="155.0">
             <font>
-               <Font name="Candara" size="12.0"/>
+               <Font name="Candara" size="12.0" />
             </font>
          </Text>
       </AnchorPane>

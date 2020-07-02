@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StateManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StateManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StateManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (14/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Events.Server.MessageEvent;
+<i>4</i>&nbsp;import it.polimi.ingsw.Observer.MessageObservable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;@SuppressWarnings(&quot;BooleanMethodIsAlwaysInverted&quot;)
+<i>9</i>&nbsp;public class StateManager extends MessageObservable {
+<i>10</i>&nbsp;    private GameState gameState;
+<b class="fc"><i>11</i>&nbsp;    private final PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<i>12</i>&nbsp;
+<b class="fc"><i>13</i>&nbsp;    public StateManager() {</b>
+<b class="fc"><i>14</i>&nbsp;        gameState = GameState.START;</b>
+<b class="fc"><i>15</i>&nbsp;    }</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    public PlayersManager getPlayersManager() {
+<b class="fc"><i>18</i>&nbsp;        return playersManager;</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public GameState getGameState() {
+<b class="fc"><i>22</i>&nbsp;        return gameState;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void setGameState(GameState gameState) {
+<b class="fc"><i>26</i>&nbsp;        this.gameState = gameState;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Checks if the playerID received is the currentPlayer
+<i>31</i>&nbsp;     * @param playerID id of the player
+<i>32</i>&nbsp;     * @return true if correct, false otherwise
+<i>33</i>&nbsp;     * @throws IOException when socket closes
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    public synchronized boolean checkPlayerID(int playerID) throws IOException {
+<b class="fc"><i>36</i>&nbsp;        if(playersManager.getCurrentPlayer().getID()!=playerID) {</b>
+<b class="nc"><i>37</i>&nbsp;            notifyMessage(new MessageEvent(411, playerID));</b>
+<b class="nc"><i>38</i>&nbsp;            return false;</b>
+<i>39</i>&nbsp;        }
+<b class="fc"><i>40</i>&nbsp;        return true;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Checks the current gameState with the received one
+<i>45</i>&nbsp;     * @param gameState state to check
+<i>46</i>&nbsp;     * @return true if correct, false otherwise
+<i>47</i>&nbsp;     * @throws IOException when socket closes
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    public boolean checkState(GameState gameState) throws IOException {
+<b class="fc"><i>50</i>&nbsp;        if(this.gameState != gameState) {</b>
+<b class="fc"><i>51</i>&nbsp;            notifyMessage(new MessageEvent(412, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>52</i>&nbsp;            return false;</b>
+<i>53</i>&nbsp;        }
+<b class="fc"><i>54</i>&nbsp;        return true;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

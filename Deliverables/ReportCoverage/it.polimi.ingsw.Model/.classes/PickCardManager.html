@@ -1,0 +1,265 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PickCardManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PickCardManager (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PickCardManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88,9%
+  </span>
+  <span class="absValue">
+    (8/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72,1%
+  </span>
+  <span class="absValue">
+    (62/ 86)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Events.Server.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.Observer.CardObservable;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.stream.Collectors;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class PickCardManager extends CardObservable {
+<b class="fc"><i>11</i>&nbsp;    private final PlayersManager playersManager = PlayersManager.getPlayersManager();</b>
+<i>12</i>&nbsp;    private final StateManager stateManager;
+<i>13</i>&nbsp;    private ArrayList&lt;CardSimplified&gt; pickedCards;
+<i>14</i>&nbsp;    private ArrayList&lt;CardSimplified&gt; remainingCards;
+<i>15</i>&nbsp;    private final FirstPlayerManager firstPlayerManager;
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;    public PickCardManager(StateManager stateManager, FirstPlayerManager firstPlayerManager) {</b>
+<b class="fc"><i>18</i>&nbsp;        this.stateManager = stateManager;</b>
+<b class="fc"><i>19</i>&nbsp;        this.firstPlayerManager = firstPlayerManager;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * This method is responsible of the initial phase of choosing cards by the first player
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * @param playerID player&#39;s id
+<i>26</i>&nbsp;     * @param cards    list of cards
+<i>27</i>&nbsp;     * @throws IOException when socket closes
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public void allCardsChosen(int playerID, ArrayList&lt;String&gt; cards) throws IOException {
+<i>31</i>&nbsp;
+<b class="fc"><i>32</i>&nbsp;        if (!stateManager.checkPlayerID(playerID))</b>
+<b class="nc"><i>33</i>&nbsp;            return;</b>
+<i>34</i>&nbsp;
+<b class="fc"><i>35</i>&nbsp;        if (!stateManager.checkState(GameState.CHOOSING))</b>
+<b class="nc"><i>36</i>&nbsp;            return;</b>
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;        if (cards.size() != playersManager.getPlayersNumber()) {</b>
+<b class="nc"><i>39</i>&nbsp;            notifyMessage(new MessageEvent(422, playersManager.getCurrentPlayer().getID()));</b>
+<b class="nc"><i>40</i>&nbsp;            return;</b>
+<i>41</i>&nbsp;        }
+<i>42</i>&nbsp;
+<b class="fc"><i>43</i>&nbsp;        ArrayList&lt;Card&gt; allCards = new ArrayList&lt;&gt;();</b>
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;        for (String c : cards) {</b>
+<b class="fc"><i>46</i>&nbsp;            Card card = Deck.getDeck().getCardByName(c);</b>
+<b class="fc"><i>47</i>&nbsp;            if (card == null || allCards.contains(card)) {</b>
+<b class="nc"><i>48</i>&nbsp;                notifyMessage(new MessageEvent(407, playersManager.getCurrentPlayer().getID()));</b>
+<b class="nc"><i>49</i>&nbsp;                return;</b>
+<i>50</i>&nbsp;            }
+<b class="fc"><i>51</i>&nbsp;            allCards.add(card);</b>
+<b class="fc"><i>52</i>&nbsp;        }</b>
+<i>53</i>&nbsp;
+<b class="fc"><i>54</i>&nbsp;        for (Card c : allCards) Deck.getDeck().createAction(c);</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;        sendCards((ArrayList&lt;CardSimplified&gt;) allCards.stream().map(Card::simplify).collect(Collectors.toList()));</b>
+<b class="fc"><i>57</i>&nbsp;        for (Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));</b>
+<b class="fc"><i>58</i>&nbsp;    }</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * Associates the card received to the player
+<i>62</i>&nbsp;     *
+<i>63</i>&nbsp;     * @param playerID ID of the player
+<i>64</i>&nbsp;     * @param cardName name of the card to associate
+<i>65</i>&nbsp;     * @throws IOException when socket closes
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public void pick(int playerID, String cardName) throws IOException {
+<b class="fc"><i>68</i>&nbsp;        if (!stateManager.checkPlayerID(playerID))</b>
+<b class="nc"><i>69</i>&nbsp;            return;</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;        if (!stateManager.checkState(GameState.PICKING))</b>
+<b class="nc"><i>72</i>&nbsp;            return;</b>
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;        if (cardName.equals(&quot;&quot;)) {</b>
+<b class="nc"><i>75</i>&nbsp;            notifyMessage(new MessageEvent(405, playersManager.getCurrentPlayer().getID()));</b>
+<b class="nc"><i>76</i>&nbsp;            return;</b>
+<i>77</i>&nbsp;        }
+<b class="fc"><i>78</i>&nbsp;        boolean rightCard = playerPicksTheCard(cardName);</b>
+<b class="fc"><i>79</i>&nbsp;        if (rightCard) {</b>
+<b class="fc"><i>80</i>&nbsp;            return;</b>
+<i>81</i>&nbsp;        }
+<i>82</i>&nbsp;
+<b class="nc"><i>83</i>&nbsp;        checkWrongCard(cardName);</b>
+<b class="nc"><i>84</i>&nbsp;    }</b>
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    public void transition() throws IOException {
+<b class="fc"><i>87</i>&nbsp;        int messageID = 0;</b>
+<b class="fc"><i>88</i>&nbsp;        if (playersManager.getPlayersNumber() == 3) messageID = 501;</b>
+<b class="nc"><i>89</i>&nbsp;        else if (playersManager.getPlayersNumber() == 2) messageID = 502;</b>
+<b class="fc"><i>90</i>&nbsp;        notifyMessage(new MessageEvent(messageID, PlayersManager.getPlayersManager().nextPlayer().getID()));</b>
+<b class="fc"><i>91</i>&nbsp;        for(Player p : playersManager.getNextPlayers()) {</b>
+<b class="fc"><i>92</i>&nbsp;            notifyMessage(new MessageEvent(120, p.getID()));</b>
+<b class="fc"><i>93</i>&nbsp;        }</b>
+<b class="fc"><i>94</i>&nbsp;        notifyFullDeck(new FullDeckEvent((ArrayList&lt;CardSimplified&gt;) Deck.getDeck().getCardsList().stream().map(Card::simplify).collect(Collectors.toList()), PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>95</i>&nbsp;    }</b>
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     * Method invoked by draw, sends the cards
+<i>99</i>&nbsp;     *
+<i>100</i>&nbsp;     * @param cardsSimplified the cardsSimplified from the deck
+<i>101</i>&nbsp;     * @throws IOException when socket closes
+<i>102</i>&nbsp;     */
+<i>103</i>&nbsp;    private void sendCards(ArrayList&lt;CardSimplified&gt; cardsSimplified) throws IOException {
+<b class="fc"><i>104</i>&nbsp;        MiniDeckSimplified miniDeckSimplified = new MiniDeckSimplified(cardsSimplified);</b>
+<b class="fc"><i>105</i>&nbsp;        pickedCards = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>106</i>&nbsp;        remainingCards = miniDeckSimplified.getMiniDeck();</b>
+<b class="fc"><i>107</i>&nbsp;        stateManager.setGameState(GameState.PICKING);</b>
+<b class="fc"><i>108</i>&nbsp;        playersManager.nextPlayer();</b>
+<b class="fc"><i>109</i>&nbsp;        notifyDeck(new DeckEvent(miniDeckSimplified));</b>
+<b class="fc"><i>110</i>&nbsp;        notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>111</i>&nbsp;    }</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    /**
+<i>114</i>&nbsp;     * Method invoked when a player picks a card, notifies the pick
+<i>115</i>&nbsp;     *
+<i>116</i>&nbsp;     * @param cardName name of the card picked
+<i>117</i>&nbsp;     * @return true if picked, false otherwise
+<i>118</i>&nbsp;     * @throws IOException when socket closes
+<i>119</i>&nbsp;     */
+<i>120</i>&nbsp;    private boolean playerPicksTheCard(String cardName) throws IOException {
+<i>121</i>&nbsp;
+<b class="fc"><i>122</i>&nbsp;        for (CardSimplified cardSimplified : remainingCards) {</b>
+<b class="fc"><i>123</i>&nbsp;            if (cardSimplified.getName().equalsIgnoreCase(cardName)) {</b>
+<i>124</i>&nbsp;
+<b class="fc"><i>125</i>&nbsp;                pickCard(cardSimplified);</b>
+<i>126</i>&nbsp;
+<b class="fc"><i>127</i>&nbsp;                if (remainingCards.size() != 1) {</b>
+<b class="fc"><i>128</i>&nbsp;                    ArrayList&lt;CardSimplified&gt; cardsSimplifiedCopy = new ArrayList&lt;&gt;(remainingCards);</b>
+<b class="fc"><i>129</i>&nbsp;                    for (Player p : playersManager.getNextPlayers()) notifyDeck(new DeckEvent(new MiniDeckSimplified(cardsSimplifiedCopy), p.getID()));</b>
+<b class="fc"><i>130</i>&nbsp;                    playersManager.nextPlayer();</b>
+<b class="fc"><i>131</i>&nbsp;                    for (Player p : playersManager.getNextPlayers()) notifyMessage(new MessageEvent(105, p.getID()));</b>
+<b class="fc"><i>132</i>&nbsp;                    notifyMessage(new MessageEvent(106, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="fc"><i>133</i>&nbsp;                } else nextPhase();</b>
+<b class="fc"><i>134</i>&nbsp;                return true;</b>
+<i>135</i>&nbsp;            }
+<b class="nc"><i>136</i>&nbsp;        }</b>
+<b class="nc"><i>137</i>&nbsp;        return false;</b>
+<i>138</i>&nbsp;    }
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;    /**
+<i>141</i>&nbsp;     * Checks if someone chooses the wrong cards
+<i>142</i>&nbsp;     * @param cardName name of the player
+<i>143</i>&nbsp;     * @throws IOException when socket closes
+<i>144</i>&nbsp;     */
+<i>145</i>&nbsp;    private void checkWrongCard(String cardName) throws IOException {
+<b class="nc"><i>146</i>&nbsp;        for (CardSimplified cardSimplified : pickedCards) {</b>
+<b class="nc"><i>147</i>&nbsp;            if (cardSimplified.getName().equalsIgnoreCase(cardName)) {</b>
+<b class="nc"><i>148</i>&nbsp;                notifyMessage(new MessageEvent(406, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>149</i>&nbsp;                notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>150</i>&nbsp;                return;</b>
+<i>151</i>&nbsp;            }
+<b class="nc"><i>152</i>&nbsp;        }</b>
+<b class="nc"><i>153</i>&nbsp;        notifyMessage(new MessageEvent(407, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>154</i>&nbsp;        notifyMessage(new MessageEvent(107, PlayersManager.getPlayersManager().getCurrentPlayer().getID()));</b>
+<b class="nc"><i>155</i>&nbsp;    }</b>
+<i>156</i>&nbsp;
+<i>157</i>&nbsp;    /**
+<i>158</i>&nbsp;     * Invoked after a card pick, removes the card from the remaining ones and adds it to the picked ones
+<i>159</i>&nbsp;     *
+<i>160</i>&nbsp;     * @param cardSimplified name of the card picked
+<i>161</i>&nbsp;     * @throws IOException when socket closes
+<i>162</i>&nbsp;     */
+<i>163</i>&nbsp;    private void pickCard(CardSimplified cardSimplified) throws IOException {
+<b class="fc"><i>164</i>&nbsp;        remainingCards.remove(cardSimplified);</b>
+<b class="fc"><i>165</i>&nbsp;        pickedCards.add(cardSimplified);</b>
+<b class="fc"><i>166</i>&nbsp;        playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(cardSimplified.getName()));</b>
+<b class="fc"><i>167</i>&nbsp;        notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), cardSimplified.getName()));</b>
+<b class="fc"><i>168</i>&nbsp;    }</b>
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;    /**
+<i>171</i>&nbsp;     * Invoked when a turn is ended, changes the player
+<i>172</i>&nbsp;     *
+<i>173</i>&nbsp;     * @throws IOException when socket closes
+<i>174</i>&nbsp;     */
+<i>175</i>&nbsp;    private void nextPhase() throws IOException {
+<b class="fc"><i>176</i>&nbsp;        playersManager.nextPlayer();</b>
+<b class="fc"><i>177</i>&nbsp;        playersManager.getCurrentPlayer().setCard(Deck.getDeck().getCardByName(remainingCards.get(0).getName()));</b>
+<b class="fc"><i>178</i>&nbsp;        notifyPower(new PlayerChosenCardEvent(playersManager.getCurrentPlayer().getName(), remainingCards.get(0).getName()));</b>
+<b class="fc"><i>179</i>&nbsp;        stateManager.setGameState(GameState.FIRSTPLAYERSELECTION);</b>
+<b class="fc"><i>180</i>&nbsp;        firstPlayerManager.transition();</b>
+<b class="fc"><i>181</i>&nbsp;    }</b>
+<i>182</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

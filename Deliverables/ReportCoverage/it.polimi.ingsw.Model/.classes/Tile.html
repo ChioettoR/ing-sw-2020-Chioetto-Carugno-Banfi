@@ -1,0 +1,185 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Tile</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Tile (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Tile</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85%
+  </span>
+  <span class="absValue">
+    (34/ 40)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class Tile {
+<i>6</i>&nbsp;    private final int x;
+<i>7</i>&nbsp;    private final int y;
+<b class="fc"><i>8</i>&nbsp;    private boolean isEmpty = true;</b>
+<i>9</i>&nbsp;    private Worker worker;
+<b class="fc"><i>10</i>&nbsp;    private ArrayList&lt;Integer&gt; levels = new ArrayList&lt;&gt;();</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    public int getX() {
+<b class="fc"><i>13</i>&nbsp;        return x;</b>
+<i>14</i>&nbsp;    }
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public int getY() {
+<b class="fc"><i>17</i>&nbsp;        return y;</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public ArrayList&lt;Integer&gt; getLevels() {
+<b class="fc"><i>21</i>&nbsp;        return levels;</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    public void setLevels(ArrayList&lt;Integer&gt; levels) {
+<b class="fc"><i>25</i>&nbsp;        this.levels = levels;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Returns the last level of the tile
+<i>30</i>&nbsp;     * @return The level of the tile
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    public int getLevel() {
+<b class="fc"><i>33</i>&nbsp;        if(levels.size() == 0) {</b>
+<b class="nc"><i>34</i>&nbsp;            System.out.println(&quot;This tile has no levels&quot;);</b>
+<b class="nc"><i>35</i>&nbsp;            return -1;</b>
+<i>36</i>&nbsp;        }
+<b class="fc"><i>37</i>&nbsp;        return levels.get(levels.size() - 1);</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Removes the last level of the tile
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public void removeLastLevel() {
+<b class="fc"><i>44</i>&nbsp;        if(levels.size()==0)</b>
+<b class="nc"><i>45</i>&nbsp;            System.out.println(&quot;This tile has only ground level&quot;);</b>
+<i>46</i>&nbsp;        else {
+<b class="fc"><i>47</i>&nbsp;            if(levels.size()==5)</b>
+<b class="nc"><i>48</i>&nbsp;                Grid.getGrid().setCompleteTowersCount(Grid.getGrid().getCompleteTowersCount()-1);</b>
+<b class="fc"><i>49</i>&nbsp;            levels.remove(levels.size() - 1);</b>
+<i>50</i>&nbsp;        }
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public int getLevelsSize() {
+<b class="fc"><i>54</i>&nbsp;        return levels.size();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public void setLevel(int level) {
+<b class="fc"><i>58</i>&nbsp;        if(level &lt;= getLevel() || level &gt; 4){</b>
+<b class="nc"><i>59</i>&nbsp;            System.out.println(&quot;You can&#39;t build that block!&quot;);</b>
+<b class="nc"><i>60</i>&nbsp;            return;</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;        this.levels.add(level);</b>
+<b class="fc"><i>64</i>&nbsp;    }</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>67</i>&nbsp;        return isEmpty;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    public void setEmpty(boolean empty) {
+<b class="fc"><i>71</i>&nbsp;        isEmpty = empty;</b>
+<b class="fc"><i>72</i>&nbsp;        if(empty) worker = null;</b>
+<b class="fc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public Worker getWorker() {
+<b class="fc"><i>76</i>&nbsp;        return worker;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setWorker(Worker worker) {
+<b class="fc"><i>80</i>&nbsp;        this.worker = worker;</b>
+<b class="fc"><i>81</i>&nbsp;        setEmpty(worker == null);</b>
+<b class="fc"><i>82</i>&nbsp;    }</b>
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;    public Tile(int x, int y) {</b>
+<b class="fc"><i>85</i>&nbsp;        this.x = x;</b>
+<b class="fc"><i>86</i>&nbsp;        this.y = y;</b>
+<b class="fc"><i>87</i>&nbsp;        levels.add(0);</b>
+<b class="fc"><i>88</i>&nbsp;    }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    /**
+<i>91</i>&nbsp;     * Simplifies the tile
+<i>92</i>&nbsp;     * @return the tile simplified
+<i>93</i>&nbsp;     */
+<i>94</i>&nbsp;    public TileSimplified simplify() {
+<i>95</i>&nbsp;        WorkerSimplified workerSimplified;
+<b class="fc"><i>96</i>&nbsp;        if(worker==null)</b>
+<b class="fc"><i>97</i>&nbsp;            workerSimplified = null;</b>
+<i>98</i>&nbsp;        else
+<b class="fc"><i>99</i>&nbsp;            workerSimplified = worker.simplify();</b>
+<b class="fc"><i>100</i>&nbsp;        return new TileSimplified(x,y,getLevel(),workerSimplified);</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>

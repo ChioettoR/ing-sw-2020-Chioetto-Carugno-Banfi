@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BuildActionStandard</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BuildActionStandard (it.polimi.ingsw.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BuildActionStandard</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,2%
+  </span>
+  <span class="absValue">
+    (40/ 42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;public class BuildActionStandard extends StandardActionBehaviour implements BuildAction {</b>
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;    private final LastActionSave lastActionSave = new LastActionSave();</b>
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    /**
+<i>10</i>&nbsp;     * Builds in the given tile the given level block if all the standard build conditions are satisfied
+<i>11</i>&nbsp;     * @param worker The worker that is building
+<i>12</i>&nbsp;     * @param tileWhereBuild The tile in which the worker will build
+<i>13</i>&nbsp;     * @param newLevel The block level you want to build
+<i>14</i>&nbsp;     */
+<i>15</i>&nbsp;    @Override
+<i>16</i>&nbsp;    public void build(Worker worker, Tile tileWhereBuild, int newLevel) {
+<b class="fc"><i>17</i>&nbsp;        if(canBuild(worker, tileWhereBuild, newLevel))</b>
+<b class="fc"><i>18</i>&nbsp;            standardBuild(tileWhereBuild, newLevel);</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * The standard build. It doesn&#39;t check any condition before building
+<i>23</i>&nbsp;     * @param tileWhereBuild The tile in which the worker will build
+<i>24</i>&nbsp;     * @param newLevel The block level you want to build
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    public void standardBuild(Tile tileWhereBuild, int newLevel) {
+<b class="fc"><i>27</i>&nbsp;        lastActionSave.saveBeforeBuild(tileWhereBuild);</b>
+<b class="fc"><i>28</i>&nbsp;        tileWhereBuild.setLevel(newLevel);</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;        //If I&#39;m building a dome, it increases the counter of complete towers
+<b class="fc"><i>31</i>&nbsp;        if(tileWhereBuild.getLevelsSize()==5) {</b>
+<b class="fc"><i>32</i>&nbsp;            Grid.getGrid().increaseCompleteTowersCount();</b>
+<i>33</i>&nbsp;        }
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Builds in the given tile if all the standard build conditions are satisfied. The level of the new block is the current level of the tile plus one
+<i>38</i>&nbsp;     * @param worker The worker that is building
+<i>39</i>&nbsp;     * @param tileWhereBuild The tile in which the worker will build
+<i>40</i>&nbsp;     */
+<i>41</i>&nbsp;    @Override
+<i>42</i>&nbsp;    public void build(Worker worker, Tile tileWhereBuild) {
+<b class="fc"><i>43</i>&nbsp;        build(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);</b>
+<b class="fc"><i>44</i>&nbsp;    }</b>
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Standard build conditions
+<i>48</i>&nbsp;     * @param worker The worker that is building
+<i>49</i>&nbsp;     * @param tileWhereBuild The tile in which the worker will build
+<i>50</i>&nbsp;     * @param newLevel The block level you want to build
+<i>51</i>&nbsp;     * @return True if the conditions are satisfied
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public boolean canBuild(Worker worker, Tile tileWhereBuild, int newLevel) {
+<b class="fc"><i>55</i>&nbsp;        return (!isActionLock() &amp;&amp; correctTile(worker.getPosition(), tileWhereBuild) &amp;&amp; newLevel&lt;=4 &amp;&amp; newLevel == tileWhereBuild.getLevel()+1) &amp;&amp; tileWhereBuild.isEmpty();</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @Override
+<i>59</i>&nbsp;    public boolean canBuild(Worker worker, Tile tileWhereBuild) {
+<b class="fc"><i>60</i>&nbsp;        return canBuild(worker, tileWhereBuild, tileWhereBuild.getLevel()+1);</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * Returns all the possible tiles in which the worker can build. The conditions checked are the standard ones
+<i>65</i>&nbsp;     * @param worker The worker that is building
+<i>66</i>&nbsp;     * @return All the tiles in which the worker can build
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    @Override
+<i>69</i>&nbsp;    public ArrayList&lt;Tile&gt; getAvailableTilesForAction(Worker worker) {
+<b class="fc"><i>70</i>&nbsp;        ArrayList&lt;Tile&gt; neighboursTiles = Grid.getGrid().getNeighbours( worker.getPosition());</b>
+<b class="fc"><i>71</i>&nbsp;        ArrayList&lt;Tile&gt; newNeighboursTiles = new ArrayList&lt;&gt;(neighboursTiles);</b>
+<i>72</i>&nbsp;        boolean buildable;
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;        for(Tile tile : neighboursTiles) {</b>
+<b class="fc"><i>75</i>&nbsp;            buildable = false;</b>
+<b class="fc"><i>76</i>&nbsp;            for(int i=0; i&lt;=4; i++) {</b>
+<b class="fc"><i>77</i>&nbsp;                if (canBuild(worker, tile, i) )</b>
+<b class="fc"><i>78</i>&nbsp;                    buildable = true;</b>
+<i>79</i>&nbsp;            }
+<b class="fc"><i>80</i>&nbsp;            if(!buildable)</b>
+<b class="fc"><i>81</i>&nbsp;                newNeighboursTiles.remove(tile);</b>
+<b class="fc"><i>82</i>&nbsp;        }</b>
+<b class="fc"><i>83</i>&nbsp;        return newNeighboursTiles;</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    public LastActionSave getLastActionSave() {
+<b class="fc"><i>87</i>&nbsp;        return lastActionSave;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    @Override
+<i>91</i>&nbsp;    public void undo() {
+<b class="fc"><i>92</i>&nbsp;        lastActionSave.undo();</b>
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    /**
+<i>96</i>&nbsp;     * Returns all the possible tiles in which the worker can build. The conditions checked are the ones in the given action class
+<i>97</i>&nbsp;     * @param worker The worker that is building
+<i>98</i>&nbsp;     * @return All the tiles in which the worker can build
+<i>99</i>&nbsp;     */
+<i>100</i>&nbsp;    public ArrayList&lt;Tile&gt; getAvailableTilesForAction(Worker worker, Action classWhereCheckBuild) {
+<b class="fc"><i>101</i>&nbsp;        ArrayList&lt;Tile&gt; neighboursTiles = Grid.getGrid().getNeighbours(worker.getPosition());</b>
+<b class="fc"><i>102</i>&nbsp;        ArrayList&lt;Tile&gt; newNeighboursTiles = new ArrayList&lt;&gt;(neighboursTiles);</b>
+<i>103</i>&nbsp;        boolean buildable;
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;        for(Tile tile : neighboursTiles) {</b>
+<b class="fc"><i>106</i>&nbsp;            buildable = false;</b>
+<b class="fc"><i>107</i>&nbsp;            for(int i=0; i&lt;=4; i++) {</b>
+<b class="fc"><i>108</i>&nbsp;                if(classWhereCheckBuild instanceof BuildAction) {</b>
+<b class="fc"><i>109</i>&nbsp;                    if(((BuildAction) classWhereCheckBuild).canBuild(worker, tile, i))</b>
+<b class="fc"><i>110</i>&nbsp;                        buildable = true;</b>
+<i>111</i>&nbsp;                }
+<i>112</i>&nbsp;                else {
+<b class="nc"><i>113</i>&nbsp;                    System.out.println(&quot;Wrong action passed to BuildActionStandard&quot;);</b>
+<b class="nc"><i>114</i>&nbsp;                    return null;</b>
+<i>115</i>&nbsp;                }
+<i>116</i>&nbsp;            }
+<b class="fc"><i>117</i>&nbsp;            if(!buildable)</b>
+<b class="fc"><i>118</i>&nbsp;                newNeighboursTiles.remove(tile);</b>
+<b class="fc"><i>119</i>&nbsp;        }</b>
+<b class="fc"><i>120</i>&nbsp;        return newNeighboursTiles;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 10:40</div>
+</div>
+</body>
+</html>
