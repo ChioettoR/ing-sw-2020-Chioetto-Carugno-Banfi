@@ -1,3 +1,8 @@
+Bachelor degree project for the Computer Engineering course at Politecnico di Milano.
+It is a multiplayer online videogame inspired by the board game Santorini.
+
+The game was created using Java as the programming language, the MVC pattern and JavaFX for the graphics. The interaction is twofold: the user can play either through the command line interface (CLI) or through the graphical interface (GUI).
+
 # Prova Finale Ingegneria del Software 2020
 
 ## Gruppo AM005
